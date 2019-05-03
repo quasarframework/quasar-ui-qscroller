@@ -73,7 +73,7 @@ export default {
     view:
     {
       get () {
-        return this.$store.state.datetime.view
+        return this.$store.state.scroller.view
       },
       set (view) {
         this.$store.commit('scroller/view', view)
@@ -82,7 +82,7 @@ export default {
     locale:
     {
       get () {
-        return this.$store.state.datetime.locale
+        return this.$store.state.scroller.locale
       },
       set (locale) {
         this.$store.commit('scroller/locale', locale)
@@ -91,7 +91,7 @@ export default {
     roundedBorders:
     {
       get () {
-        return this.$store.state.datetime.roundedBorders
+        return this.$store.state.scroller.roundedBorders
       },
       set (b) {
         this.$store.commit('scroller/roundedBorders', b)
@@ -100,7 +100,7 @@ export default {
     barColor:
     {
       get () {
-        return this.$store.state.datetime.barColor
+        return this.$store.state.scroller.barColor
       },
       set (color) {
         this.$store.commit('scroller/barColor', color)
@@ -109,7 +109,7 @@ export default {
     color:
     {
       get () {
-        return this.$store.state.datetime.color
+        return this.$store.state.scroller.color
       },
       set (color) {
         this.$store.commit('scroller/color', color)
@@ -118,7 +118,7 @@ export default {
     backgroundColor:
     {
       get () {
-        return this.$store.state.datetime.backgroundColor
+        return this.$store.state.scroller.backgroundColor
       },
       set (color) {
         this.$store.commit('scroller/backgroundColor', color)
@@ -127,7 +127,7 @@ export default {
     innerColor:
     {
       get () {
-        return this.$store.state.datetime.innerColor
+        return this.$store.state.scroller.innerColor
       },
       set (color) {
         this.$store.commit('scroller/innerColor', color)
@@ -136,7 +136,7 @@ export default {
     innerBackgroundColor:
     {
       get () {
-        return this.$store.state.datetime.innerBackgroundColor
+        return this.$store.state.scroller.innerBackgroundColor
       },
       set (color) {
         this.$store.commit('scroller/innerBackgroundColor', color)
@@ -145,7 +145,7 @@ export default {
     noHeader:
     {
       get () {
-        return this.$store.state.datetime.noHeader
+        return this.$store.state.scroller.noHeader
       },
       set (b) {
         this.$store.commit('scroller/noHeader', b)
@@ -154,7 +154,7 @@ export default {
     noFooter:
     {
       get () {
-        return this.$store.state.datetime.noFooter
+        return this.$store.state.scroller.noFooter
       },
       set (b) {
         this.$store.commit('scroller/noFooter', b)
@@ -162,7 +162,7 @@ export default {
     },
     disable: {
       get () {
-        return this.$store.state.datetime.disable
+        return this.$store.state.scroller.disable
       },
       set (b) {
         this.$store.commit('scroller/disable', b)
@@ -171,7 +171,7 @@ export default {
     noBorder:
     {
       get () {
-        return this.$store.state.datetime.noBorder
+        return this.$store.state.scroller.noBorder
       },
       set (b) {
         this.$store.commit('scroller/noBorder', b)
@@ -181,7 +181,7 @@ export default {
     selectedDate:
     {
       get () {
-        return this.$store.state.datetime.selectedDate
+        return this.$store.state.scroller.selectedDate
       },
       set (date) {
         this.$store.commit('scroller/selectedDate', date)
@@ -189,7 +189,7 @@ export default {
     },
     shortDayLabel: {
       get () {
-        return this.$store.state.datetime.shortDayLabel
+        return this.$store.state.scroller.shortDayLabel
       },
       set (b) {
         this.$store.commit('scroller/shortDayLabel', b)
@@ -197,7 +197,7 @@ export default {
     },
     shortMonthLabel: {
       get () {
-        return this.$store.state.datetime.shortMonthLabel
+        return this.$store.state.scroller.shortMonthLabel
       },
       set (b) {
         this.$store.commit('scroller/shortMonthLabel', b)
@@ -205,7 +205,7 @@ export default {
     },
     showMonthAsString: {
       get () {
-        return this.$store.state.datetime.showMonthAsString
+        return this.$store.state.scroller.showMonthAsString
       },
       set (b) {
         this.$store.commit('scroller/showMonthAsString', b)
@@ -213,7 +213,7 @@ export default {
     },
     shortYearLabel: {
       get () {
-        return this.$store.state.datetime.shortYearLabel
+        return this.$store.state.scroller.shortYearLabel
       },
       set (b) {
         this.$store.commit('scroller/shortYearLabel', b)
@@ -221,7 +221,7 @@ export default {
     },
     shortWeekdayLabel: {
       get () {
-        return this.$store.state.datetime.shortWeekdayLabel
+        return this.$store.state.scroller.shortWeekdayLabel
       },
       set (b) {
         this.$store.commit('scroller/shortWeekdayLabel', b)
@@ -229,7 +229,7 @@ export default {
     },
     showWeekdayLabel: {
       get () {
-        return this.$store.state.datetime.showWeekdayLabel
+        return this.$store.state.scroller.showWeekdayLabel
       },
       set (b) {
         this.$store.commit('scroller/showWeekdayLabel', b)
@@ -237,7 +237,7 @@ export default {
     },
     noDays: {
       get () {
-        return this.$store.state.datetime.noDays
+        return this.$store.state.scroller.noDays
       },
       set (b) {
         this.$store.commit('scroller/noDays', b)
@@ -245,7 +245,7 @@ export default {
     },
     noMonths: {
       get () {
-        return this.$store.state.datetime.noMonths
+        return this.$store.state.scroller.noMonths
       },
       set (b) {
         this.$store.commit('scroller/noMonths', b)
@@ -253,7 +253,7 @@ export default {
     },
     noYears: {
       get () {
-        return this.$store.state.datetime.noYears
+        return this.$store.state.scroller.noYears
       },
       set (b) {
         this.$store.commit('scroller/noYears', b)
@@ -263,7 +263,7 @@ export default {
     selectedTime:
     {
       get () {
-        return this.$store.state.datetime.selectedTime
+        return this.$store.state.scroller.selectedTime
       },
       set (time) {
         this.$store.commit('scroller/selectedTime', time)
@@ -271,7 +271,7 @@ export default {
     },
     hour24Format: {
       get () {
-        return this.$store.state.datetime.hour24Format
+        return this.$store.state.scroller.hour24Format
       },
       set (b) {
         this.$store.commit('scroller/hour24Format', b)
@@ -279,7 +279,7 @@ export default {
     },
     showAmPmToggle: {
       get () {
-        return this.$store.state.datetime.showAmPmToggle
+        return this.$store.state.scroller.showAmPmToggle
       },
       set (b) {
         this.$store.commit('scroller/showAmPmToggle', b)
@@ -287,7 +287,7 @@ export default {
     },
     noMinutes: {
       get () {
-        return this.$store.state.datetime.noMinutes
+        return this.$store.state.scroller.noMinutes
       },
       set (b) {
         this.$store.commit('scroller/noMinutes', b)
@@ -295,7 +295,7 @@ export default {
     },
     noHours: {
       get () {
-        return this.$store.state.datetime.noHours
+        return this.$store.state.scroller.noHours
       },
       set (b) {
         this.$store.commit('scroller/noHours', b)
