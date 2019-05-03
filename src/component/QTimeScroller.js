@@ -42,9 +42,10 @@ export default DateTimeBase.extend({
     return {
       headerFooterHeight: 100,
       bodyHeight: 100,
+      ampm: '',
       hour: '',
       minute: '',
-      ampm: '', // 3 states: 'am', 'pm' and ''
+      ampmIndex: '', // 2 states: 0=AM, 1=PM (indices into amPmLabels)
       hour24: this.hour24Format, // don't mutate property
       timestamp: { ...Timestamp },
       disabledMinutesList: [],
@@ -59,6 +60,12 @@ export default DateTimeBase.extend({
   },
 
   computed: {
+    ampmList () {
+      return this.amPmLabels
+        .map(ap => {
+          return { value: ap, disabled: false }
+        })
+    },
     minutesList () {
       let count = 60
       if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval) > 0) {
@@ -108,6 +115,10 @@ export default DateTimeBase.extend({
       this.splitTime()
     },
 
+    ampmIndex () {
+      this.ampm = this.amPmLabels[this.ampmIndex]
+    },
+
     hour () {
       this.toTimestamp()
     },
@@ -117,6 +128,7 @@ export default DateTimeBase.extend({
     },
 
     ampm () {
+      this.ampmIndex = this.amPmLabels.findIndex(ap => ap === this.ampm)
       this.toTimestamp()
     },
 
@@ -180,10 +192,10 @@ export default DateTimeBase.extend({
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
       if (this.hour24 === true) {
-        this.ampm = ''
+        this.ampmIndex = 0
         this.hour = padNumber(this.timestamp.hour, 2)
       } else {
-        this.ampm = this.timestamp.hour < 12 ? 'am' : 'pm'
+        this.ampmIndex = this.timestamp.hour < 12 ? 0 : 1
         this.hour = padNumber(this.timestamp.hour % 12, 2)
       }
     },
@@ -191,7 +203,7 @@ export default DateTimeBase.extend({
     toTimestamp () {
       const timestamp = copyTimestamp(this.timestamp)
       this.timestamp.minute = parseInt(this.minute)
-      if (this.hour24 === true || this.ampm === 'am') {
+      if (this.hour24 === true || this.ampmIndex === 0) {
         this.timestamp.hour = parseInt(this.hour)
       } else {
         // for 'pm'
@@ -203,7 +215,7 @@ export default DateTimeBase.extend({
     },
 
     toggleAmPm () {
-      this.ampm = this.ampm === 'am' ? 'pm' : 'am'
+      this.ampmIndex = this.ampmIndex === 0 ? 1 : 0
       this.toTimestamp()
     },
 
@@ -211,13 +223,13 @@ export default DateTimeBase.extend({
       this.hour24 = !this.hour24
       if (this.hour24 === false) {
         if (this.hour < 12) {
-          this.ampm = 'am'
+          this.ampmIndex = 0
         } else {
-          this.ampm = 'pm'
+          this.ampmIndex = 1
           this.hour = padNumber(parseInt(this.hour) % 12, 2)
         }
       } else {
-        if (this.ampm === 'pm') {
+        if (this.ampmIndex === 1) {
           this.hour = padNumber(parseInt(this.hour) + 12, 2)
         }
       }
@@ -259,10 +271,27 @@ export default DateTimeBase.extend({
       })
     },
 
+    __renderAmPmScroller (h) {
+      return h(ScrollerBase, {
+        props: {
+          value: this.ampm,
+          items: this.ampmList,
+          height: this.bodyHeight,
+          disable: this.disable,
+          color: this.innerColor,
+          backgroundColor: this.innerBackgroundColor
+        },
+        on: {
+          input: (val) => { this.ampm = val }
+        }
+      })
+    },
+
     __renderScrollers (h) {
       return [
         this.noHours !== true && this.__renderHoursScroller(h),
-        this.noMinutes !== true && this.__renderMinutesScroller(h)
+        this.noMinutes !== true && this.__renderMinutesScroller(h),
+        this.hour24 === false && this.__renderAmPmScroller(h)
       ]
     },
 
@@ -277,7 +306,7 @@ export default DateTimeBase.extend({
 
     __renderAmPmButton (h) {
       return h(QBtn, {
-        staticClass: `q-scroller__header--ampm ${this.ampm}`,
+        staticClass: `q-scroller__header--ampm ${this.ampmIndex === 0 ? 'am' : 'pm'}`,
         class: {
         },
         props: {

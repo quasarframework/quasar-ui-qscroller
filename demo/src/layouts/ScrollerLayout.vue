@@ -142,7 +142,7 @@ export default {
     locale:
     {
       get () {
-        return this.$store.state.datetime.locale
+        return this.$store.state.scroller.locale
       },
       set (locale) {
         this.$store.commit('scroller/locale', locale)

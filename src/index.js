@@ -7,15 +7,15 @@
 
 const extendQuasarConf = function (conf) {
   // make sure qscroller boot file is registered
-  conf.boot.push('~@quasar/quasar-app-extension-qdatetimescroller/src/boot/qdatetimescroller.js')
-  console.log(` App Extension (qdatetimescroller) Info: 'Adding qdatetimescroller boot reference to your quasar.conf.js'`)
+  conf.boot.push('~@quasar/quasar-app-extension-qscroller/src/boot/qscroller.js')
+  console.log(` App Extension (qdatetimescroller) Info: 'Adding qscroller boot reference to your quasar.conf.js'`)
 
   // make sure qscroller css goes through webpack to avoid ssr issues
-  conf.css.push('~@quasar/quasar-app-extension-qdatetimescroller/src/component/scroller-all.styl')
+  conf.css.push('~@quasar/quasar-app-extension-qscroller/src/component/scroller-all.styl')
   console.log(` App Extension (qscroller) Info: 'Adding scroller-all.styl css reference to your quasar.conf.js'`)
 
   // make sure boot file transpiles
-  conf.build.transpileDependencies.push(/quasar-app-extension-qdatetimescroller[\\/]src/)
+  conf.build.transpileDependencies.push(/quasar-app-extension-qscroller[\\/]src/)
 }
 
 module.exports = function (api) {
