@@ -1,0 +1,311 @@
+<template>
+  <div class="row justify-left" style="width: 100%;">
+    <q-dialog v-model="displayLocale">
+      <q-card style="min-width: 300px;">
+        <q-toolbar class="bg-blue-8 text-grey-1">
+          <q-toolbar-title>
+            Current local: <strong>{{ displayedLocale }}</strong>
+          </q-toolbar-title>
+        </q-toolbar>
+        <q-card-section class="text-caption">
+          Enter a new locale:
+        </q-card-section>
+        <q-card-section>
+          <q-input v-model="locale" autofocus label="Locale"></q-input>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-toggle
+      class="col-12"
+      v-model="roundedBorders"
+      label="Rounded borders"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="noBorder"
+      label="No border"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="disable"
+      label="Disable"
+    ></q-toggle>
+    <q-btn
+      dense
+      label="Change locale"
+      @click="displayLocale = true"
+      class="col-12"
+    ></q-btn>
+    <q-toggle
+      class="col-12"
+      v-model="noHeader"
+      label="Hide header"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="noFooter"
+      label="Hide footer"
+    ></q-toggle>
+  </div>
+</template>
+
+<script>
+import { Platform } from 'quasar'
+
+export default {
+  name: 'Playground',
+  data () {
+    return {
+      displayLocale: false
+    }
+  },
+  mounted () {
+    if (Platform.is.mobile) {
+    }
+  },
+  computed: {
+    displayedLocale () {
+      if (this.locale === void 0 || this.locale === '') {
+        return 'en-US'
+      }
+      return this.locale
+    },
+    view:
+    {
+      get () {
+        return this.$store.state.datetime.view
+      },
+      set (view) {
+        this.$store.commit('scroller/view', view)
+      }
+    },
+    locale:
+    {
+      get () {
+        return this.$store.state.datetime.locale
+      },
+      set (locale) {
+        this.$store.commit('scroller/locale', locale)
+      }
+    },
+    roundedBorders:
+    {
+      get () {
+        return this.$store.state.datetime.roundedBorders
+      },
+      set (b) {
+        this.$store.commit('scroller/roundedBorders', b)
+      }
+    },
+    barColor:
+    {
+      get () {
+        return this.$store.state.datetime.barColor
+      },
+      set (color) {
+        this.$store.commit('scroller/barColor', color)
+      }
+    },
+    color:
+    {
+      get () {
+        return this.$store.state.datetime.color
+      },
+      set (color) {
+        this.$store.commit('scroller/color', color)
+      }
+    },
+    backgroundColor:
+    {
+      get () {
+        return this.$store.state.datetime.backgroundColor
+      },
+      set (color) {
+        this.$store.commit('scroller/backgroundColor', color)
+      }
+    },
+    innerColor:
+    {
+      get () {
+        return this.$store.state.datetime.innerColor
+      },
+      set (color) {
+        this.$store.commit('scroller/innerColor', color)
+      }
+    },
+    innerBackgroundColor:
+    {
+      get () {
+        return this.$store.state.datetime.innerBackgroundColor
+      },
+      set (color) {
+        this.$store.commit('scroller/innerBackgroundColor', color)
+      }
+    },
+    noHeader:
+    {
+      get () {
+        return this.$store.state.datetime.noHeader
+      },
+      set (b) {
+        this.$store.commit('scroller/noHeader', b)
+      }
+    },
+    noFooter:
+    {
+      get () {
+        return this.$store.state.datetime.noFooter
+      },
+      set (b) {
+        this.$store.commit('scroller/noFooter', b)
+      }
+    },
+    disable: {
+      get () {
+        return this.$store.state.datetime.disable
+      },
+      set (b) {
+        this.$store.commit('scroller/disable', b)
+      }
+    },
+    noBorder:
+    {
+      get () {
+        return this.$store.state.datetime.noBorder
+      },
+      set (b) {
+        this.$store.commit('scroller/noBorder', b)
+      }
+    },
+    // -----------
+    selectedDate:
+    {
+      get () {
+        return this.$store.state.datetime.selectedDate
+      },
+      set (date) {
+        this.$store.commit('scroller/selectedDate', date)
+      }
+    },
+    shortDayLabel: {
+      get () {
+        return this.$store.state.datetime.shortDayLabel
+      },
+      set (b) {
+        this.$store.commit('scroller/shortDayLabel', b)
+      }
+    },
+    shortMonthLabel: {
+      get () {
+        return this.$store.state.datetime.shortMonthLabel
+      },
+      set (b) {
+        this.$store.commit('scroller/shortMonthLabel', b)
+      }
+    },
+    showMonthAsString: {
+      get () {
+        return this.$store.state.datetime.showMonthAsString
+      },
+      set (b) {
+        this.$store.commit('scroller/showMonthAsString', b)
+      }
+    },
+    shortYearLabel: {
+      get () {
+        return this.$store.state.datetime.shortYearLabel
+      },
+      set (b) {
+        this.$store.commit('scroller/shortYearLabel', b)
+      }
+    },
+    shortWeekdayLabel: {
+      get () {
+        return this.$store.state.datetime.shortWeekdayLabel
+      },
+      set (b) {
+        this.$store.commit('scroller/shortWeekdayLabel', b)
+      }
+    },
+    showWeekdayLabel: {
+      get () {
+        return this.$store.state.datetime.showWeekdayLabel
+      },
+      set (b) {
+        this.$store.commit('scroller/showWeekdayLabel', b)
+      }
+    },
+    noDays: {
+      get () {
+        return this.$store.state.datetime.noDays
+      },
+      set (b) {
+        this.$store.commit('scroller/noDays', b)
+      }
+    },
+    noMonths: {
+      get () {
+        return this.$store.state.datetime.noMonths
+      },
+      set (b) {
+        this.$store.commit('scroller/noMonths', b)
+      }
+    },
+    noYears: {
+      get () {
+        return this.$store.state.datetime.noYears
+      },
+      set (b) {
+        this.$store.commit('scroller/noYears', b)
+      }
+    },
+    // -----------
+    selectedTime:
+    {
+      get () {
+        return this.$store.state.datetime.selectedTime
+      },
+      set (time) {
+        this.$store.commit('scroller/selectedTime', time)
+      }
+    },
+    hour24Format: {
+      get () {
+        return this.$store.state.datetime.hour24Format
+      },
+      set (b) {
+        this.$store.commit('scroller/hour24Format', b)
+      }
+    },
+    showAmPmToggle: {
+      get () {
+        return this.$store.state.datetime.showAmPmToggle
+      },
+      set (b) {
+        this.$store.commit('scroller/showAmPmToggle', b)
+      }
+    },
+    noMinutes: {
+      get () {
+        return this.$store.state.datetime.noMinutes
+      },
+      set (b) {
+        this.$store.commit('scroller/noMinutes', b)
+      }
+    },
+    noHours: {
+      get () {
+        return this.$store.state.datetime.noHours
+      },
+      set (b) {
+        this.$store.commit('scroller/noHours', b)
+      }
+    }
+  },
+  methods: {
+  }
+}
+</script>
+
+<style>
+</style>

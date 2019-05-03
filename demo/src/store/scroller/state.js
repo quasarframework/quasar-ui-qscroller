@@ -1,0 +1,31 @@
+export default {
+  view: 'time',
+  locale: 'en-us',
+  roundedBorders: true,
+  barColor: '#ccc',
+  color: 'white',
+  backgroundColor: 'primary',
+  innerColor: 'white',
+  innerBackgroundColor: 'primary',
+  noHeader: false,
+  noFooter: true,
+  disable: false,
+  noBorder: false,
+
+  selectedDate: '2019-04-01',
+  shortDayLabel: false,
+  shortMonthLabel: false,
+  showMonthAsString: false,
+  shortYearLabel: false,
+  showWeekdayLabel: false,
+  shortWeekdayLabel: false,
+  noDays: false,
+  noMonths: false,
+  noYears: false,
+
+  selectedTime: '11:05',
+  hour24Format: true,
+  showAmPmToggle: false,
+  noMinutes: false,
+  noHours: false
+}

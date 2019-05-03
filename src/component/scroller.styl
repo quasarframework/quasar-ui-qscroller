@@ -1,0 +1,106 @@
+$item-height = 26px
+$half-height = 13px
+
+.no-scrollbars
+  -ms-overflow-style none
+  scrollbar-width none
+  &::-webkit-scrollbar
+    display none
+
+.q-scroller
+  position relative
+  min-height 100px
+  min-width 100px
+  overflow hidden
+  transition all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+  &--border
+    border 1px solid #ccc
+  &__header
+    position relative
+    z-index 1
+    height 50px
+    font-weight 700
+    font-size 30px
+    &--am, &--pm
+      opacity 0.7
+    &--h24
+      opacity 0.7
+    &--selected
+      font-weight 900
+  &__footer
+    position relative
+    z-index 1
+    height 50px
+    padding 4px
+  &__padding
+    min-height 1px
+    padding 0
+    margin 0
+    width 100%
+  &__body
+    position relative
+    overflow-y hidden
+    &:before
+      content ""
+      top calc(50% - 13px)
+      position absolute
+      margin 0 auto
+      height $item-height
+      width 85%
+      left 0
+      right 0
+      box-sizing border-box
+      text-align left
+      border-top 1px solid var(--scroller-bar-color, #ccc)
+      border-bottom 1px solid var(--scroller-bar-color, #ccc)
+  &__set-btn
+    font-size inherit
+  &__cancel-btn
+    font-size inherit
+  &-base
+  margin 0 2px
+  &__padding
+    min-height 1px
+    padding 0
+    margin 0
+    width 100%
+  &__item
+    height $item-height
+    min-height $item-height
+    padding 0
+    margin 0
+    width 100%
+    opacity 0.8
+    font-weight 600
+    font-size 14px
+    line-height 14px
+    &--active
+      background-color transparent
+      border-radius 4px
+      opacity 1
+      font-weight 800
+      font-size 18px
+      line-height 18px
+    &--disabled
+      pointer-events none
+      opacity 0.3
+      font-weight 300
+
+.q-scroller__header--ampm
+  &::before
+    content ''
+    display block
+    margin-left 50%
+    height 100%
+    border-radius 0 100% 100% 0 / 50%
+    background-color yellow!important
+
+.q-scroller__header--ampm.am
+  transform: rotate(-90deg)
+  color yellow!important
+  background-color grey !important
+
+.q-scroller__header--ampm.pm
+  transform: rotate(90deg)
+  color yellow!important
+  background-color grey !important
