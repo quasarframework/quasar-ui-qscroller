@@ -79,7 +79,7 @@ export default DateTimeBase.extend({
         .map((_, i) => i)
         .map(m => {
           ++m // Jan = 0
-          let mon = this.showMonthAsString === true ? this.monthNameLabel(m) : void 0
+          let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
           m = m < 10 ? '0' + m : '' + m
           return { display: mon, value: m, disabled: this.disabledMonths.includes(m) }
         })

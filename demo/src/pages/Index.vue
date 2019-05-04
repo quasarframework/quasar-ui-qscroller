@@ -19,7 +19,7 @@
 </style>
 
 <script>
-import markdown from '../markdown/datetime.md'
+import markdown from '../markdown/scroller.md'
 
 export default {
   name: 'PageIndex',

@@ -68,12 +68,11 @@ export default {
       type: Array,
       default: () => []
     },
-    shortDayLabel: Boolean,
-    shortMonthLabel: Boolean,
-    showMonthAsString: Boolean,
     shortYearLabel: Boolean,
+    shortMonthLabel: Boolean,
+    shortDayLabel: Boolean,
+    showMonthLabel: Boolean,
     showWeekdayLabel: Boolean,
-    shortWeekdayLabel: Boolean,
     noDays: Boolean,
     noMonth: Boolean,
     noYears: Boolean

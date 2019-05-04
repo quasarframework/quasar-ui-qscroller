@@ -203,12 +203,12 @@ export default {
         this.$store.commit('scroller/shortMonthLabel', b)
       }
     },
-    showMonthAsString: {
+    showMonthLabel: {
       get () {
-        return this.$store.state.scroller.showMonthAsString
+        return this.$store.state.scroller.showMonthLabel
       },
       set (b) {
-        this.$store.commit('scroller/showMonthAsString', b)
+        this.$store.commit('scroller/showMonthLabel', b)
       }
     },
     shortYearLabel: {
@@ -217,14 +217,6 @@ export default {
       },
       set (b) {
         this.$store.commit('scroller/shortYearLabel', b)
-      }
-    },
-    shortWeekdayLabel: {
-      get () {
-        return this.$store.state.scroller.shortWeekdayLabel
-      },
-      set (b) {
-        this.$store.commit('scroller/shortWeekdayLabel', b)
       }
     },
     showWeekdayLabel: {

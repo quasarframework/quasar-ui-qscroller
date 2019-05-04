@@ -14,10 +14,9 @@ export const noBorder = (state) => state.noBorder
 export const selectedDate = (state) => state.selectedDate
 export const shortDayLabel = (state) => state.shortDayLabel
 export const shortMonthLabel = (state) => state.shortMonthLabel
-export const showMonthAsString = (state) => state.showMonthAsString
+export const showMonthLabel = (state) => state.showMonthLabel
 export const shortYearLabel = (state) => state.shortYearLabel
 export const showWeekdayLabel = (state) => state.showWeekdayLabel
-export const shortWeekdayLabel = (state) => state.shortWeekdayLabel
 export const noDays = (state) => state.noDays
 export const noMonths = (state) => state.noMonths
 export const noYears = (state) => state.noYears

@@ -44,17 +44,14 @@ export const shortDayLabel = (state, b) => {
 export const shortMonthLabel = (state, b) => {
   state.shortMonthLabel = b
 }
-export const showMonthAsString = (state, b) => {
-  state.showMonthAsString = b
+export const showMonthLabel = (state, b) => {
+  state.showMonthLabel = b
 }
 export const shortYearLabel = (state, b) => {
   state.shortMonthLabel = b
 }
 export const showWeekdayLabel = (state, b) => {
   state.shortMonthLabel = b
-}
-export const shortWeekdayLabel = (state, b) => {
-  state.shortWeekdayLabel = b
 }
 
 export const selectedTime = (state, time) => {
