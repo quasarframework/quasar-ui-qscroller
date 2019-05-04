@@ -367,7 +367,6 @@ export default DateTimeBase.extend({
           },
           on: {
             'click': () => {
-              this.emitValue()
               this.$emit('close')
             }
           }

@@ -90,7 +90,7 @@ export default Vue.extend({
     },
 
     // the cancel/ok buttons
-    __renderFooterButtons (h) {
+    __renderFooterButton (h) {
       return [
         h(QBtn, {
           staticClass: 'q-scroller__cancel-btn q-ml-xs',
@@ -102,7 +102,6 @@ export default Vue.extend({
           },
           on: {
             'click': () => {
-              this.emitValue()
               this.$emit('close')
             }
           }
@@ -117,7 +116,7 @@ export default Vue.extend({
         ref: 'footer',
         staticClass: 'q-scroller__footer flex justify-around items-center full-width shadow-up-20 q-pa-xs'
       }, slot || [
-        this.__renderFooterButtons(h)
+        this.__renderFooterButton(h)
       ])
     },
 

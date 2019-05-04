@@ -395,7 +395,6 @@ export default DateTimeBase.extend({
         },
         on: {
           'click': () => {
-            this.emitValue()
             this.$emit('close')
           }
         }
@@ -407,8 +406,8 @@ export default DateTimeBase.extend({
       const slot = this.$slots.dateFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-end items-center full-width shadow-up-20 q-pa-xs'
-      }, slot ? slot(this.timestamp) : this.__renderFooterButton(h))
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width shadow-up-20 q-pa-xs'
+      }, slot ? slot(this.timestamp) : [ this.__renderFooterButton(h) ])
     }
   },
 

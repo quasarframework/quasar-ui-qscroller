@@ -37,9 +37,8 @@
           <q-input color="blue-8" filled v-model="scrollerModel" label="Enter a Zoo Animal">
             <template v-slot:append>
               <q-icon name="fas fa-paw" class="cursor-pointer">
-                <q-popup-proxy>
+                <q-popup-proxy v-model="showScroller">
                   <q-scroller
-                    v-close-popup
                     v-model="scrollerModel"
                     :items="items"
                     :noHeader="true"
@@ -51,6 +50,7 @@
                     inner-color="black"
                     inner-background-color="grey-3"
                     style="height: 280px; width: 220px;"
+                    @close="() => { showScroller = false }"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -114,7 +114,7 @@
                     inner-color="green-6"
                     inner-background-color="white"
                     style="height: 280px; width: 180px;"
-                    @onClose="() => showTimeScroller = false"
+                    @close="() => { showTimeScroller = false }"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -177,6 +177,7 @@
                     inner-color="grey-8"
                     inner-background-color="grey-3"
                     style="height: 280px; width: 280px;"
+                    @close="() => { showDateScroller = false }"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -189,7 +190,7 @@
       <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
           <div class="text-h6">QDateTimeScroller</div>
-          <div class="text-subtitle2">Date and Time Selection</div>
+          <div class="text-subtitle2">Date and Time Selection (TBD)</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -234,7 +235,7 @@
       <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
           <div class="text-h6">QTimeRangeScroller</div>
-          <div class="text-subtitle2">Time Range Selection</div>
+          <div class="text-subtitle2">Time Range Selection (TBD)</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -279,7 +280,7 @@
       <q-card style="width: 100%; max-width: 320px; min-width: 320px;">
         <q-card-section>
           <div class="text-h6">QDateRangeScroller</div>
-          <div class="text-subtitle2">Date Range Selection</div>
+          <div class="text-subtitle2">Date Range Selection (TBD)</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -336,6 +337,7 @@ export default {
   data () {
     return {
       scrollerModel: 'Elephant',
+      showScroller: false,
       showTimeScroller: false,
       showDateScroller: false,
       time1: '11:05',
