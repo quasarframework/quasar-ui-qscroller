@@ -79,8 +79,9 @@ export default DateTimeBase.extend({
         .map((_, i) => i)
         .map(m => {
           ++m // Jan = 0
+          let mon = this.showMonthAsString === true ? this.monthNameLabel(m) : void 0
           m = m < 10 ? '0' + m : '' + m
-          return { value: m, disabled: this.disabledMonths.includes(m) }
+          return { display: mon, value: m, disabled: this.disabledMonths.includes(m) }
         })
     },
 
@@ -296,6 +297,17 @@ export default DateTimeBase.extend({
       }
     },
 
+    // passed month needs to be 1-based
+    monthNameLabel (month) {
+      const now = parseDate(new Date())
+      let date = getDate(now) + ' 00:00'
+      let timestamp = parsed(date)
+      timestamp.day = 1
+      timestamp.month = parseInt(month)
+      return this.monthFormatter(timestamp, this.shortMonthLabel)
+    },
+
+    // renderers
     __renderYearsScroller (h) {
       return h(ScrollerBase, {
         props: {

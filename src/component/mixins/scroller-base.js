@@ -197,7 +197,7 @@ export default Vue.extend({
           'flat': true,
           'dense': true,
           'no-wrap': true,
-          'label': item.value !== void 0 ? item.value : void 0,
+          'label': item.display !== void 0 ? item.display : (item.value !== void 0 ? item.value : void 0),
           'disable': this.disable === true || item.disabled === true,
           'icon': item.icon !== void 0 ? item.icon : void 0,
           'icon-right': item.iconRight !== void 0 ? item.iconRight : void 0,

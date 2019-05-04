@@ -134,6 +134,8 @@
           <q-date-scroller
             v-model="date1"
             :locale="locale"
+            :showMonthAsString="true"
+            :shortMonthLabel="true"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
