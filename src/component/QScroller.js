@@ -83,7 +83,7 @@ export default Vue.extend({
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scrollerparent__header flex justify-around items-center full-width shadow-20 ellipsis q-pa-xs'
+        staticClass: 'q-scroller__header flex justify-around items-center full-width shadow-20 ellipsis q-pa-xs'
       }, slot ? slot(this.value) : [
         this.value
       ])
