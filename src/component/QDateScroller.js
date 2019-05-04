@@ -377,7 +377,10 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.dateHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-center items-center full-width shadow-20 ellipsis q-pa-xs'
+        staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
       }, slot ? slot(this.timestamp) : [
         this.displayDate
       ])
@@ -406,7 +409,10 @@ export default DateTimeBase.extend({
       const slot = this.$slots.dateFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width shadow-up-20 q-pa-xs'
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-up-20': this.noShadow === false
+        }
       }, slot ? slot(this.timestamp) : [ this.__renderFooterButton(h) ])
     }
   },

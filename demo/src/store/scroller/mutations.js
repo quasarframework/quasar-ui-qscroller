@@ -34,6 +34,9 @@ export const disable = (state, b) => {
 export const noBorder = (state, b) => {
   state.noBorder = b
 }
+export const noShadow = (state, b) => {
+  state.noShadow = b
+}
 
 export const selectedDate = (state, date) => {
   state.selectedDate = date

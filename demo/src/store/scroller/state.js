@@ -11,6 +11,7 @@ export default {
   noFooter: true,
   disable: false,
   noBorder: false,
+  noShadow: false,
 
   selectedDate: '2019-04-01',
   shortDayLabel: false,

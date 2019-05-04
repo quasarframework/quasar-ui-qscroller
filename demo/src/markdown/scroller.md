@@ -81,6 +81,7 @@ The default locale of QDateTimeScroller is **en-us**. This can easily be changed
 | disable | Boolean | | If the component should be disabled |
 | rounded-border | Boolean | | If the component should have rounded corners |
 | no-border | Boolean | | If the component should not have a border |
+| no-shadow | Boolean | | If the component should not display shadow when header/footer are displayed |
 | no-header | Boolean | | If the component should not display the header |
 | no-footer | Boolean | | If the component should not display the footer |
 

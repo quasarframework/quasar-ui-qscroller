@@ -347,7 +347,10 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.timeHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-around items-center full-width shadow-20 ellipsis q-pa-xs'
+        staticClass: 'q-scroller__header flex justify-around items-center full-width ellipsis q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
       }, slot ? slot(this.timestamp) : [
         this.noHours !== true && this.__render24hButton(h, 'h24'),
         this.displayTime
@@ -379,7 +382,10 @@ export default DateTimeBase.extend({
       const slot = this.$slots.timeFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width shadow-up-20 q-pa-xs'
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-up-20': this.noShadow === false
+        }
       }, slot || [
         this.noHours !== true && this.__renderAmPmButtons(h),
         this.__renderFooterButton(h)

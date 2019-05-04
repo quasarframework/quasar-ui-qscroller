@@ -17,6 +17,7 @@
             :no-footer="noFooter"
             :disable="disable"
             :no-border="noBorder"
+            :no-shadow="noShadow"
             color="blue-8"
             background-color="white"
             inner-color="white"
@@ -45,6 +46,7 @@
                     :rounded-borders="roundedBorders"
                     :disable="disable"
                     :no-border="noBorder"
+                    :no-shadow="noShadow"
                     color="grey-3"
                     background-color="black"
                     inner-color="black"
@@ -75,6 +77,7 @@
             :no-footer="noFooter"
             :disable="disable"
             :no-border="noBorder"
+            :no-shadow="noShadow"
             :showAmPmToggle="showAmPmToggle"
             :disabledMinutes="disabledMinutes"
             bar-color="#FF0000"
@@ -141,6 +144,7 @@
             :no-footer="noFooter"
             :disable="disable"
             :no-border="noBorder"
+            :no-shadow="noShadow"
             bar-color="#FFFF00"
             color="blue-grey-6"
             background-color="white"
@@ -171,6 +175,7 @@
                     :no-footer="false"
                     :disable="disable"
                     :no-border="noBorder"
+                    :no-shadow="noShadow"
                     bar-color="grey"
                     color="grey-3"
                     background-color="grey-8"
@@ -204,6 +209,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FFFF00"
                 color="indigo-6"
                 background-color="white"
@@ -220,6 +226,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FFFF00"
                 color="indigo-6"
                 background-color="white"
@@ -249,6 +256,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FF0000"
                 color="white"
                 background-color="red-6"
@@ -265,6 +273,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FF0000"
                 color="white"
                 background-color="red-6"
@@ -294,6 +303,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FFFF00"
                 color="teal-6"
                 background-color="white"
@@ -310,6 +320,7 @@
                 :no-footer="true"
                 :disable="disable"
                 :no-border="true"
+                :no-shadow="noShadow"
                 bar-color="#FFFF00"
                 color="teal-6"
                 background-color="white"
@@ -388,6 +399,7 @@ export default {
       noFooter: 'scroller/noFooter',
       disable: 'scroller/disable',
       noBorder: 'scroller/noBorder',
+      noShadow: 'scroller/noShadow',
       showAmPmToggle: 'scroller/showAmPmToggle'
     }),
 

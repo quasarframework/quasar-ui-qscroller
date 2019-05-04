@@ -27,6 +27,11 @@
     ></q-toggle>
     <q-toggle
       class="col-12"
+      v-model="noShadow"
+      label="No shadow"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
       v-model="disable"
       label="Disable"
     ></q-toggle>
@@ -175,6 +180,15 @@ export default {
       },
       set (b) {
         this.$store.commit('scroller/noBorder', b)
+      }
+    },
+    noShadow:
+    {
+      get () {
+        return this.$store.state.scroller.noShadow
+      },
+      set (b) {
+        this.$store.commit('scroller/noShadow', b)
       }
     },
     // -----------

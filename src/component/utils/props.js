@@ -43,7 +43,8 @@ export default {
     roundedBorders: Boolean,
     noBorder: Boolean,
     noHeader: Boolean,
-    noFooter: Boolean
+    noFooter: Boolean,
+    noShadow: Boolean
   },
   dateTimeBase: {
     locale: {

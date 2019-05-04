@@ -10,6 +10,7 @@ export const noHeader = (state) => state.noHeader
 export const noFooter = (state) => state.noFooter
 export const disable = (state) => state.disable
 export const noBorder = (state) => state.noBorder
+export const noShadow = (state) => state.noShadow
 
 export const selectedDate = (state) => state.selectedDate
 export const shortDayLabel = (state) => state.shortDayLabel
