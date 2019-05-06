@@ -51,6 +51,11 @@
       v-model="noFooter"
       label="Hide footer"
     ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="hour24Format"
+      label="24h Format"
+    ></q-toggle>
   </div>
 </template>
 

@@ -78,6 +78,7 @@
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
+            :hour24-format="hour24Format"
             :showAmPmToggle="showAmPmToggle"
             :disabledMinutes="disabledMinutes"
             bar-color="#FF0000"
@@ -109,6 +110,7 @@
                     :no-header="false"
                     :no-footer="false"
                     :disable="disable"
+                    :hour24-format="hour24Format"
                     :showAmPmToggle="showAmPmToggle"
                     :disabledMinutes="disabledMinutes"
                     bar-color="#21ba45"
@@ -227,6 +229,7 @@
                 :disable="disable"
                 :no-border="true"
                 :no-shadow="noShadow"
+                :hour24-format="hour24Format"
                 bar-color="#FFFF00"
                 color="indigo-6"
                 background-color="white"
@@ -262,6 +265,7 @@
                 background-color="red-6"
                 inner-color="red"
                 inner-background-color="white"
+                :hour24-format="hour24Format"
                 style="height: 280px;"
               />
             </div>
@@ -279,6 +283,7 @@
                 background-color="red-6"
                 inner-color="red"
                 inner-background-color="white"
+                :hour24-format="hour24Format"
                 style="height: 280px;"
               />
             </div>
@@ -400,7 +405,8 @@ export default {
       disable: 'scroller/disable',
       noBorder: 'scroller/noBorder',
       noShadow: 'scroller/noShadow',
-      showAmPmToggle: 'scroller/showAmPmToggle'
+      showAmPmToggle: 'scroller/showAmPmToggle',
+      hour24Format: 'scroller/hour24Format'
     }),
 
     items () {
