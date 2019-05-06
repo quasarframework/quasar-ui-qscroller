@@ -117,6 +117,7 @@ export default DateTimeBase.extend({
 
     ampmIndex () {
       this.ampm = this.amPmLabels[this.ampmIndex]
+      this.toTimestamp()
     },
 
     hour () {
@@ -203,12 +204,7 @@ export default DateTimeBase.extend({
     toTimestamp () {
       const timestamp = copyTimestamp(this.timestamp)
       this.timestamp.minute = parseInt(this.minute)
-      if (this.hour24 === true || this.ampmIndex === 0) {
-        this.timestamp.hour = parseInt(this.hour)
-      } else {
-        // for 'pm'
-        this.timestamp.hour = parseInt(this.hour) + 12
-      }
+      this.timestamp.hour = parseInt(this.hour) % 12
       if (!compareTimestamps(timestamp, this.timestamp)) {
         this.emitValue()
       }

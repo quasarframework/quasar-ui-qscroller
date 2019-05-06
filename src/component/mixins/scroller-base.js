@@ -22,6 +22,7 @@ const { getScrollPosition, setScrollPosition } = scroll
     // value emitted back when selected
     // also value used for 'key' in loops
     value: [Number, String]
+    display: String (if used, displayed over value, but vakue is used for the emit)
     disabled: Boolean,
     icon: String
     iconRight: String,
@@ -91,8 +92,10 @@ export default Vue.extend({
           }
           const pos = getScrollPosition(this.$el) + (ITEM_HEIGHT * dir)
           setScrollPosition(this.$el, pos, 50)
+          return true
         }
       }
+      return false
     },
 
     onResize () {
@@ -129,7 +132,9 @@ export default Vue.extend({
     },
 
     wheelEvent (event) {
-      this.move(event.wheelDeltaY < 0 ? 1 : -1)
+      if (this.move(event.wheelDeltaY < 0 ? 1 : -1)) {
+        this.$emit(this.value)
+      }
       // always prevent default so whole page doesn't scroll if at end of list
       event.preventDefault()
     },
@@ -146,7 +151,6 @@ export default Vue.extend({
     scrollEvent: debounce(function (event) {
       if (!this.noScrollEvent) {
         const index = this.getItemIndexFromEvent(event)
-        console.log('scrollEvent index:', index)
         const value = this.items[index].value
         if (this.isDisabled(value)) return
         this.$emit('input', value)
@@ -189,7 +193,7 @@ export default Vue.extend({
       return h(QBtn, {
         staticClass: 'q-scroller__item justify-center align-center',
         class: {
-          'q-scroller__item--active': item.value === this.value,
+          'q-scroller__item--active': item.value === this.value || item.display === this.value,
           'q-scroller__item--disabled': this.disable === true || item.disabled === true
         },
         key: item.item,
