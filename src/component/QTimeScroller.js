@@ -300,44 +300,6 @@ export default DateTimeBase.extend({
       }), this.__renderScrollers(h))
     },
 
-    __renderAmPmButton (h) {
-      return h(QBtn, {
-        staticClass: `q-scroller__header--ampm ${this.ampmIndex === 0 ? 'am' : 'pm'}`,
-        class: {
-        },
-        props: {
-          'flat': true,
-          'dense': true,
-          'round': true,
-          'size': 'sm'
-        },
-        on: {
-          'click': () => this.toggleAmPm()
-        }
-      })
-    },
-
-    __render24hButton (h, label) {
-      // colors are reversed
-      return h(QBtn, this.setBothColors(this.backgroundColor, this.color, {
-        staticClass: `q-scroller__header--h24` + (this.hour24 === false ? ' q-time-selector__header--selected' : ''),
-        props: {
-          'flat': true,
-          'dense': true,
-          'round': true,
-          'size': 'sm',
-          'label': this.hour24 === true ? '24' : '12'
-        },
-        on: {
-          'click': () => this.toggle24h(label)
-        }
-      }))
-    },
-
-    __renderAmPmButtons (h) {
-      if (this.hour24 === false) return [this.__renderAmPmButton(h)]
-    },
-
     __renderHeader (h) {
       if (this.noHeader) return ''
       const slot = this.$scopedSlots.timeHeader
@@ -348,7 +310,6 @@ export default DateTimeBase.extend({
           'shadow-20': this.noShadow === false
         }
       }, slot ? slot(this.timestamp) : [
-        this.noHours !== true && this.__render24hButton(h, 'h24'),
         this.displayTime
       ])
     },
@@ -383,7 +344,6 @@ export default DateTimeBase.extend({
           'shadow-up-20': this.noShadow === false
         }
       }, slot || [
-        this.noHours !== true && this.__renderAmPmButtons(h),
         this.__renderFooterButton(h)
       ])
     }
