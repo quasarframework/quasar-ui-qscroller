@@ -1,18 +1,18 @@
 // Styles
-import './date-time-scroller.styl'
-import './time-scroller.styl'
-import './date-scroller.styl'
+// import './date-time-scroller.styl'
+// import './time-scroller.styl'
+// import './date-scroller.styl'
 
 // Mixins
 import DateTimeBase from './mixins/datetime-base'
 
 // Util
 import props from './utils/props'
-import { debounce, QBtn } from 'quasar'
-import {
-  PARSE_TIME,
-  padNumber
-} from './utils/timestamp'
+// import { debounce, QBtn } from 'quasar'
+// import {
+//   PARSE_TIME,
+//   padNumber
+// } from './utils/timestamp'
 
 /* @vue/component */
 export default DateTimeBase.extend({
@@ -31,11 +31,7 @@ export default DateTimeBase.extend({
   props: {
     ...props.time,
     ...props.date
-  },
 
-  data () {
-    return {
-    }
   },
 
   mounted () {
