@@ -155,6 +155,10 @@ export default DateTimeBase.extend({
   },
 
   methods: {
+    getTimestamp () {
+      return this.timestamp
+    },
+
     emitValue () {
       this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
     },
