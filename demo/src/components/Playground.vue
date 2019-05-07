@@ -288,14 +288,6 @@ export default {
         this.$store.commit('scroller/hour24Format', b)
       }
     },
-    showAmPmToggle: {
-      get () {
-        return this.$store.state.scroller.showAmPmToggle
-      },
-      set (b) {
-        this.$store.commit('scroller/showAmPmToggle', b)
-      }
-    },
     noMinutes: {
       get () {
         return this.$store.state.scroller.noMinutes

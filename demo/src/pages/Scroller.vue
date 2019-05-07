@@ -79,7 +79,6 @@
             :no-border="noBorder"
             :no-shadow="noShadow"
             :hour24-format="hour24Format"
-            :showAmPmToggle="showAmPmToggle"
             :disabledMinutes="disabledMinutes"
             bar-color="#FF0000"
             color="white"
@@ -111,7 +110,6 @@
                     :no-footer="false"
                     :disable="disable"
                     :hour24-format="hour24Format"
-                    :showAmPmToggle="showAmPmToggle"
                     :disabledMinutes="disabledMinutes"
                     bar-color="#21ba45"
                     color="white"
@@ -405,7 +403,6 @@ export default {
       disable: 'scroller/disable',
       noBorder: 'scroller/noBorder',
       noShadow: 'scroller/noShadow',
-      showAmPmToggle: 'scroller/showAmPmToggle',
       hour24Format: 'scroller/hour24Format'
     }),
 

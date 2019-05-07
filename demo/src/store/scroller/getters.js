@@ -24,6 +24,5 @@ export const noYears = (state) => state.noYears
 
 export const selectedTime = (state) => state.selectedTime
 export const hour24Format = (state) => state.hour24Format
-export const showAmPmToggle = (state) => state.showAmPmToggle
 export const noMinutes = (state) => state.noMinutes
 export const noHours = (state) => state.noHours

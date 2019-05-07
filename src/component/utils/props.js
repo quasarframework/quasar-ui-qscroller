@@ -108,7 +108,6 @@ export default {
     },
     noMinutes: Boolean,
     noHours: Boolean,
-    showAmPmToggle: Boolean,
     // TODO
     hours: Array,
     // TODO

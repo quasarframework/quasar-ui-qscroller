@@ -134,7 +134,6 @@ export default DateTimeBase.extend({
       const month = this.shortMonthLabel ? 'numeric' : '2-digit'
       const day = this.shortDayLabel ? 'numeric' : '2-digit'
       const options = { timeZone: 'UTC', year: year, month: month, day: day }
-      console.log('options', options)
 
       return createNativeLocaleFormatter(
         this.locale,

@@ -25,7 +25,6 @@ export default {
 
   selectedTime: '11:05',
   hour24Format: true,
-  showAmPmToggle: false,
   noMinutes: false,
   noHours: false
 }

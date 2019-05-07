@@ -63,9 +63,6 @@ export const selectedTime = (state, time) => {
 export const hour24Format = (state, b) => {
   state.hour24Format = b
 }
-export const showAmPmToggle = (state, b) => {
-  state.showAmPmToggle = b
-}
 export const noMinutes = (state, b) => {
   state.noMinutes = b
 }
