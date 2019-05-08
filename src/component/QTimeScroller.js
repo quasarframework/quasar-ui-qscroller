@@ -45,8 +45,7 @@ export default DateTimeBase.extend({
       ampm: '',
       hour: '',
       minute: '',
-      ampmIndex: '', // 2 states: 0=AM, 1=PM (indices into amPmLabels)
-      hour24: this.hour24Format, // don't mutate property
+      ampmIndex: -1, // 3 states: 0=AM, 1=PM (indices into amPmLabels), -1 (hour24Format)
       timestamp: { ...Timestamp },
       disabledMinutesList: [],
       disabledHoursList: []
@@ -81,7 +80,7 @@ export default DateTimeBase.extend({
     },
 
     hoursList () {
-      const length = (this.hour24 === true ? 24 : 12)
+      const length = (this.hour24Format === true ? 24 : 12)
 
       return [...Array(length)]
         .map((_, i) => i)
@@ -99,9 +98,9 @@ export default DateTimeBase.extend({
     },
 
     timeFormatter () {
-      const longOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: '2-digit', minute: '2-digit' }
-      const shortOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: 'numeric', minute: '2-digit' }
-      const shortHourOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: 'numeric' }
+      const longOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: '2-digit', minute: '2-digit' }
+      const shortOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: 'numeric', minute: '2-digit' }
+      const shortHourOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: 'numeric' }
 
       return createNativeLocaleFormatter(
         this.locale,
@@ -116,25 +115,62 @@ export default DateTimeBase.extend({
     },
 
     ampmIndex () {
+      const timestamp = copyTimestamp(this.timestamp)
       this.ampm = this.amPmLabels[this.ampmIndex]
-      this.toTimestamp()
+      if (this.ampmIndex === 0) {
+        this.timestamp.hour = parseInt(this.hour)
+      } else if (this.ampmIndex === 1) {
+        this.timestamp.hour = parseInt(this.hour) + 12
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     hour () {
-      this.toTimestamp()
+      const timestamp = copyTimestamp(this.timestamp)
+      if (this.hour24Format === true) {
+        this.timestamp.hour = parseInt(this.hour)
+      } else {
+        if (this.ampmIndex === 0) {
+          this.timestamp.hour = parseInt(this.hour)
+        } else if (this.ampmIndex === 1) {
+          this.timestamp.hour = parseInt(this.hour) + 12
+        }
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     minute () {
-      this.toTimestamp()
+      const timestamp = copyTimestamp(this.timestamp)
+      this.timestamp.minute = parseInt(this.minute)
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     ampm () {
       this.ampmIndex = this.amPmLabels.findIndex(ap => ap === this.ampm)
-      this.toTimestamp()
     },
 
     hour24Format (val) {
-      this.hour24 = val
+      const timestamp = copyTimestamp(this.timestamp)
+      if (val === true) {
+        this.hour = padNumber(this.timestamp.hour, 2)
+      } else {
+        if (this.timestamp.hour > 12) {
+          this.hour = padNumber(this.timestamp.hour - 12, 2)
+          this.ampmIndex = 1
+        } else {
+          this.hour = padNumber(this.timestamp.hour, 2)
+          this.ampmIndex = 0
+        }
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     disabledMinutes () {
@@ -191,50 +227,49 @@ export default DateTimeBase.extend({
       const date = getDate(now) + ' ' + (this.value ? this.value : getTime(now))
       this.timestamp = parsed(date)
       this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+      this.ampmIndex = this.timestamp.hour > 12 ? 1 : 0
+
       this.fromTimestamp()
     },
 
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
-      if (this.hour24 === true) {
-        this.ampmIndex = 0
-        this.hour = padNumber(this.timestamp.hour, 2)
-      } else {
-        this.ampmIndex = this.timestamp.hour < 12 ? 0 : 1
-        this.hour = padNumber(this.timestamp.hour % 12, 2)
-      }
-    },
-
-    toTimestamp () {
-      const timestamp = copyTimestamp(this.timestamp)
-      this.timestamp.minute = parseInt(this.minute)
-      this.timestamp.hour = parseInt(this.hour) % 12
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
-    },
-
-    toggleAmPm () {
-      this.ampmIndex = this.ampmIndex === 0 ? 1 : 0
-      this.toTimestamp()
-    },
-
-    toggle24h () {
-      this.hour24 = !this.hour24
-      if (this.hour24 === false) {
-        if (this.hour < 12) {
-          this.ampmIndex = 0
+      if (this.hour24Format) {
+        if (this.ampmIndex === 1) {
+          this.hour = padNumber(this.timestamp.hour - 12, 2)
         } else {
-          this.ampmIndex = 1
-          this.hour = padNumber(parseInt(this.hour) % 12, 2)
+          this.hour = padNumber(this.timestamp.hour, 2)
         }
       } else {
         if (this.ampmIndex === 1) {
-          this.hour = padNumber(parseInt(this.hour) + 12, 2)
+          this.hour = padNumber(this.timestamp.hour - 12, 2)
+        } else {
+          this.hour = padNumber(this.timestamp.hour, 2)
         }
       }
-      this.toTimestamp()
     },
+
+    // toTimestamp () {
+    //   const timestamp = copyTimestamp(this.timestamp)
+    //   this.timestamp.minute = parseInt(this.minute)
+    //   if (this.hour24Format) {
+    //     if (this.ampmIndex === 1) {
+    //       this.timestamp.hour = parseInt(this.hour) + 12
+    //     } else {
+    //       this.timestamp.hour = parseInt(this.hour)
+    //     }
+    //   } else {
+    //     if (this.ampmIndex === 1) {
+    //       this.timestamp.hour = parseInt(this.hour) + 12
+    //     } else {
+    //       this.timestamp.hour = parseInt(this.hour)
+    //     }
+    //   }
+
+    //   if (!compareTimestamps(timestamp, this.timestamp)) {
+    //     this.emitValue()
+    //   }
+    // },
 
     // -------------------------------
     // render functions
@@ -291,7 +326,7 @@ export default DateTimeBase.extend({
       return [
         this.noHours !== true && this.__renderHoursScroller(h),
         this.noMinutes !== true && this.__renderMinutesScroller(h),
-        this.hour24 === false && this.__renderAmPmScroller(h)
+        this.hour24Format === false && this.__renderAmPmScroller(h)
       ]
     },
 

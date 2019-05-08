@@ -86,9 +86,9 @@ export default Vue.extend({
     move (dir) {
       if (this.noScrollEvent === false && (dir === 1 || dir === -1)) {
         if (this.disable !== true && this.canScroll(dir)) {
-          const selected = this.$el.querySelector('.q-scroller__item--active')
+          const selected = this.$el.querySelector('.q-scroller__item--selected')
           if (selected) {
-            selected.classList.remove('q-scroller__item--active')
+            selected.classList.remove('q-scroller__item--selected')
           }
           const pos = getScrollPosition(this.$el) + (ITEM_HEIGHT * dir)
           setScrollPosition(this.$el, pos, 50)
@@ -171,7 +171,7 @@ export default Vue.extend({
     updatePosition () {
       this.noScrollEvent = true
       setTimeout(() => {
-        const selected = this.$el.querySelector('.q-scroller__item--active')
+        const selected = this.$el.querySelector('.q-scroller__item--selected')
         if (selected) {
           const selectedOffsetTop = selected.offsetTop - this.padding + ITEM_HEIGHT
           const clientHeight = selected.clientHeight
@@ -193,7 +193,7 @@ export default Vue.extend({
       return h(QBtn, {
         staticClass: 'q-scroller__item justify-center align-center',
         class: {
-          'q-scroller__item--active': item.value === this.value || item.display === this.value,
+          'q-scroller__item--selected': item.value === this.value || item.display === this.value,
           'q-scroller__item--disabled': this.disable === true || item.disabled === true
         },
         key: item.item,
