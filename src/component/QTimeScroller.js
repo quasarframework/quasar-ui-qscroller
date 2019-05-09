@@ -35,7 +35,8 @@ export default TimeBase.extend({
   mixins: [Colorize],
 
   props: {
-    ...props.time
+    ...props.time,
+    showVerticalBar: Boolean
   },
 
   data () {
@@ -307,7 +308,10 @@ export default TimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar q-scroller__vertical-bar flex full-width',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width',
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         style: {
           height: `${this.bodyHeight}px`
         }

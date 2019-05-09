@@ -18,8 +18,7 @@ export default TimeBase.extend({
   mixins: [Colorize],
 
   props: {
-    ...props.timeRange,
-    noVerticalBar: Boolean
+    ...props.timeRange
   },
 
   data () {
@@ -45,11 +44,13 @@ export default TimeBase.extend({
 
   computed: {
     displayTime () {
-      if (this.startTime !== void 0 && this.endTime !== void 0 && this.$refs.startTime && this.$refs.endTime) {
-        return this.$refs.startTime.displayTime + this.displaySeparator + this.$refs.endTime.displayTime
+      if (this.startTime !== void 0 && this.endTime !== void 0) {
+        if (this.$refs.startTime && this.$refs.endTime) {
+          return this.$refs.startTime.displayTime + this.displaySeparator + this.$refs.endTime.displayTime
+        }
+        return `${this.startTime}${this.displaySeparator}${this.endTime}`
       }
-
-      return `${this.startTime}${this.displaySeparator}${this.endTime}`
+      return ''
     }
   },
 
@@ -160,15 +161,13 @@ export default TimeBase.extend({
       return h(QTimeScroller, {
         ref: 'startTime',
         staticClass: 'col-6',
-        class: {
-          'q-scroller__vertical-bar': this.noVerticalBar !== false
-        },
         style: {
           '--scroller-bar-color': this.barColor
         },
         props: {
           value: this.startTime,
           locale: this.locale,
+          showVerticalBar: true,
           barColor: this.barColor,
           color: this.color,
           backgroundColor: this.backgroundColor,
