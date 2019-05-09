@@ -198,7 +198,7 @@
         </q-card-section>
       </q-card>
 
-      <!-- <q-card style="width: 100%; max-width: 232px;">
+      <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
           <div class="text-h6">QDateScroller</div>
           <div class="text-subtitle2">Year, Month and Day Selection</div>
@@ -263,7 +263,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card style="width: 100%; max-width: 340px;">
+      <!-- <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
           <div class="text-h6">QDateTimeScroller</div>
           <div class="text-subtitle2">Date and Time Selection (TBD)</div>
