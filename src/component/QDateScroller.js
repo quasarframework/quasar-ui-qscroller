@@ -244,6 +244,10 @@ export default DateTimeBase.extend({
   },
 
   methods: {
+    getTimestamp () {
+      return this.timestamp
+    },
+
     emitValue () {
       this.$emit('input', [this.year, this.month, this.day].join('-'))
     },

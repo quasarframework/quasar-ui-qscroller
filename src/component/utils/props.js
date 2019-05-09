@@ -205,5 +205,65 @@ export default {
       type: String,
       default: '24:00'
     }
+  },
+  dateRange: {
+    displaySeparator: {
+      type: String,
+      default: ' - '
+    },
+    // --------------------------------
+    // start date
+    // --------------------------------
+    startMinDate: String,
+    startMaxDate: String,
+    startDates: Array,
+    startDisabledDates: Array,
+    startDisabledYears: {
+      type: Array,
+      default: () => []
+    },
+    startDisabledMonths: {
+      type: Array,
+      default: () => []
+    },
+    startDisabledDays: {
+      type: Array,
+      default: () => []
+    },
+    startShortYearLabel: Boolean,
+    startShortMonthLabel: Boolean,
+    startShortDayLabel: Boolean,
+    startShowMonthLabel: Boolean,
+    startShowWeekdayLabel: Boolean,
+    startNoDays: Boolean,
+    startNoMonth: Boolean,
+    startNoYears: Boolean,
+    // --------------------------------
+    // end date
+    // --------------------------------
+    endMinDate: String,
+    endMaxDate: String,
+    endDates: Array,
+    endDisabledDates: Array,
+    endDisabledYears: {
+      type: Array,
+      default: () => []
+    },
+    endDisabledMonths: {
+      type: Array,
+      default: () => []
+    },
+    endDisabledDays: {
+      type: Array,
+      default: () => []
+    },
+    endShortYearLabel: Boolean,
+    endShortMonthLabel: Boolean,
+    endShortDayLabel: Boolean,
+    endShowMonthLabel: Boolean,
+    endShowWeekdayLabel: Boolean,
+    endNoDays: Boolean,
+    endNoMonth: Boolean,
+    endNoYears: Boolean
   }
 }
