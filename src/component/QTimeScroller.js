@@ -235,11 +235,7 @@ export default DateTimeBase.extend({
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
       if (this.hour24Format) {
-        if (this.ampmIndex === 1) {
-          this.hour = padNumber(this.timestamp.hour - 12, 2)
-        } else {
-          this.hour = padNumber(this.timestamp.hour, 2)
-        }
+        this.hour = padNumber(this.timestamp.hour, 2)
       } else {
         if (this.ampmIndex === 1) {
           this.hour = padNumber(this.timestamp.hour - 12, 2)
