@@ -364,7 +364,7 @@ export default DateTimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body flex',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex',
         style: {
           height: `${this.bodyHeight}px`
         }

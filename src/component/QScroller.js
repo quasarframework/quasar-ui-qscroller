@@ -146,7 +146,7 @@ export default Vue.extend({
     __renderBody (h) {
       // container that wraps all the scroller in flex, unless noScroller is true
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body flex full-width',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex full-width',
         style: {
           height: `${this.bodyHeight}px`
         }
