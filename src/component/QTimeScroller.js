@@ -5,7 +5,7 @@ import './scroller.styl'
 import Resize from './directives/resize'
 
 // Mixins
-import DateTimeBase from './mixins/datetime-base'
+import TimeBase from './mixins/time-base'
 import Colorize from './mixins/colorize'
 
 // Components
@@ -13,7 +13,7 @@ import ScrollerBase from './mixins/scroller-base'
 
 // Util
 import props from './utils/props'
-import { QBtn } from 'quasar'
+import { QBtn, QResizeObserver } from 'quasar'
 import {
   Timestamp,
   parsed,
@@ -27,7 +27,7 @@ import {
 } from './utils/timestamp'
 
 /* @vue/component */
-export default DateTimeBase.extend({
+export default TimeBase.extend({
   name: `q-time-scroller`,
 
   directives: { Resize },
@@ -45,7 +45,7 @@ export default DateTimeBase.extend({
       ampm: '',
       hour: '',
       minute: '',
-      ampmIndex: -1, // 3 states: 0=AM, 1=PM (indices into amPmLabels), -1 (hour24Format)
+      ampmIndex: -1, // 2 states: 0=AM, 1=PM (indices into amPmLabels)
       timestamp: { ...Timestamp },
       disabledMinutesList: [],
       disabledHoursList: []
@@ -117,9 +117,8 @@ export default DateTimeBase.extend({
     ampmIndex () {
       const timestamp = copyTimestamp(this.timestamp)
       this.ampm = this.amPmLabels[this.ampmIndex]
-      if (this.ampmIndex === 0) {
-        this.timestamp.hour = parseInt(this.hour)
-      } else if (this.ampmIndex === 1) {
+      this.timestamp.hour = parseInt(this.hour)
+      if (this.ampmIndex === 1 && this.hour24Format === false) {
         this.timestamp.hour = parseInt(this.hour) + 12
       }
       if (!compareTimestamps(timestamp, this.timestamp)) {
@@ -155,9 +154,9 @@ export default DateTimeBase.extend({
       this.ampmIndex = this.amPmLabels.findIndex(ap => ap === this.ampm)
     },
 
-    hour24Format (val) {
+    hour24Format () {
       const timestamp = copyTimestamp(this.timestamp)
-      if (val === true) {
+      if (this.hour24Format === true) {
         this.hour = padNumber(this.timestamp.hour, 2)
       } else {
         if (this.timestamp.hour > 12) {
@@ -187,6 +186,10 @@ export default DateTimeBase.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    height () {
+      this.adjustBodyHeight()
     }
   },
 
@@ -199,18 +202,22 @@ export default DateTimeBase.extend({
       this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
     },
 
-    onResize () {
+    onResize ({ height }) {
       this.adjustBodyHeight()
     },
 
     adjustBodyHeight () {
-      this.$nextTick(() => {
-        let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-        let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-        this.headerFooterHeight = headerHeight + footerHeight
-        const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-        this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-      })
+      if (this.height !== void 0) {
+        this.bodyHeight = this.height
+      } else {
+        this.$nextTick(() => {
+          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
+          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
+          this.headerFooterHeight = headerHeight + footerHeight
+          const parentHeight = this.height || this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
+          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
+        })
+      }
     },
 
     handleDisabledLists () {
@@ -227,45 +234,17 @@ export default DateTimeBase.extend({
       const date = getDate(now) + ' ' + (this.value ? this.value : getTime(now))
       this.timestamp = parsed(date)
       this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-      this.ampmIndex = this.timestamp.hour > 12 ? 1 : 0
-
+      this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
       this.fromTimestamp()
     },
 
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
-      if (this.hour24Format) {
-        this.hour = padNumber(this.timestamp.hour, 2)
-      } else {
-        if (this.ampmIndex === 1) {
-          this.hour = padNumber(this.timestamp.hour - 12, 2)
-        } else {
-          this.hour = padNumber(this.timestamp.hour, 2)
-        }
+      this.hour = padNumber(this.timestamp.hour, 2)
+      if (this.hour24Format === false && this.ampmIndex === 1) {
+        this.hour = padNumber(this.timestamp.hour - 12, 2)
       }
     },
-
-    // toTimestamp () {
-    //   const timestamp = copyTimestamp(this.timestamp)
-    //   this.timestamp.minute = parseInt(this.minute)
-    //   if (this.hour24Format) {
-    //     if (this.ampmIndex === 1) {
-    //       this.timestamp.hour = parseInt(this.hour) + 12
-    //     } else {
-    //       this.timestamp.hour = parseInt(this.hour)
-    //     }
-    //   } else {
-    //     if (this.ampmIndex === 1) {
-    //       this.timestamp.hour = parseInt(this.hour) + 12
-    //     } else {
-    //       this.timestamp.hour = parseInt(this.hour)
-    //     }
-    //   }
-
-    //   if (!compareTimestamps(timestamp, this.timestamp)) {
-    //     this.emitValue()
-    //   }
-    // },
 
     // -------------------------------
     // render functions
@@ -328,7 +307,7 @@ export default DateTimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex full-width',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar q-scroller__vertical-bar flex full-width',
         style: {
           height: `${this.bodyHeight}px`
         }
@@ -385,13 +364,15 @@ export default DateTimeBase.extend({
   },
 
   render (h) {
+    const child = [
+      h(QResizeObserver, {
+        props: { debounce: 0 },
+        on: { resize: this.onResize }
+      })
+    ]
+
     return h('div', this.setBothColors(this.color, this.backgroundColor, {
       ref: 'scroller',
-      directives: [{
-        modifiers: { quiet: true },
-        name: 'resize',
-        value: this.onResize
-      }],
       staticClass: 'q-scroller flex',
       class: {
         'rounded-borders': this.roundedBorders === true,
@@ -400,10 +381,10 @@ export default DateTimeBase.extend({
       style: {
         '--scroller-bar-color': this.barColor
       }
-    }), [
+    }), child.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
-    ])
+    ]))
   }
 })

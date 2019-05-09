@@ -130,7 +130,7 @@
       <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
           <div class="text-h6">QTimeRangeScroller</div>
-          <div class="text-subtitle2">Time Range Selection (TBD)</div>
+          <div class="text-subtitle2">Time Range Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -154,7 +154,50 @@
         </q-card-section>
       </q-card>
 
-      <q-card style="width: 100%; max-width: 232px;">
+      <q-card style="width: 100%; max-width: 240px;">
+        <q-card-section>
+          <div class="text-h6">QTimeRangeScroller</div>
+          <div class="text-subtitle2">Time Range Selection</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+
+          <q-input
+            color="orange-6"
+            filled
+            v-model="timeRangeInput"
+            label="Enter time ranges"
+            mask="##:## - ##:##"
+            :rules="[(value) => validateTime(value) || 'Invalid time format']"
+          >
+            <template v-slot:append>
+              <q-icon name="far fa-clock" class="cursor-pointer">
+                <q-popup-proxy v-model="showTimeRangeScroller">
+
+                  <q-time-range-scroller
+                    v-model="timeRangeInput"
+                    :locale="locale"
+                    :no-header="noHeader"
+                    :no-footer="noFooter"
+                    :disable="disable"
+                    :no-border="noBorder"
+                    :no-shadow="noShadow"
+                    bar-color="#FF8C00"
+                    color="white"
+                    background-color="orange-6"
+                    inner-color="orange-6"
+                    inner-background-color="white"
+                    :hour24-format="hour24Format"
+                    style="height: 280px; width: 250px;"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-card-section>
+      </q-card>
+
+      <!-- <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
           <div class="text-h6">QDateScroller</div>
           <div class="text-subtitle2">Year, Month and Day Selection</div>
@@ -276,7 +319,7 @@
             </div>
           </div>
         </q-card-section>
-      </q-card>
+      </q-card> -->
 
       <!-- <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
@@ -329,7 +372,7 @@
         </q-card-section>
       </q-card> -->
 
-      <q-card style="width: 100%; max-width: 320px; min-width: 320px;">
+      <!-- <q-card style="width: 100%; max-width: 320px; min-width: 320px;">
         <q-card-section>
           <div class="text-h6">QDateRangeScroller</div>
           <div class="text-subtitle2">Date Range Selection (TBD)</div>
@@ -374,7 +417,7 @@
             </div>
           </div>
         </q-card-section>
-      </q-card>
+      </q-card> -->
 
     </div>
   </q-page>
@@ -393,6 +436,7 @@ export default {
       scrollerModel: 'Elephant',
       showScroller: false,
       showTimeScroller: false,
+      showTimeRangeScroller: false,
       showDateScroller: false,
       time1: '11:05',
       time2: '05:15',
@@ -401,6 +445,7 @@ export default {
       date1: '2019-04-03',
       date2: '2019-04-03',
       timeRange: ['09:05', '23:30'],
+      timeRangeInput: '09:05 - 23:30',
       disabledMinutes: [1, 2, 5, 6, 7, 8, 9],
       data: [
         { value: 'Anteater', noCaps: true, iconRight: '', disabled: false, align: 'around' },
@@ -467,6 +512,30 @@ export default {
         if (val === item.value) item.iconRight = 'check'
         return item
       })
+    }
+  },
+  methods: {
+    validateTime (timeString) {
+      const parts = this.timeRangeInput.split('-')
+      if (parts.length === 2) {
+        const start = parts[0].trim()
+        const end = parts[1].trim()
+        if (this.isValidTime(start) && this.isValidTime(end)) {
+          return true
+        }
+      }
+      return false
+    },
+    isValidTime (time) {
+      let parts = time.split(':')
+      if (parts.length === 2) {
+        let hour = parseInt(parts[0])
+        let minute = parseInt(parts[1])
+        if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
+          return true
+        }
+      }
+      return false
     }
   }
 }

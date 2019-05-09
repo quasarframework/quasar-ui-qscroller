@@ -3,11 +3,12 @@ import Vue from 'vue'
 import props from '../utils/props'
 
 export default Vue.extend({
-  name: 'datetime-base',
+  name: 'time-base',
 
   props: {
     ...props.base,
     ...props.locale,
+    height: [Number, String],
     hour24Format: {
       type: Boolean,
       default: true
