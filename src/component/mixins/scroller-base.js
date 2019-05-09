@@ -120,11 +120,8 @@ export default Vue.extend({
         }
       }
       this.$nextTick(() => {
-        let height = this.height
-        if (height === void 0) {
-          height = this.$parent.$el.clientHeight
-        }
-        this.padding = this.height / 2 - (ITEM_HEIGHT / 2)
+        const height = this.height || this.$parent.$el.clientHeight
+        this.padding = height / 2 - (ITEM_HEIGHT / 2)
         if (!isNaN(this.padding) && this.padding > 0) {
           run(this.padding)
         }
