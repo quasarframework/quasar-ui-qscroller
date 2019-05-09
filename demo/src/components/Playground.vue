@@ -27,6 +27,11 @@
     ></q-toggle>
     <q-toggle
       class="col-12"
+      v-model="noShadow"
+      label="No shadow"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
       v-model="disable"
       label="Disable"
     ></q-toggle>
@@ -45,6 +50,11 @@
       class="col-12"
       v-model="noFooter"
       label="Hide footer"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="hour24Format"
+      label="24h Format"
     ></q-toggle>
   </div>
 </template>
@@ -177,6 +187,15 @@ export default {
         this.$store.commit('scroller/noBorder', b)
       }
     },
+    noShadow:
+    {
+      get () {
+        return this.$store.state.scroller.noShadow
+      },
+      set (b) {
+        this.$store.commit('scroller/noShadow', b)
+      }
+    },
     // -----------
     selectedDate:
     {
@@ -203,12 +222,12 @@ export default {
         this.$store.commit('scroller/shortMonthLabel', b)
       }
     },
-    showMonthAsString: {
+    showMonthLabel: {
       get () {
-        return this.$store.state.scroller.showMonthAsString
+        return this.$store.state.scroller.showMonthLabel
       },
       set (b) {
-        this.$store.commit('scroller/showMonthAsString', b)
+        this.$store.commit('scroller/showMonthLabel', b)
       }
     },
     shortYearLabel: {
@@ -217,14 +236,6 @@ export default {
       },
       set (b) {
         this.$store.commit('scroller/shortYearLabel', b)
-      }
-    },
-    shortWeekdayLabel: {
-      get () {
-        return this.$store.state.scroller.shortWeekdayLabel
-      },
-      set (b) {
-        this.$store.commit('scroller/shortWeekdayLabel', b)
       }
     },
     showWeekdayLabel: {
@@ -275,14 +286,6 @@ export default {
       },
       set (b) {
         this.$store.commit('scroller/hour24Format', b)
-      }
-    },
-    showAmPmToggle: {
-      get () {
-        return this.$store.state.scroller.showAmPmToggle
-      },
-      set (b) {
-        this.$store.commit('scroller/showAmPmToggle', b)
       }
     },
     noMinutes: {

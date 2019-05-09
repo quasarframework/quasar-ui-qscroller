@@ -34,6 +34,9 @@ export const disable = (state, b) => {
 export const noBorder = (state, b) => {
   state.noBorder = b
 }
+export const noShadow = (state, b) => {
+  state.noShadow = b
+}
 
 export const selectedDate = (state, date) => {
   state.selectedDate = date
@@ -44,8 +47,8 @@ export const shortDayLabel = (state, b) => {
 export const shortMonthLabel = (state, b) => {
   state.shortMonthLabel = b
 }
-export const showMonthAsString = (state, b) => {
-  state.showMonthAsString = b
+export const showMonthLabel = (state, b) => {
+  state.showMonthLabel = b
 }
 export const shortYearLabel = (state, b) => {
   state.shortMonthLabel = b
@@ -53,18 +56,12 @@ export const shortYearLabel = (state, b) => {
 export const showWeekdayLabel = (state, b) => {
   state.shortMonthLabel = b
 }
-export const shortWeekdayLabel = (state, b) => {
-  state.shortWeekdayLabel = b
-}
 
 export const selectedTime = (state, time) => {
   state.selectedTime = time
 }
 export const hour24Format = (state, b) => {
   state.hour24Format = b
-}
-export const showAmPmToggle = (state, b) => {
-  state.showAmPmToggle = b
 }
 export const noMinutes = (state, b) => {
   state.noMinutes = b

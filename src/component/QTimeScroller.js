@@ -5,7 +5,7 @@ import './scroller.styl'
 import Resize from './directives/resize'
 
 // Mixins
-import DateTimeBase from './mixins/datetime-base'
+import TimeBase from './mixins/time-base'
 import Colorize from './mixins/colorize'
 
 // Components
@@ -13,7 +13,7 @@ import ScrollerBase from './mixins/scroller-base'
 
 // Util
 import props from './utils/props'
-import { QBtn } from 'quasar'
+import { QBtn, QResizeObserver } from 'quasar'
 import {
   Timestamp,
   parsed,
@@ -27,7 +27,7 @@ import {
 } from './utils/timestamp'
 
 /* @vue/component */
-export default DateTimeBase.extend({
+export default TimeBase.extend({
   name: `q-time-scroller`,
 
   directives: { Resize },
@@ -35,7 +35,8 @@ export default DateTimeBase.extend({
   mixins: [Colorize],
 
   props: {
-    ...props.time
+    ...props.time,
+    showVerticalBar: Boolean
   },
 
   data () {
@@ -45,8 +46,7 @@ export default DateTimeBase.extend({
       ampm: '',
       hour: '',
       minute: '',
-      ampmIndex: '', // 2 states: 0=AM, 1=PM (indices into amPmLabels)
-      hour24: this.hour24Format, // don't mutate property
+      ampmIndex: -1, // 2 states: 0=AM, 1=PM (indices into amPmLabels)
       timestamp: { ...Timestamp },
       disabledMinutesList: [],
       disabledHoursList: []
@@ -81,7 +81,7 @@ export default DateTimeBase.extend({
     },
 
     hoursList () {
-      const length = (this.hour24 === true ? 24 : 12)
+      const length = (this.hour24Format === true ? 24 : 12)
 
       return [...Array(length)]
         .map((_, i) => i)
@@ -99,9 +99,9 @@ export default DateTimeBase.extend({
     },
 
     timeFormatter () {
-      const longOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: '2-digit', minute: '2-digit' }
-      const shortOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: 'numeric', minute: '2-digit' }
-      const shortHourOptions = { timeZone: 'UTC', hour12: !this.hour24, hour: 'numeric' }
+      const longOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: '2-digit', minute: '2-digit' }
+      const shortOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: 'numeric', minute: '2-digit' }
+      const shortHourOptions = { timeZone: 'UTC', hour12: !this.hour24Format, hour: 'numeric' }
 
       return createNativeLocaleFormatter(
         this.locale,
@@ -116,24 +116,61 @@ export default DateTimeBase.extend({
     },
 
     ampmIndex () {
+      const timestamp = copyTimestamp(this.timestamp)
       this.ampm = this.amPmLabels[this.ampmIndex]
+      this.timestamp.hour = parseInt(this.hour)
+      if (this.ampmIndex === 1 && this.hour24Format === false) {
+        this.timestamp.hour = parseInt(this.hour) + 12
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     hour () {
-      this.toTimestamp()
+      const timestamp = copyTimestamp(this.timestamp)
+      if (this.hour24Format === true) {
+        this.timestamp.hour = parseInt(this.hour)
+      } else {
+        if (this.ampmIndex === 0) {
+          this.timestamp.hour = parseInt(this.hour)
+        } else if (this.ampmIndex === 1) {
+          this.timestamp.hour = parseInt(this.hour) + 12
+        }
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     minute () {
-      this.toTimestamp()
+      const timestamp = copyTimestamp(this.timestamp)
+      this.timestamp.minute = parseInt(this.minute)
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     ampm () {
       this.ampmIndex = this.amPmLabels.findIndex(ap => ap === this.ampm)
-      this.toTimestamp()
     },
 
-    hour24Format (val) {
-      this.hour24 = val
+    hour24Format () {
+      const timestamp = copyTimestamp(this.timestamp)
+      if (this.hour24Format === true) {
+        this.hour = padNumber(this.timestamp.hour, 2)
+      } else {
+        if (this.timestamp.hour > 12) {
+          this.hour = padNumber(this.timestamp.hour - 12, 2)
+          this.ampmIndex = 1
+        } else {
+          this.hour = padNumber(this.timestamp.hour, 2)
+          this.ampmIndex = 0
+        }
+      }
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
     },
 
     disabledMinutes () {
@@ -150,26 +187,38 @@ export default DateTimeBase.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    height () {
+      this.adjustBodyHeight()
     }
   },
 
   methods: {
+    getTimestamp () {
+      return this.timestamp
+    },
+
     emitValue () {
       this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
     },
 
-    onResize () {
+    onResize ({ height }) {
       this.adjustBodyHeight()
     },
 
     adjustBodyHeight () {
-      this.$nextTick(() => {
-        let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-        let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-        this.headerFooterHeight = headerHeight + footerHeight
-        const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-        this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-      })
+      if (this.height !== void 0) {
+        this.bodyHeight = this.height
+      } else {
+        this.$nextTick(() => {
+          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
+          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
+          this.headerFooterHeight = headerHeight + footerHeight
+          const parentHeight = this.height || this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
+          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
+        })
+      }
     },
 
     handleDisabledLists () {
@@ -186,54 +235,16 @@ export default DateTimeBase.extend({
       const date = getDate(now) + ' ' + (this.value ? this.value : getTime(now))
       this.timestamp = parsed(date)
       this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+      this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
       this.fromTimestamp()
     },
 
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
-      if (this.hour24 === true) {
-        this.ampmIndex = 0
-        this.hour = padNumber(this.timestamp.hour, 2)
-      } else {
-        this.ampmIndex = this.timestamp.hour < 12 ? 0 : 1
-        this.hour = padNumber(this.timestamp.hour % 12, 2)
+      this.hour = padNumber(this.timestamp.hour, 2)
+      if (this.hour24Format === false && this.ampmIndex === 1) {
+        this.hour = padNumber(this.timestamp.hour - 12, 2)
       }
-    },
-
-    toTimestamp () {
-      const timestamp = copyTimestamp(this.timestamp)
-      this.timestamp.minute = parseInt(this.minute)
-      if (this.hour24 === true || this.ampmIndex === 0) {
-        this.timestamp.hour = parseInt(this.hour)
-      } else {
-        // for 'pm'
-        this.timestamp.hour = parseInt(this.hour) + 12
-      }
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
-    },
-
-    toggleAmPm () {
-      this.ampmIndex = this.ampmIndex === 0 ? 1 : 0
-      this.toTimestamp()
-    },
-
-    toggle24h () {
-      this.hour24 = !this.hour24
-      if (this.hour24 === false) {
-        if (this.hour < 12) {
-          this.ampmIndex = 0
-        } else {
-          this.ampmIndex = 1
-          this.hour = padNumber(parseInt(this.hour) % 12, 2)
-        }
-      } else {
-        if (this.ampmIndex === 1) {
-          this.hour = padNumber(parseInt(this.hour) + 12, 2)
-        }
-      }
-      this.toTimestamp()
     },
 
     // -------------------------------
@@ -291,55 +302,20 @@ export default DateTimeBase.extend({
       return [
         this.noHours !== true && this.__renderHoursScroller(h),
         this.noMinutes !== true && this.__renderMinutesScroller(h),
-        this.hour24 === false && this.__renderAmPmScroller(h)
+        this.hour24Format === false && this.__renderAmPmScroller(h)
       ]
     },
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body flex full-width',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width',
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         style: {
           height: `${this.bodyHeight}px`
         }
       }), this.__renderScrollers(h))
-    },
-
-    __renderAmPmButton (h) {
-      return h(QBtn, {
-        staticClass: `q-scroller__header--ampm ${this.ampmIndex === 0 ? 'am' : 'pm'}`,
-        class: {
-        },
-        props: {
-          'flat': true,
-          'dense': true,
-          'round': true,
-          'size': 'sm'
-        },
-        on: {
-          'click': () => this.toggleAmPm()
-        }
-      })
-    },
-
-    __render24hButton (h, label) {
-      // colors are reversed
-      return h(QBtn, this.setBothColors(this.backgroundColor, this.color, {
-        staticClass: `q-scroller__header--h24` + (this.hour24 === false ? ' q-time-selector__header--selected' : ''),
-        props: {
-          'flat': true,
-          'dense': true,
-          'round': true,
-          'size': 'sm',
-          'label': this.hour24 === true ? '24' : '12'
-        },
-        on: {
-          'click': () => this.toggle24h(label)
-        }
-      }))
-    },
-
-    __renderAmPmButtons (h) {
-      if (this.hour24 === false) return [this.__renderAmPmButton(h)]
     },
 
     __renderHeader (h) {
@@ -347,9 +323,11 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.timeHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-around items-center full-width shadow-20 ellipsis q-pa-xs'
+        staticClass: 'q-scroller__header flex justify-around items-center full-width ellipsis q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
       }, slot ? slot(this.timestamp) : [
-        this.noHours !== true && this.__render24hButton(h, 'h24'),
         this.displayTime
       ])
     },
@@ -367,7 +345,6 @@ export default DateTimeBase.extend({
           },
           on: {
             'click': () => {
-              this.emitValue()
               this.$emit('close')
             }
           }
@@ -380,22 +357,26 @@ export default DateTimeBase.extend({
       const slot = this.$slots.timeFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width shadow-up-20 q-pa-xs'
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-up-20': this.noShadow === false
+        }
       }, slot || [
-        this.noHours !== true && this.__renderAmPmButtons(h),
         this.__renderFooterButton(h)
       ])
     }
   },
 
   render (h) {
+    const child = [
+      h(QResizeObserver, {
+        props: { debounce: 0 },
+        on: { resize: this.onResize }
+      })
+    ]
+
     return h('div', this.setBothColors(this.color, this.backgroundColor, {
       ref: 'scroller',
-      directives: [{
-        modifiers: { quiet: true },
-        name: 'resize',
-        value: this.onResize
-      }],
       staticClass: 'q-scroller flex',
       class: {
         'rounded-borders': this.roundedBorders === true,
@@ -404,10 +385,10 @@ export default DateTimeBase.extend({
       style: {
         '--scroller-bar-color': this.barColor
       }
-    }), [
+    }), child.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
-    ])
+    ]))
   }
 })

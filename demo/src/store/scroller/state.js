@@ -11,21 +11,20 @@ export default {
   noFooter: true,
   disable: false,
   noBorder: false,
+  noShadow: false,
 
   selectedDate: '2019-04-01',
   shortDayLabel: false,
   shortMonthLabel: false,
-  showMonthAsString: false,
+  showMonthLabel: false,
   shortYearLabel: false,
   showWeekdayLabel: false,
-  shortWeekdayLabel: false,
   noDays: false,
   noMonths: false,
   noYears: false,
 
   selectedTime: '11:05',
   hour24Format: true,
-  showAmPmToggle: false,
   noMinutes: false,
   noHours: false
 }

@@ -20,26 +20,23 @@ $half-height = 13px
     z-index 1
     height 50px
     font-weight 700
-    font-size 30px
-    &--am, &--pm
-      opacity 0.7
-    &--h24
-      opacity 0.7
-    &--selected
-      font-weight 900
+    font-size 22px
   &__footer
     position relative
     z-index 1
     height 50px
     padding 4px
+    font-weight 700
+    font-size 14px
   &__padding
     min-height 1px
     padding 0
     margin 0
     width 100%
   &__body
-    position relative
     overflow-y hidden
+  &__horizontal-bar
+    position relative
     &:before
       content ""
       top calc(50% - 13px)
@@ -53,6 +50,8 @@ $half-height = 13px
       text-align left
       border-top 1px solid var(--scroller-bar-color, #ccc)
       border-bottom 1px solid var(--scroller-bar-color, #ccc)
+  &__vertical-bar
+    border-right 1px solid var(--scroller-bar-color, #ccc)
   &__set-btn
     font-size inherit
   &__cancel-btn
@@ -74,7 +73,7 @@ $half-height = 13px
     font-weight 600
     font-size 14px
     line-height 14px
-    &--active
+    &--selected
       background-color transparent
       border-radius 4px
       opacity 1
@@ -85,22 +84,3 @@ $half-height = 13px
       pointer-events none
       opacity 0.3
       font-weight 300
-
-.q-scroller__header--ampm
-  &::before
-    content ''
-    display block
-    margin-left 50%
-    height 100%
-    border-radius 0 100% 100% 0 / 50%
-    background-color yellow!important
-
-.q-scroller__header--ampm.am
-  transform: rotate(-90deg)
-  color yellow!important
-  background-color grey !important
-
-.q-scroller__header--ampm.pm
-  transform: rotate(90deg)
-  color yellow!important
-  background-color grey !important

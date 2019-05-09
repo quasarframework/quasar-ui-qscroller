@@ -79,7 +79,7 @@ export default DateTimeBase.extend({
         .map((_, i) => i)
         .map(m => {
           ++m // Jan = 0
-          let mon = this.showMonthAsString === true ? this.monthNameLabel(m) : void 0
+          let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
           m = m < 10 ? '0' + m : '' + m
           return { display: mon, value: m, disabled: this.disabledMonths.includes(m) }
         })
@@ -134,7 +134,6 @@ export default DateTimeBase.extend({
       const month = this.shortMonthLabel ? 'numeric' : '2-digit'
       const day = this.shortDayLabel ? 'numeric' : '2-digit'
       const options = { timeZone: 'UTC', year: year, month: month, day: day }
-      console.log('options', options)
 
       return createNativeLocaleFormatter(
         this.locale,
@@ -365,7 +364,7 @@ export default DateTimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body flex',
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex',
         style: {
           height: `${this.bodyHeight}px`
         }
@@ -377,7 +376,10 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.dateHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-center items-center full-width shadow-20 ellipsis q-pa-xs'
+        staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
       }, slot ? slot(this.timestamp) : [
         this.displayDate
       ])
@@ -395,7 +397,6 @@ export default DateTimeBase.extend({
         },
         on: {
           'click': () => {
-            this.emitValue()
             this.$emit('close')
           }
         }
@@ -407,8 +408,11 @@ export default DateTimeBase.extend({
       const slot = this.$slots.dateFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-end items-center full-width shadow-up-20 q-pa-xs'
-      }, slot ? slot(this.timestamp) : this.__renderFooterButton(h))
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-up-20': this.noShadow === false
+        }
+      }, slot ? slot(this.timestamp) : [ this.__renderFooterButton(h) ])
     }
   },
 

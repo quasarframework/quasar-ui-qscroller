@@ -43,9 +43,10 @@ export default {
     roundedBorders: Boolean,
     noBorder: Boolean,
     noHeader: Boolean,
-    noFooter: Boolean
+    noFooter: Boolean,
+    noShadow: Boolean
   },
-  dateTimeBase: {
+  locale: {
     locale: {
       type: String,
       default: 'en-us'
@@ -68,26 +69,16 @@ export default {
       type: Array,
       default: () => []
     },
-    shortDayLabel: Boolean,
-    shortMonthLabel: Boolean,
-    showMonthAsString: Boolean,
     shortYearLabel: Boolean,
+    shortMonthLabel: Boolean,
+    shortDayLabel: Boolean,
+    showMonthLabel: Boolean,
     showWeekdayLabel: Boolean,
-    shortWeekdayLabel: Boolean,
     noDays: Boolean,
     noMonth: Boolean,
     noYears: Boolean
   },
   time: {
-    hour24Format: {
-      type: Boolean,
-      default: true
-    },
-    amPmLabels: {
-      type: Array,
-      default: () => ['AM', 'PM'],
-      validator: v => Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string'
-    },
     minuteInterval: {
       type: [String, Number],
       default: 1
@@ -108,10 +99,11 @@ export default {
     },
     noMinutes: Boolean,
     noHours: Boolean,
-    showAmPmToggle: Boolean,
     // TODO
+    // show only these hours
     hours: Array,
     // TODO
+    // show only these minutes
     minutes: Array,
     // TODO
     // any time before this time will be disabled
@@ -127,6 +119,91 @@ export default {
     }
   },
   timeRange: {
-
+    displaySeparator: {
+      type: String,
+      default: ' - '
+    },
+    // --------------------------------
+    // start time
+    // --------------------------------
+    startMinuteInterval: {
+      type: [String, Number],
+      default: 1
+    },
+    // TODO
+    startHourInterval: {
+      type: [String, Number],
+      default: 1
+    },
+    startShortTimeLabel: Boolean,
+    startDisabledHours: {
+      type: Array,
+      default: () => []
+    },
+    startDisabledMinutes: {
+      type: Array,
+      default: () => []
+    },
+    startNoMinutes: Boolean,
+    startNoHours: Boolean,
+    // TODO
+    // show only these hours
+    startHours: Array,
+    // TODO
+    // show only these minutes
+    startMinutes: Array,
+    // TODO
+    // any time before this time will be disabled
+    startMinTime: {
+      type: String,
+      default: '00:00'
+    },
+    // TODO
+    // any time after this time will be disabled
+    startMaxTime: {
+      type: String,
+      default: '24:00'
+    },
+    // --------------------------------
+    // end time
+    // --------------------------------
+    endMinuteInterval: {
+      type: [String, Number],
+      default: 1
+    },
+    // TODO
+    endHourInterval: {
+      type: [String, Number],
+      default: 1
+    },
+    endShortTimeLabel: Boolean,
+    endDisabledHours: {
+      type: Array,
+      default: () => []
+    },
+    endDisabledMinutes: {
+      type: Array,
+      default: () => []
+    },
+    endNoMinutes: Boolean,
+    endNoHours: Boolean,
+    // TODO
+    // show only these hours
+    endHours: Array,
+    // TODO
+    // show only these minutes
+    endMinutes: Array,
+    // TODO
+    // any time before this time will be disabled
+    endMinTime: {
+      type: String,
+      default: '00:00'
+    },
+    // TODO
+    // any time after this time will be disabled
+    endMaxTime: {
+      type: String,
+      default: '24:00'
+    }
   }
 }
