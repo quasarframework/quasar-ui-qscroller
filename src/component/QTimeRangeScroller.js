@@ -1,7 +1,3 @@
-// Styles
-// import './time-range-scroller.styl'
-// import './time-scroller.styl'
-
 // Mixins
 import TimeBase from './mixins/time-base'
 import Colorize from './mixins/colorize'

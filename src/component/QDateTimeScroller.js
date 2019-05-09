@@ -1,58 +1,283 @@
-// Styles
-// import './date-time-scroller.styl'
-// import './time-scroller.styl'
-// import './date-scroller.styl'
-
 // Mixins
 import DateTimeBase from './mixins/datetime-base'
+import Colorize from './mixins/colorize'
+import QDateScroller from './QDateScroller'
+import QTimeScroller from './QTimeScroller'
 
 // Util
 import props from './utils/props'
-// import { debounce, QBtn } from 'quasar'
-// import {
-//   PARSE_TIME,
-//   padNumber
-// } from './utils/timestamp'
+import { QBtn, QResizeObserver } from 'quasar'
+import {
+  Timestamp,
+  parsed,
+  getDate,
+  getTime,
+  copyTimestamp,
+  compareTimestamps
+} from './utils/timestamp'
 
 /* @vue/component */
 export default DateTimeBase.extend({
   name: `q-date-time-scroller`,
 
-  data () {
-    return {
-      year: 0,
-      month: 0,
-      day: '',
-      hour: 0,
-      minute: 0
-    }
-  },
+  mixins: [Colorize],
 
   props: {
     ...props.time,
     ...props.date
+  },
 
+  data () {
+    return {
+      headerFooterHeight: 100,
+      bodyHeight: 100,
+      date: '',
+      time: '',
+      timestamp: { ...Timestamp }
+    }
   },
 
   mounted () {
-    //
+    this.splitDateTime()
+    this.adjustBodyHeight()
   },
 
   computed: {
-    //
+    displayDateTime () {
+      if (this.date !== '' && this.time !== '') {
+        if (this.$refs.date && this.$refs.time) {
+          return this.$refs.date.displayDate + ' ' + this.$refs.time.displayTime
+        }
+        return `${this.date} ${this.time}`
+      }
+      return ''
+    }
   },
 
   watch: {
-    //
+    value () {
+      this.splitDateTime()
+    },
+
+    date () {
+      const timestamp = copyTimestamp(this.timestamp)
+      this.timestamp = parsed(this.date + ' ' + this.time)
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
+    },
+
+    time () {
+      const timestamp = copyTimestamp(this.timestamp)
+      this.timestamp = parsed(this.date + ' ' + this.time)
+      if (!compareTimestamps(timestamp, this.timestamp)) {
+        this.emitValue()
+      }
+    },
+
+    noHeader () {
+      this.adjustBodyHeight()
+    },
+
+    noFooter () {
+      this.adjustBodyHeight()
+    }
   },
 
   methods: {
+    emitValue () {
+      this.$emit('input', `${this.timestamp.date}`)
+    },
 
+    onResize ({ height }) {
+      this.adjustBodyHeight()
+    },
+
+    adjustBodyHeight () {
+      if (this.height !== void 0) {
+        this.bodyHeight = this.height
+      } else {
+        this.$nextTick(() => {
+          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
+          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
+          this.headerFooterHeight = headerHeight + footerHeight
+          const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
+          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
+        })
+      }
+    },
+
+    splitDateTime () {
+      this.timestamp = parsed(this.value)
+      this.fromTimestamp()
+    },
+
+    fromTimestamp () {
+      this.date = getDate(this.timestamp)
+      this.time = getTime(this.timestamp)
+    },
+
+    __renderHeader (h) {
+      if (this.noHeader) return ''
+      const slot = this.$scopedSlots.header
+      return h('div', {
+        ref: 'header',
+        staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
+      }, slot ? slot(this.timestamp) : [
+        this.displayDateTime
+      ])
+    },
+
+    __renderDate (h) {
+      return h(QDateScroller, {
+        ref: 'date',
+        staticClass: 'col-6',
+        props: {
+          value: this.date,
+          locale: this.locale,
+          showVerticalBar: true,
+          barColor: this.barColor,
+          color: this.color,
+          backgroundColor: this.backgroundColor,
+          innerColor: this.innerColor,
+          innerBackgroundColor: this.innerBackgroundColor,
+          disable: this.disable,
+          noBorder: true,
+          noHeader: true,
+          noFooter: true,
+          hour24Format: this.hour24Format,
+          minuteInterval: this.minuteInterval,
+          hourInterval: this.hourInterval,
+          shortTimeLabel: this.shortTimeLabel,
+          disabledHours: this.disabledHours,
+          disabledMinutes: this.disabledMinutes,
+          noMinutes: this.noMinutes,
+          noHours: this.noHours,
+          hours: this.hours,
+          minutes: this.minutes,
+          minTime: this.minTime,
+          maxTime: this.maxTime,
+          height: this.bodyHeight
+        },
+        on: {
+          input: v => { this.date = v }
+        }
+      })
+    },
+
+    __renderTime (h) {
+      return h(QTimeScroller, {
+        ref: 'time',
+        staticClass: 'col-6',
+        props: {
+          value: this.time,
+          locale: this.locale,
+          barColor: this.barColor,
+          color: this.color,
+          backgroundColor: this.backgroundColor,
+          innerColor: this.innerColor,
+          innerBackgroundColor: this.innerBackgroundColor,
+          disable: this.disable,
+          noBorder: true,
+          noHeader: true,
+          noFooter: true,
+          hour24Format: this.hour24Format,
+          amPmLabels: this.ampPmLabels,
+          minuteInterval: this.minuteInterval,
+          hourInterval: this.hourInterval,
+          shortTimeLabel: this.shortTimeLabel,
+          disabledHours: this.disabledHours,
+          disabledMinutes: this.disbaledMinutes,
+          noMinutes: this.noMinutes,
+          noHours: this.noHours,
+          hours: this.hours,
+          minutes: this.minutes,
+          minTime: this.minTime,
+          maxTime: this.maxTime,
+          height: this.bodyHeight
+        },
+        on: {
+          input: v => { this.time = v }
+        }
+      })
+    },
+
+    __renderScrollers (h) {
+      return [
+        this.__renderDate(h),
+        this.__renderTime(h)
+      ]
+    },
+
+    __renderBody (h) {
+      return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
+        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width'
+      }), [
+        this.__renderScrollers(h)
+      ])
+    },
+
+    // the close button
+    __renderFooterButton (h) {
+      return [
+        h(QBtn, {
+          staticClass: 'q-scroller__cancel-btn q-ml-xs',
+          props: {
+            'flat': true,
+            'dense': true,
+            'round': true,
+            'icon': 'close'
+          },
+          on: {
+            'click': () => {
+              this.$emit('close')
+            }
+          }
+        })
+      ]
+    },
+
+    __renderFooter (h) {
+      if (this.noFooter) return ''
+      const slot = this.$slots.timeFooter
+      return h('div', {
+        ref: 'footer',
+        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-up-20': this.noShadow === false
+        }
+      }, slot || [
+        this.__renderFooterButton(h)
+      ])
+    }
   },
 
   render (h) {
-    return h('div', {
-      staticClass: 'q-date-time-scroller fit'
-    })
+    const child = [
+      h(QResizeObserver, {
+        props: { debounce: 0 },
+        on: { resize: this.onResize }
+      })
+    ]
+
+    return h('div', this.setBothColors(this.color, this.backgroundColor, {
+      ref: 'scroller',
+      staticClass: 'q-date-time-scroller flex',
+      class: {
+        'rounded-borders': this.roundedBorders === true,
+        'q-scroller--border': this.noBorder !== true
+      },
+      style: {
+        '--scroller-bar-color': this.barColor,
+        'overflow': 'hidden'
+      }
+    }), child.concat([
+      this.__renderHeader(h),
+      this.__renderBody(h),
+      this.__renderFooter(h)
+    ]))
   }
 })
