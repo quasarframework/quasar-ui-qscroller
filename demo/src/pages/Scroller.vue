@@ -178,7 +178,7 @@
                     v-model="timeRangeInput"
                     :locale="locale"
                     :no-header="noHeader"
-                    :no-footer="noFooter"
+                    :no-footer="false"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -189,6 +189,7 @@
                     inner-background-color="white"
                     :hour24-format="hour24Format"
                     style="height: 280px; width: 250px;"
+                    @close="() => { showTimeRangeScroller = false }"
                   />
                 </q-popup-proxy>
               </q-icon>
