@@ -1,6 +1,8 @@
-demo
-docs
-.git
+/demo
+/docs
+/.git
+.editorconfig
+.eslintrc.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
