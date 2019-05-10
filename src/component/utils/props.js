@@ -75,7 +75,7 @@ export default {
     showMonthLabel: Boolean,
     showWeekdayLabel: Boolean,
     noDays: Boolean,
-    noMonth: Boolean,
+    noMonths: Boolean,
     noYears: Boolean
   },
   time: {

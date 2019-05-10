@@ -188,7 +188,7 @@ export default DateTimeBase.extend({
           showMonthLabel: this.startShowMonthLabel,
           showWeekdayLabel: this.startShowWeekdayLabel,
           noDays: this.startNoDays,
-          noMonth: this.startNoMonth,
+          noMonths: this.startNoMonths,
           noYears: this.startNoYears,
           height: this.bodyHeight
         },
@@ -227,7 +227,7 @@ export default DateTimeBase.extend({
           showMonthLabel: this.endShowMonthLabel,
           showWeekdayLabel: this.endShowWeekdayLabel,
           noDays: this.endNoDays,
-          noMonth: this.endNoMonth,
+          noMonths: this.endNoMonths,
           noYears: this.endNoYears,
           height: this.bodyHeight
         },

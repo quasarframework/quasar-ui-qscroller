@@ -54,7 +54,52 @@
     <q-toggle
       class="col-12"
       v-model="hour24Format"
-      label="24h Format"
+      label="24h format"
+    ></q-toggle>
+      <q-toggle
+      class="col-12"
+      v-model="noHours"
+      label="No hours"
+    ></q-toggle>
+        <q-toggle
+      class="col-12"
+      v-model="noMinutes"
+      label="No minutes"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="shortYearLabel"
+      label="Short year label"
+    ></q-toggle>
+      <q-toggle
+      class="col-12"
+      v-model="shortMonthLabel"
+      label="Short month label"
+    ></q-toggle>
+      <q-toggle
+      class="col-12"
+      v-model="shortDayLabel"
+      label="Short day label"
+    ></q-toggle>
+      <q-toggle
+      class="col-12"
+      v-model="showWeekdayLabel"
+      label="Show weekday label"
+    ></q-toggle>
+        <q-toggle
+      class="col-12"
+      v-model="noYears"
+      label="No years"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
+      v-model="noMonths"
+      label="No months"
+    ></q-toggle>
+        <q-toggle
+      class="col-12"
+      v-model="noDays"
+      label="No days"
     ></q-toggle>
   </div>
 </template>

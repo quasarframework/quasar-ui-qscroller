@@ -79,6 +79,8 @@
             :no-border="noBorder"
             :no-shadow="noShadow"
             :hour24-format="hour24Format"
+            :no-hours="noHours"
+            :no-minutes="noMinutes"
             :disabledMinutes="disabledMinutes"
             bar-color="#FF0000"
             color="white"
@@ -110,6 +112,8 @@
                     :no-footer="false"
                     :disable="disable"
                     :hour24-format="hour24Format"
+                    :no-hours="noHours"
+                    :no-minutes="noMinutes"
                     :disabledMinutes="disabledMinutes"
                     bar-color="#21ba45"
                     color="white"
@@ -150,6 +154,10 @@
             inner-color="indigo-6"
             inner-background-color="white"
             :hour24-format="hour24Format"
+            :start-no-hours="noHours"
+            :start-no-minutes="noMinutes"
+            :end-no-hours="noHours"
+            :end-no-minutes="noMinutes"
             style="height: 280px;"
           />
         </q-card-section>
@@ -190,6 +198,10 @@
                     inner-color="orange-6"
                     inner-background-color="white"
                     :hour24-format="hour24Format"
+                    :start-no-hours="noHours"
+                    :start-no-minutes="noMinutes"
+                    :end-no-hours="noHours"
+                    :end-no-minutes="noMinutes"
                     :style="scrollerPopupStyle200"
                     @close="() => { showTimeRangeScroller = false }"
                   />
@@ -210,8 +222,13 @@
           <q-date-scroller
             v-model="date1"
             :locale="locale"
-            :showMonthLabel="true"
-            :shortMonthLabel="true"
+            :short-year-label="shortYearLabel"
+            :show-month-label="showMonthLabel"
+            :short-month-label="shortMonthLabel"
+            :short-day-label="shortDayLabel"
+            :no-years="noYears"
+            :no-months="noMonths"
+            :no-days="noDays"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
@@ -243,6 +260,13 @@
                   <q-date-scroller
                     v-model="date1"
                     :locale="locale"
+                    :short-year-label="shortYearLabel"
+                    :show-month-label="showMonthLabel"
+                    :short-month-label="shortMonthLabel"
+                    :short-day-label="shortDayLabel"
+                    :no-years="noYears"
+                    :no-months="noMonths"
+                    :no-days="noDays"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
@@ -275,9 +299,16 @@
           <q-date-time-scroller
             v-model="dateTime1"
             :locale="locale"
+            :short-year-label="shortYearLabel"
+            :show-month-label="showMonthLabel"
+            :short-month-label="shortMonthLabel"
+            :short-day-label="shortDayLabel"
+            :no-years="noYears"
+            :no-months="noMonths"
+            :no-days="noDays"
             :hour24-format="hour24Format"
-            :showMonthLabel="true"
-            :shortMonthLabel="true"
+            :no-hours="noHours"
+            :no-minutes="noMinutes"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
@@ -310,6 +341,16 @@
                   <q-date-time-scroller
                     v-model="dateTime1"
                     :locale="locale"
+                    :short-year-label="shortYearLabel"
+                    :show-month-label="showMonthLabel"
+                    :short-month-label="shortMonthLabel"
+                    :short-day-label="shortDayLabel"
+                    :no-years="noYears"
+                    :no-months="noMonths"
+                    :no-days="noDays"
+                    :hour24-format="hour24Format"
+                    :no-hours="noHours"
+                    :no-minutes="noMinutes"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
@@ -321,9 +362,6 @@
                     background-color="white"
                     inner-color="white"
                     inner-background-color="brown-6"
-                    :showMonthLabel="true"
-                    :shortMonthLabel="true"
-                    :hour24-format="hour24Format"
                     :style="scrollerPopupStyle280"
                     @close="() => { showDateTimeScroller = false }"
                   />
@@ -360,6 +398,8 @@
                 inner-color="red"
                 inner-background-color="white"
                 :hour24-format="hour24Format"
+                :no-hours="noHours"
+                :no-minutes="noMinutes"
                 start-min-time="05:00"
                 end-max-time="24:00"
                 style="height: 280px;"
@@ -380,6 +420,8 @@
                 inner-color="red"
                 inner-background-color="white"
                 :hour24-format="hour24Format"
+                :no-hours="noHours"
+                :no-minutes="noMinutes"
                 style="height: 280px;"
               />
             </div>
@@ -506,7 +548,17 @@ export default {
       disable: 'scroller/disable',
       noBorder: 'scroller/noBorder',
       noShadow: 'scroller/noShadow',
-      hour24Format: 'scroller/hour24Format'
+      hour24Format: 'scroller/hour24Format',
+      noHours: 'scroller/noHours',
+      noMinutes: 'scroller/noMinutes',
+      shortYearLabel: 'scroller/shortYearLabel',
+      shortMonthLabel: 'scroller/shortMonthLabel',
+      showMonthLabel: 'scroller/showMonthLabel',
+      shortDayLabel: 'scroller/shortDayLabel',
+      showWeekdayLabel: 'scroller/showWeekdayLabel',
+      noYears: 'scroller/noYears',
+      noMonths: 'scroller/noMonths',
+      noDays: 'scroller/noDays'
     }),
 
     items () {
