@@ -4,7 +4,7 @@
       <h1 class="project-name">QScroller</h1>
       <h2 class="project-tagline"></h2>
       <a href="https://github.com/quasarframework/app-extension-qscroller" target="_blank" class="btn">View on GitHub</a>
-      <a href="#/demo" target="_blank" class="btn">Demo</a>
+      <a href="/#/demo" target="_blank" class="btn">Demo</a>
     </section>
     <main class="flex flex-start justify-center inset-shadow">
       <div class="q-pa-md col-12-sm col-8-md col-6-lg inset-shadow" style="width: 100%; height: 3px;" />

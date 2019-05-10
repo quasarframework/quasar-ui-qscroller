@@ -10,6 +10,7 @@ QScroller Components
 - QDateScroller
 - QDateRangeScroller
 - QDateTimeScroller
+- QDateTimeRangeScroller
 
 # Features
 
@@ -33,6 +34,7 @@ You can use:
 - `quasar describe QDateScroller`
 - `quasar describe QDateRangeScroller`
 - `quasar describe QDateTimeScroller`
+- `quasar describe QDateTimeRangeScroller`
 
 # Demo Project
 Can be found [here](https://github.com/quasarframework/app-extension-qscroller/tree/master/demo).
@@ -40,28 +42,57 @@ Can be found [here](https://github.com/quasarframework/app-extension-qscroller/t
 # Demo
 Can be found [here](/#/demo).
 
-** Everything below is to be rewritten **
 ---
 
 # Working with QScroller
 
-In order to get the best mileage from QScroller it is important to understand all aspects which will be described below.
+In order to get the best mileage from QScroller and all of its components it is important to understand all aspects which will be described below.
 
 First and foremost, it should also be known that the native date format used internally, and with the v-model, is `YYYY-mm-dd` to avoid confusion with positioning of the day and month in other date formats. All incoming and outgoing dates will use this format.
 
-The default locale of QDateTimeScroller is **en-us**. This can easily be changed via the `locale` property. Any area of QDateTimeScroller that displays text and numbers is locale-aware.
+The default locale of QDateTimeScroller is **en-us**. This can easily be changed via the `locale` property. Any area of each scroller that displays text and numbers is locale-aware.
 
 ## QScroller
 
+![QScroller](statics/q-scroller.png =200x200)
+
+The QScroller component is made to take any type of arbitray data and display it in a list-like manner so an item can be selected. All other scrollers have this base functionality. Some scrollers, will be based on multiple instances of this functionality.
+
+Each row in a scroller instance is a **QBtn**. As a result of this, you have all of the properties available to you as you would for QBtn. However, this only applies to QScroller as the other scrollers generate data for selection (being based on dates and times).
+
+The data pushed into the `items` propery of the QScroller component is an array of objects, that looks like the properties for QBtn. Only the `value` property is required if you pass in an array of objects. Alternatively, you can pass in an array of strings if you don't care about special handling and just want the default handling.
+
+Example:
+
+```js
+data: [
+  { value: 'Anteater', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' },
+  { value: 'Baboons', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' },
+  { value: 'Cheetah', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' },
+  { value: 'Chimpanzee', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' },
+  ...
+]
+```
+
+Then, your `v-model` variable should contain a `value` from your list for an initial selection. And, the `v-model` variable will be populated with  `value` data upon user selection.
+
 ## QTimeScroller
+
+![QTimeScroller](statics/q-time-scroller.png =200x200) ![QTimeScroller-ampm](statics/q-time-scroller-ampm.png =200x200)
 
 ## QTimeRangeScroller
 
+![QTimeRangeScroller](statics/q-time-range-scroller.png =200x200) ![QTimeRangeScroller-ampm](statics/q-time-range-scroller-ampm.png =200x200)
+
 ## QDateScroller
+
+![QDateScroller](statics/q-date-scroller.png =200x200)
 
 ## QDateRangeScroller
 
 ## QDateTimeScroller
+
+![QDateTimeScroller](statics/q-date-time-scroller.png =300x300) ![QDateTimeScroller-ampm](statics/q-date-time-scroller-ampm.png =300x300)
 
 ## Locale
 
@@ -72,7 +103,7 @@ The default locale of QDateTimeScroller is **en-us**. This can easily be changed
 ## Common Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
+| --- | :---: | :---: | --- |
 | bar-color | String | #ccc | This is the color of the middle bars. This **has** to be a css color (not a Quasar color) or css color name |
 | color | String | white | This is the color of the text. Applies to header and footer. It can be a css color or from the Quasar color palette |
 | background-color | String | primary | This is the color of the background. Applies to header and footer. It can be a css color or from the Quasar color palette |
@@ -89,16 +120,32 @@ The default locale of QDateTimeScroller is **en-us**. This can easily be changed
 
 ## QScroller Vue Properties
 
-| Vue Property | Type | Description |
-| --- | --- | --- |
-| value | String | (required) v-model |
-| items | Array | (required) The items to display in the scroller |
-| disabled-items | Array | Items in the list that are to be disabled |
+| Vue Property | Type | Default | Description |
+| --- | :---: | :---: | --- |
+| value | String | | (required) v-model |
+| items | Array | | (required) The items to display in the scroller |
+| disabled-items | Array | | Items in the list that are to be disabled |
+
+### QScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+
+### QScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
 
 ## QTimeScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
+| --- | :---: | :---: | --- |
 | value | String | | (required) v-model in the form of `hh:mm` |
 | items | Array | | (required) The items to display in the scroller |
 | disabled-items | Array | | Items in the list that are to be disabled |
@@ -120,13 +167,34 @@ The default locale of QDateTimeScroller is **en-us**. This can easily be changed
 ## QTimeRangeScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
-| value | Array | | v-model in the form of `[hh:mm, hh:mm]` |
+| --- | :---: | :---: | --- |
+| value | Array | | v-model in the form of `[hh:mm, hh:mm]` or `hh:mm<>hh:mm` where `<>` is the `display-separator` property |
+| display-separator | String | ' - ' | Use to parse the two time values in `v-model` when a String is passed in. Used when displaying the time range in the header, and used in the emit of selected time range (when String v-model is used) |
+| start-minute-interval | Number, String | 1 | |
+| start-hour-interval | Number, String | 1 | TBD |
+| start-short-time-label | Boolean | - | |
+| start-disabled-minutes | Array | [ ] | |
+| start-no-minutes | Boolean | - | |
+| start-no-hours | Boolean | - | |
+| start-hours | Array | - | TBD |
+| start-minutes | Array | - | TBD |
+| start-min-time | String | '00:00' | TBD |
+| start-max-time | String | '24:00' | TBD |
+| end-minute-interval | Number, String | 1 | |
+| end-hour-interval | Number, String | 1 | TBD |
+| end-short-time-label | Boolean | - | |
+| end-disabled-minutes | Array | [ ] | |
+| end-no-minutes | Boolean | - | |
+| end-no-hours | Boolean | - | |
+| end-hours | Array | - | TBD |
+| end-minutes | Array | - | TBD |
+| end-min-time | String | '00:00' | TBD |
+| end-max-time | String | '24:00' | TBD |
 
 ## QDateScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
+| --- | :---: | :---: | --- |
 | value | String | | v-model in the form of `YYYY-mm-dd` |
 | min-date | String | | The minimum date to display in the form of `YYYY-mm-dd` |
 | max-date | String | | The maximum date to display in the form of `YYYY-mm-dd` |
@@ -147,12 +215,143 @@ The default locale of QDateTimeScroller is **en-us**. This can easily be changed
 ## QDateRangeScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
-| value | Array | | v-model in the form of `[YYYY-mm-dd, YYYY-mm-dd]` |
+| --- | :---: | :---: | --- |
+| value | Array | - | v-model in the form of `[YYYY-mm-dd, YYYY-mm-dd]` |
 
 ## QDateTimeScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
-| --- | --- | --- | --- |
+| --- | :---: | :---: | --- |
 | value | String | | v-model in the form of `YYYY-mm-dd hh:mm` |
 
+## QTimeScroller
+
+### QTimeScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+## QTimeRangeScroller
+
+### QScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeRangeScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeRangeScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QTimeRangeScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+## QDateScroller
+
+### QDateScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+## QDateRangeScroller
+
+### QDateRangeScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateRangeScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateRangeScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateRangeScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+## QDateTimeScroller
+
+### QDateTimeScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+## QDateTimeRangeScroller
+
+### QDateTimeRangeScroller Vue Properties
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeRangeScroller Vue Events
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeRangeScroller Vue Methods
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |
+
+### QDateTimeRangeScroller Vue Slots
+
+| Property | Type | Default | Description |
+| :--- | :---: | :---: | --- |

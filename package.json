@@ -3,7 +3,6 @@
   "version": "1.0.0-alpha.1",
   "description": "QScroller App Extension",
   "author": "Hawkeye64 <jeff@quasar-framework.org>",
-  "license": "MIT",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
@@ -17,11 +16,14 @@
     "url": "git+https://github.com/quasarframework/app-extension-qscroller.git"
   },
   "homepage": "https://github.com/quasarframework/app-extension-qscroller",
+  "license": "MIT",
   "keywords": [
     "quasar",
     "app",
     "app extension",
     "extension",
+    "pickers",
+    "selection",
     "date",
     "time",
     "range"
@@ -30,6 +32,9 @@
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0",
     "yarn": ">= 1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",

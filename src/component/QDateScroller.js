@@ -1,9 +1,6 @@
 // Styles
 import './scroller.styl'
 
-// Directives
-import Resize from './directives/resize'
-
 // Mixins
 import DateTimeBase from './mixins/datetime-base'
 import Colorize from './mixins/colorize'
@@ -13,7 +10,7 @@ import ScrollerBase from './mixins/scroller-base'
 
 // Util
 import props from './utils/props'
-import { QBtn } from 'quasar'
+import { QBtn, QResizeObserver } from 'quasar'
 import {
   Timestamp,
   parsed,
@@ -31,12 +28,11 @@ import {
 export default DateTimeBase.extend({
   name: `q-date-scroller`,
 
-  directives: { Resize },
-
   mixins: [Colorize],
 
   props: {
-    ...props.date
+    ...props.date,
+    showVerticalBar: Boolean
   },
 
   data () {
@@ -240,26 +236,38 @@ export default DateTimeBase.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    height () {
+      this.adjustBodyHeight()
     }
   },
 
   methods: {
+    getTimestamp () {
+      return this.timestamp
+    },
+
     emitValue () {
       this.$emit('input', [this.year, this.month, this.day].join('-'))
     },
 
-    onResize () {
+    onResize ({ height }) {
       this.adjustBodyHeight()
     },
 
     adjustBodyHeight () {
-      this.$nextTick(() => {
-        let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-        let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-        this.headerFooterHeight = headerHeight + footerHeight
-        const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-        this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-      })
+      if (this.height !== void 0) {
+        this.bodyHeight = this.height
+      } else {
+        this.$nextTick(() => {
+          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
+          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
+          this.headerFooterHeight = headerHeight + footerHeight
+          const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
+          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
+        })
+      }
     },
 
     handleDisabledLists () {
@@ -365,6 +373,9 @@ export default DateTimeBase.extend({
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
         staticClass: 'q-scroller__body q-scroller__horizontal-bar flex',
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         style: {
           height: `${this.bodyHeight}px`
         }
@@ -373,7 +384,7 @@ export default DateTimeBase.extend({
 
     __renderHeader (h) {
       if (this.noHeader) return ''
-      const slot = this.$scopedSlots.dateHeader
+      const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
         staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
@@ -405,7 +416,7 @@ export default DateTimeBase.extend({
 
     __renderFooter (h) {
       if (this.noFooter) return ''
-      const slot = this.$slots.dateFooter
+      const slot = this.$slots.footer
       return h('div', {
         ref: 'footer',
         staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
@@ -417,13 +428,15 @@ export default DateTimeBase.extend({
   },
 
   render (h) {
+    const child = [
+      h(QResizeObserver, {
+        props: { debounce: 0 },
+        on: { resize: this.onResize }
+      })
+    ]
+
     return h('div', this.setBothColors(this.color, this.backgroundColor, {
       ref: 'scroller',
-      directives: [{
-        modifiers: { quiet: true },
-        name: 'resize',
-        value: this.onResize
-      }],
       staticClass: 'q-scroller flex',
       class: {
         'rounded-borders': this.roundedBorders === true,
@@ -432,10 +445,10 @@ export default DateTimeBase.extend({
       style: {
         '--scroller-bar-color': this.barColor
       }
-    }), [
+    }), child.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
-    ])
+    ]))
   }
 })

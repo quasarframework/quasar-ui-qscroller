@@ -1,9 +1,6 @@
 // Styles
 import './scroller.styl'
 
-// Directives
-import Resize from './directives/resize'
-
 // Mixins
 import TimeBase from './mixins/time-base'
 import Colorize from './mixins/colorize'
@@ -29,8 +26,6 @@ import {
 /* @vue/component */
 export default TimeBase.extend({
   name: `q-time-scroller`,
-
-  directives: { Resize },
 
   mixins: [Colorize],
 
