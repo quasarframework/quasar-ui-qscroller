@@ -104,6 +104,7 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 
 | Vue Property | Type | Default | Description |
 | --- | :---: | :---: | --- |
+| border-color | String | #ccc | This is the color of outside border when `no-border` is not `true`. This **has** to be a css color (not a Quasar color) or css color name |
 | bar-color | String | #ccc | This is the color of the middle bars. This **has** to be a css color (not a Quasar color) or css color name |
 | color | String | white | This is the color of the text. Applies to header and footer. It can be a css color or from the Quasar color palette |
 | background-color | String | primary | This is the color of the background. Applies to header and footer. It can be a css color or from the Quasar color palette |

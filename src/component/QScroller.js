@@ -170,6 +170,7 @@ export default Vue.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor
       }
     }), [

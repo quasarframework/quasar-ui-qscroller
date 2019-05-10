@@ -1,6 +1,7 @@
 export const view = (state) => state.view
 export const locale = (state) => state.locale
 export const roundedBorders = (state) => state.roundedBorders
+export const borderColor = (state) => state.borderColor
 export const barColor = (state) => state.barColor
 export const color = (state) => state.color
 export const backgroundColor = (state) => state.backgroundColor

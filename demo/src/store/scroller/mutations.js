@@ -7,6 +7,9 @@ export const locale = (state, locale) => {
 export const roundedBorders = (state, b) => {
   state.roundedBorders = b
 }
+export const borderColor = (state, color) => {
+  state.borderColor = color
+}
 export const barColor = (state, color) => {
   state.barColor = color
 }

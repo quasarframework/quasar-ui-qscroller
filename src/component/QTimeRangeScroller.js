@@ -157,9 +157,6 @@ export default TimeBase.extend({
       return h(QTimeScroller, {
         ref: 'startTime',
         staticClass: 'col-6',
-        style: {
-          '--scroller-bar-color': this.barColor
-        },
         props: {
           value: this.startTime,
           locale: this.locale,
@@ -297,6 +294,7 @@ export default TimeBase.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor,
         'overflow': 'hidden'
       }

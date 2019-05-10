@@ -2,6 +2,7 @@ export default {
   view: 'time',
   locale: 'en-us',
   roundedBorders: true,
+  borderColor: '#ccc',
   barColor: '#ccc',
   color: 'white',
   backgroundColor: 'primary',

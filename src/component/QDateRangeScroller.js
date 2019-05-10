@@ -159,9 +159,6 @@ export default DateTimeBase.extend({
       return h(QDateScroller, {
         ref: 'startDate',
         staticClass: 'col-6',
-        style: {
-          '--scroller-bar-color': this.barColor
-        },
         props: {
           value: this.startDate,
           locale: this.locale,
@@ -303,6 +300,7 @@ export default DateTimeBase.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor,
         'overflow': 'hidden'
       }

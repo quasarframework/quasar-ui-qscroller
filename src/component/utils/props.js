@@ -19,6 +19,10 @@ export default {
   },
   base: {
     value: [String, Array],
+    borderColor: {
+      type: String,
+      default: '#ccc'
+    },
     barColor: {
       type: String,
       default: '#ccc'

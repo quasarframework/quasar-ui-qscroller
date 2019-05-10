@@ -152,6 +152,15 @@ export default {
         this.$store.commit('scroller/roundedBorders', b)
       }
     },
+    borderColor:
+    {
+      get () {
+        return this.$store.state.scroller.borderColor
+      },
+      set (color) {
+        this.$store.commit('scroller/borderColor', color)
+      }
+    },
     barColor:
     {
       get () {
