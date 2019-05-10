@@ -138,6 +138,7 @@
           <q-time-range-scroller
             v-model="timeRange"
             :locale="locale"
+            :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
             :disable="disable"
@@ -177,6 +178,7 @@
                   <q-time-range-scroller
                     v-model="timeRangeInput"
                     :locale="locale"
+                    :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
                     :disable="disable"
