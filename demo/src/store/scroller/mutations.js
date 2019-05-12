@@ -7,6 +7,9 @@ export const locale = (state, locale) => {
 export const roundedBorders = (state, b) => {
   state.roundedBorders = b
 }
+export const borderColor = (state, color) => {
+  state.borderColor = color
+}
 export const barColor = (state, color) => {
   state.barColor = color
 }
@@ -28,6 +31,9 @@ export const noHeader = (state, b) => {
 export const noFooter = (state, b) => {
   state.noFooter = b
 }
+export const dense = (state, b) => {
+  state.dense = b
+}
 export const disable = (state, b) => {
   state.disable = b
 }
@@ -42,7 +48,7 @@ export const selectedDate = (state, date) => {
   state.selectedDate = date
 }
 export const shortDayLabel = (state, b) => {
-  state.shortMonthLabel = b
+  state.shortDayLabel = b
 }
 export const shortMonthLabel = (state, b) => {
   state.shortMonthLabel = b
@@ -51,10 +57,19 @@ export const showMonthLabel = (state, b) => {
   state.showMonthLabel = b
 }
 export const shortYearLabel = (state, b) => {
-  state.shortMonthLabel = b
+  state.shortYearLabel = b
 }
 export const showWeekdayLabel = (state, b) => {
-  state.shortMonthLabel = b
+  state.showWeekdayLabel = b
+}
+export const noYears = (state, b) => {
+  state.noYears = b
+}
+export const noMonths = (state, b) => {
+  state.noMonths = b
+}
+export const noDays = (state, b) => {
+  state.noDays = b
 }
 
 export const selectedTime = (state, time) => {

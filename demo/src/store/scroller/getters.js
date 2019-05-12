@@ -1,6 +1,7 @@
 export const view = (state) => state.view
 export const locale = (state) => state.locale
 export const roundedBorders = (state) => state.roundedBorders
+export const borderColor = (state) => state.borderColor
 export const barColor = (state) => state.barColor
 export const color = (state) => state.color
 export const backgroundColor = (state) => state.backgroundColor
@@ -8,6 +9,7 @@ export const innerColor = (state) => state.innerColor
 export const innerBackgroundColor = (state) => state.innerBackgroundColor
 export const noHeader = (state) => state.noHeader
 export const noFooter = (state) => state.noFooter
+export const dense = (state) => state.dense
 export const disable = (state) => state.disable
 export const noBorder = (state) => state.noBorder
 export const noShadow = (state) => state.noShadow

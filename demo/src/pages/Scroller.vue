@@ -15,6 +15,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -44,6 +45,7 @@
                     :items="items"
                     :noHeader="true"
                     :rounded-borders="roundedBorders"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -75,11 +77,15 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
             :hour24-format="hour24Format"
+            :no-hours="noHours"
+            :no-minutes="noMinutes"
             :disabledMinutes="disabledMinutes"
+            border-color="#FF0000"
             bar-color="#FF0000"
             color="white"
             background-color="red-6"
@@ -110,7 +116,10 @@
                     :no-footer="false"
                     :disable="disable"
                     :hour24-format="hour24Format"
+                    :no-hours="noHours"
+                    :no-minutes="noMinutes"
                     :disabledMinutes="disabledMinutes"
+                    border-color="#21ba45"
                     bar-color="#21ba45"
                     color="white"
                     background-color="green-6"
@@ -141,15 +150,21 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
+            border-color="#3f51b5"
             bar-color="#FF0000"
             color="white"
             background-color="indigo-6"
             inner-color="indigo-6"
             inner-background-color="white"
             :hour24-format="hour24Format"
+            :start-no-hours="noHours"
+            :start-no-minutes="noMinutes"
+            :end-no-hours="noHours"
+            :end-no-minutes="noMinutes"
             style="height: 280px;"
           />
         </q-card-section>
@@ -181,15 +196,21 @@
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
+                    border-color="#FF8C00"
                     bar-color="#FF8C00"
                     color="white"
                     background-color="orange-6"
                     inner-color="orange-6"
                     inner-background-color="white"
                     :hour24-format="hour24Format"
+                    :start-no-hours="noHours"
+                    :start-no-minutes="noMinutes"
+                    :end-no-hours="noHours"
+                    :end-no-minutes="noMinutes"
                     :style="scrollerPopupStyle200"
                     @close="() => { showTimeRangeScroller = false }"
                   />
@@ -210,14 +231,21 @@
           <q-date-scroller
             v-model="date1"
             :locale="locale"
-            :showMonthLabel="true"
-            :shortMonthLabel="true"
+            :short-year-label="shortYearLabel"
+            :show-month-label="showMonthLabel"
+            :short-month-label="shortMonthLabel"
+            :short-day-label="shortDayLabel"
+            :no-years="noYears"
+            :no-months="noMonths"
+            :no-days="noDays"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
+            border-color="#607d8b"
             bar-color="#FFFF00"
             color="blue-grey-6"
             background-color="white"
@@ -243,12 +271,21 @@
                   <q-date-scroller
                     v-model="date1"
                     :locale="locale"
+                    :short-year-label="shortYearLabel"
+                    :show-month-label="showMonthLabel"
+                    :short-month-label="shortMonthLabel"
+                    :short-day-label="shortDayLabel"
+                    :no-years="noYears"
+                    :no-months="noMonths"
+                    :no-days="noDays"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
+                    border-color="#607d8b"
                     bar-color="grey"
                     color="grey-3"
                     background-color="grey-8"
@@ -275,15 +312,24 @@
           <q-date-time-scroller
             v-model="dateTime1"
             :locale="locale"
+            :short-year-label="shortYearLabel"
+            :show-month-label="showMonthLabel"
+            :short-month-label="shortMonthLabel"
+            :short-day-label="shortDayLabel"
+            :no-years="noYears"
+            :no-months="noMonths"
+            :no-days="noDays"
             :hour24-format="hour24Format"
-            :showMonthLabel="true"
-            :shortMonthLabel="true"
+            :no-hours="noHours"
+            :no-minutes="noMinutes"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
+            border-color="#009688"
             bar-color="#FFFF00"
             color="teal-6"
             background-color="white"
@@ -310,20 +356,29 @@
                   <q-date-time-scroller
                     v-model="dateTime1"
                     :locale="locale"
+                    :short-year-label="shortYearLabel"
+                    :show-month-label="showMonthLabel"
+                    :short-month-label="shortMonthLabel"
+                    :short-day-label="shortDayLabel"
+                    :no-years="noYears"
+                    :no-months="noMonths"
+                    :no-days="noDays"
+                    :hour24-format="hour24Format"
+                    :no-hours="noHours"
+                    :no-minutes="noMinutes"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
+                    border-color="#795548"
                     bar-color="#FFFF00"
                     color="brown-6"
                     background-color="white"
                     inner-color="white"
                     inner-background-color="brown-6"
-                    :showMonthLabel="true"
-                    :shortMonthLabel="true"
-                    :hour24-format="hour24Format"
                     :style="scrollerPopupStyle280"
                     @close="() => { showDateTimeScroller = false }"
                   />
@@ -354,12 +409,15 @@
                 :disable="disable"
                 :no-border="true"
                 :no-shadow="noShadow"
+                border-color="#FF0000"
                 bar-color="#FF0000"
                 color="white"
                 background-color="red-6"
                 inner-color="red"
                 inner-background-color="white"
                 :hour24-format="hour24Format"
+                :no-hours="noHours"
+                :no-minutes="noMinutes"
                 start-min-time="05:00"
                 end-max-time="24:00"
                 style="height: 280px;"
@@ -374,12 +432,15 @@
                 :disable="disable"
                 :no-border="true"
                 :no-shadow="noShadow"
+                border-color="#FF0000"
                 bar-color="#FF0000"
                 color="white"
                 background-color="red-6"
                 inner-color="red"
                 inner-background-color="white"
                 :hour24-format="hour24Format"
+                :no-hours="noHours"
+                :no-minutes="noMinutes"
                 style="height: 280px;"
               />
             </div>
@@ -405,6 +466,7 @@
                 :disable="disable"
                 :no-border="true"
                 :no-shadow="noShadow"
+                border-color="#FFFF00"
                 bar-color="#FFFF00"
                 color="teal-6"
                 background-color="white"
@@ -422,6 +484,7 @@
                 :disable="disable"
                 :no-border="true"
                 :no-shadow="noShadow"
+                border-color="#FFFF00"
                 bar-color="#FFFF00"
                 color="teal-6"
                 background-color="white"
@@ -504,9 +567,20 @@ export default {
       noHeader: 'scroller/noHeader',
       noFooter: 'scroller/noFooter',
       disable: 'scroller/disable',
+      dense: 'scroller/dense',
       noBorder: 'scroller/noBorder',
       noShadow: 'scroller/noShadow',
-      hour24Format: 'scroller/hour24Format'
+      hour24Format: 'scroller/hour24Format',
+      noHours: 'scroller/noHours',
+      noMinutes: 'scroller/noMinutes',
+      shortYearLabel: 'scroller/shortYearLabel',
+      shortMonthLabel: 'scroller/shortMonthLabel',
+      showMonthLabel: 'scroller/showMonthLabel',
+      shortDayLabel: 'scroller/shortDayLabel',
+      showWeekdayLabel: 'scroller/showWeekdayLabel',
+      noYears: 'scroller/noYears',
+      noMonths: 'scroller/noMonths',
+      noDays: 'scroller/noDays'
     }),
 
     items () {
@@ -585,15 +659,6 @@ export default {
     }
   },
   watch: {
-    time () {
-      console.log('time changed:', this.time)
-    },
-    noHeader (val) {
-      console.log('noHeader', val)
-    },
-    noFooter (val) {
-      console.log('noFooter', val)
-    },
     scrollerModel (val) {
       this.data = this.data.map(item => {
         item.iconRight = ''

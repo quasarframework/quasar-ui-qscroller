@@ -186,6 +186,10 @@ export default TimeBase.extend({
 
     height () {
       this.adjustBodyHeight()
+    },
+
+    dense () {
+      this.adjustBodyHeight()
     }
   },
 
@@ -248,12 +252,13 @@ export default TimeBase.extend({
     __renderHoursScroller (h) {
       return h(ScrollerBase, {
         props: {
-          height: this.bodyHeight,
-          color: this.innerColor,
-          backgroundColor: this.innerBackgroundColor,
           value: this.hour,
           items: this.hoursList,
-          disable: this.disable
+          height: this.bodyHeight,
+          dense: this.dense,
+          disable: this.disable,
+          color: this.innerColor,
+          backgroundColor: this.innerBackgroundColor
         },
         on: {
           input: (val) => { this.hour = val }
@@ -267,6 +272,7 @@ export default TimeBase.extend({
           value: this.minute,
           items: this.minutesList,
           height: this.bodyHeight,
+          dense: this.dense,
           disable: this.disable,
           color: this.innerColor,
           backgroundColor: this.innerBackgroundColor
@@ -283,6 +289,7 @@ export default TimeBase.extend({
           value: this.ampm,
           items: this.ampmList,
           height: this.bodyHeight,
+          dense: this.dense,
           disable: this.disable,
           color: this.innerColor,
           backgroundColor: this.innerBackgroundColor
@@ -303,7 +310,7 @@ export default TimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width',
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
         },
@@ -318,7 +325,7 @@ export default TimeBase.extend({
       const slot = this.$scopedSlots.timeHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
@@ -352,7 +359,7 @@ export default TimeBase.extend({
       const slot = this.$slots.timeFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }
@@ -378,6 +385,7 @@ export default TimeBase.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor
       }
     }), child.concat([

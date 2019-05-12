@@ -14,11 +14,16 @@ export default {
       type: [Number, String],
       required: true
     },
+    dense: Boolean,
     disabledItems: Array,
     disable: Boolean
   },
   base: {
     value: [String, Array],
+    borderColor: {
+      type: String,
+      default: '#ccc'
+    },
     barColor: {
       type: String,
       default: '#ccc'
@@ -39,6 +44,7 @@ export default {
       type: String,
       default: 'white'
     },
+    dense: Boolean,
     disable: Boolean,
     roundedBorders: Boolean,
     noBorder: Boolean,
@@ -75,7 +81,7 @@ export default {
     showMonthLabel: Boolean,
     showWeekdayLabel: Boolean,
     noDays: Boolean,
-    noMonth: Boolean,
+    noMonths: Boolean,
     noYears: Boolean
   },
   time: {

@@ -53,6 +53,10 @@ export default Vue.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    dense () {
+      this.adjustBodyHeight()
     }
   },
 
@@ -83,7 +87,7 @@ export default Vue.extend({
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
@@ -117,7 +121,7 @@ export default Vue.extend({
       const slot = this.$slots.footer
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }
@@ -132,6 +136,7 @@ export default Vue.extend({
           value: this.value,
           items: this.items,
           height: this.bodyHeight,
+          dense: this.dense,
           disable: this.disable,
           color: this.innerColor,
           backgroundColor: this.innerBackgroundColor
@@ -146,7 +151,7 @@ export default Vue.extend({
     __renderBody (h) {
       // container that wraps all the scroller in flex, unless noScroller is true
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex full-width',
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
         style: {
           height: `${this.bodyHeight}px`
         }
@@ -170,6 +175,7 @@ export default Vue.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor
       }
     }), [

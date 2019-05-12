@@ -81,6 +81,10 @@ export default DateTimeBase.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    dense () {
+      this.adjustBodyHeight()
     }
   },
 
@@ -122,7 +126,7 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
@@ -144,22 +148,26 @@ export default DateTimeBase.extend({
           backgroundColor: this.backgroundColor,
           innerColor: this.innerColor,
           innerBackgroundColor: this.innerBackgroundColor,
+          dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
           noFooter: true,
-          hour24Format: this.hour24Format,
-          minuteInterval: this.minuteInterval,
-          hourInterval: this.hourInterval,
-          shortTimeLabel: this.shortTimeLabel,
-          disabledHours: this.disabledHours,
-          disabledMinutes: this.disabledMinutes,
-          noMinutes: this.noMinutes,
-          noHours: this.noHours,
-          hours: this.hours,
-          minutes: this.minutes,
-          minTime: this.minTime,
-          maxTime: this.maxTime,
+          minDate: this.minDate,
+          maxDate: this.maxDate,
+          dates: this.dates,
+          disabledDate: this.disabledDates,
+          disabledYears: this.disabledYears,
+          disabledMonths: this.disabledMonths,
+          disabledDays: this.disabledDays,
+          shortYearLabel: this.shortYearLabel,
+          shortMonthLabel: this.shortMonthLabel,
+          shortDayLabel: this.shortDayLabel,
+          showMonthLabel: this.showMonthLabel,
+          showWeekdayLabel: this.showWeekdayLabel,
+          noYears: this.noYears,
+          noMonths: this.noMonths,
+          noDays: this.noDays,
           height: this.bodyHeight
         },
         on: {
@@ -180,6 +188,7 @@ export default DateTimeBase.extend({
           backgroundColor: this.backgroundColor,
           innerColor: this.innerColor,
           innerBackgroundColor: this.innerBackgroundColor,
+          dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
@@ -214,7 +223,7 @@ export default DateTimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width'
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`
       }), [
         this.__renderScrollers(h)
       ])
@@ -245,7 +254,7 @@ export default DateTimeBase.extend({
       const slot = this.$slots.timeFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }
@@ -271,6 +280,7 @@ export default DateTimeBase.extend({
         'q-scroller--border': this.noBorder !== true
       },
       style: {
+        '--scroller-border-color': this.borderColor,
         '--scroller-bar-color': this.barColor,
         'overflow': 'hidden'
       }

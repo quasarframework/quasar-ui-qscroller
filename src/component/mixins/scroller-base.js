@@ -33,7 +33,9 @@ const { getScrollPosition, setScrollPosition } = scroll
   Alternatively, it can be a list of strings
 */
 
+// this needs to match scroller.styl values
 const ITEM_HEIGHT = 26
+const ITEM_HEIGHT_DENSE = 21
 
 export default Vue.extend({
   name: 'scroller-base',
@@ -65,7 +67,7 @@ export default Vue.extend({
 
   watch: {
     height () {
-      this.adjustColumnPadding()
+      this.adjustColumnPadding(true)
     },
 
     value () {
@@ -73,7 +75,12 @@ export default Vue.extend({
     },
 
     items () {
-      this.adjustColumnPadding()
+      this.adjustColumnPadding(true)
+      this.updatePosition()
+    },
+
+    dense () {
+      this.adjustColumnPadding(true)
       this.updatePosition()
     }
   },
@@ -86,11 +93,13 @@ export default Vue.extend({
     move (dir) {
       if (this.noScrollEvent === false && (dir === 1 || dir === -1)) {
         if (this.disable !== true && this.canScroll(dir)) {
-          const selected = this.$el.querySelector('.q-scroller__item--selected')
+          const klass = `.q-scroller__item--selected${this.dense ? '--dense' : ''}`
+          const selected = this.$el.querySelector(klass)
           if (selected) {
-            selected.classList.remove('q-scroller__item--selected')
+            selected.classList.remove(klass)
           }
-          const pos = getScrollPosition(this.$el) + (ITEM_HEIGHT * dir)
+          const itemHeight = selected ? selected.clientHeight : this.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
+          const pos = getScrollPosition(this.$el) + (itemHeight * dir)
           setScrollPosition(this.$el, pos, 50)
           return true
         }
@@ -99,7 +108,7 @@ export default Vue.extend({
     },
 
     onResize () {
-      this.adjustColumnPadding()
+      this.adjustColumnPadding(true)
     },
 
     canScroll (dir) {
@@ -113,19 +122,30 @@ export default Vue.extend({
       return false // nothing to scroll
     },
 
-    adjustColumnPadding () {
-      const run = (padding) => {
-        this.columnPadding = {
+    adjustColumnPadding (immediate = false) {
+      let self = this
+      const setPadding = (padding) => {
+        self.columnPadding = {
           height: `${padding}px`
         }
       }
-      this.$nextTick(() => {
-        const height = this.height || this.$parent.$el.clientHeight
-        this.padding = height / 2 - (ITEM_HEIGHT / 2)
-        if (!isNaN(this.padding) && this.padding > 0) {
-          run(this.padding)
+
+      const getPadding = () => {
+        const itemHeight = self.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
+        const height = self.height || self.$el.clientHeight
+        self.padding = (height / 2) - (itemHeight / 2)
+        if (!isNaN(self.padding) && self.padding > 0) {
+          setPadding(self.padding)
         }
-      })
+      }
+
+      if (immediate) {
+        getPadding()
+      } else {
+        this.$nextTick(() => {
+          getPadding()
+        })
+      }
     },
 
     wheelEvent (event) {
@@ -142,7 +162,8 @@ export default Vue.extend({
 
     getItemIndexFromEvent (event) {
       const top = event.target.scrollTop
-      return Math.floor(top / ITEM_HEIGHT)
+      const itemHeight = this.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
+      return Math.floor(top / itemHeight)
     },
 
     scrollEvent: debounce(function (event) {
@@ -166,32 +187,32 @@ export default Vue.extend({
     },
 
     updatePosition () {
+      let self = this
       this.noScrollEvent = true
       setTimeout(() => {
-        const selected = this.$el.querySelector('.q-scroller__item--selected')
+        const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
+        const selected = self.$el.querySelector(klass)
         if (selected) {
-          const selectedOffsetTop = selected.offsetTop - this.padding + ITEM_HEIGHT
-          const clientHeight = selected.clientHeight
-          const pos = selectedOffsetTop - (clientHeight / 2) - (ITEM_HEIGHT / 2)
-          setScrollPosition(this.$el, pos, 150)
+          setTimeout(() => {
+            const pos = selected.offsetTop - this.padding
+            setScrollPosition(self.$el, pos, 150)
+            self.noScrollEvent = false
+          }, 150)
         }
-        this.noScrollEvent = false
-      }, 0)
+      }, 10)
     },
 
     // -------------------------------
     // render functions
     // -------------------------------
     __renderItem (h, item) {
-      // let data = item
-      // if (typeof item !== 'object' && typeof item === 'string') {
-      //   data = { value: item, disable: false }
-      // }
       return h(QBtn, {
-        staticClass: 'q-scroller__item justify-center align-center',
+        staticClass: `q-scroller__item${this.dense ? '--dense' : ''} justify-center align-center`,
         class: {
-          'q-scroller__item--selected': item.value === this.value || item.display === this.value,
-          'q-scroller__item--disabled': this.disable === true || item.disabled === true
+          'q-scroller__item--selected': !this.dense && (item.value === this.value || item.display === this.value),
+          'q-scroller__item--disabled': !this.dense && (this.disable === true || item.disabled === true),
+          'q-scroller__item--selected--dense': this.dense && (item.value === this.value || item.display === this.value),
+          'q-scroller__item--disabled--dense': this.dense && (this.disable === true || item.disabled === true)
         },
         key: item.item,
         props: {
