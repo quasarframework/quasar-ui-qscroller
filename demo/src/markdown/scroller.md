@@ -40,7 +40,7 @@ You can use:
 Can be found [here](https://github.com/quasarframework/app-extension-qscroller/tree/master/demo).
 
 # Demo
-Can be found [here](/#/demo).
+Can be found [here](/app-extension-qscroller/#/demo).
 
 ---
 
