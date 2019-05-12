@@ -14,6 +14,7 @@ export default {
       type: [Number, String],
       required: true
     },
+    dense: Boolean,
     disabledItems: Array,
     disable: Boolean
   },
@@ -43,6 +44,7 @@ export default {
       type: String,
       default: 'white'
     },
+    dense: Boolean,
     disable: Boolean,
     roundedBorders: Boolean,
     noBorder: Boolean,

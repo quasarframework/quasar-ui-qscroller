@@ -32,6 +32,11 @@
     ></q-toggle>
     <q-toggle
       class="col-12"
+      v-model="dense"
+      label="Dense"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
       v-model="disable"
       label="Disable"
     ></q-toggle>
@@ -222,6 +227,14 @@ export default {
       },
       set (b) {
         this.$store.commit('scroller/noFooter', b)
+      }
+    },
+    dense: {
+      get () {
+        return this.$store.state.scroller.dense
+      },
+      set (b) {
+        this.$store.commit('scroller/dense', b)
       }
     },
     disable: {

@@ -10,6 +10,7 @@ export default {
   innerBackgroundColor: 'primary',
   noHeader: false,
   noFooter: true,
+  dense: true,
   disable: false,
   noBorder: false,
   noShadow: false,

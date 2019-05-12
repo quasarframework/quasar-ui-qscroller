@@ -31,6 +31,9 @@ export const noHeader = (state, b) => {
 export const noFooter = (state, b) => {
   state.noFooter = b
 }
+export const dense = (state, b) => {
+  state.dense = b
+}
 export const disable = (state, b) => {
   state.disable = b
 }

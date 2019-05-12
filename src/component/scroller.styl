@@ -1,5 +1,18 @@
 $item-height = 26px
-$half-height = 13px
+$selected-font-size = 18px
+$font-size = 14px
+$header-font-size = 22px
+$header-height = 50px
+$footer-height = 50px
+$footer-font-size = 14px
+
+$item-height-dense = 20px
+$selected-font-size-dense = 14px
+$font-size-dense = 11px
+$header-font-size-dense = 17px
+$header-height-dense = 40px
+$footer-height-dense = 40px
+$footer-font-size-dense = 11px
 
 .no-scrollbars
   -ms-overflow-style none
@@ -9,8 +22,7 @@ $half-height = 13px
 
 .q-scroller
   position relative
-  min-height 100px
-  min-width 100px
+
   overflow hidden
   transition all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
   &--border
@@ -18,18 +30,40 @@ $half-height = 13px
   &__header
     position relative
     z-index 1
-    height 50px
+    height $header-height
+    // padding 4px
+    padding 0
+    margin 0
     font-weight 700
-    font-size 22px
+    font-size $header-font-size
+  &__header--dense
+    position relative
+    z-index 1
+    height $header-height-dense
+    // padding 2px
+    padding 0
+    margin 0
+    font-weight 700
+    font-size $header-font-size-dense
   &__footer
     position relative
     z-index 1
-    height 50px
-    padding 4px
+    height $footer-height
+    // padding 4px
+    padding 0
+    margin 0
     font-weight 700
-    font-size 14px
+    font-size $footer-font-size
+  &__footer--dense
+    position relative
+    z-index 1
+    height $footer-height-dense
+    // padding 2px
+    padding 0
+    margin 0
+    font-weight 700
+    font-size $footer-font-size-dense
   &__padding
-    min-height 1px
     padding 0
     margin 0
     width 100%
@@ -37,13 +71,30 @@ $half-height = 13px
     overflow-y hidden
   &__horizontal-bar
     position relative
+    // regular
     &:before
       content ""
       top calc(50% - 13px)
       position absolute
       margin 0 auto
       height $item-height
-      width 85%
+      width 90%
+      left 0
+      right 0
+      box-sizing border-box
+      text-align left
+      border-top 1px solid var(--scroller-bar-color, #ccc)
+      border-bottom 1px solid var(--scroller-bar-color, #ccc)
+  &__horizontal-bar--dense
+    position relative
+    // dense
+    &:before
+      content ""
+      top calc(50% - 10px)
+      position absolute
+      margin 0 auto
+      height $item-height-dense
+      width 90%
       left 0
       right 0
       box-sizing border-box
@@ -52,35 +103,54 @@ $half-height = 13px
       border-bottom 1px solid var(--scroller-bar-color, #ccc)
   &__vertical-bar
     border-right 1px solid var(--scroller-bar-color, #ccc)
-  &__set-btn
-    font-size inherit
   &__cancel-btn
     font-size inherit
-  &-base
-  margin 0 2px
   &__padding
-    min-height 1px
     padding 0
     margin 0
     width 100%
+    pointer-events none
   &__item
     height $item-height
     min-height $item-height
+    max-height $item-height
     padding 0
     margin 0
     width 100%
     opacity 0.8
-    font-weight 600
-    font-size 14px
-    line-height 14px
+    // font-weight 600
+    font-size $font-size
+    line-height $font-size
     &--selected
       background-color transparent
       border-radius 4px
       opacity 1
-      font-weight 800
-      font-size 18px
-      line-height 18px
+      font-weight 800 !important
+      font-size $selected-font-size !important
+      line-height $selected-font-size !important
     &--disabled
       pointer-events none
       opacity 0.3
       font-weight 300
+    &--selected--dense
+      background-color transparent
+      border-radius 4px
+      opacity 1
+      font-weight 800 !important
+      font-size $selected-font-size-dense !important
+      line-height $selected-font-size-dense !important
+    &--disabled--dense
+      pointer-events none
+      opacity 0.2
+      font-weight 300
+  &__item--dense
+    height $item-height-dense
+    min-height $item-height-dense
+    max-height $item-height-dense
+    padding 0
+    margin 0
+    width 100%
+    opacity 0.8
+    //font-weight 600
+    font-size $font-size-dense
+    line-height $font-size-dense

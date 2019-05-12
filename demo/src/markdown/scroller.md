@@ -110,6 +110,7 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | background-color | String | primary | This is the color of the background. Applies to header and footer. It can be a css color or from the Quasar color palette |
 | inner-color | String | primary | This is the color of the scroller text. It can be a css color or from the Quasar color palette |
 | inner-background-color | String | white | This is the color of the scroller background. It can be a css color or from the Quasar color palette |
+| dense | Boolean | | If the component should be in dense mode |
 | disable | Boolean | | If the component should be disabled |
 | rounded-border | Boolean | | If the component should have rounded corners |
 | no-border | Boolean | | If the component should not have a border |

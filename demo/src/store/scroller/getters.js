@@ -9,6 +9,7 @@ export const innerColor = (state) => state.innerColor
 export const innerBackgroundColor = (state) => state.innerBackgroundColor
 export const noHeader = (state) => state.noHeader
 export const noFooter = (state) => state.noFooter
+export const dense = (state) => state.dense
 export const disable = (state) => state.disable
 export const noBorder = (state) => state.noBorder
 export const noShadow = (state) => state.noShadow

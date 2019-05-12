@@ -203,7 +203,7 @@ export default DateTimeBase.extend({
         const year = parseInt(this.year)
         // if the month changed and current day does not exist
         // then set to last day of the month. For instance,
-        // Jan 31, then switched to Feb
+        // Jan 31, then switched to Feb 28
         const oldDays = daysInMonth(year, om)
         const newDays = daysInMonth(year, nm)
         // the decision
@@ -239,6 +239,10 @@ export default DateTimeBase.extend({
     },
 
     height () {
+      this.adjustBodyHeight()
+    },
+
+    dense () {
       this.adjustBodyHeight()
     }
   },
@@ -318,12 +322,13 @@ export default DateTimeBase.extend({
     __renderYearsScroller (h) {
       return h(ScrollerBase, {
         props: {
-          height: this.bodyHeight,
-          color: this.innerColor,
-          backgroundColor: this.innerBackgroundColor,
           value: this.year,
           items: this.yearsList,
-          disable: this.disable
+          dense: this.dense,
+          disable: this.disable,
+          height: this.bodyHeight,
+          color: this.innerColor,
+          backgroundColor: this.innerBackgroundColor
         },
         on: {
           input: (val) => { this.year = val }
@@ -334,12 +339,13 @@ export default DateTimeBase.extend({
     __renderMonthsScroller (h) {
       return h(ScrollerBase, {
         props: {
-          height: this.bodyHeight,
-          color: this.innerColor,
-          backgroundColor: this.innerBackgroundColor,
           value: this.month,
           items: this.monthsList,
-          disable: this.disable
+          dense: this.dense,
+          disable: this.disable,
+          height: this.bodyHeight,
+          color: this.innerColor,
+          backgroundColor: this.innerBackgroundColor
         },
         on: {
           input: (val) => { this.month = val }
@@ -350,12 +356,13 @@ export default DateTimeBase.extend({
     __renderDaysScroller (h) {
       return h(ScrollerBase, {
         props: {
-          height: this.bodyHeight,
-          color: this.innerColor,
-          backgroundColor: this.innerBackgroundColor,
           value: this.day,
           items: this.daysList,
-          disable: this.disable
+          dense: this.dense,
+          disable: this.disable,
+          height: this.bodyHeight,
+          color: this.innerColor,
+          backgroundColor: this.innerBackgroundColor
         },
         on: {
           input: (val) => { this.day = val }
@@ -372,7 +379,7 @@ export default DateTimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar flex',
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
         },
@@ -387,7 +394,7 @@ export default DateTimeBase.extend({
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-center items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
@@ -419,7 +426,7 @@ export default DateTimeBase.extend({
       const slot = this.$slots.footer
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }

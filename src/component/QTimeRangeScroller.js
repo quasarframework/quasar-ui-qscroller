@@ -69,6 +69,10 @@ export default TimeBase.extend({
 
     noFooter () {
       this.adjustBodyHeight()
+    },
+
+    dense () {
+      this.adjustBodyHeight()
     }
   },
 
@@ -144,7 +148,7 @@ export default TimeBase.extend({
       const slot = this.$scopedSlots.timeHeader
       return h('div', {
         ref: 'header',
-        staticClass: 'q-scroller__header flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
@@ -166,6 +170,7 @@ export default TimeBase.extend({
           backgroundColor: this.backgroundColor,
           innerColor: this.innerColor,
           innerBackgroundColor: this.innerBackgroundColor,
+          dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
@@ -203,6 +208,7 @@ export default TimeBase.extend({
           backgroundColor: this.backgroundColor,
           innerColor: this.innerColor,
           innerBackgroundColor: this.innerBackgroundColor,
+          dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
@@ -237,7 +243,7 @@ export default TimeBase.extend({
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerBackgroundColor, {
-        staticClass: 'q-scroller__body q-scroller__horizontal-bar row full-width'
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`
       }), [
         this.__renderScrollers(h)
       ])
@@ -268,7 +274,7 @@ export default TimeBase.extend({
       const slot = this.$slots.timeFooter
       return h('div', {
         ref: 'footer',
-        staticClass: 'q-scroller__footer flex justify-around items-center full-width q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }

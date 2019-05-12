@@ -15,6 +15,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -44,6 +45,7 @@
                     :items="items"
                     :noHeader="true"
                     :rounded-borders="roundedBorders"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -75,6 +77,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -147,6 +150,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -192,6 +196,7 @@
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -236,6 +241,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -275,6 +281,7 @@
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -318,6 +325,7 @@
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
             :no-footer="noFooter"
+            :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
@@ -361,6 +369,7 @@
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
                     :no-footer="false"
+                    :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
@@ -558,6 +567,7 @@ export default {
       noHeader: 'scroller/noHeader',
       noFooter: 'scroller/noFooter',
       disable: 'scroller/disable',
+      dense: 'scroller/dense',
       noBorder: 'scroller/noBorder',
       noShadow: 'scroller/noShadow',
       hour24Format: 'scroller/hour24Format',
@@ -649,15 +659,6 @@ export default {
     }
   },
   watch: {
-    time () {
-      console.log('time changed:', this.time)
-    },
-    noHeader (val) {
-      console.log('noHeader', val)
-    },
-    noFooter (val) {
-      console.log('noFooter', val)
-    },
     scrollerModel (val) {
       this.data = this.data.map(item => {
         item.iconRight = ''
