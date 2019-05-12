@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-app-extension-qscroller",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "QScroller App Extension",
   "author": "Hawkeye64 <jeff@quasar-framework.org>",
   "main": "src/index.js",
