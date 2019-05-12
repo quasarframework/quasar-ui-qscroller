@@ -132,10 +132,10 @@ export default TimeBase.extend({
     },
 
     isValidTime (time) {
-      let parts = time.split(':')
+      const parts = time.split(':')
       if (parts.length === 2) {
-        let hour = parseInt(parts[0])
-        let minute = parseInt(parts[1])
+        const hour = parseInt(parts[0])
+        const minute = parseInt(parts[1])
         if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
           return true
         }
@@ -145,7 +145,7 @@ export default TimeBase.extend({
 
     __renderHeader (h) {
       if (this.noHeader) return ''
-      const slot = this.$scopedSlots.timeHeader
+      const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
         staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
@@ -271,7 +271,7 @@ export default TimeBase.extend({
 
     __renderFooter (h) {
       if (this.noFooter) return ''
-      const slot = this.$slots.timeFooter
+      const slot = this.$slots.footer
       return h('div', {
         ref: 'footer',
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',

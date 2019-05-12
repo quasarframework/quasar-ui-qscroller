@@ -245,12 +245,12 @@
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
-            border-color="#607d8b"
-            bar-color="#FFFF00"
-            color="blue-grey-6"
+            border-color="#33691e"
+            bar-color="#33691e"
+            color="light-green-6"
             background-color="white"
             inner-color="white"
-            inner-background-color="blue-grey-6"
+            inner-background-color="light-green-6"
             style="height: 280px;"
           />
         </q-card-section>
@@ -264,7 +264,7 @@
         <q-separator />
         <q-card-section>
 
-          <q-input color="grey-8" filled v-model="date1" label="Enter date" mask="####-##-##">
+          <q-input color="deep-orange-8" filled v-model="date1" label="Enter date" mask="####-##-##">
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
                 <q-popup-proxy v-model="showDateScroller">
@@ -285,12 +285,12 @@
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
-                    border-color="#607d8b"
-                    bar-color="grey"
-                    color="grey-3"
-                    background-color="grey-8"
-                    inner-color="grey-8"
-                    inner-background-color="grey-3"
+                    border-color="#e64a19"
+                    bar-color="#e64a19"
+                    color="deep-orange-3"
+                    background-color="deep-orange-8"
+                    inner-color="deep-orange-8"
+                    inner-background-color="deep-orange-3"
                     :style="scrollerPopupStyle160"
                     @close="() => { showDateScroller = false }"
                   />
@@ -301,6 +301,105 @@
 
         </q-card-section>
       </q-card>
+
+      <!-- --- -->
+
+      <q-card style="width: 100%; max-width: 292px;">
+        <q-card-section>
+          <div class="text-h6">QDateRangeScroller</div>
+          <div class="text-subtitle2">Date Range Selection</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+          <q-date-range-scroller
+            v-model="dateRange"
+            :locale="locale"
+            :rounded-borders="roundedBorders"
+            :no-header="noHeader"
+            :no-footer="false"
+            :dense="dense"
+            :disable="disable"
+            :no-border="noBorder"
+            :no-shadow="noShadow"
+            border-color="#607d8b"
+            bar-color="#FFFF00"
+            color="blue-grey-6"
+            background-color="white"
+            inner-color="white"
+            inner-background-color="blue-grey-6"
+            :start-short-year-label="shortYearLabel"
+            :start-show-month-label="showMonthLabel"
+            :start-short-month-label="shortMonthLabel"
+            :start-short-day-label="shortDayLabel"
+            :start-no-years="noYears"
+            :start-no-months="noMonths"
+            :start-no-days="noDays"
+            :end-short-year-label="shortYearLabel"
+            :end-show-month-label="showMonthLabel"
+            :end-short-month-label="shortMonthLabel"
+            :end-short-day-label="shortDayLabel"
+            :end-no-years="noYears"
+            :end-no-months="noMonths"
+            :end-no-days="noDays"
+            style="height: 280px;"
+          />
+        </q-card-section>
+      </q-card>
+
+      <q-card style="width: 100%; max-width: 292px;">
+        <q-card-section>
+          <div class="text-h6">QDateRangeScroller</div>
+          <div class="text-subtitle2">Using QInput</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+
+          <q-input color="grey-8" filled v-model="dateRangeInput" label="Enter date range" mask="####-##-## - ####-##-##">
+            <template v-slot:append>
+              <q-icon name="far fa-calendar" class="cursor-pointer">
+                <q-popup-proxy v-model="showDateRangeScroller">
+                  <q-date-range-scroller
+                    v-model="dateRangeInput"
+                    :locale="locale"
+                    :rounded-borders="roundedBorders"
+                    :no-header="noHeader"
+                    :no-footer="false"
+                    :dense="dense"
+                    :disable="disable"
+                    :no-border="noBorder"
+                    :no-shadow="noShadow"
+                    border-color="#795548"
+                    bar-color="#795548"
+                    color="yellow-6"
+                    background-color="brown-6"
+                    inner-color="brown-6"
+                    inner-background-color="yellow-6"
+                    :start-short-year-label="shortYearLabel"
+                    :start-show-month-label="showMonthLabel"
+                    :start-short-month-label="shortMonthLabel"
+                    :start-short-day-label="shortDayLabel"
+                    :start-no-years="noYears"
+                    :start-no-months="noMonths"
+                    :start-no-days="noDays"
+                    :end-short-year-label="shortYearLabel"
+                    :end-show-month-label="showMonthLabel"
+                    :end-short-month-label="shortMonthLabel"
+                    :end-short-day-label="shortDayLabel"
+                    :end-no-years="noYears"
+                    :end-no-months="noMonths"
+                    :end-no-days="noDays"
+                    style="height: 280px; width: 280px;"
+                    @close="() => { showDateRangeScroller = false }"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+
+        </q-card-section>
+      </q-card>
+
+      <!-- --- -->
 
       <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
@@ -390,6 +489,8 @@
 
         </q-card-section>
       </q-card>
+
+      <!-- --- -->
 
       <!-- <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
@@ -516,6 +617,7 @@ export default {
       showTimeScroller: false,
       showTimeRangeScroller: false,
       showDateScroller: false,
+      showDateRangeScroller: false,
       showDateTimeScroller: false,
       time1: '11:05',
       time2: '05:15',
@@ -526,6 +628,8 @@ export default {
       dateTime1: '2019-05-10 06:30',
       timeRange: ['09:05', '23:30'],
       timeRangeInput: '09:05 - 23:30',
+      dateRange: ['2019-08-08', '2019-09-04'],
+      dateRangeInput: '2019-08-08 - 2019-09-04',
       disabledMinutes: [1, 2, 5, 6, 7, 8, 9],
       data: [
         { value: 'Anteater', noCaps: true, iconRight: '', disabled: false, align: 'around' },

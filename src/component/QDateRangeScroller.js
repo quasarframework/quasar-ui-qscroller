@@ -6,6 +6,9 @@ import QDateScroller from './QDateScroller'
 // Util
 import props from './utils/props'
 import { QBtn, QResizeObserver } from 'quasar'
+import {
+  daysInMonth
+} from './utils/timestamp'
 
 /* @vue/component */
 export default DateTimeBase.extend({
@@ -21,8 +24,8 @@ export default DateTimeBase.extend({
     return {
       headerFooterHeight: 100,
       bodyHeight: 100,
-      dateStart: '',
-      dateEnd: '',
+      startDate: '',
+      endDate: '',
       type: null
     }
   },
@@ -39,7 +42,7 @@ export default DateTimeBase.extend({
   },
 
   computed: {
-    displayDtae () {
+    displayDate () {
       if (this.startDate !== void 0 && this.endDate !== void 0) {
         if (this.$refs.startDate && this.$refs.endDate) {
           return this.$refs.startDate.displayDate + this.displaySeparator + this.$refs.endDate.displayDate
@@ -55,10 +58,6 @@ export default DateTimeBase.extend({
       this.splitDate()
     },
 
-    dense () {
-      this.adjustBodyHeight()
-    },
-
     startDate () {
       this.emitValue()
     },
@@ -72,6 +71,10 @@ export default DateTimeBase.extend({
     },
 
     noFooter () {
+      this.adjustBodyHeight()
+    },
+
+    dense () {
       this.adjustBodyHeight()
     }
   },
@@ -132,13 +135,13 @@ export default DateTimeBase.extend({
     },
 
     isValidDate (date) {
-      let parts = date.split('-')
+      const parts = date.split('-')
       if (parts.length === 3) {
-        let year = parseInt(parts[0])
-        let month = parseInt(parts[1])
-        let day = parseInt(parts[2])
-        // TODO...
-        if (year !== 0 && month > 0 && month <= 12 && day >= 1 && day <= 31) {
+        const year = parseInt(parts[0])
+        const month = parseInt(parts[1])
+        const day = parseInt(parts[2])
+        const daysInM = daysInMonth(year, month)
+        if (year !== 0 && month > 0 && month <= 12 && day > 0 && day <= daysInM) {
           return true
         }
       }
@@ -147,7 +150,7 @@ export default DateTimeBase.extend({
 
     __renderHeader (h) {
       if (this.noHeader) return ''
-      const slot = this.$scopedSlots.dateHeader
+      const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
         staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
@@ -277,7 +280,7 @@ export default DateTimeBase.extend({
 
     __renderFooter (h) {
       if (this.noFooter) return ''
-      const slot = this.$slots.dateFooter
+      const slot = this.$slots.footer
       return h('div', {
         ref: 'footer',
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
