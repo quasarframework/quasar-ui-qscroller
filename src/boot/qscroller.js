@@ -1,4 +1,3 @@
-// import QDateTimeScroller from '@quasar/quasar-app-extension-qdatetimescroller/src/component/QDateTimeScroller'
 import QScroller from '@quasar/quasar-app-extension-qscroller/src/component/QScroller'
 import QTimeScroller from '@quasar/quasar-app-extension-qscroller/src/component/QTimeScroller'
 import QTimeRangeScroller from '@quasar/quasar-app-extension-qscroller/src/component/QTimeRangeScroller'
