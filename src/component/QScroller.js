@@ -160,7 +160,7 @@ export default Vue.extend({
         class: {
           'shadow-up-20': this.noShadow === false
         }
-      }, slot || [
+      }, slot ? slot(this.value) : [
         this.__renderFooterButton(h)
       ])
     },
