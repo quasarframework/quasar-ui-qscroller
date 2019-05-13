@@ -8,7 +8,7 @@
 const extendQuasarConf = function (conf) {
   // make sure qscroller boot file is registered
   conf.boot.push('~@quasar/quasar-app-extension-qscroller/src/boot/qscroller.js')
-  console.log(` App Extension (qdatetimescroller) Info: 'Adding qscroller boot reference to your quasar.conf.js'`)
+  console.log(` App Extension (qscroller) Info: 'Adding qscroller boot reference to your quasar.conf.js'`)
 
   // make sure qscroller css goes through webpack to avoid ssr issues
   conf.css.push('~@quasar/quasar-app-extension-qscroller/src/component/scroller-all.styl')
