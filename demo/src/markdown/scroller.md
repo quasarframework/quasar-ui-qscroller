@@ -104,12 +104,12 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 
 | Vue Property | Type | Default | Description |
 | --- | :---: | :---: | --- |
-| border-color | String | #ccc | This is the color of outside border when `no-border` is not `true`. This **has** to be a css color (not a Quasar color) or css color name |
-| bar-color | String | #ccc | This is the color of the middle bars. This **has** to be a css color (not a Quasar color) or css color name |
-| color | String | white | This is the color of the text. Applies to header and footer. It can be a css color or from the Quasar color palette |
-| background-color | String | primary | This is the color of the background. Applies to header and footer. It can be a css color or from the Quasar color palette |
-| inner-color | String | primary | This is the color of the scroller text. It can be a css color or from the Quasar color palette |
-| inner-background-color | String | white | This is the color of the scroller background. It can be a css color or from the Quasar color palette |
+| border-color | String | #ccc | This is the color of outside border when `no-border` property is not `true`. This **has** to be a css color (not a Quasar color) or css color name (see note below) |
+| bar-color | String | #ccc | This is the color of the middle bars. This **has** to be a css color (not a Quasar color) or css color name (see note below) |
+| color | String | white | This is the color of the text. Applies to header and footer. It can be a css color `(#|((rgb|hsl)a)` or from the Quasar color palette |
+| background-color | String | primary | This is the color of the background. Applies to header and footer. It can be a css color `(#|((rgb|hsl)a)` or from the Quasar color palette |
+| inner-color | String | primary | This is the color of the scroller text. It can be a css color `(#|((rgb|hsl)a)` or from the Quasar color palette |
+| inner-background-color | String | white | This is the color of the scroller background. It can be a css color `(#|((rgb|hsl)a)` or from the Quasar color palette |
 | dense | Boolean | | If the component should be in dense mode |
 | disable | Boolean | | If the component should be disabled |
 | rounded-border | Boolean | | If the component should have rounded corners |
@@ -132,17 +132,26 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
+| input |  | |  |
+| close |  | | Occurs when the footer button is clicked, usually used to close the component (in dev land) when used in a `QPopupProxy` |
 
 ### QScroller Vue Methods
 
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
+| Property | Arg | Description |
+| :--- | :---: | --- |
+| canMovePrevious |  |Returns true if can move to the previous item, otherwise returns false |
+| canMoveNext |  |Returns true if can move to the next item, otherwise returns false |
+| previous |  |Move to the previous item |
+| next |  |Move to the next item |
+| getItemIndex | value |Returns the index of the passed value, otherwise returns -1 on error or not found|
+| getCurrentIndex | | Returns the index of the current selection, otherwise returns -1 on error or not found
 
 ### QScroller Vue Slots
 
-| Property | Type | Default | Description |
+| Property | Arg | Description |
 | :--- | :---: | :---: | --- |
+| header | value | Header scoped slot |
+| footer | value | Footer scoped slot |
 
 ## QTimeScroller Vue Properties
 
@@ -161,10 +170,10 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | disabled-minutes | Array | [ ] | Minutes that should be disabled (always use 0 through to 59) |
 | no-hours | Boolean | | Do not show the Hours scroller |
 | no-minutes | Boolean | | Do not show the Minutes scroller |
-| hours | Array | | Array of hours to be displayed |
-| minutes | Array | | Array of minutes to be displayed |
-| min-time | String | '00:00' | Any time before this time will be disabled |
-| max-time | String | '24:00' | Any time after this time will be disabled |
+| hours | Array | | (TBD) Array of hours to be displayed |
+| minutes | Array | | (TBD) Array of minutes to be displayed |
+| min-time | String | '00:00' | (TBD) Any time before this time will be disabled |
+| max-time | String | '24:00' | (TBD) Any time after this time will be disabled |
 
 ## QTimeRangeScroller Vue Properties
 
