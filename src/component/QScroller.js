@@ -61,8 +61,43 @@ export default Vue.extend({
   },
 
   methods: {
-    emitValue () {
-      this.$emit('input', this.value)
+    canMovePrevious () {
+      if (this.$refs.scroller) {
+        return this.$refs.scroller.canScroll(-1)
+      }
+      return false
+    },
+
+    canMoveNext () {
+      if (this.$refs.scroller) {
+        return this.$refs.scroller.canScroll(1)
+      }
+      return false
+    },
+
+    previous () {
+      if (this.$refs.scroller) {
+        return this.$refs.scroller.move(-1)
+      }
+      return false
+    },
+
+    next () {
+      if (this.$refs.scroller) {
+        return this.$refs.scroller.move(1)
+      }
+      return false
+    },
+
+    getItemIndex (value) {
+      if (this.$refs.scroller) {
+        return this.$refs.scroller.getItemIndex(value)
+      }
+      return -1
+    },
+
+    getCurrentIndex () {
+      return this.getItemIndex(this.value)
     },
 
     onResize () {
@@ -132,6 +167,7 @@ export default Vue.extend({
 
     __renderScroller (h) {
       return h(ScrollerBase, {
+        ref: 'scroller',
         props: {
           value: this.value,
           items: this.items,
