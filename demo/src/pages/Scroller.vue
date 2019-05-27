@@ -304,7 +304,7 @@
 
       <!-- --- -->
 
-      <q-card style="width: 100%; max-width: 292px;">
+      <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
           <div class="text-h6">QDateRangeScroller</div>
           <div class="text-subtitle2">Date Range Selection</div>
@@ -316,7 +316,7 @@
             :locale="locale"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
-            :no-footer="false"
+            :no-footer="noFooter"
             :dense="dense"
             :disable="disable"
             :no-border="noBorder"
@@ -489,114 +489,6 @@
 
         </q-card-section>
       </q-card>
-
-      <!-- --- -->
-
-      <!-- <q-card style="width: 100%; max-width: 240px;">
-        <q-card-section>
-          <div class="text-h6">QTime-Range-Scroller</div>
-          <div class="text-subtitle2">Time Range Selection (TBD)</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-
-          <div class="q-scroller--border row col-xl-2 col-sm-4 col-xs-12 q-pa-xs">
-            <div class="col-6">
-              <q-time-range-scroller
-                v-model="timeRange"
-                :locale="locale"
-                :no-header="true"
-                :no-footer="true"
-                :disable="disable"
-                :no-border="true"
-                :no-shadow="noShadow"
-                border-color="#FF0000"
-                bar-color="#FF0000"
-                color="white"
-                background-color="red-6"
-                inner-color="red"
-                inner-background-color="white"
-                :hour24-format="hour24Format"
-                :no-hours="noHours"
-                :no-minutes="noMinutes"
-                start-min-time="05:00"
-                end-max-time="24:00"
-                style="height: 280px;"
-              />
-            </div>
-            <div class="col-6">
-              <q-time-scroller
-                v-model="time4"
-                :locale="locale"
-                :no-header="true"
-                :no-footer="true"
-                :disable="disable"
-                :no-border="true"
-                :no-shadow="noShadow"
-                border-color="#FF0000"
-                bar-color="#FF0000"
-                color="white"
-                background-color="red-6"
-                inner-color="red"
-                inner-background-color="white"
-                :hour24-format="hour24Format"
-                :no-hours="noHours"
-                :no-minutes="noMinutes"
-                style="height: 280px;"
-              />
-            </div>
-          </div>
-        </q-card-section>
-      </q-card> -->
-
-      <!-- <q-card style="width: 100%; max-width: 320px; min-width: 320px;">
-        <q-card-section>
-          <div class="text-h6">QDateRangeScroller</div>
-          <div class="text-subtitle2">Date Range Selection (TBD)</div>
-        </q-card-section>
-        <q-separator />
-        <q-card-section>
-
-          <div class="q-scroller--border row col-xl-2 col-sm-4 col-xs-12 q-pa-xs">
-            <div class="col-6">
-              <q-date-scroller
-                v-model="date1"
-                :locale="locale"
-                :no-header="true"
-                :no-footer="true"
-                :disable="disable"
-                :no-border="true"
-                :no-shadow="noShadow"
-                border-color="#FFFF00"
-                bar-color="#FFFF00"
-                color="teal-6"
-                background-color="white"
-                inner-color="white"
-                inner-background-color="teal-6"
-                style="height: 280px;"
-              />
-            </div>
-            <div class="col-6">
-              <q-date-scroller
-                v-model="date1"
-                :locale="locale"
-                :no-header="true"
-                :no-footer="true"
-                :disable="disable"
-                :no-border="true"
-                :no-shadow="noShadow"
-                border-color="#FFFF00"
-                bar-color="#FFFF00"
-                color="teal-6"
-                background-color="white"
-                inner-color="white"
-                inner-background-color="teal-6"
-                style="height: 280px;"
-              />
-            </div>
-          </div>
-        </q-card-section>
-      </q-card> -->
 
     </div>
   </q-page>
