@@ -3,7 +3,7 @@ QScroller Components
 
 > Please note, this is currently a work-in-progress (WIP) and not yet release to NPM as an installable package.
 
-**QScroller** is a [Quasar App Extension](https://v1.quasar-framework.org/app-extensions/introduction). There are many components avalable:
+**QScroller** is a [Quasar App Extension](https://quasar.dev/app-extensions/introduction). There are many components avalable:
 - QScroller
 - QTimeScroller
 - QTimeRangeScroller
@@ -73,6 +73,15 @@ data: [
   ...
 ]
 ```
+
+Additionally, there is one other property that can be added to the array of objects and this is the `display` property. 
+
+For example:
+```js
+{ value: '1', display: 'Anteater', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' },
+```
+
+When this property is available, this is what will be displayed to the User, but when seleected, it's the `value` that will updated using the emit for the `input` event.
 
 Then, your `v-model` variable should contain a `value` from your list for an initial selection. And, the `v-model` variable will be populated with  `value` data upon user selection.
 
