@@ -99,6 +99,8 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 
 ## QDateRangeScroller
 
+![QDateRangeScroller](statics/q-date-range-scroller.png =300x300)
+
 ## QDateTimeScroller
 
 ![QDateTimeScroller](statics/q-date-time-scroller.png =300x300) ![QDateTimeScroller-ampm](statics/q-date-time-scroller-ampm.png =300x300)
@@ -137,14 +139,14 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | items | Array | | (required) The items to display in the scroller |
 | disabled-items | Array | | Items in the list that are to be disabled |
 
-### QScroller Vue Events
+## QScroller Vue Events
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
 | input |  | |  |
 | close |  | | Occurs when the footer button is clicked, usually used to close the component (in dev land) when used in a `QPopupProxy` |
 
-### QScroller Vue Methods
+## QScroller Vue Methods
 
 | Property | Arg | Description |
 | :--- | :---: | --- |
@@ -155,7 +157,7 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | getItemIndex | value |Returns the index of the passed value, otherwise returns -1 on error or not found|
 | getCurrentIndex | | Returns the index of the current selection, otherwise returns -1 on error or not found
 
-### QScroller Vue Slots
+## QScroller Vue Slots
 
 | Property | Arg | Description |
 | :--- | :---: | :---: | --- |
@@ -231,7 +233,6 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | no-month | Boolean | | Do not show the Month scroller |
 | no-day | Boolean | | Do not show the Day scroller |
 
-
 ## QDateRangeScroller Vue Properties
 
 | Vue Property | Type | Default | Description |
@@ -244,134 +245,22 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 | --- | :---: | :---: | --- |
 | value | String | | v-model in the form of `YYYY-mm-dd hh:mm` |
 
-## QTimeScroller
-
-### QTimeScroller Vue Properties
+## QDateTimeRangeScroller Vue Properties
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
 
-### QTimeScroller Vue Events
+## QDateTimeRangeScroller Vue Events
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
 
-### QTimeScroller Vue Methods
+## QDateTimeRangeScroller Vue Methods
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
 
-### QTimeScroller Vue Slots
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-## QTimeRangeScroller
-
-### QScroller Vue Properties
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QTimeRangeScroller Vue Events
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QTimeRangeScroller Vue Methods
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QTimeRangeScroller Vue Slots
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-## QDateScroller
-
-### QDateScroller Vue Properties
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateScroller Vue Events
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateScroller Vue Methods
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateScroller Vue Slots
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-## QDateRangeScroller
-
-### QDateRangeScroller Vue Properties
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateRangeScroller Vue Events
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateRangeScroller Vue Methods
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateRangeScroller Vue Slots
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-## QDateTimeScroller
-
-### QDateTimeScroller Vue Properties
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeScroller Vue Events
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeScroller Vue Methods
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeScroller Vue Slots
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-## QDateTimeRangeScroller
-
-### QDateTimeRangeScroller Vue Properties
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeRangeScroller Vue Events
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeRangeScroller Vue Methods
-
-| Property | Type | Default | Description |
-| :--- | :---: | :---: | --- |
-
-### QDateTimeRangeScroller Vue Slots
+## QDateTimeRangeScroller Vue Slots
 
 | Property | Type | Default | Description |
 | :--- | :---: | :---: | --- |
