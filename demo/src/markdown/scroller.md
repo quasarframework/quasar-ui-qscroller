@@ -1,9 +1,9 @@
 QScroller Components
 ===
 
-> Please note, this is currently a work-in-progress (WIP) and not yet release to NPM as an installable package.
+> Please note, this is currently a work-in-progress (WIP).
 
-**QScroller** is a [Quasar App Extension](https://quasar.dev/app-extensions/introduction). There are many components avalable:
+**QScroller** is a [Quasar App Extension](https://quasar.dev/app-extensions/introduction). There are many components available:
 - QScroller
 - QTimeScroller
 - QTimeRangeScroller
