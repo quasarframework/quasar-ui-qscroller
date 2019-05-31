@@ -105,7 +105,7 @@ export default DateTimeBase.extend({
     },
 
     displayDate () {
-      console.log('displayDate')
+      // console.log('displayDate')
       if (!this.year || !this.month || !this.day) return ''
       if (this.timestamp.hasDay === false) return ''
       // year only
@@ -125,7 +125,7 @@ export default DateTimeBase.extend({
     },
 
     dateFormatter () {
-      console.log('dateFormatter')
+      // console.log('dateFormatter')
       const year = this.shortYearLabel ? '2-digit' : 'numeric'
       const month = this.shortMonthLabel ? 'numeric' : '2-digit'
       const day = this.shortDayLabel ? 'numeric' : '2-digit'

@@ -62,7 +62,6 @@ export default Vue.extend({
   },
 
   computed: {
-    //
   },
 
   watch: {
@@ -163,15 +162,19 @@ export default Vue.extend({
     getItemIndexFromEvent (event) {
       const top = event.target.scrollTop
       const itemHeight = this.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
-      return Math.floor(top / itemHeight)
+      return Math.round(top / itemHeight)
     },
 
     scrollEvent: debounce(function (event) {
       if (!this.noScrollEvent) {
         const index = this.getItemIndexFromEvent(event)
-        const value = this.items[index].value
-        if (this.isDisabled(value)) return
-        this.$emit('input', value)
+        if (index < this.items.length) {
+          const value = this.items[index].value
+          if (this.isDisabled(value)) return
+          this.$emit('input', value)
+        } else {
+          console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
+        }
       }
     }, 250),
 
@@ -193,11 +196,11 @@ export default Vue.extend({
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         const selected = self.$el.querySelector(klass)
         if (selected) {
+          const pos = selected.offsetTop - self.padding
+          setScrollPosition(self.$el, pos, 150)
           setTimeout(() => {
-            const pos = selected.offsetTop - this.padding
-            setScrollPosition(self.$el, pos, 150)
             self.noScrollEvent = false
-          }, 150)
+          }, 250)
         }
       }, 10)
     },
