@@ -50,7 +50,7 @@ export default Vue.extend({
 
   data () {
     return {
-      noScrollEvent: false, // prevent scrolling when updating position
+      noValueCHange: false,
       columnPadding: {},
       padding: 0
     }
@@ -58,7 +58,6 @@ export default Vue.extend({
 
   mounted () {
     this.adjustColumnPadding()
-    this.updatePosition()
   },
 
   computed: {
@@ -66,21 +65,19 @@ export default Vue.extend({
 
   watch: {
     height () {
-      this.adjustColumnPadding(true)
+      this.adjustColumnPadding()
     },
 
     value () {
-      this.updatePosition()
+      this.adjustColumnPadding()
     },
 
     items () {
-      this.adjustColumnPadding(true)
-      this.updatePosition()
+      this.adjustColumnPadding()
     },
 
     dense () {
-      this.adjustColumnPadding(true)
-      this.updatePosition()
+      this.adjustColumnPadding()
     }
   },
 
@@ -90,7 +87,7 @@ export default Vue.extend({
      * @param {Number} dir if 1, direction is down, otherwise -1 up
      */
     move (dir) {
-      if (this.noScrollEvent === false && (dir === 1 || dir === -1)) {
+      if (dir === 1 || dir === -1) {
         if (this.disable !== true && this.canScroll(dir)) {
           const klass = `.q-scroller__item--selected${this.dense ? '--dense' : ''}`
           const selected = this.$el.querySelector(klass)
@@ -107,7 +104,7 @@ export default Vue.extend({
     },
 
     onResize () {
-      this.adjustColumnPadding(true)
+      this.adjustColumnPadding()
     },
 
     canScroll (dir) {
@@ -121,8 +118,10 @@ export default Vue.extend({
       return false // nothing to scroll
     },
 
-    adjustColumnPadding (immediate = false) {
+    adjustColumnPadding () {
       let self = this
+      this.noValueCHange = true
+
       const setPadding = (padding) => {
         self.columnPadding = {
           height: `${padding}px`
@@ -132,19 +131,20 @@ export default Vue.extend({
       const getPadding = () => {
         const itemHeight = self.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
         const height = self.height || self.$el.clientHeight
-        self.padding = (height / 2) - (itemHeight / 2)
+        self.padding = Math.ceil(height / 2 - itemHeight / 2)
         if (!isNaN(self.padding) && self.padding > 0) {
           setPadding(self.padding)
         }
       }
 
-      if (immediate) {
-        getPadding()
-      } else {
-        this.$nextTick(() => {
-          getPadding()
-        })
-      }
+      getPadding()
+      setTimeout(() => {
+        this.updatePosition()
+
+        setTimeout(() => {
+          this.noValueCHange = false
+        }, 300)
+      }, 300)
     },
 
     wheelEvent (event) {
@@ -162,11 +162,11 @@ export default Vue.extend({
     getItemIndexFromEvent (event) {
       const top = event.target.scrollTop
       const itemHeight = this.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
-      return Math.round(top / itemHeight)
+      return Math.floor(top / itemHeight)
     },
 
     scrollEvent: debounce(function (event) {
-      if (!this.noScrollEvent) {
+      if (this.noValueCHange === false) {
         const index = this.getItemIndexFromEvent(event)
         if (index < this.items.length) {
           const value = this.items[index].value
@@ -176,7 +176,7 @@ export default Vue.extend({
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
       }
-    }, 250),
+    }, 400),
 
     clickEvent (item) {
       if (this.disable !== true && item.disabled === false) {
@@ -191,18 +191,17 @@ export default Vue.extend({
 
     updatePosition () {
       let self = this
-      this.noScrollEvent = true
+      console.log('update position')
       setTimeout(() => {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         const selected = self.$el.querySelector(klass)
         if (selected) {
           const pos = selected.offsetTop - self.padding
           setScrollPosition(self.$el, pos, 150)
-          setTimeout(() => {
-            self.noScrollEvent = false
-          }, 250)
+        } else {
+          console.log('no selected item found...')
         }
-      }, 10)
+      }, 100)
     },
 
     // -------------------------------

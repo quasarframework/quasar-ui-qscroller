@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-app-extension-qscroller",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "QScroller - Quasar App Extension",
   "author": "Hawkeye64 <jeff@quasar.dev>",
   "main": "src/index.js",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.2"
