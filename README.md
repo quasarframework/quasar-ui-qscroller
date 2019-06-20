@@ -30,7 +30,7 @@ quasar ext remove @quasar/qscroller
 Can be found [here](https://github.com/quasarframework/app-extension-qscroller/tree/master/demo).
 
 # Demo
-Demo [here](https://quasarframework.github.io/app-extension-qscroller/#/demo)
+Demo [here](https://quasarframework.github.io/app-extension-qscroller/demo)
 
 # Documentation
 Can be found [here](https://quasarframework.github.io/app-extension-qscroller/).
