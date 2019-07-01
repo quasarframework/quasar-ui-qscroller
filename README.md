@@ -34,3 +34,6 @@ Demo [here](https://quasarframework.github.io/app-extension-qscroller/demo)
 
 # Documentation
 Can be found [here](https://quasarframework.github.io/app-extension-qscroller/).
+
+# Donate
+If you appreciate the work that went into this App Extension, please consider [donating to Quasar](https://donate.quasar.dev).
