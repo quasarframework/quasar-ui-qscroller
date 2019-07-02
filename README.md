@@ -11,6 +11,7 @@ QScroller is an `UI App Extension` for [Quasar Framework v1](https://quasar.dev/
 
 This work is currently in `alpha` and there are expected changes while things get worked out. Your help with testing is greatly appreciated.
 
+![QScroller example](https://raw.githubusercontent.com/quasarframework/app-extension-qscroller/dev/demo/src/statics/qcalendar-month-view.png)
 # Info
 The QScroller package comes with several scrolling components, including QTimeScroller, QDateScroller, QDateTimeScroller, QTimeRangeScroller, and QDateRangeScroller.
 
