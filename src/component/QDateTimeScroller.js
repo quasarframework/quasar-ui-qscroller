@@ -90,7 +90,9 @@ export default DateTimeBase.extend({
 
   methods: {
     emitValue () {
-      this.$emit('input', `${this.timestamp.date}`)
+      if (this.timestamp !== void 0 && this.timestamp.date !== void 0) {
+        this.$emit('input', this.timestamp.date)
+      }
     },
 
     onResize ({ height }) {
@@ -112,8 +114,10 @@ export default DateTimeBase.extend({
     },
 
     splitDateTime () {
-      this.timestamp = parsed(this.value)
-      this.fromTimestamp()
+      if (this.value !== void 0) {
+        this.timestamp = parsed(this.value)
+        this.fromTimestamp()
+      }
     },
 
     fromTimestamp () {

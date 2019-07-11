@@ -191,7 +191,7 @@ export default Vue.extend({
 
     updatePosition () {
       let self = this
-      console.log('update position')
+      // console.log('update position')
       setTimeout(() => {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         const selected = self.$el.querySelector(klass)
@@ -199,7 +199,7 @@ export default Vue.extend({
           const pos = selected.offsetTop - self.padding
           setScrollPosition(self.$el, pos, 150)
         } else {
-          console.log('no selected item found...')
+          // console.log('no selected item found...')
         }
       }, 100)
     },
