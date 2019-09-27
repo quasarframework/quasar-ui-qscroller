@@ -50,7 +50,7 @@ export default Vue.extend({
 
   data () {
     return {
-      noValueCHange: false,
+      noValueChange: false,
       columnPadding: {},
       padding: 0
     }
@@ -120,7 +120,7 @@ export default Vue.extend({
 
     adjustColumnPadding () {
       let self = this
-      this.noValueCHange = true
+      this.noValueChange = true
 
       const setPadding = (padding) => {
         self.columnPadding = {
