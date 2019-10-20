@@ -148,7 +148,8 @@ export default {
           'shadow-20': this.noShadow === false
         },
         style: {
-          maxHeight: this.dense ? '30px' : '50px'
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
       }, slot ? slot(this.value) : [
         h('span', {
@@ -187,7 +188,8 @@ export default {
           'shadow-up-20': this.noShadow === false
         },
         style: {
-          maxHeight: this.dense ? '30px' : '50px'
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
       }, slot ? slot(this.value) : [
         this.__renderFooterButton(h)

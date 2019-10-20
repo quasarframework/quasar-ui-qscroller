@@ -6,7 +6,7 @@ import props from '../utils/props'
 import { debounce, QBtn, QResizeObserver, scroll } from 'quasar'
 
 // tree shake other scroll functions
-const { getScrollPosition, setScrollPosition } = scroll
+const { getScrollPosition, setScrollPosition, getScrollTarget } = scroll
 
 /*
   The list of items should be an object that has this format:
@@ -124,7 +124,11 @@ export default {
             this.scrollTimer = setTimeout(() => {
               scrollToEl.classList.add(klass.slice(1))
               // todo: need to get actual data in case it is disabled
-              this.$emit('input', scrollToEl.innerText)
+              const items = this.items.filter(v => v.value === scrollToEl.innerText)
+              console.log(`innerText: ${scrollToEl.innerText}, item: ${items[0].value}`)
+              if (items.length > 0 && items[0].disabled !== true) {
+                this.$emit('input', items[0].value)
+              }
             }, 500)
             return true
           }
@@ -146,14 +150,16 @@ export default {
     },
 
     getElementOffsets (childEl, parentEl) {
-      const scrollTop = parentEl.offsetParent.scrollTop
+      const target = getScrollTarget(childEl)
+      const scrollTop = getScrollPosition(target)
+      const top = childEl.offsetTop - scrollTop
       let offset = {}
       offset.x = childEl.offsetLeft
-      offset.y = childEl.offsetTop - scrollTop
+      offset.y = top
       offset.left = childEl.offsetLeft
       offset.right = childEl.offsetLeft + childEl.offsetWidth
-      offset.top = childEl.offsetTop - scrollTop
-      offset.bottom = (childEl.offsetTop - scrollTop) + childEl.offsetHeight
+      offset.top = top
+      offset.bottom = top + childEl.offsetHeight
       offset.width = childEl.offsetWidth
       offset.height = childEl.offsetHeight
 
@@ -194,7 +200,7 @@ export default {
       const getPadding = () => {
         self.height = parseInt(window.getComputedStyle(self.$el.parentElement, null).getPropertyValue('height'))
         self.padding = Math.ceil(self.height / 2 - self.itemHeight / 2)
-        if (!isNaN(self.padding) && self.padding > 0) {
+        if (!isNaN(self.padding) && self.padding > -1) {
           setPadding(self.padding)
         }
       }
@@ -292,7 +298,8 @@ export default {
           'icon': item.icon !== void 0 ? item.icon : void 0,
           'icon-right': item.iconRight !== void 0 ? item.iconRight : void 0,
           'no-caps': item.noCaps !== void 0 ? item.noCaps : void 0,
-          'align': item.align !== void 0 ? item.align : void 0
+          'align': item.align !== void 0 ? item.align : void 0,
+          'color': (this.disable === true || item.disabled !== void 0 && item.disabled === true) && this.disabledTextColor !== void 0 ? this.disabledTextColor : void 0
         },
         on: {
           'click': () => this.clickEvent(item)
@@ -330,7 +337,7 @@ export default {
     ]
 
     return h('div', {
-      staticClass: 'q-scroller__content',
+      staticClass: 'q-scroller__content scroll',
       on: {
         ...this.$listeners
       }

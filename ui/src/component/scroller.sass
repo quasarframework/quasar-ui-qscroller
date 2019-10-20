@@ -10,8 +10,8 @@ $item-height-dense        : 20px
 $selected-font-size-dense : 14px
 $font-size-dense          : 11px
 $header-font-size-dense   : 17px
-$header-height-dense      : 40px
-$footer-height-dense      : 40px
+$header-height-dense      : 30px
+$footer-height-dense      : 30px
 $footer-font-size-dense   : 11px
 
 .test
@@ -47,8 +47,6 @@ $footer-font-size-dense   : 11px
   &__header
     display: flex
     flex: 10000 1 0%
-    // position: absolute
-    // top: 0
     z-index: 1
     height: $header-height
     padding: 0
@@ -59,8 +57,6 @@ $footer-font-size-dense   : 11px
   &__header--dense
     display: flex
     flex: 10000 1 0%
-    // position: absolute
-    // top: 0
     z-index: 1
     height: $header-height-dense
     padding: 0
@@ -71,8 +67,6 @@ $footer-font-size-dense   : 11px
   &__footer
     display: flex
     flex: 10000 1 0%
-    // position: absolute
-    // bottom: 0
     z-index: 1
     height: $footer-height
     padding: 0
@@ -83,8 +77,6 @@ $footer-font-size-dense   : 11px
   &__footer--dense
     display: flex
     flex: 10000 1 0%
-    // position: absolute
-    // bottom: 0
     z-index: 1
     height: $footer-height-dense
     padding: 0
@@ -101,9 +93,13 @@ $footer-font-size-dense   : 11px
     position: relative
     overflow: hidden
     will-change: scroll-position
+    padding: 0
+    margin: 0
 
   &__horizontal-bar
     position: relative
+    padding: 0
+    margin: 0
 
     // regular
     &:before
@@ -122,6 +118,8 @@ $footer-font-size-dense   : 11px
 
   &__horizontal-bar--dense
     position: relative
+    padding: 0
+    margin: 0
 
     // dense
     &:before
@@ -164,6 +162,8 @@ $footer-font-size-dense   : 11px
     &--selected
       background-color: transparent
       border-radius: 4px
+      padding: 0
+      margin: 0
       opacity: 1
       font-weight: 800 !important
       font-size: $selected-font-size !important
@@ -173,11 +173,15 @@ $footer-font-size-dense   : 11px
       pointer-events: none
       opacity: 0.3
       font-weight: 300
+      padding: 0
+      margin: 0
 
     &--selected--dense
       background-color: transparent
       border-radius: 4px
       opacity: 1
+      padding: 0
+      margin: 0
       font-weight: 800 !important
       font-size: $selected-font-size-dense !important
       line-height: $selected-font-size-dense !important
@@ -186,6 +190,8 @@ $footer-font-size-dense   : 11px
       pointer-events: none
       opacity: 0.2
       font-weight: 300
+      padding: 0
+      margin: 0
 
   &__item--dense
     height: $item-height-dense

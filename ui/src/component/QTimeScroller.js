@@ -53,11 +53,11 @@ export default {
   },
 
   beforeMount () {
+    this.handleDisabledLists()
     this.splitTime()
   },
 
   mounted () {
-    this.handleDisabledLists()
     this.adjustBodyHeight()
   },
 
@@ -83,20 +83,23 @@ export default {
     },
 
     hoursList () {
-      const length = (this.hour12 === true ? 12 : 24)
-
-      return [...Array(length)]
+      let count = (this.hour12 === true ? 12 : 24)
+      if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
+        count /= parseInt(this.hourInterval)
+      }
+      return [...Array(count)]
         .map((_, i) => i)
         .map(h => {
+          h *= this.hourInterval ? parseInt(this.hourInterval) : 1
           h = h < 10 ? '0' + h : '' + h
           return { value: h, disabled: this.disabledHoursList.includes(h) }
         })
     },
 
     displayTime () {
-      if (this.timestamp.hasTime === false) return ''
-      if (this.noMinutes) return padNumber(this.hour, 2) + 'h'
-      else if (this.noHours) return ':' + padNumber(this.minute, 2)
+      if (this.timestamp.hasTime !== true) return ''
+      if (this.noMinutes === true) return padNumber(this.hour, 2) + 'h'
+      else if (this.noHours === true) return ':' + padNumber(this.minute, 2)
       return this.timeFormatter(this.timestamp, this.shortTimeLabel)
     },
 
@@ -259,7 +262,11 @@ export default {
           dense: this.dense,
           disable: this.disable,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
+        },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
         },
         on: {
           input: (val) => { this.hour = val }
@@ -276,7 +283,11 @@ export default {
           dense: this.dense,
           disable: this.disable,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
+        },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true && this.hour12 === true
         },
         on: {
           input: (val) => { this.minute = val }
@@ -312,9 +323,6 @@ export default {
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerColor, {
         staticClass: `row q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
-        class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
-        },
         style: {
           height: `${this.bodyHeight}px`
         }
@@ -331,7 +339,8 @@ export default {
           'shadow-20': this.noShadow === false
         },
         style: {
-          maxHeight: this.dense ? '30px' : '50px'
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
       }, slot ? slot(this.timestamp) : [
         h('span', {
@@ -370,7 +379,8 @@ export default {
           'shadow-up-20': this.noShadow === false
         },
         style: {
-          maxHeight: this.dense ? '30px' : '50px'
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
       }, slot || [
         this.__renderFooterButton(h)

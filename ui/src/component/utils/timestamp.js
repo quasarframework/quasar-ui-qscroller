@@ -429,6 +429,7 @@ export function createNativeLocaleFormatter (locale, getOptions) {
       const date = [year, month, day].join('-')
       return intlFormatter.format(new Date(`${date}T${time}:00+00:00`))
     } catch (e) {
+      console.error(`QScroller: ${e.message}`)
       return ''
     }
   }

@@ -1,7 +1,11 @@
 <template>
   <div class="q-pa-md row q-gutter-sm full-width">
+    <div class="row full-width">
+      <div class="text-h4">QTimeScroller</div>
+    </div>
+
     <q-card>
-      <q-card-section class="q-pa-md row q-gutter-sm full-width">
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-footer, no-header</p>
           <q-scroller
@@ -9,20 +13,28 @@
             view="time"
             no-header
             no-footer
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-footer</p>
           <q-scroller
             v-model="value"
             view="time"
             no-footer
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-shadow, no-footer</p>
           <q-scroller
@@ -30,10 +42,14 @@
             view="time"
             no-footer
             no-shadow
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-border, no-footer</p>
           <q-scroller
@@ -41,10 +57,14 @@
             view="time"
             no-footer
             no-border
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>rounded-borders, no-footer</p>
           <q-scroller
@@ -52,10 +72,14 @@
             view="time"
             no-footer
             rounded-borders
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>colored, no-footer</p>
           <q-scroller
@@ -66,7 +90,7 @@
             color="primary"
             inner-text-color="yellow"
             inner-color="primary"
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -81,7 +105,7 @@
             view="time"
             no-footer
             dense
-            style="max-width: 150px; height: 400px;"
+            style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -96,7 +120,7 @@
             view="time"
             no-footer
             hour12
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -112,7 +136,7 @@
             no-footer
             dense
             hour12
-            style="max-width: 150px; height: 400px;"
+            style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -121,13 +145,13 @@
     <q-card>
       <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
-          <p>disbaled, no-footer</p>
+          <p>disabled, no-footer</p>
           <q-scroller
             v-model="value"
             view="time"
             no-footer
             disable
-            style="max-width: 150px; height: 400px;"
+            style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -161,6 +185,158 @@
       </q-card-section>
     </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>show-vertical-bar, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            show-vertical-bar
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>show-vertical-bar, hour12, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            show-vertical-bar
+            hour12
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>hour12, am-pm-labels, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            :am-pm-labels="['a', 'p']"
+            hour12
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>minute-interval, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            minute-interval="5"
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>hour-interval, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            hour-interval="2"
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>no-minutes, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            no-minutes
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>no-hours, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            no-hours
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>disabled-hours, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            :disabled-hours="[0,1,2,3,4,5,6]"
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>disabled-minutes, no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            :disabled-minutes="[0,1,2,3,4,5,6]"
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <!-- <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
+        <div>
+          <p>local (he), no-footer</p>
+          <q-scroller
+            v-model="value"
+            view="time"
+            no-footer
+            locale="kn"
+            style="max-width: 150px; height: 200px;"
+          ></q-scroller>
+        </div>
+      </q-card-section>
+    </q-card> -->
+
   </div>
 </template>
 
@@ -182,8 +358,8 @@ export default {
         }
       } else {
         return {
-          maxHeight: '400px',
-          height: '400px',
+          maxHeight: '200px',
+          height: '200px',
           width: '200px'
         }
       }

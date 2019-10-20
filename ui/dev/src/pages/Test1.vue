@@ -1,7 +1,11 @@
 <template>
   <div class="q-pa-md row q-gutter-sm full-width">
+    <div class="row full-width">
+      <div class="text-h4">QStringScroller</div>
+    </div>
+
     <q-card>
-      <q-card-section class="q-pa-md row q-gutter-sm full-width">
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-footer, no-header</p>
           <q-scroller
@@ -10,10 +14,14 @@
             :items="items"
             no-header
             no-footer
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-footer</p>
           <q-scroller
@@ -21,10 +29,14 @@
             view="string"
             :items="items"
             no-footer
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-shadow, no-footer</p>
           <q-scroller
@@ -33,10 +45,14 @@
             :items="items"
             no-footer
             no-shadow
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>no-border, no-footer</p>
           <q-scroller
@@ -45,10 +61,14 @@
             :items="items"
             no-footer
             no-border
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>rounded-borders, no-footer</p>
           <q-scroller
@@ -57,10 +77,14 @@
             :items="items"
             no-footer
             rounded-borders
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
+      </q-card-section>
+    </q-card>
 
+    <q-card>
+      <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
           <p>colored, no-footer</p>
           <q-scroller
@@ -72,7 +96,7 @@
             color="primary"
             inner-text-color="yellow"
             inner-color="primary"
-            style="max-width: 200px; height: 400px;"
+            style="max-width: 200px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -88,7 +112,7 @@
             :items="items"
             no-footer
             dense
-            style="max-width: 150px; height: 400px;"
+            style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -104,7 +128,7 @@
             :items="items"
             no-footer
             disable
-            style="max-width: 150px; height: 400px;"
+            style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
       </q-card-section>
@@ -189,8 +213,8 @@ export default {
         }
       } else {
         return {
-          maxHeight: '400px',
-          height: '400px',
+          maxHeight: '200px',
+          height: '200px',
           width: '200px'
         }
       }

@@ -24,7 +24,9 @@ export default {
     ...props.timeRange,
     ...props.dateRange,
     hour12: Boolean,
-    amPmLabels: Array
+    amPmLabels: Array,
+    showVerticalBar: Boolean,
+    locale: String
   },
 
   computed: {

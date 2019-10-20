@@ -24,7 +24,11 @@ export default {
     noBorder: Boolean,
     noHeader: Boolean,
     noFooter: Boolean,
-    noShadow: Boolean
+    noShadow: Boolean,
+    disabledTextColor: {
+      type: String,
+      default: 'grey-7'
+    },
   },
   base: {
     value: [String, Array],
