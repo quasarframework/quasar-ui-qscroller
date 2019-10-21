@@ -115,9 +115,10 @@ export default {
           if (scrollToEl && scrollToEl.nodeName === 'BUTTON' && scrollToEl.innerText.length > 0) {
             clearTimeout(this.scrollTimer)
             const klass = `.q-scroller__item--selected${this.dense ? '--dense' : ''}`
-            const selected = this.$el.querySelector(klass)
-            if (selected) {
+            let selected = this.$el.querySelector(klass)
+            while (selected) {
               selected.classList.remove(klass.slice(1))
+              selected = this.$el.querySelector(klass)
             }
             const pos = getScrollPosition(this.$el) + (this.itemHeight * dir)
             setScrollPosition(this.$el, pos, 10)
@@ -268,9 +269,18 @@ export default {
       let self = this
       setTimeout(() => {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
-        const selected = self.$el.querySelector(klass)
-        if (selected) {
-          const pos = selected.offsetTop - self.padding
+        let found
+        let selected = self.$el.querySelector(klass)
+        while (selected) {
+          if (selected.innerText === self.value) {
+            found = selected
+          }
+          selected.classList.remove(klass.slice(1))
+          selected = this.$el.querySelector(klass)
+        }
+        if (found) {
+          found.classList.add(klass.slice(1))
+          const pos = found.offsetTop - self.padding
           setScrollPosition(self.$el, pos, 150)
         }
       }, 100)
