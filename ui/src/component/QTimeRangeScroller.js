@@ -29,11 +29,13 @@ export default {
   },
 
   mounted () {
-    if (!(Array.isArray(this.value) || typeof this.value === 'string')) {
-      console.error('QTimeRangeScroller - value (v-model) must to be an array of times')
-    }
-    if (Array.isArray(this.value) && this.value.length !== 2) {
-      console.error('QTimeRangeScroller - value (v-model) must contain 2 array elements')
+    if (this.value) {
+      if (!(Array.isArray(this.value) || typeof this.value === 'string')) {
+        console.error('QTimeRangeScroller: value (v-model) must to be an array of times')
+      }
+      if (Array.isArray(this.value) && this.value.length !== 2) {
+        console.error('QTimeRangeScroller: value (v-model) must contain 2 array elements')
+      }
     }
     this.splitTime()
     this.adjustBodyHeight()
@@ -45,9 +47,10 @@ export default {
         if (this.$refs.startTime && this.$refs.endTime) {
           return this.$refs.startTime.displayTime + this.displaySeparator + this.$refs.endTime.displayTime
         }
-        return `${this.startTime}${this.displaySeparator}${this.endTime}`
+        const time = `${this.startTime}${this.displaySeparator}${this.endTime}`
+        return time
       }
-      return ''
+      return `${this.displaySeparator}`
     }
   },
 
@@ -79,12 +82,16 @@ export default {
 
   methods: {
     emitValue () {
-      if (this.type === 'array') {
-        this.$emit('input', [
-          this.startTime, this.endTime
-        ])
-      } else if (this.type === 'string') {
-        this.$emit('input', `${this.startTime}${this.displaySeparator}${this.endTime}`)
+      if (this.startTime !== '' && this.endTime !== '') {
+        if (this.type === 'array') {
+          this.$emit('input', [
+            this.startTime, this.endTime
+          ])
+        } else if (this.type === 'object') {
+          this.$emit('input', `{ start: ${this.startTime}, end: ${this.endTime} }`)
+        } else { // if (this.type === 'string') {
+          this.$emit('input', `${this.startTime}${this.displaySeparator}${this.endTime}`)
+        }
       }
     },
 
@@ -93,21 +100,17 @@ export default {
     },
 
     adjustBodyHeight () {
-      if (this.height !== void 0) {
-        this.bodyHeight = this.height
-      } else {
-        this.$nextTick(() => {
-          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-          this.headerFooterHeight = headerHeight + footerHeight
-          const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-        })
-      }
+      let self = this
+      this.$nextTick(() => {
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.bodyHeight = this.height - this.headerHeight - this.footerHeight
+      })
     },
 
     splitTime () {
-      if (Array.isArray(this.value)) {
+      if (Array.isArray(this.value) && this.value.length === 2) {
         const start = this.value[0].trim()
         const end = this.value[1].trim()
         if (this.isValidTime(start) && this.isValidTime(end)) {
@@ -129,7 +132,9 @@ export default {
           }
         }
       }
-      console.error(`QTimeRangeScroller: invalid time format - '${this.value}'`)
+      if (this.value !== '') {
+        console.error(`QTimeRangeScroller: invalid time format - '${this.value}'`)
+      }
     },
 
     isValidTime (time) {
@@ -149,12 +154,18 @@ export default {
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
+        },
+        style: {
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
-      }, slot ? slot([this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()]) : [
-        this.displayTime
+      }, slot ? slot(this.timestamp) : [
+        h('span', {
+          staticClass: 'ellipsis'
+        }, this.displayTime)
       ])
     },
 
@@ -165,7 +176,6 @@ export default {
         props: {
           value: this.startTime,
           locale: this.locale,
-          showVerticalBar: true,
           barColor: this.barColor,
           textColor: this.textColor,
           color: this.color,
@@ -184,12 +194,7 @@ export default {
           disabledHours: this.startDisabledHours,
           disabledMinutes: this.startDisbaledMinutes,
           noMinutes: this.startNoMinutes,
-          noHours: this.startNoHours,
-          hours: this.startHours,
-          minutes: this.startMinutes,
-          minTime: this.startMinTime,
-          maxTime: this.startMaxTime,
-          height: this.bodyHeight
+          noHours: this.startNoHours
         },
         on: {
           input: v => { this.startTime = v }
@@ -222,12 +227,7 @@ export default {
           disabledHours: this.endDisabledHours,
           disabledMinutes: this.endDisbaledMinutes,
           noMinutes: this.endNoMinutes,
-          noHours: this.endNoHours,
-          hours: this.endHours,
-          minutes: this.endMinutes,
-          minTime: this.endMinTime,
-          maxTime: this.endMaxTime,
-          height: this.bodyHeight
+          noHours: this.endNoHours
         },
         on: {
           input: v => { this.endTime = v }
@@ -278,6 +278,10 @@ export default {
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
+        },
+        style: {
+          maxHeight: this.dense ? '30px' : '50px',
+          minHeight: this.dense ? '30px' : '50px'
         }
       }, slot || [
         this.__renderFooterButton(h)

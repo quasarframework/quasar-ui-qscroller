@@ -65,7 +65,7 @@ export default {
     ampmList () {
       return this.amPmLabels
         .map(ap => {
-          return { value: ap, disabled: false }
+          return { value: ap, disabled: false, noCaps: true }
         })
     },
     minutesList () {
@@ -121,36 +121,27 @@ export default {
     },
 
     ampmIndex () {
-      const timestamp = copyTimestamp(this.timestamp)
       this.ampm = this.amPmLabels[this.ampmIndex]
       if (this.hour12 === true && this.ampmIndex === 1) {
         this.timestamp.hour = parseInt(this.hour) + 12
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
+      this.emitValue()
     },
 
     hour () {
-      const timestamp = copyTimestamp(this.timestamp)
       if (this.hour12 === true && this.ampmIndex === 1) {
         this.timestamp.hour = parseInt(this.hour) + 12
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
+      this.emitValue()
     },
 
     minute () {
-      const timestamp = copyTimestamp(this.timestamp)
       this.timestamp.minute = parseInt(this.minute)
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
+      this.emitValue()
     },
 
     ampm () {
@@ -158,7 +149,6 @@ export default {
     },
 
     hour12 () {
-      const timestamp = copyTimestamp(this.timestamp)
       if (this.hour12 === true) {
         if (this.timestamp.hour > 12) {
           this.hour = padNumber(this.timestamp.hour - 12, 2)
@@ -170,9 +160,7 @@ export default {
       } else {
         this.hour = padNumber(this.timestamp.hour, 2)
       }
-      if (!compareTimestamps(timestamp, this.timestamp)) {
-        this.emitValue()
-      }
+      this.emitValue()
     },
 
     disabledMinutes () {
@@ -334,7 +322,7 @@ export default {
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         },
