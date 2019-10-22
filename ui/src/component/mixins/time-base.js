@@ -14,19 +14,5 @@ export default {
       default: () => ['AM', 'PM'],
       validator: v => Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string'
     }
-  },
-
-  data () {
-    return {
-      //
-    }
-  },
-
-  computed: {
-    //
-  },
-
-  methods: {
-    //
   }
 }

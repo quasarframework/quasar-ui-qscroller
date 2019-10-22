@@ -28,7 +28,7 @@ export default {
     disabledTextColor: {
       type: String,
       default: 'grey-7'
-    },
+    }
   },
   base: {
     value: [String, Array],
@@ -104,7 +104,6 @@ export default {
       type: [String, Number],
       default: 1
     },
-    // TODO
     hourInterval: {
       type: [String, Number],
       default: 1
@@ -119,25 +118,7 @@ export default {
       default: () => []
     },
     noMinutes: Boolean,
-    noHours: Boolean,
-    // TODO
-    // show only these hours
-    hours: Array,
-    // TODO
-    // show only these minutes
-    minutes: Array,
-    // TODO
-    // any time before this time will be disabled
-    minTime: {
-      type: String,
-      default: '00:00'
-    },
-    // TODO
-    // any time after this time will be disabled
-    maxTime: {
-      type: String,
-      default: '24:00'
-    }
+    noHours: Boolean
   },
   timeRange: {
     displaySeparator: {
@@ -151,7 +132,6 @@ export default {
       type: [String, Number],
       default: 1
     },
-    // TODO
     startHourInterval: {
       type: [String, Number],
       default: 1
@@ -167,24 +147,6 @@ export default {
     },
     startNoMinutes: Boolean,
     startNoHours: Boolean,
-    // TODO
-    // show only these hours
-    startHours: Array,
-    // TODO
-    // show only these minutes
-    startMinutes: Array,
-    // TODO
-    // any time before this time will be disabled
-    startMinTime: {
-      type: String,
-      default: '00:00'
-    },
-    // TODO
-    // any time after this time will be disabled
-    startMaxTime: {
-      type: String,
-      default: '24:00'
-    },
     // --------------------------------
     // end time
     // --------------------------------
@@ -208,24 +170,6 @@ export default {
     },
     endNoMinutes: Boolean,
     endNoHours: Boolean,
-    // TODO
-    // show only these hours
-    endHours: Array,
-    // TODO
-    // show only these minutes
-    endMinutes: Array,
-    // TODO
-    // any time before this time will be disabled
-    endMinTime: {
-      type: String,
-      default: '00:00'
-    },
-    // TODO
-    // any time after this time will be disabled
-    endMaxTime: {
-      type: String,
-      default: '24:00'
-    }
   },
   dateRange: {
     displaySeparator: {

@@ -124,9 +124,7 @@ export default {
             setScrollPosition(this.$el, pos, 10)
             this.scrollTimer = setTimeout(() => {
               scrollToEl.classList.add(klass.slice(1))
-              // todo: need to get actual data in case it is disabled
               const items = this.items.filter(v => v.value === scrollToEl.innerText)
-              console.log(`innerText: ${scrollToEl.innerText}, item: ${items[0].value}`)
               if (items.length > 0 && items[0].disabled !== true) {
                 this.$emit('input', items[0].value)
               }
