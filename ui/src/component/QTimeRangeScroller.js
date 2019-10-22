@@ -210,7 +210,7 @@ export default {
           hourInterval: this.startHourInterval,
           shortTimeLabel: this.startShortTimeLabel,
           disabledHours: this.startDisabledHours,
-          disabledMinutes: this.startDisbaledMinutes,
+          disabledMinutes: this.startDisabledMinutes,
           noMinutes: this.startNoMinutes,
           noHours: this.startNoHours
         },
