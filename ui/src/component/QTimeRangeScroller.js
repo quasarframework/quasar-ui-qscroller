@@ -137,6 +137,17 @@ export default {
           this.type = 'array'
           return
         }
+      } else if (typeof this.value === 'object'
+        && this.value.start !== void 0
+        && this.value.end !== void 0) {
+        const start = this.value.start.trim()
+        const end = this.value.end.trim()
+        if (this.isValidTime(start) && this.isValidTime(end)) {
+          this.startTime = start
+          this.endTime = end
+          this.type = 'object'
+          return
+        }
       } else {
         const parts = this.value.split(this.displaySeparator)
         if (parts.length === 2) {
