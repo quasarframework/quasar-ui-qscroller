@@ -107,7 +107,18 @@ export default {
       if (this.timestamp.hasTime !== true) return ''
       if (this.noMinutes === true) return padNumber(this.hour, 2) + 'h'
       else if (this.noHours === true) return ':' + padNumber(this.minute, 2)
-      return this.timeFormatter(this.timestamp, this.shortTimeLabel)
+      let time = this.timeFormatter(this.timestamp, this.shortTimeLabel)
+      if (this.amPmLabels !== void 0 && this.amPmLabels.length > 0) {
+        const c = time.substr(-(this.amPmLabels[this.ampmIndex].length))
+        if (c !== this.amPmLabels[this.ampmIndex]) {
+          let rindex = time.lastIndexOf(' ')
+          if (rindex > -1) {
+            time = time.slice(0, rindex + 1)
+            time += this.amPmLabels[this.ampmIndex]
+          }
+        }
+      }
+      return time
     },
 
     timeFormatter () {
@@ -118,6 +129,7 @@ export default {
       return createNativeLocaleFormatter(
         this.locale,
         (tms, short) => short ? (tms.minute === 0 ? shortHourOptions : shortOptions) : longOptions
+
       )
     }
   },
