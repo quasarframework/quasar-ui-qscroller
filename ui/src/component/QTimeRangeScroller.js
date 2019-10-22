@@ -97,7 +97,21 @@ export default {
       }
     },
 
-    onResize ({ height }) {
+    isValidRange () {
+      // check if endTime is > startTime
+      if (this.$refs.startTime && this.$refs.endTime) {
+        const startTime = getTimeIdentifier(this.$refs.startTime.timestamp)
+        const endTime = getTimeIdentifier(this.$refs.endTime.timestamp)
+        if (endTime >= startTime) {
+          return true
+        }
+        return false
+      }
+      // until everything is mounted, just return true
+      return true
+    },
+
+    onResize () {
       this.adjustBodyHeight()
     },
 
