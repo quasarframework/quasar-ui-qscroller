@@ -20,8 +20,10 @@ export default {
 
   data () {
     return {
-      headerFooterHeight: 100,
+      headerHeight: 50,
+      footerHeight: 50,
       bodyHeight: 100,
+      height: 0,
       startTime: '',
       endTime: '',
       type: null
@@ -212,15 +214,15 @@ export default {
           barColor: this.barColor,
           textColor: this.textColor,
           color: this.color,
-          innerTextColor: this.innerTextColor,
-          innerColor: this.innerColor,
+          innerTextColor: this.isValidRange() ? this.innerTextColor : this.errorTextColor,
+          innerColor: this.isValidRange() ? this.innerColor : this.errorColor,
           dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
           noFooter: true,
           hour12: this.hour12,
-          amPmLabels: this.ampPmLabels,
+          amPmLabels: this.amPmLabels,
           minuteInterval: this.endMinuteInterval,
           hourInterval: this.endHourInterval,
           shortTimeLabel: this.endShortTimeLabel,
@@ -297,7 +299,7 @@ export default {
       })
     ]
 
-    return h('div', this.setBothColors(this.color, this.backgroundColor, {
+    return h('div', this.setBothColors(this.textColor, this.color, {
       ref: 'scroller',
       staticClass: 'q-time-range-scroller flex',
       class: {

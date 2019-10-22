@@ -119,7 +119,7 @@ export default {
           dense: this.dense,
           disable: this.disable,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
           noCaps: this.noCaps
         },
         on: {
