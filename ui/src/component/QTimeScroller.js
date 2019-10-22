@@ -201,7 +201,7 @@ export default {
     },
 
     emitValue () {
-      this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
+      this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)].join(':'))
     },
 
     onResize ({ height }) {
