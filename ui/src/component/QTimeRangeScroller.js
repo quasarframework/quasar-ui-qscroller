@@ -6,6 +6,7 @@ import QTimeScroller from './QTimeScroller'
 // Util
 import props from './utils/props'
 import { QBtn, QResizeObserver } from 'quasar'
+import { getTimeIdentifier } from './utils/timestamp'
 
 /* @vue/component */
 export default {
@@ -15,7 +16,8 @@ export default {
 
   props: {
     ...props.common,
-    ...props.timeRange
+    ...props.timeRange,
+    ...props.verticalBar
   },
 
   data () {
@@ -211,6 +213,9 @@ export default {
           disabledMinutes: this.startDisbaledMinutes,
           noMinutes: this.startNoMinutes,
           noHours: this.startNoHours
+        },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
         },
         on: {
           input: v => { this.startTime = v }
