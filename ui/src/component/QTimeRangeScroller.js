@@ -6,7 +6,15 @@ import QTimeScroller from './QTimeScroller'
 // Util
 import props from './utils/props'
 import { QBtn, QResizeObserver } from 'quasar'
-import { getTimeIdentifier } from './utils/timestamp'
+import {
+  getTimeIdentifier,
+  parsed,
+  parseDate,
+  getDateObject,
+  getDate,
+  getTime,
+  padNumber
+} from './utils/timestamp'
 
 /* @vue/component */
 export default {
@@ -33,19 +41,18 @@ export default {
   },
 
   mounted () {
-    if (this.value) {
-      if (!(Array.isArray(this.value) || typeof this.value === 'string')) {
-        console.error('QTimeRangeScroller: value (v-model) must to be an array of times')
-      }
-      if (Array.isArray(this.value) && this.value.length !== 2) {
-        console.error('QTimeRangeScroller: value (v-model) must contain 2 array elements')
-      }
-    }
     this.splitTime()
     this.adjustBodyHeight()
   },
 
   computed: {
+    style () {
+      let style = {}
+      style['--scroller-border-color'] = this.calculateColor(this.borderColor)
+      style['--scroller-bar-color'] = this.calculateColor(this.barColor)
+      return style
+    },
+
     displayTime () {
       if (this.startTime !== void 0 && this.endTime !== void 0) {
         if (this.$refs.startTime && this.$refs.endTime) {
@@ -64,10 +71,14 @@ export default {
     },
 
     startTime () {
+      debugger
+      console.log('startTime', this.startTime)
       this.emitValue()
     },
 
     endTime () {
+      debugger
+      console.log('endTime', this.endTime)
       this.emitValue()
     },
 
@@ -86,6 +97,40 @@ export default {
 
   methods: {
     emitValue () {
+      let startParts, endParts,  start, end
+      switch (this.type) {
+        case 'date':
+            start = parseDate(new Date())
+            end = parseDate(new Date())
+            startParts = this.startTime.split(':')
+            endParts = this.endTime.split(':')
+            start.hour = parseInt(startParts[0])
+            start.minute = parseInt(startParts[1])
+            end.hour = parseInt(endParts[0])
+            end.minute = parseInt(endParts[1])
+            this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
+          return
+        case 'array':
+            startParts = this.startTime.split(':')
+            endParts = this.endTime.split(':')
+            this.$emit('input', [
+              [ parseInt(startParts[0]), parseInt(startParts[1]) ],[ parseInt(endParts[0]), parseInt(endParts[1]) ]
+            ])
+            return
+        case 'object':
+          startParts = this.startTime.split(':')
+          endParts = this.endTime.split(':')
+          this.$emit('input', [
+            { hour: parseInt(startParts[0]), minute: parseInt(startParts[1]) }, { hour: parseInt(endParts[0]), minute: parseInt(endParts[1]) }
+          ])
+
+          return
+        case 'string':
+          this.$emit('input', [
+            this.startTime, this.endTime
+          ])
+          return
+      }
       if (this.startTime !== '' && this.endTime !== '') {
         if (this.type === 'array') {
           this.$emit('input', [
@@ -101,9 +146,17 @@ export default {
 
     isValidRange () {
       // check if endTime is > startTime
-      if (this.$refs.startTime && this.$refs.endTime) {
-        const startTime = getTimeIdentifier(this.$refs.startTime.timestamp)
-        const endTime = getTimeIdentifier(this.$refs.endTime.timestamp)
+      if (this.startTime && this.endTime) {
+        let start = parseDate(new Date())
+        let end = parseDate(new Date())
+        const startParts = this.startTime.split(':')
+        const endParts = this.endTime.split(':')
+        start.hour = parseInt(startParts[0])
+        start.minute = parseInt(startParts[1])
+        end.hour = parseInt(endParts[0])
+        end.minute = parseInt(endParts[1])
+        const startTime = getTimeIdentifier(start)
+        const endTime = getTimeIdentifier(end)
         if (endTime >= startTime) {
           return true
         }
@@ -128,41 +181,65 @@ export default {
     },
 
     splitTime () {
-      if (Array.isArray(this.value) && this.value.length === 2) {
-        const start = this.value[0].trim()
-        const end = this.value[1].trim()
-        if (this.isValidTime(start) && this.isValidTime(end)) {
-          this.startTime = start
-          this.endTime = end
-          this.type = 'array'
-          return
-        }
-      } else if (typeof this.value === 'object'
-        && this.value.start !== void 0
-        && this.value.end !== void 0) {
-        const start = this.value.start.trim()
-        const end = this.value.end.trim()
-        if (this.isValidTime(start) && this.isValidTime(end)) {
-          this.startTime = start
-          this.endTime = end
-          this.type = 'object'
-          return
-        }
-      } else {
-        const parts = this.value.split(this.displaySeparator)
-        if (parts.length === 2) {
-          const start = parts[0].trim()
-          const end = parts[1].trim()
+      debugger
+      // QTimeRangeScroller takes an array of Date, Object, Array or String
+      let start, end, now
+      let type = Object.prototype.toString.call(this.value)
+      // use first item to determine type; convert to string for sub-components
+      type = Object.prototype.toString.call(this.value[0])
+      switch (type) {
+        case '[object Date]':
+          this.type = 'date'
+          start = parseDate(this.value[0])
+          start = getDate(start) + ' ' + getTime(start)
+          start = parsed(start)
+          end = parseDate(this.value[1])
+          end = getDate(end) + ' ' + getTime(end)
+          end = parsed(start)
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-            this.type = 'string'
-            return
           }
-        }
-      }
-      if (this.value !== '') {
-        console.error(`QTimeRangeScroller: invalid time format - '${this.value}'`)
+          return
+        case '[object Array]':
+          this.type = 'array'
+          start = padNumber(parseInt(this.value[0][0]), 2) + ':' + padNumber(parseInt(this.value[0][1]), 2)
+          end = padNumber(parseInt(this.value[1][0]), 2) + ':' + padNumber(parseInt(this.value[1][1]), 2)
+          if (this.isValidTime(start) && this.isValidTime(end)) {
+            this.startTime = start
+            this.endTime = end
+          }
+          return
+        case '[object Object]':
+          this.type = 'object'
+          start = padNumber(parseInt(this.value[0].hour), 2) + ':' + padNumber(parseInt(this.value[0].minute), 2)
+          end = padNumber(parseInt(this.value[1].hour), 2) + ':' + padNumber(parseInt(this.value[1].minute), 2)
+          if (this.isValidTime(start) && this.isValidTime(end)) {
+            this.startTime = start
+            this.endTime = end
+          }
+          return
+        case '[object String]':
+          this.type = 'string'
+          start = this.value[0]
+          end = this.value[1]
+          if (this.isValidTime(start) && this.isValidTime(end)) {
+            this.startTime = start
+            this.endTime = end
+          }
+          return
+        case '[object Undefined]':
+          // if nothing is provided, then use current time as array of strings
+          this.type = 'string'
+          now = new Date()
+          now = parseDate(now)
+          start = getDate(now) + ' ' + getTime(now)
+          start = getTime(parsed(start))
+          end = start
+          if (this.isValidTime(start) && this.isValidTime(end)) {
+            this.startTime = start
+            this.endTime = end
+          }
       }
     },
 
@@ -336,11 +413,7 @@ export default {
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
-      style: {
-        '--scroller-border-color': this.borderColor,
-        '--scroller-bar-color': this.barColor,
-        'overflow': 'hidden'
-      }
+      style: this.style
     }), child.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
