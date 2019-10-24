@@ -16,7 +16,6 @@ import {
   getDate,
   getTime,
   copyTimestamp,
-  // compareTimestamps,
   padNumber,
   createNativeLocaleFormatter
 } from './utils/timestamp'

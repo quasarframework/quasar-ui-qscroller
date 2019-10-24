@@ -104,6 +104,38 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
+        bar-color, no-footer
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-scroller
+          v-model="value"
+          view="string"
+          :items="items"
+          no-footer
+          bar-color="primary"
+          style="max-width: 200px; height: 200px;"
+        ></q-scroller>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        border-color, no-footer
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-scroller
+          v-model="value"
+          view="string"
+          :items="items"
+          no-footer
+          border-color="primary"
+          style="max-width: 200px; height: 200px;"
+        ></q-scroller>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
         dense, no-footer
       </q-card-section>
       <q-card-section class="col-12">
@@ -136,13 +168,13 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, no-header
+        with QInput, colored, bar-color, no-header
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="value" label="Enter a Zoo Animal">
           <template v-slot:append>
             <q-icon name="fas fa-paw" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller">
+              <q-popup-proxy v-model="showScroller" anchor="top right" self="bottom middle">
                 <q-scroller
                   v-model="value"
                   :items="items"
@@ -152,6 +184,7 @@
                   color="black"
                   inner-text-color="black"
                   inner-color="grey-3"
+                  bar-color="accent"
                   :style="scrollerPopupStyle200"
                   @close="() => { showScroller = false }"
                 />

@@ -39,7 +39,7 @@
           <q-input color="blue-8" filled v-model="scrollerModel" label="Enter a Zoo Animal">
             <template v-slot:append>
               <q-icon name="fas fa-paw" class="cursor-pointer">
-                <q-popup-proxy v-model="showScroller">
+                <q-popup-proxy v-model="showScroller" anchor="top right" self="bottom middle">
                   <q-scroller
                     v-model="scrollerModel"
                     :items="items"
@@ -107,7 +107,7 @@
           <q-input color="green-6" filled v-model="time2" label="Enter time" mask="##:##">
             <template v-slot:append>
               <q-icon name="far fa-clock" class="cursor-pointer">
-                <q-popup-proxy v-model="showTimeScroller">
+                <q-popup-proxy v-model="showTimeScroller" anchor="top right" self="bottom middle">
                   <q-time-scroller
                     v-model="time2"
                     :locale="locale"
@@ -188,7 +188,7 @@
           >
             <template v-slot:append>
               <q-icon name="far fa-clock" class="cursor-pointer">
-                <q-popup-proxy v-model="showTimeRangeScroller">
+                <q-popup-proxy v-model="showTimeRangeScroller" anchor="top right" self="bottom middle">
 
                   <q-time-range-scroller
                     v-model="timeRangeInput"
@@ -267,7 +267,7 @@
           <q-input color="deep-orange-8" filled v-model="date1" label="Enter date" mask="####-##-##">
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
-                <q-popup-proxy v-model="showDateScroller">
+                <q-popup-proxy v-model="showDateScroller" anchor="top right" self="bottom middle">
                   <q-date-scroller
                     v-model="date1"
                     :locale="locale"
@@ -357,7 +357,7 @@
           <q-input color="grey-8" filled v-model="dateRangeInput" label="Enter date range" mask="####-##-## - ####-##-##">
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
-                <q-popup-proxy v-model="showDateRangeScroller">
+                <q-popup-proxy v-model="showDateRangeScroller" anchor="top right" self="bottom middle">
                   <q-date-range-scroller
                     v-model="dateRangeInput"
                     :locale="locale"
@@ -450,7 +450,7 @@
           <q-input color="brown-8" filled v-model="dateTime1" label="Enter date and time" mask="####-##-## ##:##">
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
-                <q-popup-proxy v-model="showDateTimeScroller">
+                <q-popup-proxy v-model="showDateTimeScroller" anchor="top right" self="bottom middle">
 
                   <q-date-time-scroller
                     v-model="dateTime1"

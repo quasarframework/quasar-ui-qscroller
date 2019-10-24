@@ -12,7 +12,7 @@
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
           <template v-slot:append>
             <q-icon name="far fa-clock" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller1">
+              <q-popup-proxy v-model="showScroller1" anchor="top right" self="bottom middle">
                 <q-scroller
                   v-model="value"
                   view="time"
@@ -36,7 +36,7 @@
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
           <template v-slot:append>
             <q-icon name="far fa-clock" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller2">
+              <q-popup-proxy v-model="showScroller2" anchor="top right" self="bottom middle">
                 <q-scroller
                   v-model="value"
                   view="time"
@@ -60,7 +60,7 @@
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
           <template v-slot:append>
             <q-icon name="far fa-clock" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller3">
+              <q-popup-proxy v-model="showScroller3" anchor="top right" self="bottom middle">
                 <q-scroller
                   v-model="value"
                   view="time"
@@ -86,7 +86,7 @@
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
           <template v-slot:append>
             <q-icon name="far fa-clock" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller4">
+              <q-popup-proxy v-model="showScroller4" anchor="top right" self="bottom middle">
                 <q-scroller
                   v-model="value"
                   view="time"
