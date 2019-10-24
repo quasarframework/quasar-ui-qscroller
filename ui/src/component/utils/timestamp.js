@@ -276,6 +276,10 @@ export function padNumber (x, length) {
   return padded
 }
 
+export function getDateObject (timestamp) {
+  return new Date(getDate(timestamp) + ' ' + getTime(timestamp))
+}
+
 export function getDate (timestamp) {
   let str = `${padNumber(timestamp.year, 4)}-${padNumber(timestamp.month, 2)}`
 

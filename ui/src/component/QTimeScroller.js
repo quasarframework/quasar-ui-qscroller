@@ -12,10 +12,11 @@ import {
   Timestamp,
   parsed,
   parseDate,
+  getDateObject,
   getDate,
   getTime,
   copyTimestamp,
-  compareTimestamps,
+  // compareTimestamps,
   padNumber,
   createNativeLocaleFormatter
 } from './utils/timestamp'
@@ -75,6 +76,7 @@ export default {
           return { value: ap, disabled: false, noCaps: true }
         })
     },
+
     minutesList () {
       let count = 60
       if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval) > 0) {
@@ -213,7 +215,22 @@ export default {
     },
 
     emitValue () {
-      this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)].join(':'))
+      switch (this.type) {
+        case 'date':
+          this.timestamp.hour = this.hour
+          this.timestamp.minute = this.minute
+          this.$emit('input', getDateObject(this.timestamp))
+          return
+        case 'array':
+          this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)])
+          return
+        case 'object':
+            this.$emit('input', { hour: padNumber(this.hour, 2), minute: padNumber(this.minute, 2) })
+          return
+        case 'string':
+          this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)].join(':'))
+          return
+      }
     },
 
     onResize ({ height }) {
@@ -239,13 +256,62 @@ export default {
     },
 
     splitTime () {
-      // use today's date (but not time, unless it wasn't passed in)
-      const now = parseDate(new Date())
-      const date = getDate(now) + ' ' + (this.value ? this.value : getTime(now))
-      this.timestamp = parsed(date)
-      this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-      this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
-      this.fromTimestamp()
+      // Date object
+      const type = Object.prototype.toString.call(this.value)
+      let now, date, parts
+      switch (type) {
+        case '[object Date]':
+          this.type = 'date'
+          now = parseDate(this.value)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.fromTimestamp()
+          return
+        case '[object Array]':
+          this.type = 'array'
+          // 1st item is hour, 2nd item is minutes
+          now = parseDate(new Date())
+          now.hour = parseInt(this.value[0])
+          now.minute = parseInt(this.value[1])
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.fromTimestamp()
+          return
+        case '[object Object]':
+          this.type = 'object'
+          // object must contain keys 'hours', 'minutes'
+          now = parseDate(new Date())
+          now.hour = parseInt(this.value.hour)
+          now.minute = parseInt(this.value.minute)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.fromTimestamp()
+          return
+        case '[object String]':
+          // use today's date (but not time, unless it wasn't passed in)
+          this.type = 'string'
+          now = parseDate(new Date())
+          if (this.value) {
+            parts = this.value.split(':')
+            now.hour = parseInt(parts[0])
+            now.minute = parseInt(parts[1])
+          }
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.fromTimestamp()
+          return
+      }
+      if (this.value !== '') {
+        console.error(`QTimeScroller: invalid time format - '${this.value}'`)
+      }
     },
 
     fromTimestamp () {

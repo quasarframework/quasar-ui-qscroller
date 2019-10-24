@@ -31,7 +31,7 @@ export default {
     }
   },
   base: {
-    value: [String, Array],
+    value: null, // [Number, String, Object, Array, Date, Function],
     borderColor: {
       type: String,
       default: '#ccc'
