@@ -231,18 +231,16 @@ export default {
     emitValue () {
       switch (this.type) {
         case 'date':
-          this.timestamp.hour = this.hour
-          this.timestamp.minute = this.minute
           this.$emit('input', getDateObject(this.timestamp))
           return
         case 'array':
-          this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)])
+          this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)])
           return
         case 'object':
-            this.$emit('input', { hour: padNumber(this.hour, 2), minute: padNumber(this.minute, 2) })
+            this.$emit('input', { hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
           return
         case 'string':
-          this.$emit('input', [padNumber(this.hour, 2), padNumber(this.minute, 2)].join(':'))
+          this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
           return
       }
     },
