@@ -6,13 +6,87 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, no-header
+        with QInput, rounded-borders, no-header
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
           <template v-slot:append>
             <q-icon name="far fa-clock" class="cursor-pointer">
-              <q-popup-proxy v-model="showScroller">
+              <q-popup-proxy v-model="showScroller1">
+                <q-scroller
+                  v-model="value"
+                  view="time"
+                  no-header
+                  rounded-borders
+                  :style="scrollerPopupStyle150"
+                  @close="() => { showScroller1 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, show-vertical-bar, no-header
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller2">
+                <q-scroller
+                  v-model="value"
+                  view="time"
+                  no-header
+                  show-vertical-bar
+                  :style="scrollerPopupStyle150"
+                  @close="() => { showScroller2 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, border colors, no-header
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller3">
+                <q-scroller
+                  v-model="value"
+                  view="time"
+                  no-header
+                  show-vertical-bar
+                  bar-color="green"
+                  border-color="green"
+                  :style="scrollerPopupStyle150"
+                  @close="() => { showScroller3 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, colors, no-header
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller4">
                 <q-scroller
                   v-model="value"
                   view="time"
@@ -22,8 +96,10 @@
                   color="black"
                   inner-text-color="black"
                   inner-color="grey-3"
+                  bar-color="#000"
+                  show-vertical-bar
                   :style="scrollerPopupStyle150"
-                  @close="() => { showScroller = false }"
+                  @close="() => { showScroller4 = false }"
                 />
               </q-popup-proxy>
             </q-icon>
@@ -40,7 +116,11 @@ export default {
   data () {
     return {
       value: '',
-      showScroller: false
+      showScroller1: false,
+      showScroller2: false,
+      showScroller3: false,
+      showScroller4: false,
+      showScroller5: false
     }
   },
 
