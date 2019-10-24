@@ -45,7 +45,10 @@ export default {
       ampmIndex: -1, // 2 states: 0=AM, 1=PM (indices into amPmLabels)
       timestamp: null,
       disabledMinutesList: [],
-      disabledHoursList: []
+      disabledHoursList: [],
+      hourInitialized: false,
+      minuteInitialized: false,
+      ampmInitialized: false
     }
   },
 
@@ -148,7 +151,11 @@ export default {
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
-      this.emitValue()
+      if (this.ampmInitialized === true) {
+        this.emitValue()
+      } else {
+        this.ampmInitialized = true
+      }
     },
 
     hour () {
@@ -157,12 +164,20 @@ export default {
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
-      this.emitValue()
+      if (this.hourInitialized === true) {
+        this.emitValue()
+      } else {
+        this.hourInitialized = true
+      }
     },
 
     minute () {
       this.timestamp.minute = parseInt(this.minute)
-      this.emitValue()
+      if (this.minuteInitialized === true) {
+        this.emitValue()
+      } else {
+        this.minuteInitialized = true
+      }
     },
 
     ampm () {
