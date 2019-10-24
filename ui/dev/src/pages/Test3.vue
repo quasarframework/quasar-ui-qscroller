@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row q-gutter-sm full-width">
     <div class="row full-width">
-      <div class="text-h4">QTimeScroller</div>
+      <div class="text-h4">QTimeRangeScroller</div>
     </div>
 
     <q-card>
@@ -164,7 +164,7 @@
           <q-input color="blue-8" filled v-model="value" label="Enter time range" mask="##:## - ##:##">
             <template v-slot:append>
               <q-icon name="far fa-clock" class="cursor-pointer">
-                <q-popup-proxy v-model="showScroller">
+                <q-popup-proxy v-model="showScroller" anchor="top right" self="bottom middle">
                   <q-scroller
                     v-model="value"
                     view="time-range"
