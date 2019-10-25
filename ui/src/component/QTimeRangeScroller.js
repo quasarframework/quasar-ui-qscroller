@@ -71,14 +71,10 @@ export default {
     },
 
     startTime () {
-      debugger
-      console.log('startTime', this.startTime)
       this.emitValue()
     },
 
     endTime () {
-      debugger
-      console.log('endTime', this.endTime)
       this.emitValue()
     },
 
@@ -181,7 +177,6 @@ export default {
     },
 
     splitTime () {
-      debugger
       // QTimeRangeScroller takes an array of Date, Object, Array or String
       let start, end, now
       let type = Object.prototype.toString.call(this.value)

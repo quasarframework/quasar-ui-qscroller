@@ -179,31 +179,7 @@
 export default {
   data () {
     return {
-      value: '',
-      showScroller: false
-    }
-  },
-
-  computed: {
-    scrollerPopupStyle200 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '100vw',
-          height: '100vh'
-        }
-      } else {
-        return {
-          maxHeight: '200px',
-          height: '200px',
-          width: '200px'
-        }
-      }
-    }
-  },
-
-  watch: {
-    value (val) {
-      console.log('value changed:', val)
+      value: ''
     }
   }
 }
