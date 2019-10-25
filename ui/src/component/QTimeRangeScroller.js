@@ -96,23 +96,23 @@ export default {
       let startParts, endParts,  start, end
       switch (this.type) {
         case 'date':
-            start = parseDate(new Date())
-            end = parseDate(new Date())
-            startParts = this.startTime.split(':')
-            endParts = this.endTime.split(':')
-            start.hour = parseInt(startParts[0])
-            start.minute = parseInt(startParts[1])
-            end.hour = parseInt(endParts[0])
-            end.minute = parseInt(endParts[1])
-            this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
+          start = parseDate(new Date())
+          end = parseDate(new Date())
+          startParts = this.startTime.split(':')
+          endParts = this.endTime.split(':')
+          start.hour = parseInt(startParts[0])
+          start.minute = parseInt(startParts[1])
+          end.hour = parseInt(endParts[0])
+          end.minute = parseInt(endParts[1])
+          this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
           return
         case 'array':
-            startParts = this.startTime.split(':')
-            endParts = this.endTime.split(':')
-            this.$emit('input', [
-              [ parseInt(startParts[0]), parseInt(startParts[1]) ],[ parseInt(endParts[0]), parseInt(endParts[1]) ]
-            ])
-            return
+          startParts = this.startTime.split(':')
+          endParts = this.endTime.split(':')
+          this.$emit('input', [
+            [ parseInt(startParts[0]), parseInt(startParts[1]) ],[ parseInt(endParts[0]), parseInt(endParts[1]) ]
+          ])
+          return
         case 'object':
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
