@@ -161,7 +161,7 @@
           :items="items"
           no-footer
           disable
-          style="max-width: 150px; height: 200px;"
+          style="max-width: 200px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
