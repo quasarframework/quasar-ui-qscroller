@@ -155,6 +155,12 @@ export default {
     },
     startNoMinutes: Boolean,
     startNoHours: Boolean,
+    startAmPmLabels: {
+      type: Array,
+      default: () => ['AM', 'PM'],
+      validator: v => Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string'
+    },
+
     // --------------------------------
     // end time
     // --------------------------------
@@ -178,6 +184,11 @@ export default {
     },
     endNoMinutes: Boolean,
     endNoHours: Boolean,
+    endAmPmLabels: {
+      type: Array,
+      default: () => ['AM', 'PM'],
+      validator: v => Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string'
+    }
   },
   dateRange: {
     displaySeparator: {
