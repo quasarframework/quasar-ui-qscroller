@@ -1,27 +1,20 @@
 $item-height              : 26px
+$item-bar-top             : calc(50% - 13px)
 $selected-font-size       : 18px
 $font-size                : 14px
 $header-font-size         : 22px
+$footer-font-size         : 22px
 $header-height            : 50px
 $footer-height            : 50px
-$footer-font-size         : 14px
 
-$item-height-dense        : 20px
-$selected-font-size-dense : 14px
-$font-size-dense          : 11px
-$header-font-size-dense   : 17px
+$item-height-dense        : 24px
+$item-bar-top-dense       : calc(50% - 12px)
+$selected-font-size-dense : 16px
+$font-size-dense          : 12px
+$header-font-size-dense   : 16px
+$footer-font-size-dense   : 16px
 $header-height-dense      : 30px
 $footer-height-dense      : 30px
-$footer-font-size-dense   : 11px
-
-.test
-  border: 1px solid var(--scroller-border-color, #ccc)
-
-.no-scrollbars
-  -ms-overflow-style: none
-  scrollbar-width: none
-  &::-webkit-scrollbar
-    display: none
 
 .q-scroller
   position: relative
@@ -31,7 +24,7 @@ $footer-font-size-dense   : 11px
   width: 100%
   height: 100%
   overflow: hidden
-  transition: all 250ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
 
   &__content
     position: relative
@@ -49,6 +42,7 @@ $footer-font-size-dense   : 11px
     flex: 10000 1 0%
     z-index: 1
     height: $header-height
+    max-height: $header-height
     padding: 0
     margin: 0
     font-weight: 700
@@ -59,6 +53,7 @@ $footer-font-size-dense   : 11px
     flex: 10000 1 0%
     z-index: 1
     height: $header-height-dense
+    max-height: $header-height-dense
     padding: 0
     margin: 0
     font-weight: 700
@@ -104,10 +99,11 @@ $footer-font-size-dense   : 11px
     // regular
     &:before
       content: ""
-      top: calc(50% - 13px)
+      top: $item-bar-top
       position: absolute
       margin: 0 auto
       height: $item-height
+      line-height: $item-height
       width: 90%
       left: 0
       right: 0
@@ -124,10 +120,11 @@ $footer-font-size-dense   : 11px
     // dense
     &:before
       content: ""
-      top: calc(50% - 10px)
+      top: $item-bar-top-dense
       position: absolute
       margin: 0 auto
       height: $item-height-dense
+      line-height: $item-height-dense
       width: 90%
       left: 0
       right: 0

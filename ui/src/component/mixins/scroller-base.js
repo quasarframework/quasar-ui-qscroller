@@ -27,7 +27,7 @@ const { getScrollPosition, setScrollPosition, getScrollTarget } = scroll
 
 // this needs to match scroller.styl values
 const ITEM_HEIGHT = 26
-const ITEM_HEIGHT_DENSE = 20
+const ITEM_HEIGHT_DENSE = 24
 
 export default {
   name: 'ScrollerBase',
@@ -43,7 +43,6 @@ export default {
     return {
       scrollTimer: null,
       height: 0,
-      noValueChange: false,
       columnPadding: {},
       padding: 0
     }
@@ -52,9 +51,11 @@ export default {
   mounted () {
     this.adjustColumnPadding()
     // if there is nothing selected, select the first one
-    if (!this.value && this.items.length > 0) {
-      this.$emit('input', this.items[0].value)
-    }
+    this.$nextTick(() => {
+      if (!this.value && this.items.length > 0) {
+        this.$emit('input', this.items[0].value)
+      }
+    })
   },
 
   computed: {
@@ -85,7 +86,7 @@ export default {
     },
 
     value (val) {
-      this.adjustColumnPadding()
+      this.updatePosition()
     },
 
     items () {
@@ -103,6 +104,7 @@ export default {
      * @param {Number} dir if 1, direction is down, otherwise -1 up
      */
     move (dir) {
+      console.log('move')
       if (dir === 1 || dir === -1) {
         const elem = this.currentElement()
         if (elem) {
@@ -128,7 +130,7 @@ export default {
               if (items.length > 0 && items[0].disabled !== true) {
                 this.$emit('input', items[0].value)
               }
-            }, 500)
+            }, 350)
             return true
           }
         }
@@ -188,7 +190,6 @@ export default {
 
     adjustColumnPadding () {
       let self = this
-      self.noValueChange = true
 
       const setPadding = (padding) => {
         self.columnPadding = {
@@ -198,7 +199,7 @@ export default {
 
       const getPadding = () => {
         self.height = parseInt(window.getComputedStyle(self.$el.parentElement, null).getPropertyValue('height'))
-        self.padding = Math.ceil(self.height / 2 - self.itemHeight / 2)
+        self.padding = self.height / 2 - self.itemHeight / 2
         if (!isNaN(self.padding) && self.padding > -1) {
           setPadding(self.padding)
         }
@@ -207,16 +208,12 @@ export default {
       getPadding()
       setTimeout(() => {
         self.updatePosition()
-
-        setTimeout(() => {
-          self.noValueChange = false
-        }, 300)
-      }, 300)
+      }, 100)
     },
 
     wheelEvent (event) {
       if (this.disable !== true) {
-        let dir = event.wheelDeltaY < 0 ? 1 : -1
+        const dir = event.wheelDeltaY < 0 ? 1 : -1
         this.move(dir)
       }
       // always prevent default so whole page doesn't scroll if at end of list
@@ -234,16 +231,14 @@ export default {
 
     scrollEvent: debounce(function (event) {
       if (this.disable !== true) {
-        if (this.noValueChange === false) {
-          const index = this.getItemIndexFromEvent(event)
-          if (index > -1 && index < this.items.length) {
-            const item = this.items[index]
-            if (this.disable !== true && item.disabled !== true) {
-              this.$emit('input', value)
-            }
-          } else {
-            console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
+        const index = this.getItemIndexFromEvent(event)
+        if (index > -1 && index < this.items.length) {
+          const item = this.items[index]
+          if (this.disable !== true && item.disabled !== true) {
+            this.$emit('input', value)
           }
+        } else {
+          console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
       }
     }, 400),
@@ -279,7 +274,7 @@ export default {
         if (found) {
           found.classList.add(klass.slice(1))
           const pos = found.offsetTop - self.padding
-          setScrollPosition(self.$el, pos, 150)
+          setScrollPosition(self.$el, pos, 10)
         }
       }, 100)
     },
