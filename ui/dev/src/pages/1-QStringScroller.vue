@@ -227,7 +227,7 @@ export default {
         { value: 'Polar Bear', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Red Panda', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Rhinoceros', noCaps: true, iconRight: '', disabled: false, align: 'around' },
-        { value: 'Ring-tailer Lemur', noCaps: true, iconRight: '', disabled: false, align: 'around' },
+        { value: 'Ring-tailed Lemur', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Sea lion', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Sloth', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Tiger', noCaps: true, iconRight: '', disabled: false, align: 'around' },
