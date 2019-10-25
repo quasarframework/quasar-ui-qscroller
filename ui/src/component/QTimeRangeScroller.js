@@ -187,10 +187,10 @@ export default {
           this.type = 'date'
           start = parseDate(this.value[0])
           start = getDate(start) + ' ' + getTime(start)
-          start = parsed(start)
+          start = getTime(parsed(start))
           end = parseDate(this.value[1])
           end = getDate(end) + ' ' + getTime(end)
-          end = parsed(start)
+          end = getTime(parsed(end))
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
