@@ -1,5 +1,6 @@
 // Mixins
 import DateTimeBase from './mixins/datetime-base'
+import { QColorizeMixin } from 'q-colorize-mixin'
 
 // Components
 import ScrollerBase from './mixins/scroller-base'
@@ -24,35 +25,51 @@ import {
 export default {
   name: `QDateScroller`,
 
-  mixins: [DateTimeBase],
+  mixins: [DateTimeBase, QColorizeMixin],
 
   props: {
     ...props.common,
     ...props.date,
-    showVerticalBar: Boolean
+    ...props.verticalBar
   },
 
   data () {
     return {
-      headerFooterHeight: 100,
+      headerHeight: 50,
+      footerHeight: 50,
       bodyHeight: 100,
+      height: 0,
       year: '',
       month: '',
       day: '',
-      timestamp: { ...Timestamp },
+      timestamp: null,
       disabledYearsList: [],
       disabledMonthsList: [],
       disabledDaysList: []
     }
   },
 
-  mounted () {
+  created () {
+    this.timestamp = copyTimestamp(Timestamp)
+  },
+
+  beforeMount () {
     this.handleDisabledLists()
     this.splitDate()
+  },
+
+  mounted () {
     this.adjustBodyHeight()
   },
 
   computed: {
+    style () {
+      let style = {}
+      style['--scroller-border-color'] = this.calculateColor(this.borderColor)
+      style['--scroller-bar-color'] = this.calculateColor(this.barColor)
+      return style
+    },
+
     daysList () {
       let length = daysInMonth(parseInt(this.year), parseInt(this.month))
       if (!this.year || !this.month) {
@@ -102,7 +119,6 @@ export default {
     },
 
     displayDate () {
-      // console.log('displayDate')
       if (!this.year || !this.month || !this.day) return ''
       if (this.timestamp.hasDay === false) return ''
       // year only
@@ -122,7 +138,6 @@ export default {
     },
 
     dateFormatter () {
-      // console.log('dateFormatter')
       const year = this.shortYearLabel ? '2-digit' : 'numeric'
       const month = this.shortMonthLabel ? 'numeric' : '2-digit'
       const day = this.shortDayLabel ? 'numeric' : '2-digit'
@@ -253,22 +268,18 @@ export default {
       this.$emit('input', [this.year, this.month, this.day].join('-'))
     },
 
-    onResize ({ height }) {
+    onResize () {
       this.adjustBodyHeight()
     },
 
     adjustBodyHeight () {
-      if (this.height !== void 0) {
-        this.bodyHeight = this.height
-      } else {
-        this.$nextTick(() => {
-          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-          this.headerFooterHeight = headerHeight + footerHeight
-          const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-        })
-      }
+      let self = this
+      this.$nextTick(() => {
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.bodyHeight = this.height - this.headerHeight - this.footerHeight
+      })
     },
 
     handleDisabledLists () {
@@ -315,9 +326,12 @@ export default {
       return this.monthFormatter(timestamp, this.shortMonthLabel)
     },
 
-    // renderers
+    // -------------------------------
+    // render functions
+    // -------------------------------
     __renderYearsScroller (h) {
       return h(ScrollerBase, {
+        staticClass: 'col',
         props: {
           value: this.year,
           items: this.yearsList,
@@ -327,6 +341,9 @@ export default {
           textColor: this.innerTextColor,
           color: this.innerColor
         },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         on: {
           input: (val) => { this.year = val }
         }
@@ -335,6 +352,7 @@ export default {
 
     __renderMonthsScroller (h) {
       return h(ScrollerBase, {
+        staticClass: 'col',
         props: {
           value: this.month,
           items: this.monthsList,
@@ -344,6 +362,9 @@ export default {
           textColor: this.innerTextColor,
           color: this.innerColor
         },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         on: {
           input: (val) => { this.month = val }
         }
@@ -352,6 +373,7 @@ export default {
 
     __renderDaysScroller (h) {
       return h(ScrollerBase, {
+        staticClass: 'col',
         props: {
           value: this.day,
           items: this.daysList,
@@ -432,25 +454,22 @@ export default {
   },
 
   render (h) {
-    const child = [
+    const resize = [
       h(QResizeObserver, {
         props: { debounce: 0 },
         on: { resize: this.onResize }
       })
     ]
 
-    return h('div', this.setBothColors(this.color, this.backgroundColor, {
+    return h('div', this.setBothColors(this.textColor, this.color, {
       ref: 'scroller',
       staticClass: 'q-scroller flex',
       class: {
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
-      style: {
-        '--scroller-border-color': this.borderColor,
-        '--scroller-bar-color': this.barColor
-      }
-    }), child.concat([
+      style: this.style
+    }), resize.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
