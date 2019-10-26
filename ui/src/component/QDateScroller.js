@@ -13,6 +13,7 @@ import {
   parsed,
   parseDate,
   getDate,
+  getTime,
   daysInMonth,
   copyTimestamp,
   compareTimestamps,
@@ -96,20 +97,27 @@ export default {
     },
 
     yearsList () {
-      let minDate = 0
-      let maxDate = 0
-      if (this.minDate && this.maxDate) {
-        minDate = parseInt(minDate)
-        maxDate = parseInt(maxDate)
-      } else {
-        const date = new Date()
-        let year = date.getFullYear()
-        minDate = year - 5
-        maxDate = year + 5
+      let yearStart = 0
+      let yearEnd = 0
+      if (this.yearStart && parseInt(this.yearStart) > 0) {
+        yearStart = parseInt(this.yearStart)
+      }
+      if (this.yearEnd && parseInt(this.yearEnd) > 0) {
+        yearEnd = parseInt(this.yearEnd)
+      }
+
+      // if date range not given, calculate 5 before and 5 after years
+      const d = new Date()
+      let year = d.getFullYear()
+      if (yearStart === 0) {
+        yearStart = year - 5
+      }
+      if (yearEnd === 0) {
+        yearEnd = year + 5
       }
       let dates = []
-      let date = minDate
-      while (date <= maxDate) {
+      let date = yearStart
+      while (date <= yearEnd) {
         dates.push(padNumber(date, 4))
         ++date
       }
@@ -295,7 +303,20 @@ export default {
     },
 
     emitValue () {
-      this.$emit('input', [this.year, this.month, this.day].join('-'))
+      switch (this.type) {
+        case 'date':
+          this.$emit('input', getDateObject(this.timestamp))
+          return
+        case 'array':
+          this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)])
+          return
+        case 'object':
+            this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2) })
+          return
+        case 'string':
+          this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)].join('-'))
+          return
+      }
     },
 
     onResize () {
@@ -323,11 +344,56 @@ export default {
     },
 
     splitDate () {
-      // use today's date (but not time, unless it wasn't passed in)
-      const now = parseDate(new Date())
-      const date = (this.value ? this.value : getDate(now)) + ' 00:00'
-      this.timestamp = parsed(date)
-      this.fromTimestamp()
+      const type = Object.prototype.toString.call(this.value)
+      let now, date, parts
+      switch (type) {
+        case '[object Date]':
+          this.type = 'date'
+          now = parseDate(this.value)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object Array]':
+          this.type = 'array'
+          // 1st item is year, 2nd item is month, 3rd item is day
+          now = parseDate(new Date())
+          now.year = parseInt(this.value[0])
+          now.month = parseInt(this.value[1])
+          now.day = parseInt(this.value[2])
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object Object]':
+          this.type = 'object'
+          // object must contain keys 'year', 'month', 'day'
+          now = parseDate(new Date())
+          now.year = parseInt(this.value.year)
+          now.month = parseInt(this.value.month)
+          now.day = parseInt(this.value.day)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object String]':
+          // use today's date and time
+          this.type = 'string'
+          now = parseDate(new Date())
+          if (this.value) {
+            parts = this.value.split('-')
+            now.year = parseInt(parts[0])
+            now.month = parseInt(parts[1])
+            now.day = parseInt(parts[2])
+          }
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+      }
+      if (this.value !== '') {
+        console.error(`QDateScroller: invalid date format - '${this.value}'`)
+      }
     },
 
     fromTimestamp () {
