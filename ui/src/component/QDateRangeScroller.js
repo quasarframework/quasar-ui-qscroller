@@ -203,7 +203,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
-            console.error('QDateRangeScroller: invalid start or end dates')
+            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
         case '[object Array]':
@@ -214,7 +214,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
-            console.error('QDateRangeScroller: invalid start or end dates')
+            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
         case '[object Object]':
@@ -225,7 +225,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
-            console.error('QDateRangeScroller: invalid start or end dates')
+            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
         case '[object String]':
@@ -236,7 +236,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
-            console.error('QDateRangeScroller: invalid start or end dates')
+            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
         case '[object Undefined]':
@@ -251,7 +251,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
-            console.error('QDateRangeScroller: invalid start or end dates')
+            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
       }
     },
