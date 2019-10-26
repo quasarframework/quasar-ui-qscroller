@@ -388,10 +388,6 @@ export default {
         class: {
           'shadow-up-20': this.noShadow === false
         },
-        style: {
-          maxHeight: this.dense ? '30px' : '50px',
-          minHeight: this.dense ? '30px' : '50px'
-        }
       }, slot || [
         this.__renderFooterButton(h)
       ])
@@ -399,7 +395,7 @@ export default {
   },
 
   render (h) {
-    const child = [
+    const resize = [
       h(QResizeObserver, {
         props: { debounce: 0 },
         on: { resize: this.onResize }
@@ -415,7 +411,7 @@ export default {
         'q-scroller__border': this.noBorder !== true
       },
       style: this.style
-    }), child.concat([
+    }), resize.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
