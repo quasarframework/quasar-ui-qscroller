@@ -220,7 +220,7 @@ export default {
     startShowMonthLabel: Boolean,
     startShowWeekdayLabel: Boolean,
     startNoDays: Boolean,
-    startNoMonth: Boolean,
+    startNoMonths: Boolean,
     startNoYears: Boolean,
     // --------------------------------
     // end date
@@ -247,7 +247,7 @@ export default {
     endShowMonthLabel: Boolean,
     endShowWeekdayLabel: Boolean,
     endNoDays: Boolean,
-    endNoMonth: Boolean,
+    endNoMonths: Boolean,
     endNoYears: Boolean
   }
 }
