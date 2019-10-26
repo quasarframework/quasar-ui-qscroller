@@ -424,16 +424,16 @@ export function createNativeLocaleFormatter (locale, getOptions) {
   }
 
   return (timestamp, short) => {
+    const time = `${padNumber(timestamp.hour, 2)}:${padNumber(timestamp.minute, 2)}`
+    const year = padNumber(timestamp.year, 4)
+    const month = padNumber(timestamp.month, 2)
+    const day = padNumber(timestamp.day, 2)
+    const date = [year, month, day].join('-')
     try {
       const intlFormatter = new Intl.DateTimeFormat(locale || void 0, getOptions(timestamp, short))
-      const time = `${padNumber(timestamp.hour, 2)}:${padNumber(timestamp.minute, 2)}`
-      const year = padNumber(timestamp.year, 4)
-      const month = padNumber(timestamp.month, 2)
-      const day = padNumber(timestamp.day, 2)
-      const date = [year, month, day].join('-')
       return intlFormatter.format(new Date(`${date}T${time}:00+00:00`))
     } catch (e) {
-      console.error(`QScroller: ${e.message}`)
+      console.error(`Intl.DateTimeFormat: ${e.message} -> ${date}T${time}`)
       return ''
     }
   }
