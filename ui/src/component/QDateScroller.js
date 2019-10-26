@@ -435,7 +435,8 @@ export default {
           disable: this.disable,
           height: this.bodyHeight,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
         },
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
@@ -456,7 +457,8 @@ export default {
           disable: this.disable,
           height: this.bodyHeight,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
         },
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
@@ -477,7 +479,8 @@ export default {
           disable: this.disable,
           height: this.bodyHeight,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
         },
         on: {
           input: (val) => { this.day = val }

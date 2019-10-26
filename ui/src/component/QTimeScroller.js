@@ -391,7 +391,8 @@ export default {
           dense: this.dense,
           disable: this.disable,
           textColor: this.innerTextColor,
-          color: this.innerColor
+          color: this.innerColor,
+          disabledTextColor: this.disabledTextColor
         },
         on: {
           input: (val) => { this.ampm = val }

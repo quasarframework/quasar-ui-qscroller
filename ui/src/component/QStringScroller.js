@@ -120,6 +120,7 @@ export default {
           disable: this.disable,
           textColor: this.innerTextColor,
           color: this.innerColor,
+          disabledTextColor: this.disabledTextColor,
           noCaps: this.noCaps
         },
         on: {
