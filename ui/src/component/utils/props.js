@@ -168,7 +168,6 @@ export default {
       type: [String, Number],
       default: 1
     },
-    // TODO
     endHourInterval: {
       type: [String, Number],
       default: 1
@@ -206,10 +205,6 @@ export default {
     // --------------------------------
     // start date
     // --------------------------------
-    startMinDate: String,
-    startMaxDate: String,
-    startDates: Array,
-    startDisabledDates: Array,
     startDisabledYears: {
       type: Array,
       default: () => []
@@ -233,10 +228,6 @@ export default {
     // --------------------------------
     // end date
     // --------------------------------
-    endMinDate: String,
-    endMaxDate: String,
-    endDates: Array,
-    endDisabledDates: Array,
     endDisabledYears: {
       type: Array,
       default: () => []
