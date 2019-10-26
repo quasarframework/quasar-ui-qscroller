@@ -104,7 +104,7 @@ export default {
           start.minute = parseInt(startParts[1])
           end.hour = parseInt(endParts[0])
           end.minute = parseInt(endParts[1])
-          this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
+          this.$emit('input', [ getDateObject(start), getDateObject(end) ])
           return
         case 'array':
           startParts = this.startTime.split(':')
