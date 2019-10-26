@@ -1,5 +1,5 @@
 // Mixins
-import DateTimeBase from './mixins/datetime-base'
+import DateTimeBase from './mixins/date-time-base'
 import QDateScroller from './QDateScroller'
 import QTimeScroller from './QTimeScroller'
 
@@ -43,6 +43,13 @@ export default {
   },
 
   computed: {
+    style () {
+      let style = {}
+      style['--scroller-border-color'] = this.calculateColor(this.borderColor)
+      style['--scroller-bar-color'] = this.calculateColor(this.barColor)
+      return style
+    },
+
     displayDateTime () {
       if (this.date !== '' && this.time !== '') {
         if (this.$refs.date && this.$refs.time) {
@@ -283,11 +290,7 @@ export default {
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
-      style: {
-        '--scroller-border-color': this.borderColor,
-        '--scroller-bar-color': this.barColor,
-        'overflow': 'hidden'
-      }
+      style: this.style
     }), child.concat([
       this.__renderHeader(h),
       this.__renderBody(h),

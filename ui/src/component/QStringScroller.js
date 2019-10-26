@@ -37,6 +37,12 @@ export default {
   },
 
   computed: {
+    style () {
+      let style = {}
+      style['--scroller-border-color'] = this.calculateColor(this.borderColor)
+      style['--scroller-bar-color'] = this.calculateColor(this.barColor)
+      return style
+    }
   },
 
   watch: {
@@ -215,10 +221,7 @@ export default {
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
-      style: {
-        '--scroller-border-color': this.borderColor,
-        '--scroller-bar-color': this.barColor
-      }
+      style: this.style
     }), resize.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
