@@ -104,7 +104,6 @@ export default {
      * @param {Number} dir if 1, direction is down, otherwise -1 up
      */
     move (dir) {
-      console.log('move')
       if (dir === 1 || dir === -1) {
         const elem = this.currentElement()
         if (elem) {
