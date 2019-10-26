@@ -561,6 +561,7 @@ export default {
       ref: 'scroller',
       staticClass: 'q-scroller flex',
       class: {
+        'q-scroller__disabled': this.disable === true,
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
