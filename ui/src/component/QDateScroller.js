@@ -80,7 +80,7 @@ export default {
         .map(d => {
           ++d // days start with 1
           d = d < 10 ? '0' + d : '' + d
-          return { value: d, disabled: this.disabledDays.includes(d) }
+          return { value: d, disabled: this.disabledDaysList.includes(d) }
         })
     },
 
@@ -91,7 +91,7 @@ export default {
           ++m // Jan = 0
           let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
           m = m < 10 ? '0' + m : '' + m
-          return { display: mon, value: m, disabled: this.disabledMonths.includes(m) }
+          return { display: mon, value: m, disabled: this.disabledMonthsList.includes(m) }
         })
     },
 
@@ -114,7 +114,7 @@ export default {
         ++date
       }
       return dates.map(y => {
-        return { value: y, disabled: this.disabledYears.includes(y) }
+        return { value: y, disabled: this.disabledYearsList.includes(y) }
       })
     },
 
@@ -128,12 +128,12 @@ export default {
       // day only
       if (this.noMonths === true && this.noYears === true) return this.dayFormatter(this.timestamp, this.shortDayLabel)
       // month and year
-      // if (this.noDays) return this.yearMonthFormatter(this.timestamp)
+      if (this.noDays) return this.yearMonthFormatter(this.timestamp)
       // year and day
-      // if (this.noMonths) return this.yearDayFormatter(this.timestamp)
+      if (this.noMonths) return this.yearDayFormatter(this.timestamp)
       // month and day
-      // if (this.noYears) return this.monthDayFormatter(this.timestamp)
-      // everything
+      if (this.noYears) return this.monthDayFormatter(this.timestamp)
+      // everything else
       return this.dateFormatter(this.timestamp)
     },
 
@@ -180,8 +180,28 @@ export default {
     },
 
     yearFormatter () {
-      const longOptions = { timeZone: 'UTC', year: 'long' }
-      const shortOptions = { timeZone: 'UTC', year: 'short' }
+      const longOptions = { timeZone: 'UTC', year: 'numeric' }
+      const shortOptions = { timeZone: 'UTC', year: '2-digit' }
+
+      return createNativeLocaleFormatter(
+        this.locale,
+        (_tms, short) => short ? shortOptions : longOptions
+      )
+    },
+
+    yearMonthFormatter () {
+      const longOptions = { timeZone: 'UTC', month: 'long', year: 'numeric' }
+      const shortOptions = { timeZone: 'UTC', month: 'short', year: '2-digit' }
+
+      return createNativeLocaleFormatter(
+        this.locale,
+        (_tms, short) => short ? shortOptions : longOptions
+      )
+    },
+
+    yearDayFormatter () {
+      const longOptions = { timeZone: 'UTC', day: 'numeric', year: 'numeric' }
+      const shortOptions = { timeZone: 'UTC', day: '2-digit', year: '2-digit' }
 
       return createNativeLocaleFormatter(
         this.locale,
@@ -195,6 +215,16 @@ export default {
       return createNativeLocaleFormatter(
         this.locale,
         (_tms, _short) => options
+      )
+    },
+
+    monthDayFormatter () {
+      const longOptions = { timeZone: 'UTC', day: 'numeric', month: 'long' }
+      const shortOptions = { timeZone: 'UTC', day: '2-digit', month: 'short' }
+
+      return createNativeLocaleFormatter(
+        this.locale,
+        (_tms, short) => short ? shortOptions : longOptions
       )
     }
   },
@@ -287,8 +317,8 @@ export default {
       this.disabledMonthsList = []
       this.disabledYearsList = []
 
-      this.disabledDays.forEach(m => this.disabledDaysList.push(padNumber(parseInt(m), 2)))
-      this.disabledMonths.forEach(h => this.disabledMonthsList.push(padNumber(parseInt(h), 2)))
+      this.disabledDays.forEach(d => this.disabledDaysList.push(padNumber(parseInt(d), 2)))
+      this.disabledMonths.forEach(m => this.disabledMonthsList.push(padNumber(parseInt(m), 2)))
       this.disabledYears.forEach(h => this.disabledYearsList.push(padNumber(parseInt(h), 4)))
     },
 
