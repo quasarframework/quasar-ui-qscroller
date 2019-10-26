@@ -58,8 +58,7 @@ export default {
         if (this.$refs.startTime && this.$refs.endTime) {
           return this.$refs.startTime.displayTime + this.displaySeparator + this.$refs.endTime.displayTime
         }
-        const time = `${this.startTime}${this.displaySeparator}${this.endTime}`
-        return time
+        return `${this.startTime}${this.displaySeparator}${this.endTime}`
       }
       return `${this.displaySeparator}`
     }
@@ -269,10 +268,7 @@ export default {
         class: {
           'shadow-20': this.noShadow === false
         },
-        style: {
-          maxHeight: this.dense ? '30px' : '50px',
-          minHeight: this.dense ? '30px' : '50px'
-        }
+      }, slot ? slot([this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()]) : [
       }, slot ? slot(this.timestamp) : [
         h('span', {
           staticClass: 'ellipsis'
