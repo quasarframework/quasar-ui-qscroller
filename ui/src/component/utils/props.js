@@ -195,6 +195,14 @@ export default {
       type: String,
       default: ' - '
     },
+    errorColor: {
+      type: String,
+      default: 'red-1'
+    },
+    errorTextColor: {
+      type: String,
+      default: 'red-10'
+    },
     // --------------------------------
     // start date
     // --------------------------------
