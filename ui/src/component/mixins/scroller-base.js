@@ -236,6 +236,7 @@ export default {
           if (this.disable !== true && item.disabled !== true) {
             this.$emit('input', value)
           }
+          event.preventDefault()
         } else {
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
