@@ -427,6 +427,9 @@ export default {
     __renderYearsScroller (h) {
       return h(ScrollerBase, {
         staticClass: 'col',
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         props: {
           value: this.year,
           items: this.yearsList,
@@ -437,9 +440,6 @@ export default {
           color: this.innerColor,
           disabledTextColor: this.disabledTextColor
         },
-        class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
-        },
         on: {
           input: (val) => { this.year = val }
         }
@@ -449,6 +449,9 @@ export default {
     __renderMonthsScroller (h) {
       return h(ScrollerBase, {
         staticClass: 'col',
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
         props: {
           value: this.month,
           items: this.monthsList,
@@ -458,9 +461,6 @@ export default {
           textColor: this.innerTextColor,
           color: this.innerColor,
           disabledTextColor: this.disabledTextColor
-        },
-        class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
         },
         on: {
           input: (val) => { this.month = val }
