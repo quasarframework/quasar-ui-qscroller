@@ -245,7 +245,7 @@ export default {
       }
     },
 
-    onResize ({ height }) {
+    onResize () {
       this.adjustBodyHeight()
     },
 
@@ -467,10 +467,6 @@ export default {
           'shadow-up-20': this.noShadow === false
         },
         style: {
-          maxHeight: this.dense ? '30px' : '50px',
-          minHeight: this.dense ? '30px' : '50px'
-        }
-      }, slot || [
         this.__renderFooterButton(h)
       ])
     }

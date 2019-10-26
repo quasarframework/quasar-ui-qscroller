@@ -54,7 +54,7 @@ export default {
     },
 
     displayDate () {
-      if (this.startDate !== void 0 && this.endDate !== void 0) {
+      if (this.startDate !== '' && this.endDate !== '') {
         if (this.$refs.startDate && this.$refs.endDate) {
           return this.$refs.startDate.displayDate + this.displaySeparator + this.$refs.endDate.displayDate
         }
@@ -266,22 +266,6 @@ export default {
       return false
     },
 
-    __renderHeader (h) {
-      if (this.noHeader) return ''
-      const slot = this.$scopedSlots.header
-      return h('div', {
-        ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
-        class: {
-          'shadow-20': this.noShadow === false
-        },
-      }, slot ? slot([this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()]) : [
-        h('span', {
-          staticClass: 'ellipsis'
-        }, this.displayDate)
-      ])
-    },
-
     __renderStartDate (h) {
       return h(QDateScroller, {
         ref: 'startDate',
@@ -374,6 +358,22 @@ export default {
         staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`
       }), [
         this.__renderScrollers(h)
+      ])
+    },
+
+    __renderHeader (h) {
+      if (this.noHeader) return ''
+      const slot = this.$scopedSlots.header
+      return h('div', {
+        ref: 'header',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        },
+      }, slot ? slot([this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()]) : [
+        h('span', {
+          staticClass: 'ellipsis'
+        }, this.displayDate)
       ])
     },
 

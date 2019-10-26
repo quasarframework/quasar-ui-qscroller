@@ -497,9 +497,6 @@ export default {
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerColor, {
         staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
-        class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
-        },
         style: {
           height: `${this.bodyHeight}px`
         }
