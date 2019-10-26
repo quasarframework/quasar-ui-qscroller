@@ -159,6 +159,7 @@ export default {
         if (endDate >= startDate) {
           return true
         }
+        this.$emit('invalid-range', { startDate: this.startDate, endDate: this.endDate } )
         return false
       }
       // until everything is mounted, just return true
@@ -323,6 +324,7 @@ export default {
     },
 
     __renderEndDate (h) {
+      const isValidRange = this.isValidRange()
       return h(QDateScroller, {
         ref: 'endDate',
         staticClass: 'col-6',
@@ -332,8 +334,8 @@ export default {
           barColor: this.barColor,
           textColor: this.textColor,
           color: this.color,
-          innerTextColor: this.isValidRange() ? this.innerTextColor : this.errorTextColor,
-          innerColor: this.isValidRange() ? this.innerColor : this.errorColor,
+          innerTextColor: isValidRange ? this.innerTextColor : this.errorTextColor,
+          innerColor: isValidRange ? this.innerColor : this.errorColor,
           disabledTextColor: this.disabledTextColor,
           dense: this.dense,
           disable: this.disable,

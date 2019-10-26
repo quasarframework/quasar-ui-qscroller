@@ -155,6 +155,7 @@ export default {
         if (endTime >= startTime) {
           return true
         }
+        this.$emit('invalid-range', { startTime: this.startTime, endTime: this.endTime } )
         return false
       }
       // until everything is mounted, just return true
@@ -313,6 +314,7 @@ export default {
     },
 
     __renderEndTime (h) {
+      const isValidRange = this.isValidRange()
       return h(QTimeScroller, {
         ref: 'endTime',
         staticClass: 'col-6',
@@ -322,8 +324,8 @@ export default {
           barColor: this.barColor,
           textColor: this.textColor,
           color: this.color,
-          innerTextColor: this.isValidRange() ? this.innerTextColor : this.errorTextColor,
-          innerColor: this.isValidRange() ? this.innerColor : this.errorColor,
+          innerTextColor: isValidRange ? this.innerTextColor : this.errorTextColor,
+          innerColor: isValidRange ? this.innerColor : this.errorColor,
           disabledTextColor: this.disabledTextColor,
           dense: this.dense,
           disable: this.disable,
