@@ -155,23 +155,6 @@
       </q-card-section>
     </q-card>
 
-    <q-card class="q-pa-md">
-      <q-card-section class="col-12">
-        dense, disabled, hour12, no-footer
-      </q-card-section>
-      <q-card-section class="col-12">
-        <q-scroller
-          v-model="value"
-          view="time"
-          no-footer
-          dense
-          disabled
-          hour12
-          style="max-width: 120px; height: 200px;"
-        ></q-scroller>
-      </q-card-section>
-    </q-card>
-
   </div>
 </template>
 
