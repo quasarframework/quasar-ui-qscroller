@@ -74,8 +74,6 @@ export default {
     showVerticalBar: Boolean
   },
   date: {
-    minDate: String,
-    maxDate: String,
     dates: Array,
     disabledDates: Array,
     disabledYears: {
@@ -97,7 +95,9 @@ export default {
     showWeekdayLabel: Boolean,
     noDays: Boolean,
     noMonths: Boolean,
-    noYears: Boolean
+    noYears: Boolean,
+    startYear: [Number, String],
+    endYear: [Number, String]
   },
   time: {
     minuteInterval: {
