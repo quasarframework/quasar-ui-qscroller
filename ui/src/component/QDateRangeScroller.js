@@ -216,7 +216,7 @@ export default {
         case '[object Object]':
           this.type = 'object'
           start = padNumber(parseInt(this.value[0].year), 2) + '-' + padNumber(parseInt(this.value[0].month), 2) + '-' + padNumber(parseInt(this.value[0].day), 2)
-          end = padNumber(parseInt(this.value[1].year), 2) + '-' + padNumber(parseInt(this.value[1].month), 2) + '-' + padNumber(parseInt(this.value[1].minute), 2)
+          end = padNumber(parseInt(this.value[1].year), 2) + '-' + padNumber(parseInt(this.value[1].month), 2) + '-' + padNumber(parseInt(this.value[1].day), 2)
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
