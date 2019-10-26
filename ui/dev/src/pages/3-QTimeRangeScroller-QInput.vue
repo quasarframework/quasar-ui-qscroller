@@ -80,7 +80,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, colors, no-header
+        with QInput, colors, rounded-border, no-border, show-vertical-bar
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter time" mask="##:## - ##:##">
@@ -90,8 +90,8 @@
                 <q-scroller
                   v-model="value"
                   view="time-range"
-                  no-header
                   rounded-borders
+                  no-border
                   text-color="grey-3"
                   color="black"
                   inner-text-color="black"
@@ -100,6 +100,30 @@
                   show-vertical-bar
                   :style="scrollerPopupStyle150"
                   @close="() => { showScroller4 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, dense
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="inputValue" label="Enter time" mask="##:## - ##:##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller5" anchor="top right" self="bottom middle">
+                <q-scroller
+                  v-model="value"
+                  view="time-range"
+                  show-vertical-bar
+                  dense
+                  :style="scrollerPopupStyle150"
+                  @close="() => { showScroller5 = false }"
                 />
               </q-popup-proxy>
             </q-icon>
@@ -150,10 +174,12 @@ export default {
     },
 
     inputValue (val) {
-      const parts = val.split(' - ')
-      if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
-        this.value[0] = parts[0]
-        this.value[1] = parts[1]
+      if (val) {
+        const parts = val.split(' - ')
+        if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
+          this.value[0] = parts[0]
+          this.value[1] = parts[1]
+        }
       }
     }
   }

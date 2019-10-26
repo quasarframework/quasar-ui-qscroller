@@ -80,7 +80,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, colors, no-header
+        with QInput, colors, rounded-borders, show-vertical-bar
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
@@ -90,7 +90,6 @@
                 <q-scroller
                   v-model="value"
                   view="time"
-                  no-header
                   rounded-borders
                   text-color="grey-3"
                   color="black"
@@ -100,6 +99,31 @@
                   show-vertical-bar
                   :style="scrollerPopupStyle150"
                   @close="() => { showScroller4 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, rounded-borders, show-vertical-bar, dense
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="value" label="Enter time" mask="##:##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller5" anchor="top right" self="bottom middle">
+                <q-scroller
+                  v-model="value"
+                  view="time"
+                  rounded-borders
+                  show-vertical-bar
+                  dense
+                  :style="scrollerPopupStyle150"
+                  @close="() => { showScroller5 = false }"
                 />
               </q-popup-proxy>
             </q-icon>

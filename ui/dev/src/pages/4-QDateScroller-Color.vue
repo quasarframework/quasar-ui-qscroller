@@ -17,7 +17,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 180px; height: 200px;"
+          style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -36,7 +36,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 180px; height: 200px;"
+          style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -56,7 +56,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 180px; height: 200px;"
+          style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -77,48 +77,7 @@
           color="yellow"
           inner-text-color="primary"
           inner-color="yellow"
-          style="max-width: 180px; height: 200px;"
-        ></q-scroller>
-      </q-card-section>
-    </q-card>
-
-    <q-card class="q-pa-md">
-      <q-card-section class="col-12">
-        colored, show-vertical-bar, hour12, no-footer
-      </q-card-section>
-      <q-card-section class="col-12">
-        <q-scroller
-          v-model="value"
-          view="date"
-          no-footer
-          show-vertical-bar
-          hour12
-          text-color="yellow"
-          color="primary"
-          inner-text-color="yellow"
-          inner-color="primary"
-          style="max-width: 180px; height: 200px;"
-        ></q-scroller>
-      </q-card-section>
-    </q-card>
-
-    <q-card class="q-pa-md">
-      <q-card-section class="col-12">
-        colored, show-vertical-bar, hour12, am-pm-labels, no-footer
-      </q-card-section>
-      <q-card-section class="col-12">
-        <q-scroller
-          v-model="value"
-          view="date"
-          no-footer
-          show-vertical-bar
-          hour12
-          :am-pm-labels="['a', 'p']"
-          text-color="yellow"
-          color="primary"
-          inner-text-color="yellow"
-          inner-color="primary"
-          style="max-width: 180px; height: 200px;"
+          style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>

@@ -14,14 +14,14 @@
           view="date-range"
           no-footer
           show-vertical-bar
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        show-vertical-bar, bar-color, hour12, no-footer
+        show-vertical-bar, bar-color, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
@@ -30,7 +30,7 @@
           no-footer
           show-vertical-bar
           bar-color="primary"
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -47,8 +47,7 @@
           show-vertical-bar
           bar-color="primary"
           border-color="primary"
-          hour12
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>

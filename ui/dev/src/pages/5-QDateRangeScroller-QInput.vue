@@ -18,7 +18,7 @@
                   view="date-range"
                   no-header
                   rounded-borders
-                  :style="scrollerPopupStyle300"
+                  :style="scrollerPopupStyle250"
                   @close="() => { showScroller1 = false }"
                 />
               </q-popup-proxy>
@@ -42,7 +42,7 @@
                   view="date-range"
                   no-header
                   show-vertical-bar
-                  :style="scrollerPopupStyle300"
+                  :style="scrollerPopupStyle250"
                   @close="() => { showScroller2 = false }"
                 />
               </q-popup-proxy>
@@ -54,7 +54,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, border colors, no-header
+        with QInput, border-color, no-header
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter date" mask="####-##-## - ####-##-##">
@@ -68,7 +68,7 @@
                   show-vertical-bar
                   bar-color="primary"
                   border-color="primary"
-                  :style="scrollerPopupStyle300"
+                  :style="scrollerPopupStyle250"
                   @close="() => { showScroller3 = false }"
                 />
               </q-popup-proxy>
@@ -90,16 +90,40 @@
                 <q-scroller
                   v-model="value"
                   view="date-range"
-                  rounded-borders
-                  no-border
                   text-color="grey-3"
                   color="black"
                   inner-text-color="black"
                   inner-color="grey-3"
                   bar-color="#000"
+                  no-border
                   show-vertical-bar
-                  :style="scrollerPopupStyle300"
+                  :style="scrollerPopupStyle250"
                   @close="() => { showScroller4 = false }"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </q-card-section>
+    </q-card>
+
+    <q-card class="q-pa-md">
+      <q-card-section class="col-12">
+        with QInput, show-vertical-bar, border-color, dense
+      </q-card-section>
+      <q-card-section class="col-12">
+        <q-input color="blue-8" filled v-model="inputValue" label="Enter date" mask="####-##-## - ####-##-##">
+          <template v-slot:append>
+            <q-icon name="far fa-clock" class="cursor-pointer">
+              <q-popup-proxy v-model="showScroller5" anchor="top right" self="bottom middle">
+                <q-scroller
+                  v-model="value"
+                  view="date-range"
+                  show-vertical-bar
+                  dense
+                  border-color="primary"
+                  :style="scrollerPopupStyle250"
+                  @close="() => { showScroller5 = false }"
                 />
               </q-popup-proxy>
             </q-icon>
@@ -126,7 +150,7 @@ export default {
   },
 
   computed: {
-    scrollerPopupStyle300 () {
+    scrollerPopupStyle250 () {
       if (this.$q.screen.lt.sm) {
         return {
           width: '90vw',
@@ -136,7 +160,7 @@ export default {
         return {
           maxHeight: '200px',
           height: '200px',
-          width: '300px'
+          width: '250px'
         }
       }
     }

@@ -15,7 +15,7 @@
           no-footer
           start-no-years
           end-no-years
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 250px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -31,7 +31,7 @@
           no-footer
           start-no-months
           end-no-months
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 200px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -65,7 +65,7 @@
           end-no-months
           start-no-days
           end-no-days
-          style="max-width: 300px; height: 200px;"
+          style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -83,7 +83,7 @@
           end-no-years
           start-no-days
           end-no-days
-          style="max-width: 300px; height: 200px;"
+          style="max-width: 200px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -101,7 +101,7 @@
           end-no-years
           start-no-months
           end-no-months
-          style="max-width: 300px; height: 200px;"
+          style="max-width: 100px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>

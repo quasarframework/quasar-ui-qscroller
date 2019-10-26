@@ -17,7 +17,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -36,7 +36,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -56,7 +56,7 @@
           color="primary"
           inner-text-color="yellow"
           inner-color="primary"
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
@@ -77,7 +77,7 @@
           color="yellow"
           inner-text-color="primary"
           inner-color="yellow"
-          style="max-width: 280px; height: 200px;"
+          style="max-width: 270px; height: 200px;"
         ></q-scroller>
       </q-card-section>
     </q-card>
