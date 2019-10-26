@@ -85,6 +85,10 @@ export default {
       this.adjustBodyHeight()
     },
 
+    height () {
+      this.adjustBodyHeight()
+    },
+
     dense () {
       this.adjustBodyHeight()
     }

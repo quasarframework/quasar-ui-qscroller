@@ -43,6 +43,7 @@ export default {
       minute: '',
       ampmIndex: -1, // 2 states: 0=AM, 1=PM (indices into amPmLabels)
       timestamp: null,
+      type: null,
       disabledMinutesList: [],
       disabledHoursList: [],
       hourInitialized: false,
