@@ -194,6 +194,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
+          } else {
+            console.error('QTimeRangeScroller: invalid start or end dates')
           }
           return
         case '[object Array]':
@@ -203,6 +205,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
+          } else {
+            console.error('QTimeRangeScroller: invalid start or end dates')
           }
           return
         case '[object Object]':
@@ -212,6 +216,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
+          } else {
+            console.error('QTimeRangeScroller: invalid start or end dates')
           }
           return
         case '[object String]':
@@ -221,6 +227,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
+          } else {
+            console.error('QTimeRangeScroller: invalid start or end dates')
           }
           return
         case '[object Undefined]':
@@ -234,6 +242,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
+          } else {
+            console.error('QTimeRangeScroller: invalid start or end dates')
           }
       }
     },
