@@ -403,14 +403,14 @@ export default {
 
     __renderFooter (h) {
       if (this.noFooter) return ''
-      const slot = this.$slots.footer
+      const slot = this.$scopedSlots.footer
       return h('div', {
         ref: 'footer',
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         },
-      }, slot || [
+      }, slot ? slot([this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()]) : [
         this.__renderFooterButton(h)
       ])
     }

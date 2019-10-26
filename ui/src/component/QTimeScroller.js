@@ -467,7 +467,7 @@ export default {
         class: {
           'shadow-up-20': this.noShadow === false
         },
-        style: {
+      }, slot ? slot(this.timestamp) : [
         this.__renderFooterButton(h)
       ])
     }
