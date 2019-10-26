@@ -269,7 +269,6 @@ export default {
           'shadow-20': this.noShadow === false
         },
       }, slot ? slot([this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()]) : [
-      }, slot ? slot(this.timestamp) : [
         h('span', {
           staticClass: 'ellipsis'
         }, this.displayTime)
