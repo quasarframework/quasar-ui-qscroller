@@ -38,7 +38,7 @@
             <q-icon name="far fa-clock" class="cursor-pointer">
               <q-popup-proxy v-model="showScroller2" anchor="top right" self="bottom middle">
                 <q-scroller
-                  v-model="inputValue"
+                  v-model="value"
                   view="time-range"
                   no-header
                   show-vertical-bar
