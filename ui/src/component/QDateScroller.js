@@ -118,8 +118,7 @@ export default {
       let dates = []
       let date = yearStart
       while (date <= yearEnd) {
-        dates.push(padNumber(date, 4))
-        ++date
+        dates.push(padNumber(date++, 4))
       }
       return dates.map(y => {
         return { value: y, disabled: this.disabledYearsList.includes(y) }
