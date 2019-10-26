@@ -1,5 +1,5 @@
 // Mixins
-import DateTimeBase from './mixins/datetime-base'
+import DateTimeBase from './mixins/date-base'
 import { QColorizeMixin } from 'q-colorize-mixin'
 
 // Components
