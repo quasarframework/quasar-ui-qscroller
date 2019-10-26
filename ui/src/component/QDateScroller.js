@@ -425,10 +425,16 @@ export default {
     // render functions
     // -------------------------------
     __renderYearsScroller (h) {
+      let maxWidth = '60%'
+      if (this.noDays === true && this.noMonths === true) maxWidth = '100%'
+
       return h(ScrollerBase, {
         staticClass: 'col',
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
+        style: {
+          maxWidth: maxWidth
         },
         props: {
           value: this.year,
@@ -447,10 +453,18 @@ export default {
     },
 
     __renderMonthsScroller (h) {
+      let maxWidth = '30%'
+      if (this.noYears === true && this.noDays === true) maxWidth = '100%'
+      else if (this.noDays === true && this.noYears !== true) maxWidth = '40%'
+      else if (this.noYears === true) maxWidth = '50%'
+
       return h(ScrollerBase, {
         staticClass: 'col',
         class: {
           'q-scroller__vertical-bar': this.showVerticalBar === true
+        },
+        style: {
+          maxWidth: maxWidth
         },
         props: {
           value: this.month,
@@ -469,8 +483,16 @@ export default {
     },
 
     __renderDaysScroller (h) {
+      let maxWidth = '30%'
+      if (this.noYears === true && this.noMonths === true) maxWidth = '100%'
+      else if (this.noMonths === true && this.noYears !== true) maxWidth = '40%'
+      else if (this.noYears === true) maxWidth = '50%'
+
       return h(ScrollerBase, {
         staticClass: 'col',
+        style: {
+          maxWidth: maxWidth
+        },
         props: {
           value: this.day,
           items: this.daysList,
