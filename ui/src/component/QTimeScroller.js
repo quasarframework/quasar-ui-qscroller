@@ -268,7 +268,6 @@ export default {
     },
 
     splitTime () {
-      // Date object
       const type = Object.prototype.toString.call(this.value)
       let now, date, parts
       switch (type) {
@@ -278,7 +277,7 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object Array]':
@@ -290,19 +289,19 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object Object]':
           this.type = 'object'
-          // object must contain keys 'hours', 'minutes'
+          // object must contain keys 'hour', 'minute'
           now = parseDate(new Date())
           now.hour = parseInt(this.value.hour)
           now.minute = parseInt(this.value.minute)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object String]':
@@ -317,7 +316,10 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute > 0 ? 1 : 0
+          if (this.timestamp.hour > 24) {
+            this.timestamp.hour %= 24
+          }
+          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
       }
