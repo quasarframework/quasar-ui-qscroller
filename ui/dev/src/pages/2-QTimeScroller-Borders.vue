@@ -77,25 +77,7 @@
 export default {
   data () {
     return {
-      value: '',
-      showScroller: false
-    }
-  },
-
-  computed: {
-    scrollerPopupStyle150 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '90vw',
-          height: '90vh'
-        }
-      } else {
-        return {
-          maxHeight: '200px',
-          height: '200px',
-          width: '150px'
-        }
-      }
+      value: ''
     }
   }
 }
