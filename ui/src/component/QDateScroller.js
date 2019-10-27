@@ -12,6 +12,7 @@ import {
   Timestamp,
   parsed,
   parseDate,
+  getDateObject,
   getDate,
   getTime,
   daysInMonth,
@@ -81,10 +82,10 @@ export default {
         data.push(index)
       }
       data = data.map(d => {
-          ++d // days start with 1
-          d = d < 10 ? '0' + d : '' + d
-          return { value: d, disabled: this.disabledDaysList.includes(d) }
-        })
+        ++d // days start with 1
+        d = d < 10 ? '0' + d : '' + d
+        return { value: d, disabled: this.disabledDaysList.includes(d) }
+      })
       return data
     },
 
@@ -94,11 +95,11 @@ export default {
         data.push(index)
       }
       data = data.map(m => {
-          ++m // Jan = 0
-          let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
-          m = m < 10 ? '0' + m : '' + m
-          return { display: mon, value: m, disabled: this.disabledMonthsList.includes(m) }
-        })
+        ++m // Jan = 0
+        let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
+        m = m < 10 ? '0' + m : '' + m
+        return { display: mon, value: m, disabled: this.disabledMonthsList.includes(m) }
+      })
       return data
     },
 
@@ -316,11 +317,10 @@ export default {
           this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)])
           return
         case 'object':
-            this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2) })
+          this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2) })
           return
         case 'string':
           this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)].join('-'))
-          return
       }
     },
 

@@ -10,9 +10,9 @@ import {
   getDayIdentifier,
   parsed,
   parseDate,
+  getDateObject,
   getDate,
   getTime,
-  daysInMonth,
   padNumber
 } from './utils/timestamp'
 
@@ -95,7 +95,7 @@ export default {
 
   methods: {
     emitValue () {
-      let startParts, endParts,  start, end
+      let startParts, endParts, start, end
       switch (this.type) {
         case 'date':
           start = parseDate(new Date())
@@ -114,7 +114,7 @@ export default {
           startParts = this.startDate.split('-')
           endParts = this.endDate.split('-')
           this.$emit('input', [
-            [ parseInt(startParts[0]), parseInt(startParts[1]), parseInt(startParts[2]) ],[ parseInt(endParts[0]), parseInt(endParts[1]), parseInt(endParts[2]) ]
+            [ parseInt(startParts[0]), parseInt(startParts[1]), parseInt(startParts[2]) ], [ parseInt(endParts[0]), parseInt(endParts[1]), parseInt(endParts[2]) ]
           ])
           return
         case 'object':
@@ -162,7 +162,7 @@ export default {
         if (endDate >= startDate) {
           return true
         }
-        this.$emit('invalid-range', { startDate: this.startDate, endDate: this.endDate } )
+        this.$emit('invalid-range', { startDate: this.startDate, endDate: this.endDate })
         return false
       }
       // until everything is mounted, just return true
@@ -319,7 +319,7 @@ export default {
           noHeader: true,
           noFooter: true,
           startDate: this.endStartDate,
-          startDate: this.endStartDate,
+          endDate: this.endStartDate,
           disabledYears: this.endDisabledYears,
           disabledMonths: this.endDisabledMonths,
           disabledDays: this.endDisabledDays,
@@ -361,7 +361,7 @@ export default {
         staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
-        },
+        }
       }, slot ? slot([this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()]) : [
         h('span', {
           staticClass: 'ellipsis'
@@ -397,7 +397,7 @@ export default {
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
-        },
+        }
       }, slot ? slot([this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()]) : [
         this.__renderFooterButton(h)
       ])

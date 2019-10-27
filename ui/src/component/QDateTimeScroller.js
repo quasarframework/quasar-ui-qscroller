@@ -127,11 +127,10 @@ export default {
           this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2), padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)])
           return
         case 'object':
-            this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2), hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
+          this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2), hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
           return
         case 'string':
           this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)].join('-') + ' ' + [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
-          return
       }
     },
 
@@ -325,7 +324,6 @@ export default {
       } else {
         displayDateTime = ''
       }
-
 
       return h('div', {
         ref: 'header',

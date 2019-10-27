@@ -95,7 +95,7 @@ export default {
 
   methods: {
     emitValue () {
-      let startParts, endParts,  start, end
+      let startParts, endParts, start, end
       switch (this.type) {
         case 'date':
           start = parseDate(new Date())
@@ -112,7 +112,7 @@ export default {
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
           this.$emit('input', [
-            [ parseInt(startParts[0]), parseInt(startParts[1]) ],[ parseInt(endParts[0]), parseInt(endParts[1]) ]
+            [ parseInt(startParts[0]), parseInt(startParts[1]) ], [ parseInt(endParts[0]), parseInt(endParts[1]) ]
           ])
           return
         case 'object':
@@ -158,7 +158,7 @@ export default {
         if (endTime >= startTime) {
           return true
         }
-        this.$emit('invalid-range', { startTime: this.startTime, endTime: this.endTime } )
+        this.$emit('invalid-range', { startTime: this.startTime, endTime: this.endTime })
         return false
       }
       // until everything is mounted, just return true
@@ -349,7 +349,7 @@ export default {
         staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
-        },
+        }
       }, slot ? slot([this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()]) : [
         h('span', {
           staticClass: 'ellipsis'
@@ -385,7 +385,7 @@ export default {
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
-        },
+        }
       }, slot ? slot(this.timestamp) : [
         this.__renderFooterButton(h)
       ])

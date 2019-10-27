@@ -93,13 +93,13 @@ export default {
         data.push(index)
       }
       data = data.map(m => {
-          m *= this.minuteInterval ? parseInt(this.minuteInterval) : 1
-          m = m < 10 ? '0' + m : '' + m
-          return {
-            value: m,
-            disabled: this.disabledMinutesList.includes(m)
-          }
-        })
+        m *= this.minuteInterval ? parseInt(this.minuteInterval) : 1
+        m = m < 10 ? '0' + m : '' + m
+        return {
+          value: m,
+          disabled: this.disabledMinutesList.includes(m)
+        }
+      })
       return data
     },
 
@@ -121,7 +121,7 @@ export default {
           disabled: this.disabledHoursList.includes(h)
         }
       })
-    return data
+      return data
     },
 
     displayTime () {
@@ -272,11 +272,10 @@ export default {
           this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)])
           return
         case 'object':
-            this.$emit('input', { hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
+          this.$emit('input', { hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
           return
         case 'string':
           this.$emit('input', [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
-          return
       }
     },
 
@@ -515,7 +514,7 @@ export default {
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
-        },
+        }
       }, slot ? slot(this.timestamp) : [
         this.__renderFooterButton(h)
       ])

@@ -164,7 +164,7 @@ export default {
       offset.height = childEl.offsetHeight
 
       return offset
-  },
+    },
 
     intersectRect (r1, r2) {
       return !(r2.left > r1.right ||
@@ -234,7 +234,7 @@ export default {
         if (index > -1 && index < this.items.length) {
           const item = this.items[index]
           if (this.disable !== true && item.disabled !== true) {
-            this.$emit('input', value)
+            this.$emit('input', this.value)
           }
           event.preventDefault()
         } else {
@@ -248,7 +248,7 @@ export default {
         const elem = this.currentElement()
         if (elem) {
           if (elem.innerText === item.value) {
-            return
+
           } else {
             const klass = `q-scroller__item--selected${this.dense ? '--dense' : ''}`
             elem.classList.remove(klass)
@@ -302,7 +302,7 @@ export default {
           'icon-right': item.iconRight !== void 0 ? item.iconRight : void 0,
           'no-caps': item.noCaps !== void 0 ? item.noCaps : void 0,
           'align': item.align !== void 0 ? item.align : void 0,
-          'color': (this.disable === true || item.disabled !== void 0 && item.disabled === true) && this.disabledTextColor !== void 0 ? this.disabledTextColor : void 0
+          'color': (this.disable === true || (item.disabled !== void 0 && item.disabled === true)) && this.disabledTextColor !== void 0 ? this.disabledTextColor : void 0
         },
         on: {
           'click': () => this.clickEvent(item)

@@ -1,4 +1,7 @@
 import props from '../utils/props'
+import {
+  daysInMonth
+} from '../utils/timestamp'
 
 export default {
   name: 'DateBase',
