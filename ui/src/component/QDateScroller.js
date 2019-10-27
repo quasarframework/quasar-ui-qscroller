@@ -76,24 +76,30 @@ export default {
       if (!this.year || !this.month) {
         length = DAYS_IN_MONTH_MAX
       }
-      return [...Array(length)]
-        .map((_, i) => i)
-        .map(d => {
+      let data = []
+      for (let index = 0; index < length; ++index) {
+        data.push(index)
+      }
+      data = data.map(d => {
           ++d // days start with 1
           d = d < 10 ? '0' + d : '' + d
           return { value: d, disabled: this.disabledDaysList.includes(d) }
         })
+      return data
     },
 
     monthsList () {
-      return [...Array(12)]
-        .map((_, i) => i)
-        .map(m => {
+      let data = []
+      for (let index = 0; index < 12; ++index) {
+        data.push(index)
+      }
+      data = data.map(m => {
           ++m // Jan = 0
           let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
           m = m < 10 ? '0' + m : '' + m
           return { display: mon, value: m, disabled: this.disabledMonthsList.includes(m) }
         })
+      return data
     },
 
     yearsList () {

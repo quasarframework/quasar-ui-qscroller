@@ -88,13 +88,19 @@ export default {
       if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval) > 0) {
         count /= parseInt(this.minuteInterval)
       }
-      return [...Array(count)]
-        .map((_, i) => i)
-        .map(m => {
+      let data = []
+      for (let index = 0; index < count; ++index) {
+        data.push(index)
+      }
+      data = data.map(m => {
           m *= this.minuteInterval ? parseInt(this.minuteInterval) : 1
           m = m < 10 ? '0' + m : '' + m
-          return { value: m, disabled: this.disabledMinutesList.includes(m) }
+          return {
+            value: m,
+            disabled: this.disabledMinutesList.includes(m)
+          }
         })
+      return data
     },
 
     hoursList () {
@@ -102,17 +108,20 @@ export default {
       if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
         count /= parseInt(this.hourInterval)
       }
-      return [...Array(count)]
-        .map((_, i) => i)
-        .map(h => {
-          h = this.hour12 ? h + 1 : h
-          h *= this.hourInterval ? parseInt(this.hourInterval) : 1
-          h = h < 10 ? '0' + h : '' + h
-          return {
-            value: h,
-            disabled: this.disabledHoursList.includes(h)
-          }
-        })
+      let data = []
+      for (let index = 0; index < count; ++index) {
+        data.push(index)
+      }
+      data = data.map(h => {
+        h = this.hour12 ? h + 1 : h
+        h *= this.hourInterval ? parseInt(this.hourInterval) : 1
+        h = h < 10 ? '0' + h : '' + h
+        return {
+          value: h,
+          disabled: this.disabledHoursList.includes(h)
+        }
+      })
+    return data
     },
 
     displayTime () {
