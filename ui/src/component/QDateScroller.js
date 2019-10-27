@@ -43,6 +43,7 @@ export default {
       month: '',
       day: '',
       timestamp: null,
+      type: null,
       disabledYearsList: [],
       disabledMonthsList: [],
       disabledDaysList: []
@@ -529,12 +530,14 @@ export default {
       const slot = this.$scopedSlots.header
       return h('div', {
         ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-20': this.noShadow === false
         }
       }, slot ? slot(this.timestamp) : [
-        this.displayDate
+        h('span', {
+          staticClass: 'ellipsis'
+        }, this.displayDate)
       ])
     },
 
@@ -565,7 +568,9 @@ export default {
         class: {
           'shadow-up-20': this.noShadow === false
         }
-      }, slot ? slot(this.timestamp) : [ this.__renderFooterButton(h) ])
+      }, slot ? slot(this.timestamp) : [
+        this.__renderFooterButton(h)
+      ])
     }
   },
 
