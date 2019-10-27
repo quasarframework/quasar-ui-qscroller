@@ -22,7 +22,7 @@ import {
 
 /* @vue/component */
 export default {
-  name: `QTimeScroller`,
+  name: 'QTimeScroller',
 
   mixins: [TimeBase, QColorizeMixin],
 

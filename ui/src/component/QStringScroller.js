@@ -10,7 +10,7 @@ import { QBtn, QResizeObserver } from 'quasar'
 
 /* @vue/component */
 export default {
-  name: `QStringScroller`,
+  name: 'QStringScroller',
 
   mixins: [QColorizeMixin],
 

@@ -18,7 +18,7 @@ import {
 
 /* @vue/component */
 export default {
-  name: `QTimeRangeScroller`,
+  name: 'QTimeRangeScroller',
 
   mixins: [TimeBase, QColorizeMixin],
 

@@ -24,7 +24,7 @@ import {
 
 /* @vue/component */
 export default {
-  name: `QDateScroller`,
+  name: 'QDateScroller',
 
   mixins: [DateTimeBase, QColorizeMixin],
 
