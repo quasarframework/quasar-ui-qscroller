@@ -75,8 +75,12 @@ export default {
 
     ampmList () {
       return this.amPmLabels
-        .map(ap => {
-          return { value: ap, disabled: false, noCaps: true }
+        .map((ap, index) => {
+          return {
+            value: ap,
+            disabled: (this.hour === '00' || this.hour === '12') && index === 1,
+            noCaps: true
+          }
         })
     },
 
@@ -95,7 +99,7 @@ export default {
     },
 
     hoursList () {
-      let count = (this.hour12 === true ? 12 : 24)
+      let count = (this.hour12 === true ? 13 : 24)
       if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
         count /= parseInt(this.hourInterval)
       }
