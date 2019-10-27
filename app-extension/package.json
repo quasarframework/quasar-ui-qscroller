@@ -1,22 +1,47 @@
 {
-  "name": "quasar-app-extension-qscroller",
-  "version": "0.0.1",
+  "name": "@quasar/quasar-app-extension-qscroller",
+  "version": "1.0.0-alpha.8",
   "description": "A Quasar App Extension",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
   "license": "MIT",
   "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src",
+    "lint-fix": "eslint --ext .js,.vue src --fix"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": "https://github.com/quasarframework/quasar-ui-qscroller/issues",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/quasarframework/quasar-ui-qscroller.git"
   },
-  "bugs": "",
-  "homepage": "",
-  "dependencies": {
-    "quasar-ui-qscroller": "latest"
-  },
+  "homepage": "https://github.com/quasarframework/quasar-ui-qscroller",
+  "keywords": [
+    "quasar",
+    "quasarframework",
+    "app",
+    "app extension",
+    "extension",
+    "date",
+    "time",
+    "range",
+    "date-time"
+  ],
   "engines": {
     "node": ">= 8.9.0",
     "npm": ">= 5.6.0",
     "yarn": ">= 1.6.0"
+  },
+  "dependencies": {
+    "@quasar/quasar-ui-qscroller": "1.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-vue": "^5.2.3"
   }
 }

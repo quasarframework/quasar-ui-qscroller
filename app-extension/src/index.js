@@ -8,13 +8,13 @@
 
 function extendConf (conf) {
   // register our boot file
-  conf.boot.push('~quasar-app-extension-qscroller/src/boot/register.js')
+  conf.boot.push('~@quasar/quasar-app-extension-qscroller/src/boot/register.js')
 
   // make sure app extension files & ui package gets transpiled
   conf.build.transpileDependencies.push(/quasar-app-extension-qscroller[\\/]src/)
 
   // make sure the stylesheet goes through webpack to avoid SSR issues
-  conf.css.push('~quasar-ui-qscroller/src/index.sass')
+  conf.css.push('~@quasar/quasar-ui-qscroller/src/index.sass')
 }
 
 module.exports = function (api) {
@@ -22,10 +22,10 @@ module.exports = function (api) {
   // hard dependencies, as in a minimum version of the "quasar"
   // package or a minimum version of "@quasar/app" CLI
   api.compatibleWith('quasar', '^1.1.1')
-  api.compatibleWith('@quasar/app', '^1.1.0')
+  api.compatibleWith('@quasar/app', '^1.1.4')
 
   // Uncomment the line below if you provide a JSON API for your component
-  // api.registerDescribeApi('QScroller', '~quasar-ui-qscroller/src/component/QScroller.json')
+  api.registerDescribeApi('QScroller', '~@quasar/quasar-ui-qscroller/src/component/QScroller.json')
 
   // We extend /quasar.conf.js
   api.extendQuasarConf(extendConf)
