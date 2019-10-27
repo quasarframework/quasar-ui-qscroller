@@ -23,7 +23,6 @@ export default {
   mixins: [TimeBase, QColorizeMixin],
 
   props: {
-    ...props.common,
     ...props.timeRange,
     ...props.verticalBar
   },
@@ -252,18 +251,9 @@ export default {
       }
     },
 
-    isValidTime (time) {
-      const parts = time.split(':')
-      if (parts.length === 2) {
-        const hour = parseInt(parts[0])
-        const minute = parseInt(parts[1])
-        if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
-          return true
-        }
-      }
-      return false
-    },
-
+    // -------------------------------
+    // render functions
+    // -------------------------------
     __renderStartTime (h) {
       return h(QTimeScroller, {
         ref: 'startTime',

@@ -29,7 +29,6 @@ export default {
   mixins: [DateTimeBase, QColorizeMixin],
 
   props: {
-    ...props.common,
     ...props.date,
     ...props.verticalBar
   },
