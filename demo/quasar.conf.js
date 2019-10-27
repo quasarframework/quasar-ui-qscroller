@@ -1,14 +1,18 @@
 // Configuration for your app
 
+const path = require('path')
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
+      'components',
+      'qscroller'
     ],
 
     css: [
-      'app.styl'
+      'app.sass'
     ],
 
     extras: [
@@ -79,12 +83,12 @@ module.exports = function (ctx) {
       // lang: 'de' // Quasar language
     },
 
-    supportIE: false,
+    supportIE: true,
 
     build: {
       scopeHoisting: true,
       vueRouterMode: 'history',
-      publicPath: 'app-extension-qscroller',
+      publicPath: 'quasar-ui-qscroller',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
@@ -99,6 +103,13 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+      },
+
+      chainWebpack (chain) {
+        chain.resolve.alias.merge({
+          'ui': path.resolve(__dirname, '../ui/src/index.js'),
+          'sass': path.resolve(__dirname, '../ui/src/index.sass')
+        })
       }
     },
 
@@ -109,7 +120,8 @@ module.exports = function (ctx) {
       watchOptions: {
         ignored: [
           'node_modules',
-          '!node_modules/@quasar/quasar-app-extension-qscroller'
+          '!node_modules/@quasar/quasar-app-extension-qscroller',
+          '!node_modules/@quasar/quasar-ui-qscroller'
         ]
       }
     },

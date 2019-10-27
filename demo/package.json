@@ -1,13 +1,13 @@
 {
   "name": "demo",
   "version": "0.0.1",
-  "description": "QScroller - A Quasar Framework app extension",
-  "productName": "QScroller demo app",
+  "description": "QScroller  docs, examples and demo site",
+  "productName": "QScroller  docs, examples and demo site",
   "cordovaId": "org.cordova.quasar.app",
-  "author": "Jeff Galbraith <jeff.galbraith@xendra.com>",
+  "author": "Jeff Galbraith <jeff@quasar.dev>",
   "private": true,
   "scripts": {
-    "build": "quasar build && cp ./src/404.html ./dist/spa",
+    "build-demo": "quasar build && cp ./src/404.html ./dist/spa && rm -rf ../docs && cp -r ./dist/spa/. ../docs",
     "lint": "eslint --ext .js,.vue src",
     "lint-fix": "eslint --ext .js,.vue src --fix",
     "test": "echo \"No test specified\" && exit 0"
@@ -24,7 +24,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
     "eslint-loader": "^3.0.2",
-    "eslint-plugin-quasar": "^1.0.0-alpha.11",
+    "eslint-plugin-quasar": "^1.0.0-alpha.15",
     "eslint-plugin-vue": "^5.2.3"
   },
   "engines": {

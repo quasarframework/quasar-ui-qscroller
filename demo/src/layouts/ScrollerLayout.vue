@@ -17,10 +17,7 @@
         <q-icon name="far fa-calendar-alt" class="q-ml-md" size="1.5rem"></q-icon>
 
         <q-toolbar-title v-if="$q.screen.width > 500">
-          Quasar Scroller
-          <q-tooltip v-if="$q.screen.width < 1077">
-            Quasar Scroller
-          </q-tooltip>
+          QScroller <span class="text-subtitle2">v{{ version }}</span>
         </q-toolbar-title>
 
         <q-space></q-space>
@@ -111,6 +108,7 @@
 
 <script>
 import { openURL } from 'quasar'
+import { version } from 'ui'
 
 export default {
   name: 'ScrollerLayout',
@@ -119,6 +117,7 @@ export default {
   },
   data () {
     return {
+      version: version,
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
