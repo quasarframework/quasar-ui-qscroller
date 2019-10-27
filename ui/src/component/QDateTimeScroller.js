@@ -1,5 +1,6 @@
 // Mixins
 import DateTimeBase from './mixins/date-time-base'
+import { QColorizeMixin } from 'q-colorize-mixin'
 import QDateScroller from './QDateScroller'
 import QTimeScroller from './QTimeScroller'
 
@@ -9,36 +10,49 @@ import { QBtn, QResizeObserver } from 'quasar'
 import {
   Timestamp,
   parsed,
+  parseDate,
+  getDateObject,
   getDate,
   getTime,
   copyTimestamp,
-  compareTimestamps
+  compareTimestamps,
+  padNumber
 } from './utils/timestamp'
 
 /* @vue/component */
 export default {
-  name: `QDateTimeScroller`,
+  name: 'QDateTimeScroller',
 
-  mixins: [DateTimeBase],
+  mixins: [DateTimeBase, QColorizeMixin],
 
   props: {
-    ...props.common,
     ...props.time,
-    ...props.date
+    ...props.date,
+    ...props.verticalBar
   },
 
   data () {
     return {
-      headerFooterHeight: 100,
+      headerHeight: 50,
+      footerHeight: 50,
       bodyHeight: 100,
+      height: 0,
       date: '',
       time: '',
-      timestamp: { ...Timestamp }
+      timestamp: null,
+      type: null
     }
   },
 
-  mounted () {
+  created () {
+    this.timestamp = copyTimestamp(Timestamp)
+  },
+
+  beforeMount () {
     this.splitDateTime()
+  },
+
+  mounted () {
     this.adjustBodyHeight()
   },
 
@@ -90,15 +104,34 @@ export default {
       this.adjustBodyHeight()
     },
 
+    height () {
+      this.adjustBodyHeight()
+    },
+
     dense () {
       this.adjustBodyHeight()
     }
   },
 
   methods: {
+    getTimestamp () {
+      return this.timestamp
+    },
+
     emitValue () {
-      if (this.timestamp !== void 0 && this.timestamp.date !== void 0) {
-        this.$emit('input', this.timestamp.date)
+      switch (this.type) {
+        case 'date':
+          this.$emit('input', getDateObject(this.timestamp))
+          return
+        case 'array':
+          this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2), padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)])
+          return
+        case 'object':
+            this.$emit('input', { year: padNumber(this.timestamp.year, 2), month: padNumber(this.timestamp.month, 2), day: padNumber(this.timestamp.day, 2), hour: padNumber(this.timestamp.hour, 2), minute: padNumber(this.timestamp.minute, 2) })
+          return
+        case 'string':
+          this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)].join('-') + ' ' + [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(':'))
+          return
       }
     },
 
@@ -107,23 +140,73 @@ export default {
     },
 
     adjustBodyHeight () {
-      if (this.height !== void 0) {
-        this.bodyHeight = this.height
-      } else {
-        this.$nextTick(() => {
-          let headerHeight = this.noHeader ? 0 : this.$refs.header ? this.$refs.header.clientHeight : 0
-          let footerHeight = this.noFooter ? 0 : this.$refs.footer ? this.$refs.footer.clientHeight : 0
-          this.headerFooterHeight = headerHeight + footerHeight
-          const parentHeight = this.$refs.scroller ? window.getComputedStyle(this.$refs.scroller, null).getPropertyValue('height') : 0
-          this.bodyHeight = parseInt(parentHeight) - this.headerFooterHeight
-        })
-      }
+      let self = this
+      this.$nextTick(() => {
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.bodyHeight = this.height - this.headerHeight - this.footerHeight
+      })
     },
 
     splitDateTime () {
-      if (this.value !== void 0) {
-        this.timestamp = parsed(this.value)
-        this.fromTimestamp()
+      const type = Object.prototype.toString.call(this.value)
+      let now, date, parts, parts2
+      switch (type) {
+        case '[object Date]':
+          this.type = 'date'
+          now = parseDate(this.value)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object Array]':
+          this.type = 'array'
+          // 1st item is hour, 2nd item is minutes
+          now = parseDate(new Date())
+          now.year = parseInt(this.value[0])
+          now.month = parseInt(this.value[1])
+          now.day = parseInt(this.value[2])
+          now.hour = parseInt(this.value[3])
+          now.minute = parseInt(this.value[4])
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object Object]':
+          this.type = 'object'
+          // object must contain keys 'year', 'month', 'day', 'hour', 'minute'
+          now = parseDate(new Date())
+          now.year = parseInt(this.value.year)
+          now.month = parseInt(this.value.month)
+          now.day = parseInt(this.value.day)
+          now.hour = parseInt(this.value.hour)
+          now.minute = parseInt(this.value.minute)
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+        case '[object String]':
+          // use today's date (but not time, unless it wasn't passed in)
+          this.type = 'string'
+          now = parseDate(new Date())
+          if (this.value) {
+            parts = this.value.split(' ')
+            parts2 = parts[1].split(':')
+            parts = parts[0].split('-')
+            now.year = parseInt(parts[0])
+            now.month = parseInt(parts[1])
+            now.day = parseInt(parts[2])
+            now.hour = parseInt(parts2[0])
+            now.minute = parseInt(parts2[1])
+          }
+          date = getDate(now) + ' ' + getTime(now)
+          this.timestamp = parsed(date)
+          this.fromTimestamp()
+          return
+      }
+      if (this.value !== '') {
+        console.error(`QDateTimeScroller: invalid time format - '${this.value}'`)
       }
     },
 
@@ -132,42 +215,29 @@ export default {
       this.time = getTime(this.timestamp)
     },
 
-    __renderHeader (h) {
-      if (this.noHeader) return ''
-      const slot = this.$scopedSlots.header
-      return h('div', {
-        ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width ellipsis q-pa-xs',
-        class: {
-          'shadow-20': this.noShadow === false
-        }
-      }, slot ? slot(this.timestamp) : [
-        this.displayDateTime
-      ])
-    },
-
+    // -------------------------------
+    // render functions
+    // -------------------------------
     __renderDate (h) {
       return h(QDateScroller, {
         ref: 'date',
-        staticClass: 'col-6',
+        staticClass: this.hour12 === true ? 'col-7' : 'col-8',
         props: {
           value: this.date,
           locale: this.locale,
-          showVerticalBar: true,
           barColor: this.barColor,
           textColor: this.textColor,
           color: this.color,
           innerTextColor: this.innerTextColor,
           innerColor: this.innerColor,
+          disabledTextColor: this.disabledTextColor,
           dense: this.dense,
           disable: this.disable,
           noBorder: true,
           noHeader: true,
           noFooter: true,
-          minDate: this.minDate,
-          maxDate: this.maxDate,
-          dates: this.dates,
-          disabledDate: this.disabledDates,
+          startDate: this.startDate,
+          endDate: this.EndDate,
           disabledYears: this.disabledYears,
           disabledMonths: this.disabledMonths,
           disabledDays: this.disabledDays,
@@ -176,10 +246,12 @@ export default {
           shortDayLabel: this.shortDayLabel,
           showMonthLabel: this.showMonthLabel,
           showWeekdayLabel: this.showWeekdayLabel,
-          noYears: this.noYears,
-          noMonths: this.noMonths,
           noDays: this.noDays,
-          height: this.bodyHeight
+          noMonths: this.noMonths,
+          noYears: this.noYears
+        },
+        class: {
+          'q-scroller__vertical-bar': this.showVerticalBar === true
         },
         on: {
           input: v => { this.date = v }
@@ -190,7 +262,7 @@ export default {
     __renderTime (h) {
       return h(QTimeScroller, {
         ref: 'time',
-        staticClass: 'col-6',
+        staticClass: this.hour12 === true ? 'col-5' : 'col-4',
         props: {
           value: this.time,
           locale: this.locale,
@@ -199,6 +271,7 @@ export default {
           color: this.color,
           innerTextColor: this.innerTextColor,
           innerColor: this.innerColor,
+          disabledTextColor: this.disabledTextColor,
           dense: this.dense,
           disable: this.disable,
           noBorder: true,
@@ -210,14 +283,9 @@ export default {
           hourInterval: this.hourInterval,
           shortTimeLabel: this.shortTimeLabel,
           disabledHours: this.disabledHours,
-          disabledMinutes: this.disbaledMinutes,
+          disabledMinutes: this.disabledMinutes,
           noMinutes: this.noMinutes,
-          noHours: this.noHours,
-          hours: this.hours,
-          minutes: this.minutes,
-          minTime: this.minTime,
-          maxTime: this.maxTime,
-          height: this.bodyHeight
+          noHours: this.noHours
         },
         on: {
           input: v => { this.time = v }
@@ -234,9 +302,41 @@ export default {
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerColor, {
-        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
+        style: {
+          height: `${this.bodyHeight}px`
+        }
       }), [
         this.__renderScrollers(h)
+      ])
+    },
+
+    __renderHeader (h) {
+      if (this.noHeader) return ''
+      const slot = this.$scopedSlots.header
+      let displayDateTime = ''
+
+      if (this.date !== '' && this.time !== '') {
+        if (this.$refs.date && this.$refs.time) {
+          displayDateTime = this.$refs.date.displayDate + ' ' + this.$refs.time.displayTime
+        } else {
+          displayDateTime = `${this.date} ${this.time}`
+        }
+      } else {
+        displayDateTime = ''
+      }
+
+
+      return h('div', {
+        ref: 'header',
+        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
+        class: {
+          'shadow-20': this.noShadow === false
+        }
+      }, slot ? slot(this.timestamp) : [
+        h('span', {
+          staticClass: 'ellipsis'
+        }, displayDateTime)
       ])
     },
 
@@ -262,36 +362,37 @@ export default {
 
     __renderFooter (h) {
       if (this.noFooter) return ''
-      const slot = this.$slots.footer
+      const slot = this.$scopedSlots.footer
       return h('div', {
         ref: 'footer',
         staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
         class: {
           'shadow-up-20': this.noShadow === false
         }
-      }, slot || [
+      }, slot ? slot(this.timestamp) : [
         this.__renderFooterButton(h)
       ])
     }
   },
 
   render (h) {
-    const child = [
+    const resize = [
       h(QResizeObserver, {
         props: { debounce: 0 },
         on: { resize: this.onResize }
       })
     ]
 
-    return h('div', this.setBothColors(this.color, this.backgroundColor, {
+    return h('div', this.setBothColors(this.textColor, this.color, {
       ref: 'scroller',
-      staticClass: 'q-date-time-scroller flex',
+      staticClass: 'q-scroller flex',
       class: {
+        'q-scroller__disabled': this.disable === true,
         'rounded-borders': this.roundedBorders === true,
         'q-scroller__border': this.noBorder !== true
       },
       style: this.style
-    }), child.concat([
+    }), resize.concat([
       this.__renderHeader(h),
       this.__renderBody(h),
       this.__renderFooter(h)
