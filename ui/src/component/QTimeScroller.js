@@ -77,7 +77,7 @@ export default {
         .map((ap, index) => {
           return {
             value: ap,
-            disabled: (this.hour === '00' || this.hour === '12') && index === 1,
+            disabled: false,
             noCaps: true
           }
         })
@@ -98,16 +98,20 @@ export default {
     },
 
     hoursList () {
-      let count = (this.hour12 === true ? 13 : 24)
+      let count = (this.hour12 === true ? 12 : 24)
       if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
         count /= parseInt(this.hourInterval)
       }
       return [...Array(count)]
         .map((_, i) => i)
         .map(h => {
+          h = this.hour12 ? h + 1 : h
           h *= this.hourInterval ? parseInt(this.hourInterval) : 1
           h = h < 10 ? '0' + h : '' + h
-          return { value: h, disabled: this.disabledHoursList.includes(h) }
+          return {
+            value: h,
+            disabled: this.disabledHoursList.includes(h)
+          }
         })
     },
 
@@ -116,7 +120,7 @@ export default {
       if (this.noMinutes === true) return padNumber(this.hour, 2) + 'h'
       else if (this.noHours === true) return ':' + padNumber(this.minute, 2)
       let time = this.timeFormatter(this.timestamp, this.shortTimeLabel)
-      if (this.amPmLabels !== void 0 && this.amPmLabels.length > 0) {
+      if (this.amPmLabels !== void 0 && this.amPmLabels.length > 0 && this.ampmIndex > -1) {
         const c = time.substr(-(this.amPmLabels[this.ampmIndex].length))
         if (c !== this.amPmLabels[this.ampmIndex]) {
           let rindex = time.lastIndexOf(' ')
@@ -149,8 +153,8 @@ export default {
 
     ampmIndex () {
       this.ampm = this.amPmLabels[this.ampmIndex]
-      if (this.hour12 === true && this.ampmIndex === 1) {
-        this.timestamp.hour = parseInt(this.hour) + 12
+      if (this.hour12 === true) {
+        this.handle12Hour()
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
@@ -162,11 +166,12 @@ export default {
     },
 
     hour () {
-      if (this.hour12 === true && this.ampmIndex === 1) {
-        this.timestamp.hour = parseInt(this.hour) + 12
+      if (this.hour12 === true) {
+        this.handle12Hour()
       } else {
         this.timestamp.hour = parseInt(this.hour)
       }
+      this.timestamp.hour %= 24
       if (this.hourInitialized === true) {
         this.emitValue()
       } else {
@@ -188,14 +193,9 @@ export default {
     },
 
     hour12 () {
+      this.hour = padNumber(this.timestamp.hour, 2)
       if (this.hour12 === true) {
-        if (this.timestamp.hour > 12) {
-          this.hour = padNumber(this.timestamp.hour - 12, 2)
-          this.ampmIndex = 1
-        } else {
-          this.hour = padNumber(this.timestamp.hour, 2)
-          this.ampmIndex = 0
-        }
+        this.handle12Hour()
       } else {
         this.hour = padNumber(this.timestamp.hour, 2)
       }
@@ -230,6 +230,28 @@ export default {
   methods: {
     getTimestamp () {
       return this.timestamp
+    },
+
+    handle12Hour () {
+      if (this.hour12 === true && this.ampmIndex > -1) {
+        let hour = parseInt(this.hour)
+        if (this.ampmIndex === 0) {
+          if (hour === 12) {
+            this.timestamp.hour = 0
+          } else {
+            this.timestamp.hour = parseInt(this.hour)
+          }
+        } else if (this.ampmIndex === 1) {
+          if (hour === 0) {
+            this.timestamp.hour = 12
+            this.hour = padNumber(this.timestamp.hour, 2)
+          } else {
+            this.timestamp.hour = hour < 12 ? hour + 12 : hour
+          }
+        } else {
+          this.timestamp.hour = parseInt(this.hour)
+        }
+      }
     },
 
     emitValue () {
@@ -281,7 +303,7 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
+          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object Array]':
@@ -293,7 +315,7 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
+          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object Object]':
@@ -305,7 +327,7 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
+          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
         case '[object String]':
@@ -320,10 +342,10 @@ export default {
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
-          if (this.timestamp.hour > 24) {
+          if (this.timestamp.hour >= 24) {
             this.timestamp.hour %= 24
           }
-          this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
+          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
           return
       }
@@ -334,8 +356,23 @@ export default {
 
     fromTimestamp () {
       this.minute = padNumber(this.timestamp.minute, 2)
-      if (this.hour12 === true && this.ampmIndex === 1) {
-        this.hour = padNumber(this.timestamp.hour - 12, 2)
+      if (this.hour12 === true) {
+        if (this.timestamp.hour === 12) {
+          this.hour = '12'
+          this.amPmIndex = 1
+        } else if (this.timestamp.hour === 0) {
+          this.hour = '12'
+          this.amPmIndex = 0
+        } else if (this.timestamp.hour > 12) {
+          this.hour = padNumber(this.timestamp.hour - 12, 2)
+          this.amPmIndex = 1
+        } else if (this.timestamp.hour === 0) {
+          this.hour = '12'
+          this.amPmIndex = 0
+        } else {
+          this.hour = padNumber(this.timestamp.hour, 2)
+          this.amPmIndex = 0
+        }
       } else {
         this.hour = padNumber(this.timestamp.hour, 2)
       }
