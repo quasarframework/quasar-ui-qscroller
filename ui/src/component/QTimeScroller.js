@@ -359,19 +359,19 @@ export default {
       if (this.hour12 === true) {
         if (this.timestamp.hour === 12) {
           this.hour = '12'
-          this.amPmIndex = 1
+          this.ampmIndex = 1
         } else if (this.timestamp.hour === 0) {
           this.hour = '12'
-          this.amPmIndex = 0
+          this.ampmIndex = 0
         } else if (this.timestamp.hour > 12) {
           this.hour = padNumber(this.timestamp.hour - 12, 2)
-          this.amPmIndex = 1
+          this.ampmIndex = 1
         } else if (this.timestamp.hour === 0) {
           this.hour = '12'
-          this.amPmIndex = 0
+          this.ampmIndex = 0
         } else {
           this.hour = padNumber(this.timestamp.hour, 2)
-          this.amPmIndex = 0
+          this.ampmIndex = 0
         }
       } else {
         this.hour = padNumber(this.timestamp.hour, 2)
