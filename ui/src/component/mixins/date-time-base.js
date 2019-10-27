@@ -7,6 +7,7 @@ export default {
     ...props.common,
     ...props.base,
     ...props.locale,
+    ...props.verticalBar,
     hour12: Boolean,
     amPmLabels: {
       type: Array,
