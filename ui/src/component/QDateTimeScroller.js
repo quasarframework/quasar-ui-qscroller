@@ -141,9 +141,9 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height', 10))
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
       })
     },
@@ -163,11 +163,11 @@ export default {
           this.type = 'array'
           // 1st item is hour, 2nd item is minutes
           now = parseDate(new Date())
-          now.year = parseInt(this.value[0])
-          now.month = parseInt(this.value[1])
-          now.day = parseInt(this.value[2])
-          now.hour = parseInt(this.value[3])
-          now.minute = parseInt(this.value[4])
+          now.year = parseInt(this.value[0], 10)
+          now.month = parseInt(this.value[1], 10)
+          now.day = parseInt(this.value[2], 10)
+          now.hour = parseInt(this.value[3], 10)
+          now.minute = parseInt(this.value[4], 10)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.fromTimestamp()
@@ -176,11 +176,11 @@ export default {
           this.type = 'object'
           // object must contain keys 'year', 'month', 'day', 'hour', 'minute'
           now = parseDate(new Date())
-          now.year = parseInt(this.value.year)
-          now.month = parseInt(this.value.month)
-          now.day = parseInt(this.value.day)
-          now.hour = parseInt(this.value.hour)
-          now.minute = parseInt(this.value.minute)
+          now.year = parseInt(this.value.year, 10)
+          now.month = parseInt(this.value.month, 10)
+          now.day = parseInt(this.value.day, 10)
+          now.hour = parseInt(this.value.hour, 10)
+          now.minute = parseInt(this.value.minute, 10)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.fromTimestamp()
@@ -193,11 +193,11 @@ export default {
             parts = this.value.split(' ')
             parts2 = parts[1].split(':')
             parts = parts[0].split('-')
-            now.year = parseInt(parts[0])
-            now.month = parseInt(parts[1])
-            now.day = parseInt(parts[2])
-            now.hour = parseInt(parts2[0])
-            now.minute = parseInt(parts2[1])
+            now.year = parseInt(parts[0], 10)
+            now.month = parseInt(parts[1], 10)
+            now.day = parseInt(parts[2], 10)
+            now.hour = parseInt(parts2[0], 10)
+            now.minute = parseInt(parts2[1], 10)
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)

@@ -102,24 +102,24 @@ export default {
           end = parseDate(new Date())
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
-          start.hour = parseInt(startParts[0])
-          start.minute = parseInt(startParts[1])
-          end.hour = parseInt(endParts[0])
-          end.minute = parseInt(endParts[1])
+          start.hour = parseInt(startParts[0], 10)
+          start.minute = parseInt(startParts[1], 10)
+          end.hour = parseInt(endParts[0], 10)
+          end.minute = parseInt(endParts[1], 10)
           this.$emit('input', [ getDateObject(start), getDateObject(end) ])
           return
         case 'array':
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
           this.$emit('input', [
-            [ parseInt(startParts[0]), parseInt(startParts[1]) ], [ parseInt(endParts[0]), parseInt(endParts[1]) ]
+            [ parseInt(startParts[0], 10), parseInt(startParts[1], 10) ], [ parseInt(endParts[0], 10), parseInt(endParts[1], 10) ]
           ])
           return
         case 'object':
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
           this.$emit('input', [
-            { hour: parseInt(startParts[0]), minute: parseInt(startParts[1]) }, { hour: parseInt(endParts[0]), minute: parseInt(endParts[1]) }
+            { hour: parseInt(startParts[0], 10), minute: parseInt(startParts[1], 10) }, { hour: parseInt(endParts[0], 10), minute: parseInt(endParts[1], 10) }
           ])
 
           return
@@ -172,9 +172,9 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height', 10))
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
       })
     },
@@ -203,8 +203,8 @@ export default {
           return
         case '[object Array]':
           this.type = 'array'
-          start = padNumber(parseInt(this.value[0][0]), 2) + ':' + padNumber(parseInt(this.value[0][1]), 2)
-          end = padNumber(parseInt(this.value[1][0]), 2) + ':' + padNumber(parseInt(this.value[1][1]), 2)
+          start = padNumber(parseInt(this.value[0][0], 10), 2) + ':' + padNumber(parseInt(this.value[0][1], 10), 2)
+          end = padNumber(parseInt(this.value[1][0], 10), 2) + ':' + padNumber(parseInt(this.value[1][1], 10), 2)
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
@@ -214,8 +214,8 @@ export default {
           return
         case '[object Object]':
           this.type = 'object'
-          start = padNumber(parseInt(this.value[0].hour), 2) + ':' + padNumber(parseInt(this.value[0].minute), 2)
-          end = padNumber(parseInt(this.value[1].hour), 2) + ':' + padNumber(parseInt(this.value[1].minute), 2)
+          start = padNumber(parseInt(this.value[0].hour, 10), 2) + ':' + padNumber(parseInt(this.value[0].minute, 10), 2)
+          end = padNumber(parseInt(this.value[1].hour, 10), 2) + ':' + padNumber(parseInt(this.value[1].minute, 10), 2)
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end

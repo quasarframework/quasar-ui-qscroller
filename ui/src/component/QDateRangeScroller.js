@@ -102,26 +102,26 @@ export default {
           end = parseDate(new Date())
           startParts = this.startDate.split('-')
           endParts = this.endDate.split('-')
-          start.year = parseInt(startParts[0])
-          start.month = parseInt(startParts[1])
-          start.day = parseInt(startParts[2])
-          end.year = parseInt(endParts[0])
-          end.month = parseInt(endParts[1])
-          end.day = parseInt(endParts[2])
+          start.year = parseInt(startParts[0], 10)
+          start.month = parseInt(startParts[1], 10)
+          start.day = parseInt(startParts[2], 10)
+          end.year = parseInt(endParts[0], 10)
+          end.month = parseInt(endParts[1], 10)
+          end.day = parseInt(endParts[2], 10)
           this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
           return
         case 'array':
           startParts = this.startDate.split('-')
           endParts = this.endDate.split('-')
           this.$emit('input', [
-            [ parseInt(startParts[0]), parseInt(startParts[1]), parseInt(startParts[2]) ], [ parseInt(endParts[0]), parseInt(endParts[1]), parseInt(endParts[2]) ]
+            [ parseInt(startParts[0], 10), parseInt(startParts[1], 10), parseInt(startParts[2], 10) ], [ parseInt(endParts[0], 10), parseInt(endParts[1], 10), parseInt(endParts[2], 10) ]
           ])
           return
         case 'object':
           startParts = this.startDate.split('-')
           endParts = this.endDate.split('-')
           this.$emit('input', [
-            { year: parseInt(startParts[0]), month: parseInt(startParts[1]), day: parseInt(startParts[2]) }, { year: parseInt(endParts[0]), month: parseInt(endParts[1]), day: parseInt(endParts[2]) }
+            { year: parseInt(startParts[0], 10), month: parseInt(startParts[1], 10), day: parseInt(startParts[2], 10) }, { year: parseInt(endParts[0], 10), month: parseInt(endParts[1], 10), day: parseInt(endParts[2], 10) }
           ])
 
           return
@@ -151,12 +151,12 @@ export default {
         let end = parseDate(new Date())
         const startParts = this.startDate.split('-')
         const endParts = this.endDate.split('-')
-        start.year = parseInt(startParts[0])
-        start.month = parseInt(startParts[1])
-        start.day = parseInt(startParts[2])
-        end.year = parseInt(endParts[0])
-        end.month = parseInt(endParts[1])
-        end.day = parseInt(endParts[2])
+        start.year = parseInt(startParts[0], 10)
+        start.month = parseInt(startParts[1], 10)
+        start.day = parseInt(startParts[2], 10)
+        end.year = parseInt(endParts[0], 10)
+        end.month = parseInt(endParts[1], 10)
+        end.day = parseInt(endParts[2], 10)
         const startDate = getDayIdentifier(start)
         const endDate = getDayIdentifier(end)
         if (endDate >= startDate) {
@@ -176,9 +176,9 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'), 10)
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
       })
     },
@@ -207,8 +207,8 @@ export default {
           return
         case '[object Array]':
           this.type = 'array'
-          start = padNumber(parseInt(this.value[0][0]), 2) + '-' + padNumber(parseInt(this.value[0][1]), 2) + '-' + padNumber(parseInt(this.value[0][2]), 2)
-          end = padNumber(parseInt(this.value[1][0]), 2) + '-' + padNumber(parseInt(this.value[1][1]), 2) + '-' + padNumber(parseInt(this.value[1][2]), 2)
+          start = padNumber(parseInt(this.value[0][0], 10), 2) + '-' + padNumber(parseInt(this.value[0][1], 10), 2) + '-' + padNumber(parseInt(this.value[0][2], 10), 2)
+          end = padNumber(parseInt(this.value[1][0], 10), 2) + '-' + padNumber(parseInt(this.value[1][1], 10), 2) + '-' + padNumber(parseInt(this.value[1][2], 10), 2)
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
@@ -218,8 +218,8 @@ export default {
           return
         case '[object Object]':
           this.type = 'object'
-          start = padNumber(parseInt(this.value[0].year), 2) + '-' + padNumber(parseInt(this.value[0].month), 2) + '-' + padNumber(parseInt(this.value[0].day), 2)
-          end = padNumber(parseInt(this.value[1].year), 2) + '-' + padNumber(parseInt(this.value[1].month), 2) + '-' + padNumber(parseInt(this.value[1].day), 2)
+          start = padNumber(parseInt(this.value[0].year, 10), 2) + '-' + padNumber(parseInt(this.value[0].month, 10), 2) + '-' + padNumber(parseInt(this.value[0].day, 10), 2)
+          end = padNumber(parseInt(this.value[1].year, 10), 2) + '-' + padNumber(parseInt(this.value[1].month, 10), 2) + '-' + padNumber(parseInt(this.value[1].day, 10), 2)
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end

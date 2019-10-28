@@ -85,15 +85,15 @@ export default {
 
     minutesList () {
       let count = 60
-      if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval) > 0) {
-        count /= parseInt(this.minuteInterval)
+      if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval, 10) > 0) {
+        count /= parseInt(this.minuteInterval, 10)
       }
       let data = []
       for (let index = 0; index < count; ++index) {
         data.push(index)
       }
       data = data.map(m => {
-        m *= this.minuteInterval ? parseInt(this.minuteInterval) : 1
+        m *= this.minuteInterval ? parseInt(this.minuteInterval, 10) : 1
         m = m < 10 ? '0' + m : '' + m
         return {
           value: m,
@@ -106,7 +106,7 @@ export default {
     hoursList () {
       let count = (this.hour12 === true ? 12 : 24)
       if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
-        count /= parseInt(this.hourInterval)
+        count /= parseInt(this.hourInterval, 10)
       }
       let data = []
       for (let index = 0; index < count; ++index) {
@@ -114,7 +114,7 @@ export default {
       }
       data = data.map(h => {
         h = this.hour12 ? h + 1 : h
-        h *= this.hourInterval ? parseInt(this.hourInterval) : 1
+        h *= this.hourInterval ? parseInt(this.hourInterval, 10) : 1
         h = h < 10 ? '0' + h : '' + h
         return {
           value: h,
@@ -165,7 +165,7 @@ export default {
       if (this.hour12 === true) {
         this.handle12Hour()
       } else {
-        this.timestamp.hour = parseInt(this.hour)
+        this.timestamp.hour = parseInt(this.hour, 10)
       }
       if (this.ampmInitialized === true) {
         this.emitValue()
@@ -178,7 +178,7 @@ export default {
       if (this.hour12 === true) {
         this.handle12Hour()
       } else {
-        this.timestamp.hour = parseInt(this.hour)
+        this.timestamp.hour = parseInt(this.hour, 10)
       }
       this.timestamp.hour %= 24
       if (this.hourInitialized === true) {
@@ -189,7 +189,7 @@ export default {
     },
 
     minute () {
-      this.timestamp.minute = parseInt(this.minute)
+      this.timestamp.minute = parseInt(this.minute, 10)
       if (this.minuteInitialized === true) {
         this.emitValue()
       } else {
@@ -243,12 +243,12 @@ export default {
 
     handle12Hour () {
       if (this.hour12 === true && this.ampmIndex > -1) {
-        let hour = parseInt(this.hour)
+        let hour = parseInt(this.hour, 10)
         if (this.ampmIndex === 0) {
           if (hour === 12) {
             this.timestamp.hour = 0
           } else {
-            this.timestamp.hour = parseInt(this.hour)
+            this.timestamp.hour = parseInt(this.hour, 10)
           }
         } else if (this.ampmIndex === 1) {
           if (hour === 0) {
@@ -258,7 +258,7 @@ export default {
             this.timestamp.hour = hour < 12 ? hour + 12 : hour
           }
         } else {
-          this.timestamp.hour = parseInt(this.hour)
+          this.timestamp.hour = parseInt(this.hour, 10)
         }
       }
     },
@@ -286,9 +286,9 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height', 10), 10)
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
       })
     },
@@ -297,8 +297,8 @@ export default {
       this.disabledMinutesList = []
       this.disabledHoursList = []
 
-      this.disabledMinutes.forEach(m => this.disabledMinutesList.push(padNumber(parseInt(m), 2)))
-      this.disabledHours.forEach(h => this.disabledHoursList.push(padNumber(parseInt(h), 2)))
+      this.disabledMinutes.forEach(m => this.disabledMinutesList.push(padNumber(parseInt(m, 10), 2)))
+      this.disabledHours.forEach(h => this.disabledHoursList.push(padNumber(parseInt(h, 10), 2)))
     },
 
     splitTime () {
@@ -318,8 +318,8 @@ export default {
           this.type = 'array'
           // 1st item is hour, 2nd item is minutes
           now = parseDate(new Date())
-          now.hour = parseInt(this.value[0])
-          now.minute = parseInt(this.value[1])
+          now.hour = parseInt(this.value[0], 10)
+          now.minute = parseInt(this.value[1], 10)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
@@ -330,9 +330,9 @@ export default {
           this.type = 'object'
           // object must contain keys 'hour', 'minute'
           now = parseDate(new Date())
-          now.hour = parseInt(this.value.hour)
-          now.minute = parseInt(this.value.minute)
-          date = getDate(now) + ' ' + getTime(now)
+          now.hour = parseInt(this.value.hour, 10)
+          now.minute = parseInt(this.value.minute, 10)
+          date = getDate(now) + ' ' + getTime(now, 10)
           this.timestamp = parsed(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
           // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
@@ -344,8 +344,8 @@ export default {
           now = parseDate(new Date())
           if (this.value) {
             parts = this.value.split(':')
-            now.hour = parseInt(parts[0])
-            now.minute = parseInt(parts[1])
+            now.hour = parseInt(parts[0], 10)
+            now.minute = parseInt(parts[1], 10)
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)

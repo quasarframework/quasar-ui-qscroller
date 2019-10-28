@@ -60,8 +60,8 @@ export default {
 
   computed: {
     selectedArea () {
-      const width = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('width'))
-      const height = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('height'))
+      const width = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('width'), 10)
+      const height = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('height'), 10)
       const top = height / 2 + this.itemHeight / 2
       return {
         x: 0,
@@ -197,7 +197,7 @@ export default {
       }
 
       const getPadding = () => {
-        self.height = parseInt(window.getComputedStyle(self.$el.parentElement, null).getPropertyValue('height'))
+        self.height = parseInt(window.getComputedStyle(self.$el.parentElement, null).getPropertyValue('height'), 10)
         self.padding = self.height / 2 - self.itemHeight / 2
         if (!isNaN(self.padding) && self.padding > -1) {
           setPadding(self.padding)

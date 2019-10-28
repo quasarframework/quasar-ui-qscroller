@@ -73,7 +73,7 @@ export default {
     },
 
     daysList () {
-      let length = daysInMonth(parseInt(this.year), parseInt(this.month))
+      let length = daysInMonth(parseInt(this.year, 10), parseInt(this.month, 10))
       if (!this.year || !this.month) {
         length = DAYS_IN_MONTH_MAX
       }
@@ -106,11 +106,11 @@ export default {
     yearsList () {
       let yearStart = 0
       let yearEnd = 0
-      if (this.yearStart && parseInt(this.yearStart) > 0) {
-        yearStart = parseInt(this.yearStart)
+      if (this.yearStart && parseInt(this.yearStart, 10) > 0) {
+        yearStart = parseInt(this.yearStart, 10)
       }
-      if (this.yearEnd && parseInt(this.yearEnd) > 0) {
-        yearEnd = parseInt(this.yearEnd)
+      if (this.yearEnd && parseInt(this.yearEnd, 10) > 0) {
+        yearEnd = parseInt(this.yearEnd, 10)
       }
 
       // if date range not given, calculate 5 before and 5 after years
@@ -254,9 +254,9 @@ export default {
 
     month (newMonth, oldMonth) {
       if (this.day > 28) {
-        const nm = parseInt(newMonth)
-        const om = parseInt(oldMonth)
-        const year = parseInt(this.year)
+        const nm = parseInt(newMonth, 10)
+        const om = parseInt(oldMonth, 10)
+        const year = parseInt(this.year, 10)
         // if the month changed and current day does not exist
         // then set to last day of the month. For instance,
         // Jan 31, then switched to Feb 28
@@ -331,9 +331,9 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height')) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height')) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'))
+        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
+        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
+        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height', 10))
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
       })
     },
@@ -343,9 +343,9 @@ export default {
       this.disabledMonthsList = []
       this.disabledYearsList = []
 
-      this.disabledDays.forEach(d => this.disabledDaysList.push(padNumber(parseInt(d), 2)))
-      this.disabledMonths.forEach(m => this.disabledMonthsList.push(padNumber(parseInt(m), 2)))
-      this.disabledYears.forEach(h => this.disabledYearsList.push(padNumber(parseInt(h), 4)))
+      this.disabledDays.forEach(d => this.disabledDaysList.push(padNumber(parseInt(d, 10), 2)))
+      this.disabledMonths.forEach(m => this.disabledMonthsList.push(padNumber(parseInt(m, 10), 2)))
+      this.disabledYears.forEach(h => this.disabledYearsList.push(padNumber(parseInt(h, 10), 4)))
     },
 
     splitDate () {
@@ -363,9 +363,9 @@ export default {
           this.type = 'array'
           // 1st item is year, 2nd item is month, 3rd item is day
           now = parseDate(new Date())
-          now.year = parseInt(this.value[0])
-          now.month = parseInt(this.value[1])
-          now.day = parseInt(this.value[2])
+          now.year = parseInt(this.value[0], 10)
+          now.month = parseInt(this.value[1], 10)
+          now.day = parseInt(this.value[2], 10)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.fromTimestamp()
@@ -374,9 +374,9 @@ export default {
           this.type = 'object'
           // object must contain keys 'year', 'month', 'day'
           now = parseDate(new Date())
-          now.year = parseInt(this.value.year)
-          now.month = parseInt(this.value.month)
-          now.day = parseInt(this.value.day)
+          now.year = parseInt(this.value.year, 10)
+          now.month = parseInt(this.value.month, 10)
+          now.day = parseInt(this.value.day, 10)
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
           this.fromTimestamp()
@@ -387,9 +387,9 @@ export default {
           now = parseDate(new Date())
           if (this.value) {
             parts = this.value.split('-')
-            now.year = parseInt(parts[0])
-            now.month = parseInt(parts[1])
-            now.day = parseInt(parts[2])
+            now.year = parseInt(parts[0], 10)
+            now.month = parseInt(parts[1], 10)
+            now.day = parseInt(parts[2], 10)
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
@@ -409,9 +409,9 @@ export default {
 
     toTimestamp () {
       const timestamp = copyTimestamp(this.timestamp)
-      this.timestamp.day = parseInt(this.day)
-      this.timestamp.month = parseInt(this.month)
-      this.timestamp.year = parseInt(this.year)
+      this.timestamp.day = parseInt(this.day, 10)
+      this.timestamp.month = parseInt(this.month, 10)
+      this.timestamp.year = parseInt(this.year, 10)
       if (!compareTimestamps(timestamp, this.timestamp)) {
         this.emitValue()
       }
@@ -423,7 +423,7 @@ export default {
       let date = getDate(now) + ' 00:00'
       let timestamp = parsed(date)
       timestamp.day = 1
-      timestamp.month = parseInt(month)
+      timestamp.month = parseInt(month, 10)
       return this.monthFormatter(timestamp, this.shortMonthLabel)
     },
 
