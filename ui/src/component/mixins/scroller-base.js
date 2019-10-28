@@ -274,7 +274,7 @@ export default {
         if (found) {
           found.classList.add(klass.slice(1))
           const pos = found.offsetTop - self.padding
-          setScrollPosition(self.$el, pos, 10)
+          setScrollPosition(self.$el, pos, 100)
         }
       }, 100)
     },
