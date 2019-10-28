@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row q-gutter-sm full-width">
     <div class="row full-width">
-      <div class="text-h4">QTimeScroller</div>
+      <div class="text-h4">'time' Scroller</div>
     </div>
 
     <q-card class="q-pa-md">
