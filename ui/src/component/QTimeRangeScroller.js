@@ -183,7 +183,11 @@ export default {
       // QTimeRangeScroller takes an array of Date, Object, Array or String
       let start, end, now
       let type = Object.prototype.toString.call(this.value)
-      // use first item to determine type; convert to string for sub-components
+      if (type !== '[object Array]' && type !== '[object Undefined]' && type !== '[object String]') {
+        console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`)
+        return
+      }
+      // use first item to determine type
       type = Object.prototype.toString.call(this.value[0])
       switch (type) {
         case '[object Date]':
