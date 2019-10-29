@@ -23,10 +23,10 @@ export default {
     ...props.time,
     ...props.timeRange,
     ...props.dateRange,
+    ...props.showVerticalBar,
+    ...props.locale,
     hour12: Boolean,
-    amPmLabels: Array,
-    showVerticalBar: Boolean,
-    locale: String
+    amPmLabels: Array
   },
 
   computed: {

@@ -24,7 +24,8 @@ export default {
 
   props: {
     ...props.dateRange,
-    ...props.verticalBar
+    ...props.verticalBar,
+    ...props.locale
   },
 
   data () {

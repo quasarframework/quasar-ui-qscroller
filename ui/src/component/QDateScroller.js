@@ -31,7 +31,8 @@ export default {
 
   props: {
     ...props.date,
-    ...props.verticalBar
+    ...props.verticalBar,
+    ...props.locale
   },
 
   data () {
@@ -133,6 +134,7 @@ export default {
     },
 
     displayDate () {
+      if (!this.locale) return ''
       if (!this.year || !this.month || !this.day) return ''
       if (this.timestamp.hasDay === false) return ''
       // year only

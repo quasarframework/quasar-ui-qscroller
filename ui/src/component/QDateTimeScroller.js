@@ -28,7 +28,8 @@ export default {
   props: {
     ...props.time,
     ...props.date,
-    ...props.verticalBar
+    ...props.verticalBar,
+    ...props.locale
   },
 
   data () {
@@ -65,6 +66,7 @@ export default {
     },
 
     displayDateTime () {
+      if (this.locale === '') return ''
       if (this.date !== '' && this.time !== '') {
         if (this.$refs.date && this.$refs.time) {
           return this.$refs.date.displayDate + ' ' + this.$refs.time.displayTime
