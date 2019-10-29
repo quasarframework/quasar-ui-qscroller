@@ -1,0 +1,76 @@
+{
+  "type": "component",
+  "props": {
+    "bar-color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of the middle bars. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "border-color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of outside border when `no-border` property is not `true`. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of the background (header and footer). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "text-color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of the text (header and footer). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "inner-color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of the background (scroller area). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "inner-text-color": {
+      "type": "String",
+      "applicable": "all",
+      "desc": "This is the color of the text (scroller area). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')"
+    },
+    "dense": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should be in dense mode"
+    },
+    "disable": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should be disabled"
+    },
+    "rounded-border": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should have rounded corners"
+    },
+    "no-border": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should not have a border"
+    },
+    "no-shadow": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should not display shadow when header/footer are displayed"
+    },
+    "no-header": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should not display the header"
+    },
+    "no-footer": {
+      "type": "Boolean",
+      "applicable": "all",
+      "desc": "If the component should not display the footer"
+    }
+  },
+  "events": {
+  },
+  "methods": {
+  },
+  "scopedSlots": {
+  }
+}
