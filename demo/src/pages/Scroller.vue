@@ -678,8 +678,8 @@ export default {
     isValidTime (time) {
       let parts = time.split(':')
       if (parts.length === 2) {
-        let hour = parseInt(parts[0])
-        let minute = parseInt(parts[1])
+        let hour = parseInt(parts[0], 10)
+        let minute = parseInt(parts[1], 10)
         if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
           return true
         }
