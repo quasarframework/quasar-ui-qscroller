@@ -67,9 +67,9 @@
 export default {
   data () {
     return {
-      valueStr: ['2020-10-01','2020-10-01'],
+      valueStr: [ '2020-10-01', '2020-10-01' ],
       valueObj: [{ year: '2020', month: '11', day: 10 }, { year: '2020', month: '11', day: 10 }],
-      valueArr: [[ 2020, 12, '25'], [ 2020, 12, '25']],
+      valueArr: [[ 2020, 12, '25' ], [ 2020, 12, '25' ]],
       valueDate: [new Date(), new Date()]
     }
   },
