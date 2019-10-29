@@ -43,6 +43,9 @@ module.exports = function (ctx) {
         'QItemLabel',
         'QTabs',
         'QRouteTab',
+        'QTab',
+        'QTabPanels',
+        'QTabPanel',
         'QSpace',
         'QSelect',
         'QBadge',
@@ -66,7 +69,8 @@ module.exports = function (ctx) {
         'QRadio',
         'QTooltip',
         'QSlider',
-        'QSeparator'
+        'QSeparator',
+        'QPageScroller'
       ],
 
       directives: [
