@@ -1,13 +1,13 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
     <div>
-      <q-select filled v-model="locale" :options="options" label="Filled" style="max-width: 200px;"/>
+      <q-select filled v-model="locale" :options="options" label="Filled" style="max-width: 280px;"/>
       <q-scroller
         v-model="value"
-        view="date-time"
+        view="date-range"
         no-footer
-        :locale="locale"
-        style="max-width: 200px; height: 200px;"
+        :local="locale"
+        style="max-width: 280px; height: 200px;"
       ></q-scroller>
     </div>
 
@@ -25,12 +25,6 @@ export default {
       options: [
         'en-us', 'fr', 'ro', 'se', 'ru', 'ar', 'ca'
       ]
-    }
-  },
-
-  watch: {
-    locale (val) {
-      console.log(val)
     }
   }
 }

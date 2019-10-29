@@ -21,6 +21,15 @@ import DateTypes from '../examples/date/Types'
 import DateLocale from '../examples/date/Locale'
 import DateSlots from '../examples/date/Slots'
 
+import DateRangeBasic from '../examples/date-range/Basic'
+import DateRangeColors from '../examples/date-range/Colors'
+import DateRangeQInput from '../examples/date-range/QInput'
+import DateRangeDisabled from '../examples/date-range/Disabled'
+import DateRangeIntervals from '../examples/date-range/Intervals'
+import DateRangeTypes from '../examples/date-range/Types'
+import DateRangeLocale from '../examples/date-range/Locale'
+import DateRangeSlots from '../examples/date-range/Slots'
+
 import DateTimeBasic from '../examples/date-time/Basic'
 import DateTimeColors from '../examples/date-time/Colors'
 import DateTimeQInput from '../examples/date-time/QInput'
@@ -53,6 +62,15 @@ export default ({ Vue }) => {
   Vue.component('DateTypes', DateTypes)
   Vue.component('DateLocale', DateLocale)
   Vue.component('DateSlots', DateSlots)
+
+  Vue.component('DateRangeBasic', DateRangeBasic)
+  Vue.component('DateRangeColors', DateRangeColors)
+  Vue.component('DateRangeQInput', DateRangeQInput)
+  Vue.component('DateRangeDisabled', DateRangeDisabled)
+  Vue.component('DateRangeIntervals', DateRangeIntervals)
+  Vue.component('DateRangeTypes', DateRangeTypes)
+  Vue.component('DateRangeLocale', DateRangeLocale)
+  Vue.component('DateRangeSlots', DateRangeSlots)
 
   Vue.component('DateTimeBasic', DateTimeBasic)
   Vue.component('DateTimeColors', DateTimeColors)

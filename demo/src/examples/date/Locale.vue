@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
-    <div class="col">
+    <div>
       <q-select filled v-model="locale" :options="options" label="Filled" style="max-width: 200px;"/>
       <q-scroller
         v-model="value"

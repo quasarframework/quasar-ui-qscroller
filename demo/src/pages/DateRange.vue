@@ -1,10 +1,14 @@
 <template>
   <div class="q-markdown">
     <example-title title="view='date-range'" />
-    <example-card title="String - Basic" name="StringBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Basic.vue').default)" />
-    <example-card title="String - Colors" name="StringColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Colors.vue').default)" />
-    <example-card title="String - QInput" name="StringQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/QInput.vue').default)" />
-    <example-card title="String - Disabled" name="StringDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Disabled.vue').default)" />
+    <example-card title="Basic" name="DateRangeBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Basic.vue').default)" />
+    <example-card title="Colors" name="DateRangeColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Colors.vue').default)" />
+    <example-card title="QInput" name="DateRangeQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/QInput.vue').default)" />
+    <example-card title="Disabled" name="DateRangeDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Disabled.vue').default)" />
+    <example-card title="Intervals" name="DateRangeIntervals" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Intervals.vue').default)" />
+    <example-card title="Types" name="DateRangeTypes" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Types.vue').default)" />
+    <example-card title="Locale" name="DateRangeLocale" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Locale.vue').default)" />
+    <example-card title="Slots" name="DateRangeSlots" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Slots.vue').default)" />
   </div>
 </template>
 
@@ -32,11 +36,15 @@ export default {
     this.toc = []
     this.tempToc = []
 
-    this.addToToc('String')
-    this.addToToc('String - Basic', 2)
-    this.addToToc('String - Colors', 2)
-    this.addToToc('String - QInput', 2)
-    this.addToToc('String - Disabled', 2)
+    this.addToToc('DateRange')
+    this.addToToc('Basic', 2)
+    this.addToToc('Colors', 2)
+    this.addToToc('QInput', 2)
+    this.addToToc('Disabled', 2)
+    this.addToToc('Intervals', 2)
+    this.addToToc('Types', 2)
+    this.addToToc('Locale', 2)
+    this.addToToc('Slots', 2)
 
     this.toc = this.tempToc
   },
