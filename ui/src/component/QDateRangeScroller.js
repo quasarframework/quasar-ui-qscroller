@@ -109,7 +109,7 @@ export default {
           end.year = parseInt(endParts[0], 10)
           end.month = parseInt(endParts[1], 10)
           end.day = parseInt(endParts[2], 10)
-          this.$emit('input', [ getDateObject(this.start), getDateObject(this.end) ])
+          this.$emit('input', [ getDateObject(start), getDateObject(end) ])
           return
         case 'array':
           startParts = this.startDate.split('-')
