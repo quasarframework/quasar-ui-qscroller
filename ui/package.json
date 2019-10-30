@@ -2,7 +2,7 @@
   "name": "@quasar/quasar-ui-qscroller",
   "version": "1.0.0-alpha.1",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
-  "description": "QScroller - Embed time, date and ranges in your Quasar Apps",
+  "description": "QScroller - Embed string, time, date and range scrollers in your Quasar Apps",
   "license": "MIT",
   "module": "dist/index.esm.js",
   "main": "dist/index.common.js",
