@@ -12,6 +12,15 @@ import Time12Hour from '../examples/time/12Hour'
 import TimeTypes from '../examples/time/Types'
 import TimeSlots from '../examples/time/Slots'
 
+import TimeRangeBasic from '../examples/time-range/Basic'
+import TimeRangeColors from '../examples/time-range/Colors'
+import TimeRangeQInput from '../examples/time-range/QInput'
+import TimeRangeDisabled from '../examples/time-range/Disabled'
+import TimeRangeIntervals from '../examples/time-range/Intervals'
+import TimeRange12Hour from '../examples/time-range/12Hour'
+import TimeRangeTypes from '../examples/time-range/Types'
+import TimeRangeSlots from '../examples/time-range/Slots'
+
 import DateBasic from '../examples/date/Basic'
 import DateColors from '../examples/date/Colors'
 import DateQInput from '../examples/date/QInput'
@@ -53,6 +62,15 @@ export default ({ Vue }) => {
   Vue.component('Time12Hour', Time12Hour)
   Vue.component('TimeTypes', TimeTypes)
   Vue.component('TimeSlots', TimeSlots)
+
+  Vue.component('TimeRangeBasic', TimeRangeBasic)
+  Vue.component('TimeRangeColors', TimeRangeColors)
+  Vue.component('TimeRangeQInput', TimeRangeQInput)
+  Vue.component('TimeRangeDisabled', TimeRangeDisabled)
+  Vue.component('TimeRangeIntervals', TimeRangeIntervals)
+  Vue.component('TimeRange12Hour', TimeRange12Hour)
+  Vue.component('TimeRangeTypes', TimeRangeTypes)
+  Vue.component('TimeRangeSlots', TimeRangeSlots)
 
   Vue.component('DateBasic', DateBasic)
   Vue.component('DateColors', DateColors)

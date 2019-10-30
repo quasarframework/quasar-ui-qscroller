@@ -1,10 +1,14 @@
 <template>
   <div class="q-markdown">
     <example-title title="view='time-range'" />
-    <example-card title="String - Basic" name="StringBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Basic.vue').default)" />
-    <example-card title="String - Colors" name="StringColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Colors.vue').default)" />
-    <example-card title="String - QInput" name="StringQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/QInput.vue').default)" />
-    <example-card title="String - Disabled" name="StringDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Disabled.vue').default)" />
+    <example-card title="Basic" name="TimeRangeBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Basic.vue').default)" />
+    <example-card title="Colors" name="TimeRangeColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Colors.vue').default)" />
+    <example-card title="QInput" name="TimeRangeQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/QInput.vue').default)" />
+    <example-card title="Disabled" name="TimeRangeDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Disabled.vue').default)" />
+    <example-card title="Intervals" name="TimeRangeIntervals" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Intervals.vue').default)" />
+    <example-card title="12 Hour" name="TimeRange12Hour" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/12Hour.vue').default)" />
+    <example-card title="Types" name="TimeRangeTypes" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Types.vue').default)" />
+    <example-card title="Slots" name="TimeRangeSlots" :tag-parts="getTagParts(require('!!raw-loader!../examples/time-range/Slots.vue').default)" />
   </div>
 </template>
 
@@ -32,11 +36,15 @@ export default {
     this.toc = []
     this.tempToc = []
 
-    this.addToToc('String')
-    this.addToToc('String - Basic', 2)
-    this.addToToc('String - Colors', 2)
-    this.addToToc('String - QInput', 2)
-    this.addToToc('String - Disabled', 2)
+    this.addToToc('TimeRange')
+    this.addToToc('Basic', 2)
+    this.addToToc('Colors', 2)
+    this.addToToc('QInput', 2)
+    this.addToToc('Disabled', 2)
+    this.addToToc('Intervals', 2)
+    this.addToToc('12 Hour', 2)
+    this.addToToc('Types', 2)
+    this.addToToc('Slots', 2)
 
     this.toc = this.tempToc
   },
