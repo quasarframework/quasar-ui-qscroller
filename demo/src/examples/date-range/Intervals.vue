@@ -4,46 +4,55 @@
       v-model="value"
       view="date-range"
       no-footer
-      no-years
+      start-no-years
+      end-no-years
       style="max-width: 280px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
       view="date-range"
       no-footer
-      no-months
+      start-no-months
+      end-no-months
       style="max-width: 280px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
       view="date-range"
       no-footer
-      no-days
+      start-no-days
+      end-no-days
+      style="max-width: 320px; height: 200px;"
+    ></q-scroller>
+    <q-scroller
+      v-model="value"
+      view="date-range"
+      no-footer
+      start-no-days
+      end-no-days
+      start-no-months
+      end-no-months
+      style="max-width: 220px; height: 200px;"
+    ></q-scroller>
+    <q-scroller
+      v-model="value"
+      view="date-range"
+      no-footer
+      start-no-days
+      end-no-days
+      start-no-years
+      end-no-years
       style="max-width: 280px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
       view="date-range"
       no-footer
-      no-days
-      no-months
-      style="max-width: 280px; height: 200px;"
-    ></q-scroller>
-    <q-scroller
-      v-model="value"
-      view="date-range"
-      no-footer
-      no-days
-      no-years
-      style="max-width: 280px; height: 200px;"
-    ></q-scroller>
-    <q-scroller
-      v-model="value"
-      view="date-range"
-      no-footer
-      no-months
-      no-years
-      style="max-width: 280px; height: 200px;"
+      start-no-months
+      end-no-months
+      start-no-years
+      end-no-years
+      style="max-width: 220px; height: 200px;"
     ></q-scroller>
 
   </div>
