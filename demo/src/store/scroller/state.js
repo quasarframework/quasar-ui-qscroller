@@ -8,6 +8,7 @@ export default {
   backgroundColor: 'primary',
   innerColor: 'white',
   innerBackgroundColor: 'primary',
+  verticalBar: false,
   noHeader: false,
   noFooter: true,
   dense: false,

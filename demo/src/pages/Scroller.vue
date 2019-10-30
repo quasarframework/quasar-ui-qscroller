@@ -14,6 +14,7 @@
             view="string"
             :items="items"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
@@ -45,15 +46,18 @@
                     v-model="scrollerModel"
                     :items="items"
                     view="string"
-                    :noHeader="true"
+                    :vertical-bar="verticalBar"
+                    :no-header="noHeader"
+                    :no-footer="noFooter"
                     :rounded-borders="roundedBorders"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
+                    border-color="black"
                     text-color="grey-3"
                     color="black"
-                    text-inner-color="black"
+                    inner-text-color="black"
                     inner-color="grey-3"
                     :style="scrollerPopupStyle200"
                     @close="() => { showScroller = false }"
@@ -78,23 +82,24 @@
             view="time"
             :locale="locale"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
             :disable="disable"
             :no-border="noBorder"
             :no-shadow="noShadow"
-            :hour24-format="hour24Format"
+            :hour12="!hour24Format"
             :no-hours="noHours"
             :no-minutes="noMinutes"
             :disabledMinutes="disabledMinutes"
             border-color="#FF0000"
             bar-color="#FF0000"
-            color="white"
-            background-color="red-6"
-            inner-color="red"
-            inner-background-color="white"
-            style="height: 280px;"
+            text-color="white"
+            color="red-6"
+            inner-text-color="red"
+            inner-color="white"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
@@ -116,20 +121,21 @@
                     view="time"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
-                    :no-header="false"
-                    :no-footer="false"
+                    :vertical-bar="verticalBar"
+                    :no-header="noHeader"
+                    :no-footer="noFooter"
                     :disable="disable"
-                    :hour24-format="hour24Format"
+                    :hour12="!hour24Format"
                     :no-hours="noHours"
                     :no-minutes="noMinutes"
                     :disabledMinutes="disabledMinutes"
                     border-color="#21ba45"
                     bar-color="#21ba45"
-                    color="white"
-                    background-color="green-6"
-                    inner-color="green-6"
-                    inner-background-color="white"
-                    :style="scrollerPopupStyle120"
+                    text-color="white"
+                    color="green-6"
+                    inner-text-color="green-6"
+                    inner-color="white"
+                    :style="scrollerPopupStyle200"
                     @close="() => { showTimeScroller = false }"
                   />
                 </q-popup-proxy>
@@ -153,6 +159,7 @@
             view="time-range"
             :locale="locale"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
@@ -161,16 +168,16 @@
             :no-shadow="noShadow"
             border-color="#3f51b5"
             bar-color="#FF0000"
-            color="white"
-            background-color="indigo-6"
-            inner-color="indigo-6"
-            inner-background-color="white"
-            :hour24-format="hour24Format"
+            text-color="white"
+            color="indigo-6"
+            inner-text-color="indigo-6"
+            inner-color="white"
+            :hour12="!hour24Format"
             :start-no-hours="noHours"
             :start-no-minutes="noMinutes"
             :end-no-hours="noHours"
             :end-no-minutes="noMinutes"
-            style="height: 280px;"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
@@ -196,23 +203,24 @@
                 <q-popup-proxy v-model="showTimeRangeScroller" anchor="top right" self="bottom middle">
 
                   <q-scroller
-                    v-model="timeRangeInput"
+                    v-model="timeRange"
                     view="time-range"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
+                    :vertical-bar="verticalBar"
                     :no-header="noHeader"
-                    :no-footer="false"
+                    :no-footer="noFooter"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
                     border-color="#FF8C00"
                     bar-color="#FF8C00"
-                    color="white"
-                    background-color="orange-6"
-                    inner-color="orange-6"
-                    inner-background-color="white"
-                    :hour24-format="hour24Format"
+                    text-color="white"
+                    color="orange-6"
+                    inner-text-color="orange-6"
+                    inner-color="white"
+                    :hour12="!hour24Format"
                     :start-no-hours="noHours"
                     :start-no-minutes="noMinutes"
                     :end-no-hours="noHours"
@@ -246,6 +254,7 @@
             :no-months="noMonths"
             :no-days="noDays"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
@@ -258,7 +267,7 @@
             background-color="white"
             inner-color="white"
             inner-background-color="light-green-6"
-            style="height: 280px;"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
@@ -287,19 +296,20 @@
                     :no-months="noMonths"
                     :no-days="noDays"
                     :rounded-borders="roundedBorders"
+                    :vertical-bar="verticalBar"
                     :no-header="noHeader"
-                    :no-footer="false"
+                    :no-footer="noFooter"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
                     border-color="#e64a19"
                     bar-color="#e64a19"
-                    color="deep-orange-3"
-                    background-color="deep-orange-8"
-                    inner-color="deep-orange-8"
-                    inner-background-color="deep-orange-3"
-                    :style="scrollerPopupStyle160"
+                    text-color="deep-orange-3"
+                    color="deep-orange-8"
+                    inner-text-color="deep-orange-8"
+                    inner-color="deep-orange-3"
+                    :style="scrollerPopupStyle200"
                     @close="() => { showDateScroller = false }"
                   />
                 </q-popup-proxy>
@@ -324,6 +334,7 @@
             view="date-range"
             :locale="locale"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
@@ -332,9 +343,9 @@
             :no-shadow="noShadow"
             border-color="#607d8b"
             bar-color="#FFFF00"
-            color="blue-grey-6"
-            background-color="white"
-            text-inner-color="white"
+            text-color="blue-grey-6"
+            color="white"
+            inner-text-color="white"
             inner-color="blue-grey-6"
             :start-short-year-label="shortYearLabel"
             :start-show-month-label="showMonthLabel"
@@ -368,22 +379,23 @@
               <q-icon name="far fa-calendar" class="cursor-pointer">
                 <q-popup-proxy v-model="showDateRangeScroller" anchor="top right" self="bottom middle">
                   <q-scroller
-                    v-model="dateRangeInput"
+                    v-model="dateRange"
                     view="date-range"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
+                    :vertical-bar="verticalBar"
                     :no-header="noHeader"
-                    :no-footer="false"
+                    :no-footer="noFooter"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
                     border-color="#795548"
                     bar-color="#795548"
-                    color="yellow-6"
-                    background-color="brown-6"
-                    inner-color="brown-6"
-                    inner-background-color="yellow-6"
+                    text-color="yellow-6"
+                    color="brown-6"
+                    inner-text-color="brown-6"
+                    inner-color="yellow-6"
                     :start-short-year-label="shortYearLabel"
                     :start-show-month-label="showMonthLabel"
                     :start-short-month-label="shortMonthLabel"
@@ -398,7 +410,7 @@
                     :end-no-years="noYears"
                     :end-no-months="noMonths"
                     :end-no-days="noDays"
-                    style="height: 280px; width: 280px;"
+                    :style="scrollerPopupStyle200"
                     @close="() => { showDateRangeScroller = false }"
                   />
                 </q-popup-proxy>
@@ -433,6 +445,7 @@
             :no-hours="noHours"
             :no-minutes="noMinutes"
             :rounded-borders="roundedBorders"
+            :vertical-bar="verticalBar"
             :no-header="noHeader"
             :no-footer="noFooter"
             :dense="dense"
@@ -474,12 +487,13 @@
                     :no-years="noYears"
                     :no-months="noMonths"
                     :no-days="noDays"
-                    :hour24-format="hour24Format"
+                    :hour12="!hour24Format"
                     :no-hours="noHours"
                     :no-minutes="noMinutes"
                     :rounded-borders="roundedBorders"
+                    :vertical-bar="verticalBar"
                     :no-header="noHeader"
-                    :no-footer="false"
+                    :no-footer="noFooter"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
@@ -489,8 +503,8 @@
                     text-color="brown-6"
                     color="white"
                     inner-color="white"
-                    text-inner-color="brown-6"
-                    :style="scrollerPopupStyle280"
+                    inner-text-color="brown-6"
+                    :style="scrollerPopupStyle200"
                     @close="() => { showDateTimeScroller = false }"
                   />
 
@@ -572,6 +586,7 @@ export default {
       locale: 'scroller/locale',
       titlebarHeight: 'common/titlebarHeight',
       roundedBorders: 'scroller/roundedBorders',
+      verticalBar: 'scroller/verticalBar',
       noHeader: 'scroller/noHeader',
       noFooter: 'scroller/noFooter',
       disable: 'scroller/disable',
@@ -595,20 +610,6 @@ export default {
       return this.data
     },
 
-    scrollerPopupStyle280 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '100vw',
-          height: '100vh'
-        }
-      } else {
-        return {
-          maxHeight: '400px',
-          height: '400px',
-          width: '280px'
-        }
-      }
-    },
     scrollerPopupStyle200 () {
       if (this.$q.screen.lt.sm) {
         return {
@@ -622,57 +623,45 @@ export default {
           width: '200px'
         }
       }
-    },
-    scrollerPopupStyle160 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '100vw',
-          height: '100vh'
-        }
-      } else {
-        return {
-          maxHeight: '400px',
-          height: '400px',
-          width: '160px'
-        }
-      }
-    },
-    scrollerPopupStyle120 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '100vw',
-          height: '100vh'
-        }
-      } else {
-        return {
-          maxHeight: '400px',
-          height: '400px',
-          width: '120px'
-        }
-      }
-    },
-    scrollerPopupStyle100 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '100vw',
-          height: '100vh'
-        }
-      } else {
-        return {
-          maxHeight: '400px',
-          height: '400px',
-          width: '100px'
-        }
-      }
     }
   },
   watch: {
     scrollerModel (val) {
-      this.data = this.data.map(item => {
-        item.iconRight = ''
-        if (val === item.value) item.iconRight = 'check'
-        return item
-      })
+      // this.data = this.data.map(item => {
+      //   item.iconRight = ''
+      //   if (val === item.value) item.iconRight = 'check'
+      //   return item
+      // })
+    },
+
+    timeRangeInput (val) {
+      const parts = val.split(' - ')
+      if (parts[0] !== this.timeRange[0] || parts[1] !== this.timeRange[1]) {
+        this.timeRange[0] = parts[0]
+        this.timeRange[1] = parts[1]
+      }
+    },
+
+    timeRange (val) {
+      let type = Object.prototype.toString.call(val)
+      if (type === '[object Array]') {
+        this.timeRangeInput = `${val[0]} - ${val[1]}`
+      }
+    },
+
+    dateRangeInput (val) {
+      const parts = val.split(' - ')
+      if (parts[0] !== this.dateRange[0] || parts[1] !== this.dateRange[1]) {
+        this.dateRange[0] = parts[0]
+        this.dateRange[1] = parts[1]
+      }
+    },
+
+    dateRange (val) {
+      let type = Object.prototype.toString.call(val)
+      if (type === '[object Array]') {
+        this.dateRangeInput = `${val[0]} - ${val[1]}`
+      }
     }
   },
   methods: {

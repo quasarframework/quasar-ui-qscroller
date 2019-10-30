@@ -25,6 +25,9 @@ export const innerColor = (state, color) => {
 export const innerBackgroundColor = (state, color) => {
   state.innerBackgroundColor = color
 }
+export const verticalBar = (state, b) => {
+  state.verticalBar = b
+}
 export const noHeader = (state, b) => {
   state.noHeader = b
 }

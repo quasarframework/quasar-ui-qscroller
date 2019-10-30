@@ -48,6 +48,11 @@
     ></q-btn>
     <q-toggle
       class="col-12"
+      v-model="verticalBar"
+      label="Vertical Bar"
+    ></q-toggle>
+    <q-toggle
+      class="col-12"
       v-model="noHeader"
       label="Hide header"
     ></q-toggle>
@@ -71,7 +76,7 @@
       v-model="noMinutes"
       label="No minutes"
     ></q-toggle>
-    <q-toggle
+    <!-- <q-toggle
       class="col-12"
       v-model="shortYearLabel"
       label="Short year label"
@@ -90,7 +95,7 @@
       class="col-12"
       v-model="showWeekdayLabel"
       label="Show weekday label"
-    ></q-toggle>
+    ></q-toggle> -->
         <q-toggle
       class="col-12"
       v-model="noYears"
@@ -209,6 +214,14 @@ export default {
       },
       set (color) {
         this.$store.commit('scroller/innerBackgroundColor', color)
+      }
+    },
+    verticalBar: {
+      get () {
+        return this.$store.state.scroller.verticalBar
+      },
+      set (b) {
+        return this.$store.commit('scroller/verticalBar', b)
       }
     },
     noHeader:

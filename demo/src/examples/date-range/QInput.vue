@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
 
-    <q-input color="blue-8" filled v-model="value" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller1" anchor="top right" self="bottom middle">
@@ -18,7 +18,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller2" anchor="top right" self="bottom middle">
@@ -34,7 +34,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller3" anchor="top right" self="bottom middle">
@@ -53,7 +53,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller4" anchor="top right" self="bottom middle">
@@ -89,7 +89,8 @@ export default {
       showScroller2: false,
       showScroller3: false,
       showScroller4: false,
-      value: ''
+      value: '',
+      inputValue: ''
     }
   },
 
@@ -106,6 +107,24 @@ export default {
           height: '200px',
           width: '200px'
         }
+      }
+    }
+  },
+  watch: {
+    value (val) {
+      debugger
+      let type = Object.prototype.toString.call(this.value)
+      if (type === '[object Array]') {
+        this.inputValue = `${val[0]} - ${val[1]}`
+      }
+    },
+
+    inputValue (val) {
+      debugger
+      const parts = val.split(' - ')
+      if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
+        this.value[0] = parts[0]
+        this.value[1] = parts[1]
       }
     }
   }
