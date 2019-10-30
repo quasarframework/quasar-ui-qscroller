@@ -161,9 +161,23 @@ In order to get the best potential from QScroller it is important to understand 
 
 First and foremost, the native date format used internally for date-types, and with the v-model, is `YYYY-mm-dd`. This is to avoid confusion with positioning of the day and month in other date format locales as well as date separator. All incoming and outgoing dates will use this format.
 
-The internal time format used internally for time-types if 24-hour clock (`hh:mm`).
+The internal time format used internally for time-types is 24-hour clock (`hh:mm`) or also known as military time.
 
 The default locale of QScroller is **en-us**. This can easily be changed via the `locale` property. Any area of each scroller that displays text and numbers is locale-aware.
+
+The external div of Scroller is set to take 100% width and height. Therefore, it is very important to either wrap it with a width/height controlling div, or set the height and with via the `style` attribute:
+
+```html
+    <q-scroller
+      v-model="value"
+      view="date-range"
+      no-footer
+      no-border
+      style="max-width: 280px; height: 200px;"
+    ></q-scroller>
+```
+
+QScroller can also be customized with any sort of color. Whether it be from the [Quasar Color Pallete](https://quasar.dev/style/color-palette), CSS named color (ie: `ghostwhite`), any rgb(a), hls(a) or # color (`#ccc`).
 
 ![QScroller](statics/q-scroller.png =200x200)
 
