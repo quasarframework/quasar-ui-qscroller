@@ -25,7 +25,7 @@
             <q-scroller
               v-model="value"
               view="date-range"
-              show-vertical-bar
+              vertical-bar
               :style="scrollerPopupStyle280"
               @close="() => { showScroller2 = false }"
             />
@@ -42,7 +42,7 @@
               v-model="value"
               view="date-range"
               no-header
-              show-vertical-bar
+              vertical-bar
               bar-color="green"
               border-color="green"
               :style="scrollerPopupStyle280"
@@ -67,7 +67,7 @@
               inner-text-color="black"
               inner-color="grey-3"
               bar-color="#000"
-              show-vertical-bar
+              vertical-bar
               :style="scrollerPopupStyle280"
               @close="() => { showScroller4 = false }"
             />

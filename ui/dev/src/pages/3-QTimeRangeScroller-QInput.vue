@@ -30,7 +30,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, show-vertical-bar, no-header
+        with QInput, vertical-bar, no-header
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter time" mask="##:## - ##:##">
@@ -41,7 +41,7 @@
                   v-model="value"
                   view="time-range"
                   no-header
-                  show-vertical-bar
+                  vertical-bar
                   :style="scrollerPopupStyle150"
                   @close="() => { showScroller2 = false }"
                 />
@@ -65,7 +65,7 @@
                   v-model="value"
                   view="time-range"
                   no-header
-                  show-vertical-bar
+                  vertical-bar
                   bar-color="primary"
                   border-color="primary"
                   :style="scrollerPopupStyle150"
@@ -80,7 +80,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, colors, rounded-border, no-border, show-vertical-bar
+        with QInput, colors, rounded-border, no-border, vertical-bar
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter time" mask="##:## - ##:##">
@@ -97,7 +97,7 @@
                   inner-text-color="black"
                   inner-color="grey-3"
                   bar-color="#000"
-                  show-vertical-bar
+                  vertical-bar
                   :style="scrollerPopupStyle150"
                   @close="() => { showScroller4 = false }"
                 />
@@ -120,7 +120,7 @@
                 <q-scroller
                   v-model="value"
                   view="time-range"
-                  show-vertical-bar
+                  vertical-bar
                   dense
                   :style="scrollerPopupStyle150"
                   @close="() => { showScroller5 = false }"

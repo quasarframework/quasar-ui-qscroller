@@ -188,12 +188,12 @@
     <q-card>
       <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
-          <p>show-vertical-bar, no-footer</p>
+          <p>vertical-bar, no-footer</p>
           <q-scroller
             v-model="value"
             view="time-range"
             no-footer
-            show-vertical-bar
+            vertical-bar
             style="max-width: 150px; height: 200px;"
           ></q-scroller>
         </div>
@@ -203,12 +203,12 @@
     <q-card>
       <q-card-section class="q-pa-md row q-gutter-sm">
         <div>
-          <p>show-vertical-bar, hour12, no-footer</p>
+          <p>vertical-bar, hour12, no-footer</p>
           <q-scroller
             v-model="value"
             view="time-range"
             no-footer
-            show-vertical-bar
+            vertical-bar
             hour12
             style="max-width: 220px; height: 200px;"
           ></q-scroller>

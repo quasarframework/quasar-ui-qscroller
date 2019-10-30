@@ -47,7 +47,7 @@
               view="time"
               no-header
               no-footer
-              show-vertical-bar
+              vertical-bar
               :style="scrollerPopupStyle120"
               @close="() => { showScroller3 = false }"
             />
@@ -64,7 +64,7 @@
               v-model="value"
               view="time"
               no-header
-              show-vertical-bar
+              vertical-bar
               bar-color="green"
               border-color="green"
               :style="scrollerPopupStyle120"

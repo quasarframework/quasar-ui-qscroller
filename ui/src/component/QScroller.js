@@ -23,7 +23,7 @@ export default {
     ...props.time,
     ...props.timeRange,
     ...props.dateRange,
-    ...props.showVerticalBar,
+    ...props.verticalBar,
     ...props.locale,
     hour12: Boolean,
     amPmLabels: Array

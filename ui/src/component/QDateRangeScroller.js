@@ -296,7 +296,7 @@ export default {
           noYears: this.startNoYears
         },
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
+          'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
           input: v => { this.startDate = v }

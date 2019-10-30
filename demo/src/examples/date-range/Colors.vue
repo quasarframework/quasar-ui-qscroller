@@ -21,7 +21,7 @@
       v-model="value"
       view="date-range"
       no-footer
-      show-vertical-bar
+      vertical-bar
       bar-color="purple-8"
       style="max-width: 280px; height: 200px;"
     ></q-scroller>

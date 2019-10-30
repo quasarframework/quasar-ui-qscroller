@@ -6,14 +6,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        show-vertical-bar, no-footer
+        vertical-bar, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="date"
           no-footer
-          show-vertical-bar
+          vertical-bar
           style="max-width: 150px; height: 200px;"
         ></q-scroller>
       </q-card-section>
@@ -21,14 +21,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        show-vertical-bar, bar-color, no-footer
+        vertical-bar, bar-color, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="date"
           no-footer
-          show-vertical-bar
+          vertical-bar
           bar-color="primary"
           style="max-width: 150px; height: 200px;"
         ></q-scroller>
@@ -37,14 +37,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        show-vertical-bar, bar-color, border-color, hour12, no-footer
+        vertical-bar, bar-color, border-color, hour12, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="date"
           no-footer
-          show-vertical-bar
+          vertical-bar
           bar-color="primary"
           border-color="primary"
           hour12

@@ -439,7 +439,7 @@ export default {
       return h(ScrollerBase, {
         staticClass: 'col',
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
+          'q-scroller__vertical-bar': this.verticalBar === true
         },
         style: {
           maxWidth: maxWidth
@@ -469,7 +469,7 @@ export default {
       return h(ScrollerBase, {
         staticClass: 'col',
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
+          'q-scroller__vertical-bar': this.verticalBar === true
         },
         style: {
           maxWidth: maxWidth

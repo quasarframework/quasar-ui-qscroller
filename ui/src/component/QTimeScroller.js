@@ -402,7 +402,7 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
+          'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
           input: (val) => { this.hour = val }
@@ -423,7 +423,7 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true && this.hour12 === true
+          'q-scroller__vertical-bar': this.verticalBar === true && this.hour12 === true
         },
         on: {
           input: (val) => { this.minute = val }

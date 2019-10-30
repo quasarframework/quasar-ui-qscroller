@@ -71,7 +71,7 @@ export default {
     }
   },
   verticalBar: {
-    showVerticalBar: Boolean
+    verticalBar: Boolean
   },
   date: {
     dates: Array,

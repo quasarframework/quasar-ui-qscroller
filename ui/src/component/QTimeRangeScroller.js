@@ -287,7 +287,7 @@ export default {
           noHours: this.startNoHours
         },
         class: {
-          'q-scroller__vertical-bar': this.showVerticalBar === true
+          'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
           input: v => { this.startTime = v }

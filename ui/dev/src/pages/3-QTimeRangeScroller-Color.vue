@@ -24,14 +24,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        colored, show-vertical-bar, no-footer
+        colored, vertical-bar, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="time-range"
           no-footer
-          show-vertical-bar
+          vertical-bar
           text-color="yellow"
           color="primary"
           inner-text-color="yellow"
@@ -43,14 +43,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        colored, show-vertical-bar, bar-color, no-footer
+        colored, vertical-bar, bar-color, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="time-range"
           no-footer
-          show-vertical-bar
+          vertical-bar
           bar-color="yellow"
           text-color="yellow"
           color="primary"
@@ -63,14 +63,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        colored, show-vertical-bar, bar-color, border-color, no-footer
+        colored, vertical-bar, bar-color, border-color, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="time-range"
           no-footer
-          show-vertical-bar
+          vertical-bar
           bar-color="primary"
           border-color="primary"
           text-color="primary"
@@ -84,14 +84,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        colored, show-vertical-bar, hour12, no-footer
+        colored, vertical-bar, hour12, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="time-range"
           no-footer
-          show-vertical-bar
+          vertical-bar
           hour12
           text-color="yellow"
           color="primary"
@@ -104,14 +104,14 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        colored, show-vertical-bar, hour12, am-pm-labels, no-footer
+        colored, vertical-bar, hour12, am-pm-labels, no-footer
       </q-card-section>
       <q-card-section class="col-12">
         <q-scroller
           v-model="value"
           view="time-range"
           no-footer
-          show-vertical-bar
+          vertical-bar
           hour12
           :am-pm-labels="['a', 'p']"
           text-color="yellow"

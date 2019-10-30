@@ -30,7 +30,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, show-vertical-bar, no-header
+        with QInput, vertical-bar, no-header
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
@@ -41,7 +41,7 @@
                   v-model="value"
                   view="date-range"
                   no-header
-                  show-vertical-bar
+                  vertical-bar
                   :style="scrollerPopupStyle250"
                   @close="() => { showScroller2 = false }"
                 />
@@ -65,7 +65,7 @@
                   v-model="value"
                   view="date-range"
                   no-header
-                  show-vertical-bar
+                  vertical-bar
                   bar-color="primary"
                   border-color="primary"
                   :style="scrollerPopupStyle250"
@@ -80,7 +80,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, colors, no-border, show-vertical-bar
+        with QInput, colors, no-border, vertical-bar
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
@@ -96,7 +96,7 @@
                   inner-color="grey-3"
                   bar-color="#000"
                   no-border
-                  show-vertical-bar
+                  vertical-bar
                   :style="scrollerPopupStyle250"
                   @close="() => { showScroller4 = false }"
                 />
@@ -109,7 +109,7 @@
 
     <q-card class="q-pa-md">
       <q-card-section class="col-12">
-        with QInput, show-vertical-bar, border-color, dense
+        with QInput, vertical-bar, border-color, dense
       </q-card-section>
       <q-card-section class="col-12">
         <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
@@ -119,7 +119,7 @@
                 <q-scroller
                   v-model="value"
                   view="date-range"
-                  show-vertical-bar
+                  vertical-bar
                   dense
                   border-color="primary"
                   :style="scrollerPopupStyle250"
