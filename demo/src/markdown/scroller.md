@@ -144,6 +144,17 @@ Can be found [here](https://github.com/quasarframework/quasar-ui-qscroller/tree/
 
 ---
 
+# Converting from previous version
+
+- `hour24-format` no longer exists. The default is now a 24-hour clock. If you wish to show a 12-hour clock, use the `hour12` property
+- `color` has been renamed `text-color`
+- `background-color` has been renamed `color`
+- `inner-color` has been renamed `inner-text-color`
+- `inner-background-color` has been renamed to `inner-color`
+- some properties have been temporarily removed: `short-year-label`, `short-month-label`, `short-day-label`, and `show-weekday-label`. Other properties that were not programmed have also been removed (ie: min/max props)
+
+---
+
 # Working with QScroller
 
 In order to get the best potential from QScroller it is important to understand all aspects which will be described below.

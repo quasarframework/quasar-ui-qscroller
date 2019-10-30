@@ -112,7 +112,6 @@ export default {
   },
   watch: {
     value (val) {
-      debugger
       let type = Object.prototype.toString.call(this.value)
       if (type === '[object Array]') {
         this.inputValue = `${val[0]} - ${val[1]}`
@@ -120,7 +119,6 @@ export default {
     },
 
     inputValue (val) {
-      debugger
       const parts = val.split(' - ')
       if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
         this.value[0] = parts[0]
