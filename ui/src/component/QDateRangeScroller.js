@@ -177,12 +177,12 @@ export default {
     adjustBodyHeight () {
       let self = this
       this.$nextTick(() => {
-        this.headerHeight = this.noHeader === true ? 0 : this.$refs.header ? parseInt(window.getComputedStyle(this.$refs.header, null).getPropertyValue('height'), 10) : 0
-        this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
-        this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height'), 10)
-        this.bodyHeight = this.height - this.headerHeight - this.footerHeight
-        if (this.noHeader !== true && this.noFooter !== true && this.noBorder !== true) {
-          this.bodyHeight -= 2
+        self.headerHeight = self.noHeader === true ? 0 : self.$refs.header ? self.$refs.header.getBoundingClientRect().height : 0
+        self.footerHeight = self.noFooter === true ? 0 : self.$refs.footer ? self.$refs.footer.getBoundingClientRect().height : 0
+        self.height = self.$el.getBoundingClientRect().height
+        self.bodyHeight = self.height - self.headerHeight - self.footerHeight
+        if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {
+          self.bodyHeight -= 2
         }
       })
     },

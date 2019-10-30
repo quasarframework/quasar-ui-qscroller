@@ -60,8 +60,9 @@ export default {
 
   computed: {
     selectedArea () {
-      const width = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('width'), 10)
-      const height = parseInt(window.getComputedStyle(this.$el, null).getPropertyValue('height'), 10)
+      const rect = this.$el.getBoundingClientRect()
+      const width = rect.width
+      const height = rect.height
       const top = height / 2 + this.itemHeight / 2
       return {
         x: 0,
