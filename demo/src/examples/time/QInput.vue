@@ -93,20 +93,6 @@ export default {
   },
 
   computed: {
-    scrollerPopupStyle200 () {
-      if (this.$q.screen.lt.sm) {
-        return {
-          width: '90vw',
-          height: '70vh'
-        }
-      } else {
-        return {
-          maxHeight: '200px',
-          height: '200px',
-          width: '200px'
-        }
-      }
-    },
     scrollerPopupStyle120 () {
       if (this.$q.screen.lt.sm) {
         return {
