@@ -176,6 +176,9 @@ export default {
         this.footerHeight = this.noFooter === true ? 0 : this.$refs.footer ? parseInt(window.getComputedStyle(this.$refs.footer, null).getPropertyValue('height'), 10) : 0
         this.height = parseInt(window.getComputedStyle(self.$el, null).getPropertyValue('height', 10))
         this.bodyHeight = this.height - this.headerHeight - this.footerHeight
+        if (this.noHeader !== true && this.noFooter !== true && this.noBorder !== true) {
+          this.bodyHeight -= 1
+        }
       })
     },
 
@@ -339,7 +342,10 @@ export default {
 
     __renderBody (h) {
       return h('div', this.setBackgroundColor(this.innerColor, {
-        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`
+        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
+        style: {
+          maxHeight: this.bodyHeight + 'px'
+        }
       }), [
         this.__renderScrollers(h)
       ])
