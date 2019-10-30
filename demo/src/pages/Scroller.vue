@@ -4,13 +4,14 @@
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QScroller</div>
+          <div class="text-h6">string</div>
           <div class="text-subtitle2">Arbitrary Data Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
           <q-scroller
             v-model="scrollerModel"
+            view="string"
             :items="items"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
@@ -23,14 +24,14 @@
             background-color="white"
             inner-color="white"
             inner-background-color="blue-8"
-            style="height: 280px;"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QScroller</div>
+          <div class="text-h6">string</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -43,16 +44,17 @@
                   <q-scroller
                     v-model="scrollerModel"
                     :items="items"
+                    view="string"
                     :noHeader="true"
                     :rounded-borders="roundedBorders"
                     :dense="dense"
                     :disable="disable"
                     :no-border="noBorder"
                     :no-shadow="noShadow"
-                    color="grey-3"
-                    background-color="black"
-                    inner-color="black"
-                    inner-background-color="grey-3"
+                    text-color="grey-3"
+                    color="black"
+                    text-inner-color="black"
+                    inner-color="grey-3"
                     :style="scrollerPopupStyle200"
                     @close="() => { showScroller = false }"
                   />
@@ -66,13 +68,14 @@
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QTimeScroller</div>
+          <div class="text-h6">time</div>
           <div class="text-subtitle2">Hour and Minute Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-time-scroller
+          <q-scroller
             v-model="time1"
+            view="time"
             :locale="locale"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
@@ -98,7 +101,7 @@
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QTimeScroller</div>
+          <div class="text-h6">time</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -108,8 +111,9 @@
             <template v-slot:append>
               <q-icon name="far fa-clock" class="cursor-pointer">
                 <q-popup-proxy v-model="showTimeScroller" anchor="top right" self="bottom middle">
-                  <q-time-scroller
+                  <q-scroller
                     v-model="time2"
+                    view="time"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
                     :no-header="false"
@@ -138,14 +142,15 @@
 
       <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
-          <div class="text-h6">QTimeRangeScroller</div>
+          <div class="text-h6">time-range</div>
           <div class="text-subtitle2">Time Range Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
 
-          <q-time-range-scroller
+          <q-scroller
             v-model="timeRange"
+            view="time-range"
             :locale="locale"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
@@ -172,7 +177,7 @@
 
       <q-card style="width: 100%; max-width: 240px;">
         <q-card-section>
-          <div class="text-h6">QTimeRangeScroller</div>
+          <div class="text-h6">time-range</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -190,8 +195,9 @@
               <q-icon name="far fa-clock" class="cursor-pointer">
                 <q-popup-proxy v-model="showTimeRangeScroller" anchor="top right" self="bottom middle">
 
-                  <q-time-range-scroller
+                  <q-scroller
                     v-model="timeRangeInput"
+                    view="time-range"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
@@ -223,13 +229,14 @@
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QDateScroller</div>
+          <div class="text-h6">date</div>
           <div class="text-subtitle2">Year, Month and Day Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-date-scroller
+          <q-scroller
             v-model="date1"
+            view="date"
             :locale="locale"
             :short-year-label="shortYearLabel"
             :show-month-label="showMonthLabel"
@@ -258,7 +265,7 @@
 
       <q-card style="width: 100%; max-width: 232px;">
         <q-card-section>
-          <div class="text-h6">QDateScroller</div>
+          <div class="text-h6">date</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -268,8 +275,9 @@
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
                 <q-popup-proxy v-model="showDateScroller" anchor="top right" self="bottom middle">
-                  <q-date-scroller
+                  <q-scroller
                     v-model="date1"
+                    view="date"
                     :locale="locale"
                     :short-year-label="shortYearLabel"
                     :show-month-label="showMonthLabel"
@@ -306,13 +314,14 @@
 
       <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
-          <div class="text-h6">QDateRangeScroller</div>
+          <div class="text-h6">date-range</div>
           <div class="text-subtitle2">Date Range Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-date-range-scroller
+          <q-scroller
             v-model="dateRange"
+            view="date-range"
             :locale="locale"
             :rounded-borders="roundedBorders"
             :no-header="noHeader"
@@ -325,8 +334,8 @@
             bar-color="#FFFF00"
             color="blue-grey-6"
             background-color="white"
-            inner-color="white"
-            inner-background-color="blue-grey-6"
+            text-inner-color="white"
+            inner-color="blue-grey-6"
             :start-short-year-label="shortYearLabel"
             :start-show-month-label="showMonthLabel"
             :start-short-month-label="shortMonthLabel"
@@ -348,7 +357,7 @@
 
       <q-card style="width: 100%; max-width: 292px;">
         <q-card-section>
-          <div class="text-h6">QDateRangeScroller</div>
+          <div class="text-h6">date-range</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -358,8 +367,9 @@
             <template v-slot:append>
               <q-icon name="far fa-calendar" class="cursor-pointer">
                 <q-popup-proxy v-model="showDateRangeScroller" anchor="top right" self="bottom middle">
-                  <q-date-range-scroller
+                  <q-scroller
                     v-model="dateRangeInput"
+                    view="date-range"
                     :locale="locale"
                     :rounded-borders="roundedBorders"
                     :no-header="noHeader"
@@ -403,13 +413,14 @@
 
       <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
-          <div class="text-h6">QDateTimeScroller</div>
+          <div class="text-h6">date-time</div>
           <div class="text-subtitle2">Date and Time Selection</div>
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-date-time-scroller
+          <q-scroller
             v-model="dateTime1"
+            view="date-time"
             :locale="locale"
             :short-year-label="shortYearLabel"
             :show-month-label="showMonthLabel"
@@ -441,7 +452,7 @@
 
       <q-card style="width: 100%; max-width: 340px;">
         <q-card-section>
-          <div class="text-h6">QDateTimeScroller</div>
+          <div class="text-h6">date-time</div>
           <div class="text-subtitle2">Using QInput</div>
         </q-card-section>
         <q-separator />
@@ -452,8 +463,9 @@
               <q-icon name="far fa-calendar" class="cursor-pointer">
                 <q-popup-proxy v-model="showDateTimeScroller" anchor="top right" self="bottom middle">
 
-                  <q-date-time-scroller
+                  <q-scroller
                     v-model="dateTime1"
+                    view="date-time"
                     :locale="locale"
                     :short-year-label="shortYearLabel"
                     :show-month-label="showMonthLabel"
@@ -474,10 +486,10 @@
                     :no-shadow="noShadow"
                     border-color="#795548"
                     bar-color="#FFFF00"
-                    color="brown-6"
-                    background-color="white"
+                    text-color="brown-6"
+                    color="white"
                     inner-color="white"
-                    inner-background-color="brown-6"
+                    text-inner-color="brown-6"
                     :style="scrollerPopupStyle280"
                     @close="() => { showDateTimeScroller = false }"
                   />
@@ -606,7 +618,7 @@ export default {
       } else {
         return {
           maxHeight: '400px',
-          height: '400px',
+          height: '200px',
           width: '200px'
         }
       }
