@@ -6,7 +6,6 @@ export default {
   scroller: {
     value: String,
     items: Array,
-    disabledItems: Array,
     disable: Boolean,
     textColor: {
       type: String,
