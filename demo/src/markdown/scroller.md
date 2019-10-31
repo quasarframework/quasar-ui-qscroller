@@ -1,7 +1,7 @@
 QScroller
 ===
 
-> Please note, this is currently a very much work-in-progress (WIP). This component recently went through a very vigorous rewrite/refactor to improve on some issues. The documentation and examples will continuously be improved.
+> Please note, this is currently a very much work-in-progress (WIP). This component recently went through a very rigorous rewrite/refactor to improve on some issues. The documentation and examples will continuously be improved.
 
 ::: warning
 If you were using a previous version, please read the information below for converting to the new version, in particular the `view` property. This may be the only change you need to make (hopefully). If you used the property `hour24-format` the default is now 24 hour format. If you want 12 hour format, use the new `hour12` property.
@@ -130,16 +130,18 @@ If you need the RTL variant of the CSS, then go for the following (instead of th
 
 [UMD Example on Codepen (TBD)](https://codepen.io/Hawkeye64/pen/RwwwKQL)
 
-# Docs
+# Information
+
+## Docs
 Can be found [here](https://quasarframework.github.io/quasar-ui-qscroller).
 
-# Examples
+## Examples
 Can be found [here](https://quasarframework.github.io/quasar-ui-qscroller/examples).
 
-# Interactive Demo
+## Interactive Demo
 Can be found [here](https://quasarframework.github.io/quasar-ui-qscroller/demo).
 
-# Demo (source) Project
+## Demo (source) Project
 Can be found [here](https://github.com/quasarframework/quasar-ui-qscroller/tree/master/demo).
 
 ---
@@ -161,25 +163,21 @@ In order to get the best potential from QScroller it is important to understand 
 
 First and foremost, the native date format used internally for date-types, and with the v-model, is `YYYY-mm-dd`. This is to avoid confusion with positioning of the day and month in other date format locales as well as date separator. All incoming and outgoing dates will use this format.
 
-The internal time format used internally for time-types is 24-hour clock (`hh:mm`) or also known as military time.
+The internal time format used internally for time-types is 24-hour clock (`HH:mm`) or also known as military time.
 
 The default locale of QScroller is **en-us**. This can easily be changed via the `locale` property. Any area of each scroller that displays text and numbers is locale-aware.
 
-The external div of Scroller is set to take 100% width and height. Therefore, it is very important to either wrap it with a width/height controlling div, or set the height and with via the `style` attribute:
+The external div of the Scroller is set to take 100% width and height. Therefore, it is very important to either wrap it with a width/height controlling div, or set the height and width via the `style` attribute:
 
 ```html
     <q-scroller
       v-model="value"
-      view="date-range"
-      no-footer
-      no-border
+      view="date"
       style="max-width: 280px; height: 200px;"
     ></q-scroller>
 ```
 
 QScroller can also be customized with any sort of color. Whether it be from the [Quasar Color Pallete](https://quasar.dev/style/color-palette), CSS named color (ie: `ghostwhite`), any rgb(a), hls(a) or # color (`#ccc`).
-
-![QScroller](statics/q-scroller.png =200x200)
 
 # QScroller views
 
@@ -194,11 +192,14 @@ QScroller has a property `view` which can take one of the following:
 
 ## string view
 
+![QScroller](statics/q-scroller.png =200x200)
+
+
 The `string` view can take any type of arbitray data and display it in a list-like manner so an item can be selected. All other scrollers have this base functionality. Some scrollers, will be based on multiple instances of this functionality.
 
 Each row in a scroller instance is a **QBtn**. As a result of this, you have all of the properties available to you as you would for QBtn. However, this only applies to `string` view as the other scrollers generate data for selection (being based on dates and times).
 
-The data pushed into the `items` propery of the `string` view is an array of objects, that looks like the properties for QBtn. Only the `value` property is required when you pass in an array of objects. Alternatively, you can pass in an array of strings if you don't care about special handling and just want the default handling.
+The data pushed into the `items` propery of the `string` view is an array of objects, that looks like the properties for **QBtn**. Only the `value` property is required when you pass in an array of objects.
 
 Example:
 
@@ -221,47 +222,80 @@ For example:
 
 When this property is available, this is what will be displayed to the User, but when selected, it's the `value` that will updated using the emit for the `input` event.
 
-Then, your `v-model` variable should contain a `value` from your list for an initial selection. And, the `v-model` variable will be populated with  `value` data upon user selection.
+Then, your `v-model` variable should contain a `value` from your list for an initial selection. And, the `v-model` variable will be populated with  `value` data upon user selection. If your `v-model` does not contain a proper match, the first item in the list will automatically be selected.
 
 ## time view
 
 ![Time view](statics/q-time-scroller.png =200x200) ![Time view-ampm](statics/q-time-scroller-ampm.png =200x200)
 
+When `view="time"` the scroller will show the current time clock. If the `v-model` contains an empty string, the current time will be selected. And, the emit for `input` will be a string.
+
+Using the `hour12` property will show the ante meridiem (AM) and post meridiem (PM) periods. To change the values of `AM` or `PM`, use the `am-pm-labels` property.
+
+The `v-model` can take types containing String, Array, Object, or Date. See the `v-model` section below on usage.
+
 ## time-range view
 
 ![time-range view](statics/q-time-range-scroller.png =200x200) ![time-range view-ampm](statics/q-time-range-scroller-ampm.png =200x200)
+
+When `view="time-range"` the scroller will show the current time clock in a start and an end section. If the `v-model` contains an empty string, the current time will be selected. And, the emit for `input` will be a string.
+
+Using the `hour12` property will show the ante meridiem (AM) and post meridiem (PM) periods. To change the values of `AM` or `PM`, use the `am-pm-labels` property.
+
+If the end section becomes less than the start section, a color indicator will be used. You can change the color using the `error-color` and `error-text-color` properties. Should this occur, the `invalid-range` event will be emitted. It contains an object with keys `startDate` and `endDate` which contains the string representation of the times.
+
+The `v-model` can take an array of types containing String, Array, Object, or Date. See the `v-model` section below on usage.
 
 ## date view
 
 ![date view](statics/q-date-scroller.png =200x200)
 
+When `view="date"` the scroller will show dates. If the `v-model` contains an empty string, the current date will be selected. And, the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `year-begin` and `year-stop` properties.
+
+The `v-model` can take types containing String, Array, Object, or Date. See the `v-model` section below on usage.
+
 ## date-range view
 
 ![date-range view](statics/q-date-range-scroller.png =300x300)
+
+When `view="date-range"` the scroller will show the dates in a start and end section. If the `v-model` contains an empty string, the current date will be selected for both. And, the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `start-year-begin`, `start-year-stop`, `end-year-begin` and `end-year-stop` properties for the respective start and end sections.
+
+If the end section becomes less than the start section, a color indicator will be used. You can change the color using the `error-color` and `error-text-color` properties. Should this occur, the `invalid-range` event will be emitted. It contains an object with keys `startDate` and `endDate` which contains the string representation of the currently selected dates.
+
+The `v-model` can take an array of types containing String, Array, Object, or Date. See the `v-model` section below on usage.
+
 
 ## date-time view
 
 ![date-time view](statics/q-date-time-scroller.png =300x300) ![date-time view-ampm](statics/q-date-time-scroller-ampm.png =300x300)
 
-## Locale
+When `view="date-time"` the scroller will show date and time selection. If the `v-model` contains an empty string, the current date and time will be selected. And the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `year-begin` and `year-stop` properties.
+
+Using the `hour12` property will show the ante meridiem (AM) and post meridiem (PM) periods. To change the values of `AM` or `PM`, use the `am-pm-labels` property.
+
+The `v-model` can take types containing String, Array, Object, or Date. See the `v-model` section below on usage.
+
+# Locale
 
 The default locale is `en-us`. To change it, use the `locale` property and pass an appropriate locale.
 
-## Colorizing
+# Colorizing
 
-Anywhere you see a `color` property, this refers to the background. `text-color` refers to the foreground, or text, color.
+Anywhere you see a `color`-type property, this refers to the background. `text-color` refers to the foreground, or text, color.
 
 For any color property, you can use any color from the [Quasar Color Pallete](https://quasar.dev/style/color-palette), CSS named color, any rgb(a), hls(a) or # color.
 
-## Error indicator
+# Error indicator
 
 Whenever a date or time range is used, the sections are known as `start` and `end`. If the `end` section is less than the `start` section, the `color` and `text-color` will change to indicate an error. The defaults are variants of red. You can change this to your own color by setting the `error-color` and `error-text-color` respectively.
 
 Also, when this occurs, the the `invalid-range` will be emitted with an object containing the data from the start and end sections.
 
 
-## v-model
-For all view types, except `string`, you can pass v-model data as a `String`, `Object`, `Array` or `Date`.
+# v-model
+For all view types, except `string`, you can pass `v-model` data as a `String`, `Object`, `Array` or `Date`. Whatever is passed in will be the same as passed out in the `input` event. If `v-model` is an empty string, then the `String` type will be used.
+
+All number can be `Number` or `String` (quoted) values; examples below of mixed values.
 
 Where `view="time"` you can use the following for `v-model`:
 
