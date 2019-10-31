@@ -10,6 +10,7 @@ QScroller (Vue Plugin, UMD and Quasar App Extension)
 * [/ui](ui) - standalone npm package
 * [/app-extension](app-extension) - Quasar app extension
 * [/demo](demo) - demo and examples
+* [live demo](https://quasarframework.github.io/quasar-ui-qscroller/docs) - live docs, demo and examples
 
 # Donate
 If you appreciate the work that went into this, please consider donating to [Quasar](https://donate.quasar.dev) or [Jeff](https://github.com/sponsors/hawkeye64).
