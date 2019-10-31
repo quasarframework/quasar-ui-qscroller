@@ -76,15 +76,19 @@ export default {
 
   watch: {
     valueStr (val) {
+      /* eslint-disable-next-line */
       console.log('string:', val)
     },
     valueObj (val) {
+      /* eslint-disable-next-line */
       console.log('object:', JSON.stringify(val))
     },
     valueArr (val) {
+      /* eslint-disable-next-line */
       console.log('array:', JSON.stringify(val))
     },
     valueDate (val) {
+      /* eslint-disable-next-line */
       console.log('date:', val)
     }
   }

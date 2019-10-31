@@ -433,6 +433,7 @@ export function createNativeLocaleFormatter (locale, getOptions) {
       const intlFormatter = new Intl.DateTimeFormat(locale || void 0, getOptions(timestamp, short))
       return intlFormatter.format(new Date(`${date}T${time}:00+00:00`))
     } catch (e) {
+      /* eslint-disable-next-line */
       console.error(`Intl.DateTimeFormat: ${e.message} -> ${date}T${time}`)
       return ''
     }

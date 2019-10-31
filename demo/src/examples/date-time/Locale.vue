@@ -26,12 +26,6 @@ export default {
         'en-us', 'fr', 'ro', 'se', 'ru', 'ar', 'ca'
       ]
     }
-  },
-
-  watch: {
-    locale (val) {
-      console.log(val)
-    }
   }
 }
 </script>

@@ -402,6 +402,7 @@ export default {
           return
       }
       if (this.value !== '') {
+        /* eslint-disable-next-line */
         console.error(`QDateScroller: invalid date format - '${this.value}'`)
       }
     },

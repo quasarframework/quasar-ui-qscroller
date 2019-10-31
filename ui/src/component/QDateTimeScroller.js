@@ -210,6 +210,7 @@ export default {
           return
       }
       if (this.value !== '') {
+        /* eslint-disable-next-line */
         console.error(`QDateTimeScroller: invalid time format - '${this.value}'`)
       }
     },

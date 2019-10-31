@@ -192,6 +192,7 @@ export default {
       let start, end, now
       let type = Object.prototype.toString.call(this.value)
       if (type !== '[object Array]' && type !== '[object Undefined]' && type !== '[object String]') {
+        /* eslint-disable-next-line */
         console.error(`QDateRangeScroller: value needs to be an array of types (${this.value})`)
         return
       }
@@ -210,6 +211,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
@@ -221,6 +223,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
@@ -232,6 +235,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
@@ -243,6 +247,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
           return
@@ -258,6 +263,7 @@ export default {
             this.startDate = start
             this.endDate = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
       }

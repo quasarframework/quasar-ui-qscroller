@@ -239,6 +239,7 @@ export default {
           }
           event.preventDefault()
         } else {
+          /* eslint-disable-next-line */
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
       }

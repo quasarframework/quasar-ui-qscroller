@@ -361,6 +361,7 @@ export default {
           return
       }
       if (this.value !== '') {
+        /* eslint-disable-next-line */
         console.error(`QTimeScroller: invalid time format - '${this.value}'`)
       }
     },

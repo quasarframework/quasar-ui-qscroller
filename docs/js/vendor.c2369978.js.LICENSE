@@ -11,6 +11,18 @@
  */
 
 /*!
+ * Quasar Framework v1.2.7
+ * (c) 2015-present Razvan Stoenescu
+ * Released under the MIT License.
+ */
+
+/*!
+ * q-colorize-mixin v1.0.0-alpha.3
+ * (c) 2019 Jeff Galbraith <jeff@quasar.dev>
+ * Released under the MIT License.
+ */
+
+/*!
   * vue-router v3.1.3
   * (c) 2019 Evan You
   * @license MIT

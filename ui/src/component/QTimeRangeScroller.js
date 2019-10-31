@@ -187,6 +187,7 @@ export default {
       let start, end, now
       let type = Object.prototype.toString.call(this.value)
       if (type !== '[object Array]' && type !== '[object Undefined]' && type !== '[object String]') {
+        /* eslint-disable-next-line */
         console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`)
         return
       }
@@ -205,6 +206,7 @@ export default {
             this.startTime = start
             this.endTime = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
           return
@@ -216,6 +218,7 @@ export default {
             this.startTime = start
             this.endTime = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
           return
@@ -227,6 +230,7 @@ export default {
             this.startTime = start
             this.endTime = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
           return
@@ -238,6 +242,7 @@ export default {
             this.startTime = start
             this.endTime = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
           return
@@ -253,6 +258,7 @@ export default {
             this.startTime = start
             this.endTime = end
           } else {
+            /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
       }
