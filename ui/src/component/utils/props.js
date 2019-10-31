@@ -87,16 +87,16 @@ export default {
       type: Array,
       default: () => []
     },
-    shortYearLabel: Boolean,
-    shortMonthLabel: Boolean,
-    shortDayLabel: Boolean,
-    showMonthLabel: Boolean,
-    showWeekdayLabel: Boolean,
+    // shortYearLabel: Boolean,
+    // shortMonthLabel: Boolean,
+    // shortDayLabel: Boolean,
+    // showMonthLabel: Boolean,
+    // showWeekdayLabel: Boolean,
     noDays: Boolean,
     noMonths: Boolean,
     noYears: Boolean,
-    startYear: [Number, String],
-    endYear: [Number, String]
+    yearBegin: [Number, String],
+    yearStop: [Number, String]
   },
   time: {
     minuteInterval: {
@@ -216,14 +216,16 @@ export default {
       type: Array,
       default: () => []
     },
-    startShortYearLabel: Boolean,
-    startShortMonthLabel: Boolean,
-    startShortDayLabel: Boolean,
-    startShowMonthLabel: Boolean,
-    startShowWeekdayLabel: Boolean,
+    // startShortYearLabel: Boolean,
+    // startShortMonthLabel: Boolean,
+    // startShortDayLabel: Boolean,
+    // startShowMonthLabel: Boolean,
+    // startShowWeekdayLabel: Boolean,
     startNoDays: Boolean,
     startNoMonths: Boolean,
     startNoYears: Boolean,
+    startYearBegin: [Number, String],
+    startYearStop: [Number, String],
     // --------------------------------
     // end date
     // --------------------------------
@@ -239,13 +241,15 @@ export default {
       type: Array,
       default: () => []
     },
-    endShortYearLabel: Boolean,
-    endShortMonthLabel: Boolean,
-    endShortDayLabel: Boolean,
-    endShowMonthLabel: Boolean,
-    endShowWeekdayLabel: Boolean,
+    // endShortYearLabel: Boolean,
+    // endShortMonthLabel: Boolean,
+    // endShortDayLabel: Boolean,
+    // endShowMonthLabel: Boolean,
+    // endShowWeekdayLabel: Boolean,
     endNoDays: Boolean,
     endNoMonths: Boolean,
-    endNoYears: Boolean
+    endNoYears: Boolean,
+    endYearBegin: [Number, String],
+    endYearStop: [Number, String]
   }
 }

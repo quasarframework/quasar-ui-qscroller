@@ -105,27 +105,27 @@ export default {
     },
 
     yearsList () {
-      let yearStart = 0
-      let yearEnd = 0
-      if (this.yearStart && parseInt(this.yearStart, 10) > 0) {
-        yearStart = parseInt(this.yearStart, 10)
+      let yearBegin = 0
+      let yearStop = 0
+      if (this.yearBegin && parseInt(this.yearBegin, 10) > 0) {
+        yearBegin = parseInt(this.yearBegin, 10)
       }
-      if (this.yearEnd && parseInt(this.yearEnd, 10) > 0) {
-        yearEnd = parseInt(this.yearEnd, 10)
+      if (this.yearStop && parseInt(this.yearStop, 10) > 0) {
+        yearStop = parseInt(this.yearStop, 10)
       }
 
       // if date range not given, calculate 5 before and 5 after years
       const d = new Date()
       let year = d.getFullYear()
-      if (yearStart === 0) {
-        yearStart = year - 5
+      if (yearBegin === 0) {
+        yearBegin = year - 5
       }
-      if (yearEnd === 0) {
-        yearEnd = year + 5
+      if (yearStop === 0) {
+        yearStop = year + 5
       }
       let dates = []
-      let date = yearStart
-      while (date <= yearEnd) {
+      let date = yearBegin
+      while (date <= yearStop) {
         dates.push(padNumber(date++, 4))
       }
       return dates.map(y => {

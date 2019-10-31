@@ -5,7 +5,7 @@
       "type": [ "String", "Array", "Object", "Date" ],
       "applicable": [ "all" ],
       "required": true,
-      "desc": "The `type` is dependent on the `view` property",
+      "desc": "The `type` property is dependent on the `view` property",
       "examples": [
         "v-model=\"myVar\""
       ]
@@ -596,6 +596,60 @@
       "applicable": [
         "date-range"
       ]
+    },
+    "year-start": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the starting year to be used",
+      "applicable": [ "date" ],
+      "default": "5 years before current year",
+      "examples": [
+        "year-start=\"2000\""
+      ]
+    },
+    "year-end": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the ending year to be used",
+      "applicable": [ "date" ],
+      "default": "5 years after current year",
+      "examples": [
+        "year-end=\"2025\""
+      ]
+    },
+    "start-year-begin": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the starting year to be used for the start date section",
+      "applicable": [ "date-range" ],
+      "default": "5 years before current year",
+      "examples": [
+        "start-year-start=\"2000\""
+      ]
+    },
+    "start-year-stop": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the ending year to be used for the start date section",
+      "applicable": [ "date-range" ],
+      "default": "5 years after current year",
+      "examples": [
+        "start-year-end=\"2025\""
+      ]
+    },
+    "end-year-begin": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the starting year to be used for the end date section",
+      "applicable": [ "date-range" ],
+      "default": "5 years before current year",
+      "examples": [
+        "end-year-start=\"2000\""
+      ]
+    },
+    "end-year-stop": {
+      "type": [ "Number", "String" ],
+      "desc": "This is the ending year to be used for the end date section",
+      "applicable": [ "date-range" ],
+      "default": "5 years after current year",
+      "examples": [
+        "end-year-end=\"2025\""
+      ]
     }
   },
   "events": {
@@ -631,8 +685,6 @@
         "all"
       ]
     }
-  },
-  "methods": {
   },
   "scopedSlots": {
     "header": {
