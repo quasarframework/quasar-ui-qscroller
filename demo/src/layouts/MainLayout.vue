@@ -13,10 +13,10 @@
         </q-btn>
 
         <q-toolbar-title>
-          QScroller - Quasar App Extension
+          QScroller <span class="text-subtitle2">v{{ version }}</span>
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div v-if="$q.screen.width > 500">Quasar v{{ $q.version }}</div>
 
         <q-btn
           flat
@@ -38,70 +38,8 @@
     >
       <q-list>
         <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="http://quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="school" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
-          <q-item-section avatar>
-            <q-icon name="code" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="http://chat.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="chat" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="record_voice_over" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
-          <q-item-section avatar>
-            <q-icon name="rss_feed" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/app-extension-qscroller">
-          <q-item-section avatar>
-            <q-icon name="extension" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>QScroller home</q-item-label>
-            <q-item-label caption>@quasar/qscroller</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/app-extension-qmarkdown">
-          <q-item-section avatar>
-            <q-icon name="extension" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>QMarkdown home</q-item-label>
-            <q-item-label caption>@quasar/qmarkdown</q-item-label>
-          </q-item-section>
-        </q-item>
       </q-list>
+      <essential-links />
     </q-drawer>
 
     <q-drawer
@@ -139,48 +77,53 @@
 <script>
 import { mapGetters } from 'vuex'
 import { scroll } from 'quasar'
+const { setScrollPosition } = scroll
+import { version } from 'ui'
 
 export default {
   name: 'MyLayout',
+  components: {
+    'essential-links': () => import('../components/EssentialLinks')
+  },
   data () {
     return {
+      version: version,
       leftDrawerOpen: this.$q.platform.is.desktop,
       rightDrawerOpen: this.$q.platform.is.desktop,
       activeToc: 0
     }
-  },
-  beforeDestroy () {
-    clearTimeout(this.scrollTimer)
   },
   computed: {
     ...mapGetters({
       toc: 'common/toc'
     })
   },
+  mounted () {
+    // code to handle anchor link on refresh/new page, etc
+    if (location.hash !== '') {
+      const id = location.hash.substring(1, location.hash.length)
+      setTimeout(() => {
+        this.scrollTo(id)
+      }, 200)
+    }
+  },
   methods: {
     scrollTo (id) {
       this.activeToc = id
       const el = document.getElementById(id)
-      clearTimeout(this.scrollTimer)
 
       if (el) {
-        this.scrollPage(el)
+        setTimeout(() => {
+          this.scrollPage(el)
+        }, 200)
       }
     },
     scrollPage (el) {
-      const
-        target = scroll.getScrollTarget(el),
-        offset = el.offsetTop - el.scrollHeight
-
-      this.scrollingPage = true
-      this.scrollTimer = setTimeout(() => {
-        this.scrollingPage = false
-      }, 510)
-      scroll.setScrollPosition(target, offset, 500)
+      // const target = getScrollTarget(el)
+      const offset = el.offsetTop - 50
+      // setScrollPosition(target, offset, 500)
+      setScrollPosition(window, offset, 500)
     }
   }
 }
 </script>
-
-<style>
-</style>

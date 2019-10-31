@@ -1,0 +1,207 @@
+$item-height              : 26px
+$item-bar-top             : calc(50% - 13px)
+$selected-font-size       : 18px
+$font-size                : 14px
+$header-font-size         : 22px
+$footer-font-size         : 14px
+$header-height            : 50px
+$footer-height            : 50px
+
+$item-height-dense        : 24px
+$item-bar-top-dense       : calc(50% - 12px)
+$selected-font-size-dense : 16px
+$font-size-dense          : 12px
+$header-font-size-dense   : 16px
+$footer-font-size-dense   : 12px
+$header-height-dense      : 30px
+$footer-height-dense      : 30px
+
+.q-scroller
+  position: relative
+  display: flex
+  flex-direction: column
+  width: 100%
+  height: 100%
+  overflow: hidden
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1) 0ms
+
+  &__disabled
+    cursor: not-allowed
+    opacity: 0.75
+
+  &__content
+    position: relative
+    width: 100%
+    height: 100%
+    overflow: hidden
+    margin: 0
+    padding: 0
+
+  &__border
+    border: 1px solid var(--scroller-border-color, #ccc)
+
+  &__header
+    display: flex
+    flex: 10000 1 0%
+    z-index: 1
+    height: $header-height
+    max-height: $header-height
+    padding: 0
+    margin: 0
+    font-weight: 700
+    font-size: $header-font-size
+
+  &__header--dense
+    display: flex
+    flex: 10000 1 0%
+    z-index: 1
+    height: $header-height-dense
+    max-height: $header-height-dense
+    padding: 0
+    margin: 0
+    font-weight: 700
+    font-size: $header-font-size-dense
+
+  &__footer
+    display: flex
+    flex: 10000 1 0%
+    z-index: 1
+    height: $footer-height
+    max-height: $footer-height
+    padding: 0
+    margin: 0
+    font-weight: 700
+    font-size: $footer-font-size
+
+  &__footer--dense
+    display: flex
+    flex: 10000 1 0%
+    z-index: 1
+    height: $footer-height-dense
+    max-height: $footer-height-dense
+    padding: 0
+    margin: 0
+    font-weight: 700
+    font-size: $footer-font-size-dense
+
+  &__padding
+    padding: 0
+    margin: 0
+    width: 100%
+
+  &__body
+    position: relative
+    overflow: hidden
+    padding: 0
+    margin: 0
+
+  &__horizontal-bar
+    position: relative
+    padding: 0
+    margin: 0
+
+    // regular
+    &:before
+      content: ""
+      top: $item-bar-top
+      position: absolute
+      margin: 0 auto
+      height: $item-height
+      line-height: $item-height
+      width: 90%
+      left: 0
+      right: 0
+      box-sizing: border-box
+      text-align: left
+      border-top: 1px solid var(--scroller-bar-color, #ccc)
+      border-bottom: 1px solid var(--scroller-bar-color, #ccc)
+
+  &__horizontal-bar--dense
+    position: relative
+    padding: 0
+    margin: 0
+
+    // dense
+    &:before
+      content: ""
+      top: $item-bar-top-dense
+      position: absolute
+      margin: 0 auto
+      height: $item-height-dense
+      line-height: $item-height-dense
+      width: 90%
+      left: 0
+      right: 0
+      box-sizing: border-box
+      text-align: left
+      border-top: 1px solid var(--scroller-bar-color, #ccc)
+      border-bottom: 1px solid var(--scroller-bar-color, #ccc)
+
+  &__vertical-bar
+    border-right: 1px solid var(--scroller-bar-color, #ccc)
+
+  &__cancel-btn
+    font-size: inherit
+
+  &__padding
+    padding: 0
+    margin: 0
+    width: 100%
+    pointer-events: none
+
+  &__item
+    height: $item-height
+    min-height: $item-height
+    max-height: $item-height
+    padding: 0
+    margin: 0
+    width: 100%
+    opacity: 0.8
+    font-size: $font-size
+    line-height: $font-size
+
+    &--selected
+      background-color: transparent
+      border-radius: 4px
+      padding: 0
+      margin: 0
+      opacity: 1
+      font-weight: 800 !important
+      font-size: $selected-font-size !important
+      line-height: $selected-font-size !important
+
+    &--disabled
+      pointer-events: none
+      opacity: 0.3
+      font-weight: 300
+      padding: 0
+      margin: 0
+
+    &--selected--dense
+      background-color: transparent
+      border-radius: 4px
+      opacity: 1
+      padding: 0
+      margin: 0
+      font-weight: 800 !important
+      font-size: $selected-font-size-dense !important
+      line-height: $selected-font-size-dense !important
+
+    &--disabled--dense
+      pointer-events: none
+      opacity: 0.2
+      font-weight: 300
+      padding: 0
+      margin: 0
+
+  &__item--dense
+    height: $item-height-dense
+    min-height: $item-height-dense
+    max-height: $item-height-dense
+    padding: 0
+    margin: 0
+    width: 100%
+    opacity: 0.8
+    //font-weight: 600
+    font-size: $font-size-dense
+    line-height: $font-size-dense

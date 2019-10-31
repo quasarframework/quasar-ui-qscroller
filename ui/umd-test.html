@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+
+    <title>UMD test</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.min.css" rel="stylesheet" type="text/css">
+    <link href="dist/index.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="q-app">
+      <q-layout view="lHh Lpr fff">
+        <q-header class="glossy bg-primary">
+          <q-toolbar>
+            <q-toolbar-title>
+              quasar-ui-qscroller v{{ version }}
+            </q-toolbar-title>
+
+            <div>Quasar v{{ $q.version }}</div>
+          </q-toolbar>
+        </q-header>
+
+        <q-page-container>
+          <q-page>
+
+            <div class="q-pa-md row q-gutter-sm full-width">
+              <div class="row full-width">
+                <div class="text-h4">Time Scroller</div>
+              </div>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-header, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-header
+                    no-footer
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-shadow, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    no-shadow
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-border, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    no-border
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  rounded-borders, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    rounded-borders
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  dense, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    dense
+                    style="max-width: 85px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  hour12, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    hour12
+                    style="max-width: 120px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  dense, hour12, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    dense
+                    hour12
+                    style="max-width: 120px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  disabled, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    disable
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  dense, disabled, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="value"
+                    view="time"
+                    no-footer
+                    dense
+                    disable
+                    style="max-width: 85px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+            </div>
+
+            <div class="q-pa-md row q-gutter-sm full-width">
+              <div class="row full-width">
+                <div class="text-h4">Date Scroller</div>
+              </div>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-header, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-header
+                    no-footer
+                    style="max-width: 120px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    style="max-width: 130px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-shadow, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    no-shadow
+                    style="max-width: 130px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  no-border, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    no-border
+                    style="max-width: 130px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  rounded-borders, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    rounded-borders
+                    style="max-width: 130px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  dense, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    dense
+                    style="max-width: 100px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  disabled, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    disable
+                    style="max-width: 130px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+              <q-card class="q-pa-md">
+                <q-card-section class="col-12">
+                  dense, disabled, no-footer
+                </q-card-section>
+                <q-card-section class="col-12">
+                  <q-scroller
+                    v-model="date"
+                    view="date"
+                    no-footer
+                    dense
+                    disable
+                    style="max-width: 120px; height: 200px;"
+                  ></q-scroller>
+                </q-card-section>
+              </q-card>
+
+            </div>
+
+            <!-- <q-scroller view="time" v-model="time"></q-scroller> -->
+            <!-- <q-scroller view="date" v-model="date"></q-scroller> -->
+            <ul class="q-mb-lg">
+              <li>In /ui, run: "yarn build"</li>
+              <li class="text-red">You need to build & refresh page on each change manually.</li>
+              <li>Use self-closing tags only!</li>
+              <li>Example: &lt;my-component&gt;&lt;/my-component&gt;</li>
+            </ul>
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.ie.polyfills.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.umd.min.js"></script>
+    <script src="dist/index.umd.js"></script>
+
+    <script>
+      new Vue({
+        el: '#q-app',
+
+        data: function () {
+          return {
+            version: QScroller.version,
+            date: '',
+            time: '',
+            value: ''
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

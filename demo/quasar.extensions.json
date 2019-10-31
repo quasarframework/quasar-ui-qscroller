@@ -1,4 +1,5 @@
 {
-  "@quasar/qscroller": {},
-  "@quasar/qmarkdown": {}
+  "@quasar/qmarkdown": {},
+  "@quasar/qribbon": {},
+  "@quasar/qpublish": {}
 }
