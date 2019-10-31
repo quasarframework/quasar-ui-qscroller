@@ -1,8 +1,8 @@
 
 const routes = [
   {
-    path: '/',
-    redirect: '/docs'
+    path: '',
+    redirect: 'docs'
   },
   {
     path: '/docs',
@@ -13,9 +13,42 @@ const routes = [
   },
   {
     path: '/examples',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/Examples.vue'),
     children: [
-      { path: '', component: () => import('pages/Examples.vue') }
+      {
+        path: '',
+        component: () => import('pages/Examples.vue'),
+        children: [
+          {
+            path: '',
+            redirect: '/examples/string'
+          },
+          {
+            path: 'string',
+            component: () => import('pages/String.vue')
+          },
+          {
+            path: 'time',
+            component: () => import('pages/Time.vue')
+          },
+          {
+            path: 'date',
+            component: () => import('pages/Date.vue')
+          },
+          {
+            path: 'time-range',
+            component: () => import('pages/TimeRange.vue')
+          },
+          {
+            path: 'date-range',
+            component: () => import('pages/DateRange.vue')
+          },
+          {
+            path: 'date-time',
+            component: () => import('pages/DateTime.vue')
+          }
+        ]
+      }
     ]
   },
   {
