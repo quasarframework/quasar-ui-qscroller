@@ -52,7 +52,7 @@ export default {
     this.adjustColumnPadding()
     // if there is nothing selected, select the first one
     this.$nextTick(() => {
-      if (!this.value && this.items.length > 0) {
+      if (!this.value && this.items.length > 0 && this.items[0].value) {
         this.$emit('input', this.items[0].value)
       }
     })
@@ -213,7 +213,7 @@ export default {
 
     wheelEvent (event) {
       if (this.disable !== true) {
-        const dir = event.wheelDeltaY < 0 ? 1 : -1
+        const dir = event.wheelDeltaY ? (event.wheelDeltaY < 0 ? 1 : -1) : (event.deltaY  < 0 ? 1 : -1)
         this.move(dir)
       }
       // always prevent default so whole page doesn't scroll if at end of list
@@ -243,17 +243,24 @@ export default {
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
       }
-    }, 400),
+    }, 500),
 
     clickEvent (item) {
       if (this.disable !== true && item.disabled !== true) {
         const elem = this.currentElement()
         if (elem) {
-          if (elem.innerText === item.value) {
-
-          } else {
+          if (elem.innerText !== item.value) {
             const klass = `q-scroller__item--selected${this.dense ? '--dense' : ''}`
             elem.classList.remove(klass)
+            this.$emit('input', item.value)
+          } else {
+            const klass = `.q-scroller__item--selected${this.dense ? '--dense' : ''}`
+            let selected = this.$el.querySelector(klass)
+            while (selected) {
+              selected.classList.remove(klass.slice(1))
+              selected = this.$el.querySelector(klass)
+            }
+            elem.classList.add(klass.slice(1))
             this.$emit('input', item.value)
           }
         }
@@ -278,7 +285,7 @@ export default {
           const pos = found.offsetTop - self.padding
           setScrollPosition(self.$el, pos, 100)
         }
-      }, 100)
+      }, 150)
     },
 
     // -------------------------------
@@ -343,6 +350,9 @@ export default {
 
     return h('div', {
       staticClass: 'q-scroller__content scroll',
+      class: {
+        'q-scroller__overflow-hidden': this.$q.platform.is.mobile !== true
+      },
       on: {
         ...this.$listeners
       }
