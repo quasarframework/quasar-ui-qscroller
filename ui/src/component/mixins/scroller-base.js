@@ -213,7 +213,7 @@ export default {
 
     wheelEvent (event) {
       if (this.disable !== true) {
-        const dir = event.wheelDeltaY ? (event.wheelDeltaY < 0 ? 1 : -1) : (event.deltaY  < 0 ? 1 : -1)
+        const dir = event.wheelDeltaY ? (event.wheelDeltaY < 0 ? 1 : -1) : (event.deltaY < 0 ? 1 : -1)
         this.move(dir)
       }
       // always prevent default so whole page doesn't scroll if at end of list

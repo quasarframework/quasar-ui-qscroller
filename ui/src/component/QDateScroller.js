@@ -1,4 +1,5 @@
 // Mixins
+import Common from './mixins/common'
 import DateTimeBase from './mixins/date-base'
 import { QColorizeMixin } from 'q-colorize-mixin'
 
@@ -7,7 +8,6 @@ import ScrollerBase from './mixins/scroller-base'
 
 // Util
 import props from './utils/props'
-import { QBtn, QResizeObserver } from 'quasar'
 import {
   Timestamp,
   parsed,
@@ -27,7 +27,7 @@ import {
 export default {
   name: 'QDateScroller',
 
-  mixins: [DateTimeBase, QColorizeMixin],
+  mixins: [DateTimeBase, QColorizeMixin, Common],
 
   props: {
     ...props.date,
@@ -66,11 +66,12 @@ export default {
   },
 
   computed: {
-    style () {
-      let style = {}
-      style['--scroller-border-color'] = this.calculateColor(this.borderColor)
-      style['--scroller-bar-color'] = this.calculateColor(this.barColor)
-      return style
+    slotData () {
+      return this.timestamp
+    },
+
+    displayed () {
+      return this.displayDate
     },
 
     daysList () {
@@ -286,22 +287,6 @@ export default {
 
     disabledYears () {
       this.handleDisabledLists()
-    },
-
-    noHeader () {
-      this.adjustBodyHeight()
-    },
-
-    noFooter () {
-      this.adjustBodyHeight()
-    },
-
-    height () {
-      this.adjustBodyHeight()
-    },
-
-    dense () {
-      this.adjustBodyHeight()
     }
   },
 
@@ -324,23 +309,6 @@ export default {
         case 'string':
           this.$emit('input', [padNumber(this.timestamp.year, 2), padNumber(this.timestamp.month, 2), padNumber(this.timestamp.day, 2)].join('-'))
       }
-    },
-
-    onResize () {
-      this.adjustBodyHeight()
-    },
-
-    adjustBodyHeight () {
-      let self = this
-      this.$nextTick(() => {
-        self.headerHeight = self.noHeader === true ? 0 : self.$refs.header ? self.$refs.header.getBoundingClientRect().height : 0
-        self.footerHeight = self.noFooter === true ? 0 : self.$refs.footer ? self.$refs.footer.getBoundingClientRect().height : 0
-        self.height = self.$el.getBoundingClientRect().height
-        self.bodyHeight = self.height - self.headerHeight - self.footerHeight
-        if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {
-          self.bodyHeight -= 2
-        }
-      })
     },
 
     handleDisabledLists () {
@@ -526,87 +494,6 @@ export default {
         this.noMonths !== true && this.__renderMonthsScroller(h),
         this.noDays !== true && this.__renderDaysScroller(h)
       ]
-    },
-
-    __renderBody (h) {
-      return h('div', this.setBackgroundColor(this.innerColor, {
-        staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense ? '--dense' : ''} row full-width`,
-        style: {
-          height: `${this.bodyHeight}px`
-        }
-      }), this.__renderScrollers(h))
-    },
-
-    __renderHeader (h) {
-      if (this.noHeader) return ''
-      const slot = this.$scopedSlots.header
-      return h('div', {
-        ref: 'header',
-        staticClass: (this.dense ? 'q-scroller__header--dense' : 'q-scroller__header') + ' flex justify-around items-center full-width q-pa-xs',
-        class: {
-          'shadow-20': this.noShadow === false
-        }
-      }, slot ? slot(this.timestamp) : [
-        h('span', {
-          staticClass: 'ellipsis'
-        }, this.displayDate)
-      ])
-    },
-
-    // the cancel/ok buttons show up only if not inline
-    __renderFooterButton (h) {
-      return h(QBtn, {
-        staticClass: 'q-scroller__cancel-btn q-ml-xs',
-        props: {
-          'flat': true,
-          'dense': true,
-          'round': true,
-          'icon': 'close'
-        },
-        on: {
-          'click': () => {
-            this.$emit('close')
-          }
-        }
-      })
-    },
-
-    __renderFooter (h) {
-      if (this.noFooter) return ''
-      const slot = this.$scopedSlots.footer
-      return h('div', {
-        ref: 'footer',
-        staticClass: (this.dense ? 'q-scroller__footer--dense' : 'q-scroller__footer') + ' flex justify-around items-center full-width q-pa-xs',
-        class: {
-          'shadow-up-20': this.noShadow === false
-        }
-      }, slot ? slot(this.timestamp) : [
-        this.__renderFooterButton(h)
-      ])
     }
-  },
-
-  render (h) {
-    const resize = [
-      h(QResizeObserver, {
-        props: { debounce: 0 },
-        on: { resize: this.onResize }
-      })
-    ]
-
-    return h('div', this.setBothColors(this.textColor, this.color, {
-      ref: 'scroller',
-      staticClass: 'q-scroller flex',
-      class: {
-        'q-scroller__disabled': this.disable === true,
-        'rounded-borders': this.roundedBorders === true,
-        'q-scroller__border': this.noBorder !== true
-      },
-      style: this.style
-    }), resize.concat([
-      this.__renderHeader(h),
-      this.__renderBody(h),
-      this.__renderFooter(h)
-    ]))
   }
 }

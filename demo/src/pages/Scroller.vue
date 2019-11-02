@@ -361,7 +361,7 @@
             :end-no-years="noYears"
             :end-no-months="noMonths"
             :end-no-days="noDays"
-            style="height: 280px;"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
@@ -410,7 +410,7 @@
                     :end-no-years="noYears"
                     :end-no-months="noMonths"
                     :end-no-days="noDays"
-                    :style="scrollerPopupStyle200"
+                    :style="scrollerPopupStyle280"
                     @close="() => { showDateRangeScroller = false }"
                   />
                 </q-popup-proxy>
@@ -453,12 +453,12 @@
             :no-border="noBorder"
             :no-shadow="noShadow"
             border-color="#009688"
-            bar-color="#FFFF00"
+            bar-color="orange-8"
             color="teal-6"
             background-color="white"
             inner-color="white"
             inner-background-color="teal-6"
-            style="height: 280px;"
+            style="height: 200px;"
           />
         </q-card-section>
       </q-card>
@@ -614,13 +614,28 @@ export default {
       if (this.$q.screen.lt.sm) {
         return {
           width: '100vw',
-          height: '100vh'
+          height: '400px'
         }
       } else {
         return {
           maxHeight: '400px',
           height: '200px',
           width: '200px'
+        }
+      }
+    },
+
+    scrollerPopupStyle280 () {
+      if (this.$q.screen.lt.sm) {
+        return {
+          width: '100vw',
+          height: '400px'
+        }
+      } else {
+        return {
+          maxHeight: '400px',
+          height: '200px',
+          width: '280px'
         }
       }
     }
