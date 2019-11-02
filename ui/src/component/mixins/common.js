@@ -9,6 +9,7 @@ export default {
       let style = {}
       style['--scroller-border-color'] = this.calculateColor(this.borderColor)
       style['--scroller-bar-color'] = this.calculateColor(this.barColor)
+      style.height = this.bodyHeight
       return style
     }
   },
@@ -44,12 +45,16 @@ export default {
       let self = this
       // this.$nextTick(() => {
       setTimeout(() => {
-        self.headerHeight = self.noHeader === true ? 0 : self.dense === true ? 25 : 50
-        self.footerHeight = self.noFooter === true ? 0 : self.dense === true ? 25 : 50
-        self.height = self.$el.getBoundingClientRect().height
-        self.bodyHeight = self.height - self.headerHeight - self.footerHeight
-        if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {
-          self.bodyHeight -= 2
+        if (this.childHeight === void 0) {
+          self.headerHeight = self.noHeader === true ? 0 : self.dense === true ? 25 : 50
+          self.footerHeight = self.noFooter === true ? 0 : self.dense === true ? 25 : 50
+          self.height = self.$el.getBoundingClientRect().height
+          self.bodyHeight = self.height - self.headerHeight - self.footerHeight
+          if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {
+            self.bodyHeight -= 2
+          }
+        } else {
+          self.bodyHeight = this.childHeight
         }
       }, 200)
     },
@@ -65,7 +70,7 @@ export default {
           'q-scroller__overflow-hidden': this.$q.platform.is.mobile !== true
         },
         style: {
-          height: this.bodyHeight + 'px'
+          height: (this.childHeight === void 0 ? this.bodyHeight : this.childHeight) + 'px'
         }
       }), [
         this.__renderScrollers(h)

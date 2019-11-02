@@ -275,7 +275,8 @@ export default {
           noMonths: this.startNoMonths,
           noYears: this.startNoYears,
           yearBegin: this.startYearBegin,
-          yearStop: this.startYearStop
+          yearStop: this.startYearStop,
+          childHeight: this.bodyHeight
         },
         class: {
           'q-scroller__vertical-bar': this.verticalBar === true
@@ -319,7 +320,8 @@ export default {
           noMonths: this.endNoMonths,
           noYears: this.endNoYears,
           yearBegin: this.endYearBegin,
-          yearStop: this.endYearStop
+          yearStop: this.endYearStop,
+          childHeight: this.bodyHeight
         },
         on: {
           input: v => { this.endDate = v }

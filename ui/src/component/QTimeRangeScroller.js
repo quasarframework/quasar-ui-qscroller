@@ -264,7 +264,8 @@ export default {
           disabledHours: this.startDisabledHours,
           disabledMinutes: this.startDisabledMinutes,
           noMinutes: this.startNoMinutes,
-          noHours: this.startNoHours
+          noHours: this.startNoHours,
+          childHeight: this.bodyHeight
         },
         class: {
           'q-scroller__vertical-bar': this.verticalBar === true
@@ -302,7 +303,8 @@ export default {
           disabledHours: this.endDisabledHours,
           disabledMinutes: this.endDisabledMinutes,
           noMinutes: this.endNoMinutes,
-          noHours: this.endNoHours
+          noHours: this.endNoHours,
+          childHeight: this.bodyHeight
         },
         on: {
           input: v => { this.endTime = v }
