@@ -221,7 +221,8 @@ export default {
           showWeekdayLabel: this.showWeekdayLabel,
           noDays: this.noDays,
           noMonths: this.noMonths,
-          noYears: this.noYears
+          noYears: this.noYears,
+          childHeight: this.bodyHeight
         },
         class: {
           'q-scroller__vertical-bar': this.verticalBar === true
@@ -258,7 +259,8 @@ export default {
           disabledHours: this.disabledHours,
           disabledMinutes: this.disabledMinutes,
           noMinutes: this.noMinutes,
-          noHours: this.noHours
+          noHours: this.noHours,
+          childHeight: this.bodyHeight
         },
         on: {
           input: v => { this.time = v }

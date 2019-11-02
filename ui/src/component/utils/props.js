@@ -27,7 +27,8 @@ export default {
     disabledTextColor: {
       type: String,
       default: 'grey-7'
-    }
+    },
+    childHeight: [Number, String]
   },
   base: {
     value: null, // [Number, String, Object, Array, Date, Function],
