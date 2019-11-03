@@ -16,13 +16,13 @@
 
         <q-icon name="far fa-calendar-alt" class="q-ml-md" size="1.5rem"></q-icon>
 
-        <q-toolbar-title v-if="$q.screen.width > 500">
+        <q-toolbar-title>
           QScroller <span class="text-subtitle2">v{{ version }}</span>
         </q-toolbar-title>
 
         <q-space></q-space>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div v-if="$q.screen.width > 500">Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -43,59 +43,14 @@
         >
           <playground></playground>
         </q-expansion-item>
+
         <q-expansion-item
           expand-separator
           group="somegroup"
           icon="fas fa-link"
           label="Essential Links"
         >
-          <q-list>
-            <q-item clickable tag="a" target="_blank" href="http://quasar.dev">
-              <q-item-section avatar>
-                <q-icon name="school"></q-icon>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Docs</q-item-label>
-                <q-item-label caption>quasar.dev</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
-              <q-item-section avatar>
-                <q-icon name="code"></q-icon>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Github</q-item-label>
-                <q-item-label caption>github.com/quasarframework</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="http://chat.quasar.dev">
-              <q-item-section avatar>
-                <q-icon name="chat"></q-icon>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Discord Chat Channel</q-item-label>
-                <q-item-label caption>chat.quasar.dev</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
-              <q-item-section avatar>
-                <q-icon name="record_voice_over"></q-icon>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Forum</q-item-label>
-                <q-item-label caption>forum.quasar.dev</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
-              <q-item-section avatar>
-                <q-icon name="rss_feed"></q-icon>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Twitter</q-item-label>
-                <q-item-label caption>@quasarframework</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+          <essential-links />
         </q-expansion-item>
       </div>
     </q-drawer>
@@ -113,7 +68,8 @@ import { version } from 'ui'
 export default {
   name: 'ScrollerLayout',
   components: {
-    'playground': () => import('../components/Playground')
+    'playground': () => import('../components/Playground'),
+    'essential-links': () => import('../components/EssentialLinks')
   },
   data () {
     return {

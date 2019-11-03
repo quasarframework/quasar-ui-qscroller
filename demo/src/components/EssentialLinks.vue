@@ -2,7 +2,7 @@
   <q-list>
     <q-item clickable to="/docs">
       <q-item-section avatar>
-        <q-icon name="calendar_today" />
+        <q-icon name="extension" />
       </q-item-section>
       <q-item-section>
         <q-item-label>QScroller docs</q-item-label>
@@ -11,7 +11,7 @@
     </q-item>
     <q-item clickable to="/demo">
       <q-item-section avatar>
-        <q-icon name="calendar_today" />
+        <q-icon name="extension" />
       </q-item-section>
       <q-item-section>
         <q-item-label>QScroller demo</q-item-label>
@@ -20,7 +20,7 @@
     </q-item>
     <q-item clickable to="/examples">
       <q-item-section avatar>
-        <q-icon name="calendar_today" />
+        <q-icon name="extension" />
       </q-item-section>
       <q-item-section>
         <q-item-label>QScroller examples</q-item-label>

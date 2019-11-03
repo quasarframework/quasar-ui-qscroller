@@ -36,52 +36,64 @@
       bordered
       content-style="background-color: #f8f8ff"
     >
+      <div class="col-12">
+        <q-expansion-item
+          expand-separator
+          default-opened
+          group="somegroup"
+          icon="fas fa-cogs"
+          label="QScroller"
+          caption="QScroller Examples"
+        >
+          <q-list dense bordered separator>
 
-      <q-list dense bordered separator>
-        <q-item-label header>QScroller Examples</q-item-label>
+            <q-item clickable to="/examples/string">
+              <q-item-section>
+                <q-item-label>String</q-item-label>
+              </q-item-section>
+            </q-item>
 
-        <q-item clickable to="/examples/string">
-          <q-item-section>
-            <q-item-label>String</q-item-label>
-          </q-item-section>
-        </q-item>
+            <q-item clickable to="/examples/time">
+              <q-item-section>
+                <q-item-label>Time</q-item-label>
+              </q-item-section>
+            </q-item>
 
-        <q-item clickable to="/examples/time">
-          <q-item-section>
-            <q-item-label>Time</q-item-label>
-          </q-item-section>
-        </q-item>
+            <q-item clickable to="/examples/date">
+              <q-item-section>
+                <q-item-label>Date</q-item-label>
+              </q-item-section>
+            </q-item>
 
-        <q-item clickable to="/examples/date">
-          <q-item-section>
-            <q-item-label>Date</q-item-label>
-          </q-item-section>
-        </q-item>
+            <q-item clickable to="/examples/time-range">
+              <q-item-section>
+                <q-item-label>Time Range</q-item-label>
+              </q-item-section>
+            </q-item>
 
-        <q-item clickable to="/examples/time-range">
-          <q-item-section>
-            <q-item-label>Time Range</q-item-label>
-          </q-item-section>
-        </q-item>
+            <q-item clickable to="/examples/date-range">
+              <q-item-section>
+                <q-item-label>Date Range</q-item-label>
+              </q-item-section>
+            </q-item>
 
-        <q-item clickable to="/examples/date-range">
-          <q-item-section>
-            <q-item-label>Date Range</q-item-label>
-          </q-item-section>
-        </q-item>
+            <q-item clickable to="/examples/date-time">
+              <q-item-section>
+                <q-item-label>Date/Time</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
 
-        <q-item clickable to="/examples/date-time">
-          <q-item-section>
-            <q-item-label>Date/Time</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-
-      <q-list>
-        <q-item-label header>Essential Links</q-item-label>
-      </q-list>
-
-      <essential-links />
+        <q-expansion-item
+          expand-separator
+          group="somegroup"
+          icon="fas fa-link"
+          label="Essential Links"
+        >
+          <essential-links />
+        </q-expansion-item>
+      </div>
     </q-drawer>
 
     <q-drawer
