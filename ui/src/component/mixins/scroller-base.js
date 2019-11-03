@@ -3,7 +3,12 @@ import { QColorizeMixin } from 'q-colorize-mixin'
 
 // Utils
 import props from '../utils/props'
-import { debounce, QBtn, QResizeObserver, scroll } from 'quasar'
+import {
+  debounce,
+  QBtn,
+  QResizeObserver,
+  scroll
+} from 'quasar'
 
 // tree shake other scroll functions
 const { getScrollPosition, setScrollPosition, getScrollTarget } = scroll
@@ -226,16 +231,21 @@ export default {
 
     getItemIndexFromEvent (event) {
       const top = event.target.scrollTop
-      return Math.floor(top / this.itemHeight)
+      return Math.round(top / this.itemHeight)
     },
 
     scrollEvent: debounce(function (event) {
+      if (this.$q.platform.is.desktop) {
+        return
+      }
       if (this.disable !== true) {
         const index = this.getItemIndexFromEvent(event)
         if (index > -1 && index < this.items.length) {
           const item = this.items[index]
           if (this.disable !== true && item.disabled !== true) {
-            this.$emit('input', this.value)
+            if (item.value !== this.value) {
+              this.$emit('input', item.value)
+            }
           }
           event.preventDefault()
         } else {
@@ -243,7 +253,7 @@ export default {
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
       }
-    }, 500),
+    }, 250),
 
     clickEvent (item) {
       if (this.disable !== true && item.disabled !== true) {
@@ -329,8 +339,7 @@ export default {
       return h('div', this.setBothColors(this.textColor, void 0, {
         staticClass: 'q-scroller__body',
         on: {
-          mousewheel: (event) => this.wheelEvent(event),
-          scroll: (event) => this.scrollEvent(event)
+          wheel: (event) => this.wheelEvent(event)
         }
       }), [
         this.__renderPadding(h),
@@ -354,7 +363,8 @@ export default {
         'q-scroller__overflow-hidden': this.$q.platform.is.mobile !== true
       },
       on: {
-        ...this.$listeners
+        ...this.$listeners,
+        scroll: (event) => this.scrollEvent(event)
       }
     }, resize.concat([
       this.__renderContents(h)
