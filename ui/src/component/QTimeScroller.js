@@ -12,6 +12,7 @@ import {
   Timestamp,
   parsed,
   parseDate,
+  PARSE_TIME,
   getDateObject,
   getDate,
   getTime,
@@ -274,7 +275,7 @@ export default {
 
     splitTime () {
       const type = Object.prototype.toString.call(this.value)
-      let now, date, parts
+      let now, date
       switch (type) {
         case '[object Date]':
           this.type = 'date'
@@ -314,9 +315,9 @@ export default {
           this.type = 'string'
           now = parseDate(new Date())
           if (this.value) {
-            parts = this.value.split(':')
-            now.hour = parseInt(parts[0], 10)
-            now.minute = parseInt(parts[1], 10)
+            const parts = PARSE_TIME.exec(this.value)
+            now.hour = parseInt(parts[1], 10)
+            now.minute = parseInt(parts[3] || 0, 10)
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)

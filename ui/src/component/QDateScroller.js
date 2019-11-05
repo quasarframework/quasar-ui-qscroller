@@ -323,7 +323,7 @@ export default {
 
     splitDate () {
       const type = Object.prototype.toString.call(this.value)
-      let now, date, parts
+      let now, date
       switch (type) {
         case '[object Date]':
           this.type = 'date'
@@ -359,10 +359,10 @@ export default {
           this.type = 'string'
           now = parseDate(new Date())
           if (this.value) {
-            parts = this.value.split('-')
-            now.year = parseInt(parts[0], 10)
-            now.month = parseInt(parts[1], 10)
-            now.day = parseInt(parts[2], 10)
+            const tm = parsed(this.value)
+            now.year = tm.year
+            now.month = tm.month
+            now.day = tm.day
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parsed(date)
