@@ -35,7 +35,7 @@
     "yarn": ">= 1.6.0"
   },
   "dependencies": {
-    "@quasar/quasar-ui-qscroller": "1.0.0-alpha.5"
+    "@quasar/quasar-ui-qscroller": "1.0.0-alpha.6"
   },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",
