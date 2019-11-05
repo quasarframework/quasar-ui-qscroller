@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-app-extension-qscroller",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "description": "QScroller - Embed string, time, date and range scrollers in your Quasar Apps",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
   "license": "MIT",
