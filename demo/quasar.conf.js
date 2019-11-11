@@ -16,15 +16,21 @@ module.exports = function (ctx) {
     ],
 
     extras: [
-      'roboto-font',
-      'material-icons', // optional, you are not bound to it
       // 'ionicons-v4',
       // 'mdi-v3',
-      'fontawesome-v5'
-      // 'eva-icons'
+      'fontawesome-v5',
+      // 'eva-icons',
+      // 'themify',
+      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
+
+      'roboto-font', // optional, you are not bound to it
+      'material-icons' // optional, you are not bound to it
     ],
 
     framework: {
+      // iconSet: 'ionicons-v4',
+      // lang: 'de', // Quasar language
+
       // all: true, // --- includes everything; for dev only!
 
       components: [
@@ -82,9 +88,6 @@ module.exports = function (ctx) {
       plugins: [
         'Notify'
       ]
-
-      // iconSet: 'ionicons-v4'
-      // lang: 'de' // Quasar language
     },
 
     supportIE: true,
@@ -112,6 +115,7 @@ module.exports = function (ctx) {
       chainWebpack (chain) {
         chain.resolve.alias.merge({
           'ui': path.resolve(__dirname, '../ui/src/index.js'),
+          'api': path.resolve(__dirname, '../ui/dist/api/QScroller.json'),
           'sass': path.resolve(__dirname, '../ui/src/index.sass')
         })
       }
