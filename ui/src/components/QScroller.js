@@ -1,5 +1,5 @@
 // Scrollers
-import ScrollerBase from './mixins/scroller-base'
+import ScrollerBase from '../mixins/scroller-base'
 import QStringScroller from './QStringScroller.js'
 import QDateScroller from './QDateScroller.js'
 import QTimeScroller from './QTimeScroller.js'
@@ -7,7 +7,7 @@ import QDateTimeScroller from './QDateTimeScroller.js'
 import QTimeRangeScroller from './QTimeRangeScroller.js'
 import QDateRangeScroller from './QDateRangeScroller.js'
 
-import props from './utils/props.js'
+import props from '../utils/props.js'
 
 /* @vue/component */
 export default {

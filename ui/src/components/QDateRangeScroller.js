@@ -1,11 +1,11 @@
 // Mixins
-import Common from './mixins/common'
-import DateBase from './mixins/date-base'
+import Common from '../mixins/common'
+import DateBase from '../mixins/date-base'
 import { QColorizeMixin } from 'q-colorize-mixin'
 import QDateScroller from './QDateScroller'
 
 // Util
-import props from './utils/props'
+import props from '../utils/props'
 import {
   getDayIdentifier,
   parsed,
@@ -14,7 +14,7 @@ import {
   getDate,
   getTime,
   padNumber
-} from './utils/timestamp'
+} from '../utils/timestamp'
 
 /* @vue/component */
 export default {
