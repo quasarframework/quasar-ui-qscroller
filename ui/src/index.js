@@ -1,17 +1,14 @@
 import { version } from '../package.json'
-import Component from './component/QScroller'
-import Api from './component/QScroller.json'
+import Component from './components/QScroller'
 
 export {
   version,
-  Component,
-  Api
+  Component
 }
 
 export default {
   version,
   Component,
-  Api,
 
   install (Vue) {
     Vue.component(Component.name, Component)

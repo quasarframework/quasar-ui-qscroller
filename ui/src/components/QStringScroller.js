@@ -1,12 +1,12 @@
 // Mixins
-import Common from './mixins/common'
+import Common from '../mixins/common'
 import { QColorizeMixin } from 'q-colorize-mixin'
 
 // Components
-import ScrollerBase from './mixins/scroller-base'
+import ScrollerBase from '../mixins/scroller-base'
 
 // Util
-import props from './utils/props'
+import props from '../utils/props'
 
 /* @vue/component */
 export default {

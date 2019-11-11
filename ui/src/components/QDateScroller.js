@@ -1,13 +1,13 @@
 // Mixins
-import Common from './mixins/common'
-import DateTimeBase from './mixins/date-base'
+import Common from '../mixins/common'
+import DateTimeBase from '../mixins/date-base'
 import { QColorizeMixin } from 'q-colorize-mixin'
 
 // Components
-import ScrollerBase from './mixins/scroller-base'
+import ScrollerBase from '../mixins/scroller-base'
 
 // Util
-import props from './utils/props'
+import props from '../utils/props'
 import {
   Timestamp,
   parsed,
@@ -21,7 +21,7 @@ import {
   padNumber,
   createNativeLocaleFormatter,
   DAYS_IN_MONTH_MAX
-} from './utils/timestamp'
+} from '../utils/timestamp'
 
 /* @vue/component */
 export default {
