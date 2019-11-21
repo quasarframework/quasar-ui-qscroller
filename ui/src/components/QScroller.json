@@ -114,7 +114,8 @@
       "type": "Boolean",
       "category": "behavior",
       "applicable": [ "time-range", "date-range" ],
-      "desc": "Disables range checking validation (ie: allows right-side of range to be less than left-side range)"
+      "desc": "Disables range checking validation (ie: allows right-side of range to be less than left-side range)",
+      "addedIn": "v1.0.0"
     },
     "error-color": {
       "type": "String",
