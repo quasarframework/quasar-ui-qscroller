@@ -125,6 +125,7 @@ export default {
       type: String,
       default: ' - '
     },
+    disableValidation: Boolean,
     errorColor: {
       type: String,
       default: 'red-1'
@@ -194,6 +195,7 @@ export default {
       type: String,
       default: ' - '
     },
+    disableValidation: Boolean,
     errorColor: {
       type: String,
       default: 'red-1'

@@ -134,6 +134,9 @@ export default {
     },
 
     isValidRange () {
+      if (this.disableValidation === true) {
+        return true
+      }
       // check if endDate is > startDate
       if (this.startDate && this.endDate) {
         let start = parseDate(new Date())
