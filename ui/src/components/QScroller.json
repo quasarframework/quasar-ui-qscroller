@@ -110,6 +110,12 @@
         "inner-text-color=\"ghostwhite\""
       ]
     },
+    "disable-validation": {
+      "type": "Boolean",
+      "category": "behavior",
+      "applicable": [ "time-range", "date-range" ],
+      "desc": "Disables range checking validation (ie: allows right-side of range to be less than left-side range)"
+    },
     "error-color": {
       "type": "String",
       "category": "style",

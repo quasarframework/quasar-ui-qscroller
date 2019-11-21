@@ -25,7 +25,7 @@ module.exports = function (api) {
   api.compatibleWith('@quasar/app', '^1.1.4')
 
   // Uncomment the line below if you provide a JSON API for your component
-  api.registerDescribeApi('QScroller', '~@quasar/quasar-ui-qscroller/src/component/QScroller.json')
+  api.registerDescribeApi('QScroller', '~@quasar/quasar-ui-qscroller/dist/api/QScroller.json')
 
   // We extend /quasar.conf.js
   api.extendQuasarConf(extendConf)

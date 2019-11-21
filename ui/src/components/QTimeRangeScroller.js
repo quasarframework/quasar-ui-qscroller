@@ -131,6 +131,9 @@ export default {
     },
 
     isValidRange () {
+      if (this.disableValidation === true) {
+        return true
+      }
       // check if endTime is > startTime
       if (this.startTime && this.endTime) {
         let start = parseDate(new Date())

@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-app-extension-qscroller",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0",
   "description": "QScroller - Embed string, time, date and range scrollers in your Quasar Apps",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
   "license": "MIT",
@@ -8,6 +8,10 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "lint-fix": "eslint --ext .js,.vue src --fix"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/hawkeye64"
   },
   "publishConfig": {
     "access": "public"
@@ -35,13 +39,13 @@
     "yarn": ">= 1.6.0"
   },
   "dependencies": {
-    "@quasar/quasar-ui-qscroller": "1.0.0-alpha.7"
+    "@quasar/quasar-ui-qscroller": "^1.0.0"
   },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
     "eslint-loader": "^3.0.2",
-    "eslint-plugin-vue": "^6.0.0"
+    "eslint-plugin-vue": "^6.0.1"
   }
 }
