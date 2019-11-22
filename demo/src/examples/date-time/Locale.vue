@@ -1,13 +1,13 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
     <div>
-      <q-select filled v-model="locale" :options="options" label="Filled" style="max-width: 200px;"/>
+      <q-select filled v-model="locale" :options="options" label="Filled" style="max-width: 240px;"/>
       <q-scroller
         v-model="value"
         view="date-time"
         no-footer
         :locale="locale"
-        style="max-width: 200px; height: 200px;"
+        style="max-width: 240px; height: 200px;"
       ></q-scroller>
     </div>
 

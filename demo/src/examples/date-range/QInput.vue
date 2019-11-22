@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
 
-    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter start & end dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller1" anchor="top right" self="bottom middle">
@@ -10,7 +10,7 @@
               view="date-range"
               no-header
               rounded-borders
-              :style="scrollerPopupStyle280"
+              :style="scrollerPopupStyle240"
               @close="() => { showScroller1 = false }"
             />
           </q-popup-proxy>
@@ -18,7 +18,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter start & end dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller2" anchor="top right" self="bottom middle">
@@ -26,7 +26,7 @@
               v-model="value"
               view="date-range"
               vertical-bar
-              :style="scrollerPopupStyle280"
+              :style="scrollerPopupStyle240"
               @close="() => { showScroller2 = false }"
             />
           </q-popup-proxy>
@@ -34,7 +34,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter start & end dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller3" anchor="top right" self="bottom middle">
@@ -45,7 +45,7 @@
               vertical-bar
               bar-color="green"
               border-color="green"
-              :style="scrollerPopupStyle280"
+              :style="scrollerPopupStyle240"
               @close="() => { showScroller3 = false }"
             />
           </q-popup-proxy>
@@ -53,7 +53,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="inputValue" label="Enter dates" mask="####-##-## - ####-##-##">
+    <q-input color="blue-8" filled v-model="inputValue" label="Enter start & end dates" mask="####-##-## - ####-##-##">
       <template v-slot:append>
         <q-icon name="far fa-calendar" class="cursor-pointer">
           <q-popup-proxy v-model="showScroller4" anchor="top right" self="bottom middle">
@@ -68,7 +68,7 @@
               inner-color="grey-3"
               bar-color="#000"
               vertical-bar
-              :style="scrollerPopupStyle280"
+              :style="scrollerPopupStyle240"
               @close="() => { showScroller4 = false }"
             />
           </q-popup-proxy>
@@ -95,7 +95,7 @@ export default {
   },
 
   computed: {
-    scrollerPopupStyle280 () {
+    scrollerPopupStyle240 () {
       if (this.$q.screen.lt.sm) {
         return {
           width: '90vw',
@@ -105,7 +105,7 @@ export default {
         return {
           maxHeight: '200px',
           height: '200px',
-          width: '200px'
+          width: '240px'
         }
       }
     }

@@ -27,7 +27,7 @@
       no-footer
       no-days
       no-months
-      style="max-width: 160px; height: 200px;"
+      style="max-width: 200px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
@@ -35,7 +35,7 @@
       no-footer
       no-days
       no-years
-      style="max-width: 160px; height: 200px;"
+      style="max-width: 200px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
@@ -43,7 +43,7 @@
       no-footer
       no-months
       no-years
-      style="max-width: 160px; height: 200px;"
+      style="max-width: 200px; height: 200px;"
     ></q-scroller>
 
   </div>

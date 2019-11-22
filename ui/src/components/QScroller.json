@@ -110,6 +110,18 @@
         "inner-text-color=\"ghostwhite\""
       ]
     },
+    "disabled-text-color": {
+      "type": "String",
+      "category": "style",
+      "applicable": [ "all" ],
+      "default": "grey-7",
+      "desc": "Sets the color that will be used when in the disabled state",
+      "examples": [
+        "disabled-text-color=\"yellow-2\"",
+        "disabled-text-color=\"#dadada\"",
+        "disabled-text-color=\"ghostwhite\""
+      ]
+    },
     "disable-validation": {
       "type": "Boolean",
       "category": "behavior",
@@ -151,7 +163,7 @@
     },
     "disable": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "state",
       "applicable": [
         "All"
       ],
@@ -205,9 +217,12 @@
     },
     "items": {
       "type": "Array",
-      "category": "model",
+      "category": "content",
       "applicable": [ "string" ],
       "desc": "An array of objects",
+      "examples": [
+        "{ value: 'Anteater', noCaps: true, icon: '', iconRight: '', disabled: false, align: 'around' }"
+      ],
       "definition": {
         "value": {
           "type": "String",
@@ -257,7 +272,7 @@
     },
     "locale": {
       "type": "String",
-      "category": "behavior",
+      "category": "state",
       "desc": "Changes the locale used for the header",
       "default": "en-us",
       "applicable": [
@@ -271,7 +286,7 @@
     },
     "am-pm-labels": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
         "time",
@@ -284,7 +299,7 @@
     },
     "hour-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -297,7 +312,7 @@
     },
     "minute-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -310,7 +325,7 @@
     },
     "disabled-hours": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
         "time",
@@ -322,7 +337,7 @@
     },
     "disabled-minutes": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
         "time",
@@ -334,7 +349,7 @@
     },
     "no-hours": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the hours section",
       "applicable": [
         "time",
@@ -343,7 +358,7 @@
     },
     "no-minutes": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the minutes section",
       "applicable": [
         "time",
@@ -366,7 +381,7 @@
     },
     "start-am-pm-labels": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
         "time-range"
@@ -378,7 +393,7 @@
     },
     "end-am-pm-labels": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
         "time-range"
@@ -390,7 +405,7 @@
     },
     "start-hour-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -402,7 +417,7 @@
     },
     "end-hour-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -414,7 +429,7 @@
     },
     "start-minute-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -426,7 +441,7 @@
     },
     "end-minute-interval": {
       "type": [ "String", "Number" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
       "applicable": [
@@ -438,7 +453,7 @@
     },
     "start-disabled-hours": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
         "time-range"
@@ -449,7 +464,7 @@
     },
     "end-disabled-hours": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
         "time-range"
@@ -460,7 +475,7 @@
     },
     "start-disabled-minutes": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
         "time-range"
@@ -471,7 +486,7 @@
     },
     "end-disabled-minutes": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
         "time-range"
@@ -482,7 +497,7 @@
     },
     "start-no-hours": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the hours section",
       "applicable": [
         "time-range"
@@ -490,7 +505,7 @@
     },
     "end-no-hours": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the hours section",
       "applicable": [
         "time-range"
@@ -498,7 +513,7 @@
     },
     "start-no-minutes": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the minutes section",
       "applicable": [
         "time",
@@ -507,7 +522,7 @@
     },
     "end-no-minutes": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the minutes section",
       "applicable": [
         "time",
@@ -516,7 +531,7 @@
     },
     "disabled-years": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
         "date",
@@ -528,7 +543,7 @@
     },
     "disabled-months": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
         "date",
@@ -540,7 +555,7 @@
     },
     "disabled-days": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
         "date",
@@ -552,7 +567,7 @@
     },
     "no-year": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the years section",
       "applicable": [
         "date",
@@ -561,7 +576,7 @@
     },
     "no-month": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the months section",
       "applicable": [
         "date",
@@ -570,7 +585,7 @@
     },
     "no-day": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the day section",
       "applicable": [
         "date",
@@ -580,7 +595,7 @@
 
     "start-disabled-years": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
         "date-range"
@@ -591,7 +606,7 @@
     },
     "end-disabled-years": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
         "date-range"
@@ -602,7 +617,7 @@
     },
     "start-disabled-months": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
         "date-range"
@@ -613,7 +628,7 @@
     },
     "end-disabled-months": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
         "date-range"
@@ -624,7 +639,7 @@
     },
     "start-disabled-days": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
         "date-range"
@@ -635,7 +650,7 @@
     },
     "end-disabled-days": {
       "type": "Array",
-      "category": "behavior",
+      "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
         "date-range"
@@ -646,7 +661,7 @@
     },
     "start-no-year": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the years section",
       "applicable": [
         "date-range"
@@ -654,7 +669,7 @@
     },
     "end-no-year": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the years section",
       "applicable": [
         "date-range"
@@ -662,7 +677,7 @@
     },
     "start-no-month": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the months section",
       "applicable": [
         "date-range"
@@ -670,7 +685,7 @@
     },
     "end-no-month": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the months section",
       "applicable": [
         "date-range"
@@ -678,7 +693,7 @@
     },
     "start-no-day": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the day section",
       "applicable": [
         "date-range"
@@ -686,7 +701,7 @@
     },
     "end-no-day": {
       "type": "Boolean",
-      "category": "behavior",
+      "category": "content",
       "desc": "Hide the day section",
       "applicable": [
         "date-range"
@@ -694,7 +709,7 @@
     },
     "year-start": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the starting year to be used",
       "applicable": [ "date" ],
       "default": "5 years before current year",
@@ -704,7 +719,7 @@
     },
     "year-end": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the ending year to be used",
       "applicable": [ "date" ],
       "default": "5 years after current year",
@@ -714,7 +729,7 @@
     },
     "start-year-begin": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the starting year to be used for the start date section",
       "applicable": [ "date-range" ],
       "default": "5 years before current year",
@@ -724,7 +739,7 @@
     },
     "start-year-stop": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the ending year to be used for the start date section",
       "applicable": [ "date-range" ],
       "default": "5 years after current year",
@@ -734,7 +749,7 @@
     },
     "end-year-begin": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the starting year to be used for the end date section",
       "applicable": [ "date-range" ],
       "default": "5 years before current year",
@@ -744,7 +759,7 @@
     },
     "end-year-stop": {
       "type": [ "Number", "String" ],
-      "category": "behavior",
+      "category": "content",
       "desc": "This is the ending year to be used for the end date section",
       "applicable": [ "date-range" ],
       "default": "5 years after current year",
@@ -795,7 +810,7 @@
       "scope": {
         "value": {
           "type": ["String", "Object", "Array"],
-          "desc": "When view is 'string', the returned value is the selected string value. For views of 'date', 'time' and 'date-time', the returned value is a timestamp object. For views of 'time-range' and 'date-range' the returned value is an array of timestamp objects",
+          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects",
           "__exemption": [ "examples" ]
         }
       }
@@ -805,7 +820,7 @@
       "scope": {
         "value": {
           "type": ["String", "Object", "Array"],
-          "desc": "When view is 'string', the returned value is the selected string value. For views of 'date', 'time' and 'date-time', the returned value is a timestamp object. For views of 'time-range' and 'date-range' the returned value is an array of timestamp objects",
+          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects",
           "__exemption": [ "examples" ]
         }
       }

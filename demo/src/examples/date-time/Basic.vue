@@ -39,7 +39,7 @@
       no-footer
       rounded-borders
       dense
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 160px; height: 200px;"
     ></q-scroller>
 
   </div>

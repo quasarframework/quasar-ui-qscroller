@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md row justify-evenly q-gutter-sm">
 
-    <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
+    <q-input color="blue-8" filled v-model="value" label="Enter date & time" mask="####-##-## ##:##">
       <template v-slot:append>
         <span>
           <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -20,7 +20,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
+    <q-input color="blue-8" filled v-model="value" label="Enter date & time" mask="####-##-## ##:##">
       <template v-slot:append>
         <span>
           <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -38,7 +38,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
+    <q-input color="blue-8" filled v-model="value" label="Enter date & time" mask="####-##-## ##:##">
       <template v-slot:append>
         <span>
           <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -59,7 +59,7 @@
       </template>
     </q-input>
 
-    <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
+    <q-input color="blue-8" filled v-model="value" label="Enter date & time" mask="####-##-## ##:##">
       <template v-slot:append>
         <span>
           <q-icon name="far fa-calendar" class="cursor-pointer" />

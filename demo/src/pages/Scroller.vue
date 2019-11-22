@@ -347,6 +347,7 @@
             color="white"
             inner-text-color="white"
             inner-color="blue-grey-6"
+            disabled-text-color="yellow-2"
             :start-short-year-label="shortYearLabel"
             :start-show-month-label="showMonthLabel"
             :start-short-month-label="shortMonthLabel"
