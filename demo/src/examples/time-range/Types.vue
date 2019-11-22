@@ -4,25 +4,25 @@
       v-model="valueStr"
       view="time-range"
       no-footer
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="valueObj"
       view="time-range"
       no-footer
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="valueArr"
       view="time-range"
       no-footer
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="valueDate"
       view="time-range"
       no-footer
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
 
   </div>

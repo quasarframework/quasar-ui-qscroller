@@ -291,13 +291,18 @@ Whenever a date or time range is used, the sections are known as `start` and `en
 
 Also, when this occurs, the the `invalid-range` will be emitted with an object containing the data from the start and end sections.
 
+You can turn off the error checking by setting the `disable-validation` property.
+
+# Disable
+
+When the property `disable` is used, you may find that the default disable color of `grey-7` makes it difficult to see the text, based on your selected background color. In situations like this, you can use the `disabled-text-color` property to change it to something more visible.
 
 # v-model
 For all view types, except `string`, you can pass `v-model` data as a `String`, `Object`, `Array` or `Date`. Whatever is passed in will be the same as passed out in the `input` event. If `v-model` is an empty string, then the `String` type will be used.
 
-All number can be `Number` or `String` (quoted) values; examples below of mixed values.
+All numbers can be `Number` or `String` (quoted) values; examples below of mixed values.
 
-Where `view="time"` you can use the following for `v-model`:
+Where `view="time"` you can use one of the following for `v-model`:
 
 ```js
   data () {
@@ -310,7 +315,7 @@ Where `view="time"` you can use the following for `v-model`:
   },
 ```
 
-Where `view="date"` you can use the following for `v-model`:
+Where `view="date"` you can use one of the following for `v-model`:
 
 ```js
   data () {
@@ -323,7 +328,7 @@ Where `view="date"` you can use the following for `v-model`:
   },
 ```
 
-Where `view="time-range"` you can use the following for `v-model`:
+Where `view="time-range"` you can use one of the following for `v-model`:
 
 ```js
   data () {
@@ -336,7 +341,7 @@ Where `view="time-range"` you can use the following for `v-model`:
   },
 ```
 
-Where `view="date-range"` you can use the following for `v-model`:
+Where `view="date-range"` you can use one of the following for `v-model`:
 
 ```js
   data () {
@@ -349,7 +354,7 @@ Where `view="date-range"` you can use the following for `v-model`:
   },
 ```
 
-And finally, where `view="date-time"` you can use the following for `v-model`:
+And finally, where `view="date-time"` you can use one of the following for `v-model`:
 
 ```js
   data () {

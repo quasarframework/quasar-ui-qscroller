@@ -5,7 +5,7 @@
       view="time-range"
       no-footer
       disable
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
@@ -21,7 +21,7 @@
       no-footer
       :start-disabled-hours="[1,2,3,4,5,6]"
       :end-disabled-hours="[1,2,3,4,5,6]"
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
     <q-scroller
       v-model="value"
@@ -29,7 +29,7 @@
       no-footer
       :start-disabled-minutes="[10,12,14,16,18,20]"
       :end-disabled-minutes="[10,12,14,16,18,20]"
-      style="max-width: 140px; height: 200px;"
+      style="max-width: 150px; height: 200px;"
     ></q-scroller>
 
   </div>
