@@ -16,6 +16,9 @@
           QScroller <span class="text-subtitle2">v{{ version }}</span>
         </q-toolbar-title>
 
+        <q-space />
+
+        <q-btn flat round @click="$q.dark.toggle()" :icon="$q.dark.isActive ? 'brightness_2' : 'brightness_5'" />
         <div v-if="$q.screen.width > 500">Quasar v{{ $q.version }}</div>
 
         <q-btn
@@ -34,7 +37,6 @@
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
-      content-style="background-color: #f8f8ff"
     >
       <div class="col-12">
         <q-expansion-item
@@ -100,7 +102,6 @@
       v-model="rightDrawerOpen"
       side="right"
       bordered
-      content-style="background-color: #f8f8ff"
     >
       <q-scroll-area class="fit">
         <q-list dense>
@@ -128,7 +129,11 @@
       </transition>
     </q-page-container>
     <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab icon="keyboard_arrow_up" color="primary" />
+      <q-btn
+        fab
+        icon="keyboard_arrow_up"
+        :class="{ 'text-black bg-grey-4': $q.dark.isActive, 'text-white bg-primary': !$q.dark.isActive }"
+      />
     </q-page-scroller>
 
   </q-layout>
