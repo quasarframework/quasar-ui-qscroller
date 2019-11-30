@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "docsUrl": "https://quasarframework.github.io/quasar-ui-qscroller/docs"
+  },
   "props": {
     "value": {
       "type": [ "String", "Array", "Object", "Date" ],
