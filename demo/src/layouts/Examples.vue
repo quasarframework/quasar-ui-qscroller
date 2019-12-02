@@ -93,8 +93,10 @@
           icon="fas fa-link"
           label="Essential Links"
         >
+          <q-separator />
           <essential-links />
         </q-expansion-item>
+        <q-separator />
       </div>
     </q-drawer>
 
