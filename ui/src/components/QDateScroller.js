@@ -98,7 +98,7 @@ export default {
       }
       data = data.map(m => {
         ++m // Jan = 0
-        let mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
+        const mon = this.showMonthLabel === true ? this.monthNameLabel(m) : void 0
         m = m < 10 ? '0' + m : '' + m
         return { display: mon, value: m, disabled: this.disabledMonthsList.includes(m) }
       })
@@ -117,14 +117,14 @@ export default {
 
       // if date range not given, calculate 5 before and 5 after years
       const d = new Date()
-      let year = d.getFullYear()
+      const year = d.getFullYear()
       if (yearBegin === 0) {
         yearBegin = year - 5
       }
       if (yearStop === 0) {
         yearStop = year + 5
       }
-      let dates = []
+      const dates = []
       let date = yearBegin
       while (date <= yearStop) {
         dates.push(padNumber(date++, 4))
@@ -394,8 +394,8 @@ export default {
     // passed month needs to be 1-based
     monthNameLabel (month) {
       const now = parseDate(new Date())
-      let date = getDate(now) + ' 00:00'
-      let timestamp = parsed(date)
+      const date = getDate(now) + ' 00:00'
+      const timestamp = parsed(date)
       timestamp.day = 1
       timestamp.month = parseInt(month, 10)
       return this.monthFormatter(timestamp, this.shortMonthLabel)

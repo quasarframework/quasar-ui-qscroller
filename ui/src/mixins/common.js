@@ -6,7 +6,7 @@ export default {
 
   computed: {
     style () {
-      let style = {}
+      const style = {}
       style['--scroller-border-color'] = this.calculateColor(this.borderColor)
       style['--scroller-bar-color'] = this.calculateColor(this.barColor)
       style.height = this.bodyHeight
@@ -42,8 +42,7 @@ export default {
     },
 
     adjustBodyHeight () {
-      let self = this
-      // this.$nextTick(() => {
+      const self = this
       setTimeout(() => {
         if (this.childHeight === void 0) {
           self.headerHeight = self.noHeader === true ? 0 : self.dense === true ? 25 : 50
@@ -99,13 +98,13 @@ export default {
         h(QBtn, {
           staticClass: 'q-scroller__cancel-btn q-ml-xs',
           props: {
-            'flat': true,
-            'dense': true,
-            'round': true,
-            'icon': 'close'
+            flat: true,
+            dense: true,
+            round: true,
+            icon: 'close'
           },
           on: {
-            'click': () => {
+            click: () => {
               this.$emit('close')
             }
           }

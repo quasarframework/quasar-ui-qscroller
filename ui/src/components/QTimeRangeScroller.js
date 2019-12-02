@@ -94,13 +94,13 @@ export default {
           start.minute = parseInt(startParts[1], 10)
           end.hour = parseInt(endParts[0], 10)
           end.minute = parseInt(endParts[1], 10)
-          this.$emit('input', [ getDateObject(start), getDateObject(end) ])
+          this.$emit('input', [getDateObject(start), getDateObject(end)])
           return
         case 'array':
           startParts = this.startTime.split(':')
           endParts = this.endTime.split(':')
           this.$emit('input', [
-            [ parseInt(startParts[0], 10), parseInt(startParts[1], 10) ], [ parseInt(endParts[0], 10), parseInt(endParts[1], 10) ]
+            [parseInt(startParts[0], 10), parseInt(startParts[1], 10)], [parseInt(endParts[0], 10), parseInt(endParts[1], 10)]
           ])
           return
         case 'object':
@@ -136,8 +136,8 @@ export default {
       }
       // check if endTime is > startTime
       if (this.startTime && this.endTime) {
-        let start = parseDate(new Date())
-        let end = parseDate(new Date())
+        const start = parseDate(new Date())
+        const end = parseDate(new Date())
         const startParts = this.startTime.split(':')
         const endParts = this.endTime.split(':')
         start.hour = parseInt(startParts[0])
