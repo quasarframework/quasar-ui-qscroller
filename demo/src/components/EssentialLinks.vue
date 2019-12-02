@@ -30,7 +30,7 @@
     <q-separator />
     <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/quasar-ui-qscroller">
       <q-item-section avatar>
-        <q-icon name="extension" />
+        <q-icon name="home" />
       </q-item-section>
       <q-item-section>
         <q-item-label>QScroller home</q-item-label>
@@ -39,7 +39,7 @@
     </q-item>
     <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/app-extension-qmarkdown">
       <q-item-section avatar>
-        <q-icon name="extension" />
+        <q-icon name="home" />
       </q-item-section>
       <q-item-section>
         <q-item-label>QMarkdown home</q-item-label>
