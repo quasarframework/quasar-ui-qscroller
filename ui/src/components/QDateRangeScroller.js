@@ -97,13 +97,13 @@ export default {
           end.year = parseInt(endParts[0], 10)
           end.month = parseInt(endParts[1], 10)
           end.day = parseInt(endParts[2], 10)
-          this.$emit('input', [ getDateObject(start), getDateObject(end) ])
+          this.$emit('input', [getDateObject(start), getDateObject(end)])
           return
         case 'array':
           startParts = this.startDate.split('-')
           endParts = this.endDate.split('-')
           this.$emit('input', [
-            [ parseInt(startParts[0], 10), parseInt(startParts[1], 10), parseInt(startParts[2], 10) ], [ parseInt(endParts[0], 10), parseInt(endParts[1], 10), parseInt(endParts[2], 10) ]
+            [parseInt(startParts[0], 10), parseInt(startParts[1], 10), parseInt(startParts[2], 10)], [parseInt(endParts[0], 10), parseInt(endParts[1], 10), parseInt(endParts[2], 10)]
           ])
           return
         case 'object':
@@ -139,8 +139,8 @@ export default {
       }
       // check if endDate is > startDate
       if (this.startDate && this.endDate) {
-        let start = parseDate(new Date())
-        let end = parseDate(new Date())
+        const start = parseDate(new Date())
+        const end = parseDate(new Date())
         const startParts = this.startDate.split('-')
         const endParts = this.endDate.split('-')
         start.year = parseInt(startParts[0], 10)

@@ -236,7 +236,7 @@ export function updateFormatted (timestamp) {
 
 export function getDayOfYear (timestamp) {
   if (timestamp.year === 0) return
-  let dt = new Date(timestamp.date + ' 00:00')
+  const dt = new Date(timestamp.date + ' 00:00')
   return date.getDayOfYear(dt)
 }
 

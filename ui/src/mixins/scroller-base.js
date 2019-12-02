@@ -159,7 +159,7 @@ export default {
       const target = getScrollTarget(childEl)
       const scrollTop = getScrollPosition(target)
       const top = childEl.offsetTop - scrollTop
-      let offset = {}
+      const offset = {}
       offset.x = childEl.offsetLeft
       offset.y = top
       offset.left = childEl.offsetLeft
@@ -194,7 +194,7 @@ export default {
     },
 
     adjustColumnPadding () {
-      let self = this
+      const self = this
 
       const setPadding = (padding) => {
         self.columnPadding = {
@@ -278,7 +278,7 @@ export default {
     },
 
     updatePosition () {
-      let self = this
+      const self = this
       setTimeout(() => {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         let found
@@ -312,19 +312,19 @@ export default {
         },
         key: item.item,
         props: {
-          'flat': true,
-          'dense': true,
-          'no-wrap': true,
-          'label': item.label !== void 0 ? item.label : (item.value !== void 0 ? item.value : void 0),
-          'disable': this.disable === true || item.disabled === true,
-          'icon': item.icon !== void 0 ? item.icon : void 0,
-          'icon-right': item.iconRight !== void 0 ? item.iconRight : void 0,
-          'no-caps': item.noCaps !== void 0 ? item.noCaps : void 0,
-          'align': item.align !== void 0 ? item.align : void 0,
-          'color': (this.disable === true || (item.disabled !== void 0 && item.disabled === true)) && this.disabledTextColor !== void 0 ? this.disabledTextColor : void 0
+          flat: true,
+          dense: true,
+          noWrap: true,
+          label: item.label !== void 0 ? item.label : (item.value !== void 0 ? item.value : void 0),
+          disable: this.disable === true || item.disabled === true,
+          icon: item.icon !== void 0 ? item.icon : void 0,
+          iconRight: item.iconRight !== void 0 ? item.iconRight : void 0,
+          noCaps: item.noCaps !== void 0 ? item.noCaps : void 0,
+          align: item.align !== void 0 ? item.align : void 0,
+          color: (this.disable === true || (item.disabled !== void 0 && item.disabled === true)) && this.disabledTextColor !== void 0 ? this.disabledTextColor : void 0
         },
         on: {
-          'click': () => this.clickEvent(item)
+          click: () => this.clickEvent(item)
         }
       })
     },

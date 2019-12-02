@@ -16,7 +16,7 @@
 import ExampleTitle from '../components/ExampleTitle'
 import ExampleCard from '../components/ExampleCard'
 import { slugify } from 'assets/page-utils'
-import { getTagParts } from '@quasar/quasar-app-extension-qmarkdown'
+import { getTagParts } from '@quasar/quasar-ui-qmarkdown'
 
 export default {
   name: 'DateRange',

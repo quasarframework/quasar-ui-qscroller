@@ -134,7 +134,7 @@ export default {
       if (this.amPmLabels !== void 0 && this.amPmLabels.length > 0 && this.ampmIndex > -1) {
         const c = time.substr(-(this.amPmLabels[this.ampmIndex].length))
         if (c !== this.amPmLabels[this.ampmIndex]) {
-          let rindex = time.lastIndexOf(' ')
+          const rindex = time.lastIndexOf(' ')
           if (rindex > -1) {
             time = time.slice(0, rindex + 1)
             time += this.amPmLabels[this.ampmIndex]
@@ -229,7 +229,7 @@ export default {
 
     handle12Hour () {
       if (this.hour12 === true && this.ampmIndex > -1) {
-        let hour = parseInt(this.hour, 10)
+        const hour = parseInt(this.hour, 10)
         if (this.ampmIndex === 0) {
           if (hour === 12) {
             this.timestamp.hour = 0
