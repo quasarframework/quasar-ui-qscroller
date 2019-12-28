@@ -64,7 +64,7 @@ Vue.use(Plugin)
 <style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
 
 <script>
-import { Component as QScroller } from '@quasar/quasar-ui-qscroller'
+import { QScroller } from '@quasar/quasar-ui-qscroller'
 
 export default {
   components: {
@@ -94,7 +94,7 @@ Vue.use(Plugin)
 <style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
 
 <script>
-import { Component as QScroller } from '@quasar/quasar-ui-qscroller'
+import { QScroller } from '@quasar/quasar-ui-qscroller'
 
 export default {
   components: {
@@ -147,6 +147,20 @@ Can be found [here](https://github.com/quasarframework/quasar-ui-qscroller/tree/
 ---
 
 # Converting from previous version
+
+From **v1.0.4** to **v1.0.5**:
+
+You no longer need to do this:
+```js
+import { Component as QScroller } from '@quasar/quasar-ui-qscroller'
+```
+instead you can do this:
+```js
+import { QScroller } from '@quasar/quasar-ui-qscroller'
+```
+---
+
+From **beta** to **v1.0.0**:
 
 - `hour24-format` no longer exists. The default is now a 24-hour clock. If you wish to show a 12-hour clock, use the `hour12` property
 - `color` has been renamed `text-color`

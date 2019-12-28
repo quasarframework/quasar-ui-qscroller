@@ -1,16 +1,16 @@
 import { version } from '../package.json'
-import Component from './components/QScroller'
+import QScroller from './components/QScroller'
 
 export {
   version,
-  Component
+  QScroller
 }
 
 export default {
   version,
-  Component,
+  QScroller,
 
   install (Vue) {
-    Vue.component(Component.name, Component)
+    Vue.component(QScroller.name, QScroller)
   }
 }

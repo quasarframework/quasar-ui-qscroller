@@ -34,7 +34,7 @@ Vue.use(Plugin)
 <style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
 
 <script>
-import { Component as QScroller } from '@quasar/quasar-ui-qscroller'
+import { QScroller } from '@quasar/quasar-ui-qscroller'
 
 export default {
   components: {
@@ -60,7 +60,7 @@ Vue.use(Plugin)
 <style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
 
 <script>
-import { Component as QScroller } from '@quasar/quasar-ui-qscroller'
+import { QScroller } from '@quasar/quasar-ui-qscroller'
 
 export default {
   components: {

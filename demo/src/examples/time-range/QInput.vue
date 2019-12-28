@@ -113,7 +113,7 @@ export default {
 
   watch: {
     value (val) {
-      let type = Object.prototype.toString.call(this.value)
+      const type = Object.prototype.toString.call(this.value)
       if (type === '[object Array]') {
         this.inputValue = `${val[0]} - ${val[1]}`
       }

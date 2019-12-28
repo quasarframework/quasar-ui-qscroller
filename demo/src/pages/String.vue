@@ -1,30 +1,34 @@
 <template>
   <div class="q-markdown">
     <example-title title="view='string'" />
-    <example-card title="Basic" name="StringBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Basic.vue').default)" />
-    <example-card title="Colors" name="StringColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Colors.vue').default)" />
-    <example-card title="QInput" name="StringQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/QInput.vue').default)" />
-    <example-card title="Disabled" name="StringDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/string/Disabled.vue').default)" />
+    <example-viewer title="Basic" file="string/Basic" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Colors" file="string/Colors" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="QInput" file="string/QInput" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Disabled" file="string/Disabled" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
   </div>
 </template>
 
 <script>
 import ExampleTitle from '../components/ExampleTitle'
-import ExampleCard from '../components/ExampleCard'
 import { slugify } from 'assets/page-utils'
-import { getTagParts } from '@quasar/quasar-ui-qmarkdown'
+import { version } from 'ui'
 
 export default {
   name: 'String',
 
   components: {
-    ExampleTitle,
-    ExampleCard
+    ExampleTitle
   },
 
   data () {
     return {
-      tempToc: []
+      tempToc: [],
+      locationUrl: 'https://github.com/quasarframework/quasar-ui-qscroller/tree/dev/demo/src/examples/',
+      jsPaths: [`https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.umd.min.js`],
+      cssPaths: [
+        `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.min.css`,
+        'https://cdn.jsdelivr.net/npm/@quasar/extras/fontawesome-v5/fontawesome-v5.css'
+      ]
     }
   },
 
@@ -32,7 +36,7 @@ export default {
     this.toc = []
     this.tempToc = []
 
-    this.addToToc('String')
+    this.addToToc('view=\'string\'')
     this.addToToc('Basic', 2)
     this.addToToc('Colors', 2)
     this.addToToc('QInput', 2)
@@ -54,9 +58,12 @@ export default {
   },
 
   methods: {
-    getTagParts,
     addToToc (name, level = 1) {
-      const slug = slugify(name)
+      let n = name
+      if (level > 1) {
+        n = 'example-' + n
+      }
+      const slug = slugify(n)
       this.tempToc.push({
         children: [],
         id: slug,

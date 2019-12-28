@@ -50,7 +50,9 @@
           icon="fas fa-link"
           label="Essential Links"
         >
+          <q-separator />
           <essential-links />
+          <q-separator />
         </q-expansion-item>
       </div>
     </q-drawer>
@@ -68,7 +70,7 @@ import { version } from 'ui'
 export default {
   name: 'ScrollerLayout',
   components: {
-    'playground': () => import('../components/Playground'),
+    playground: () => import('../components/Playground'),
     'essential-links': () => import('../components/EssentialLinks')
   },
   data () {
