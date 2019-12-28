@@ -1,7 +1,7 @@
 <template>
   <hero>
     <q-markdown :src="markdown" toc @data="onToc" />
-    <component-api
+    <json-api-viewer
       title="QScroller API"
       :json="json"
     />
