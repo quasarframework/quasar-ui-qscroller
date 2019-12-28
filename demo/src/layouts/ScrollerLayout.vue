@@ -50,7 +50,9 @@
           icon="fas fa-link"
           label="Essential Links"
         >
+          <q-separator />
           <essential-links />
+          <q-separator />
         </q-expansion-item>
       </div>
     </q-drawer>

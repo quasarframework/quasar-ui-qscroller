@@ -1,34 +1,42 @@
 <template>
   <div class="q-markdown">
     <example-title title="view='date-range'" />
-    <example-card title="Basic" name="DateRangeBasic" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Basic.vue').default)" />
-    <example-card title="Colors" name="DateRangeColors" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Colors.vue').default)" />
-    <example-card title="QInput" name="DateRangeQInput" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/QInput.vue').default)" />
-    <example-card title="Disabled" name="DateRangeDisabled" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Disabled.vue').default)" />
-    <example-card title="Intervals" name="DateRangeIntervals" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Intervals.vue').default)" />
-    <example-card title="Types" name="DateRangeTypes" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Types.vue').default)" />
-    <example-card title="Locale" name="DateRangeLocale" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Locale.vue').default)" />
-    <example-card title="Slots" name="DateRangeSlots" :tag-parts="getTagParts(require('!!raw-loader!../examples/date-range/Slots.vue').default)" />
+    <example-viewer title="Basic" file="date-range/Basic" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Colors" file="date-range/Colors" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="QInput" file="date-range/QInput" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Disabled" file="date-range/Disabled" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Intervals" file="date-range/Intervals" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Types" file="date-range/Types" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths">
+      <q-markdown>
+Open the browser's Dev Tools (console) and then click on examples to see the different types.
+      </q-markdown>
+    </example-viewer>
+    <example-viewer title="Locale" file="date-range/Locale" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
+    <example-viewer title="Slots" file="date-range/Slots" :location-url="locationUrl" :js-paths="jsPaths" :css-paths="cssPaths" />
   </div>
 </template>
 
 <script>
 import ExampleTitle from '../components/ExampleTitle'
-import ExampleCard from '../components/ExampleCard'
 import { slugify } from 'assets/page-utils'
-import { getTagParts } from '@quasar/quasar-ui-qmarkdown'
+import { version } from 'ui'
 
 export default {
   name: 'DateRange',
 
   components: {
-    ExampleTitle,
-    ExampleCard
+    ExampleTitle
   },
 
   data () {
     return {
-      tempToc: []
+      tempToc: [],
+      locationUrl: 'https://github.com/quasarframework/quasar-ui-qscroller/tree/dev/demo/src/examples/',
+      jsPaths: [`https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.umd.min.js`],
+      cssPaths: [
+        `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.min.css`,
+        'https://cdn.jsdelivr.net/npm/@quasar/extras/fontawesome-v5/fontawesome-v5.css'
+      ]
     }
   },
 
@@ -36,7 +44,7 @@ export default {
     this.toc = []
     this.tempToc = []
 
-    this.addToToc('DateRange')
+    this.addToToc('view=\'date-range\'')
     this.addToToc('Basic', 2)
     this.addToToc('Colors', 2)
     this.addToToc('QInput', 2)
@@ -62,9 +70,12 @@ export default {
   },
 
   methods: {
-    getTagParts,
     addToToc (name, level = 1) {
-      const slug = slugify(name)
+      let n = name
+      if (level > 1) {
+        n = 'example-' + n
+      }
+      const slug = slugify(n)
       this.tempToc.push({
         children: [],
         id: slug,
