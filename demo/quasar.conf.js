@@ -116,7 +116,8 @@ module.exports = function (ctx) {
         chain.resolve.alias.merge({
           'ui': path.resolve(__dirname, '../ui/src/index.js'),
           'api': path.resolve(__dirname, '../ui/dist/api/QScroller.json'),
-          'sass': path.resolve(__dirname, '../ui/src/index.sass')
+          'sass': path.resolve(__dirname, '../ui/src/index.sass'),
+          'examples': path.resolve(__dirname, './src/examples')
         })
       }
     },
