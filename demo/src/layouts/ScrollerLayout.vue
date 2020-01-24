@@ -31,6 +31,8 @@
       v-model="leftDrawerOpen"
       bordered
       :width="350"
+      aria-label="Menu"
+      class="menu"
     >
       <div class="col-12">
         <q-expansion-item
