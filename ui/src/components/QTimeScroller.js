@@ -222,8 +222,10 @@ export default {
     },
 
     timestamp: {
-      handler (val) {
-        this.emitValue()
+      handler (val, oldVal) {
+        if (oldVal === null || val.date !== oldVal.date) {
+          this.emitValue()
+        }
       },
       deep: true
     }
