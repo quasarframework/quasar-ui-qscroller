@@ -97,6 +97,13 @@ export default {
       if (!compareTimestamps(timestamp, this.timestamp)) {
         this.emitValue()
       }
+    },
+
+    timestamp: {
+      handler (val) {
+        this.emitValue()
+      },
+      deep: true
     }
   },
 

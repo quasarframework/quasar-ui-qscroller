@@ -287,6 +287,13 @@ export default {
 
     disabledYears () {
       this.handleDisabledLists()
+    },
+
+    timestamp: {
+      handler (val) {
+        this.emitValue()
+      },
+      deep: true
     }
   },
 
