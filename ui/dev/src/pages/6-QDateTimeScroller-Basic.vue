@@ -149,7 +149,7 @@
           view="date-time"
           no-footer
           dense
-          disabled
+          disable
           hour12
           style="max-width: 150px; height: 200px;"
         ></q-scroller>
