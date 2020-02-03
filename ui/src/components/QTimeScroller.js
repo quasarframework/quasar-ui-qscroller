@@ -219,6 +219,13 @@ export default {
 
     disabledHours () {
       this.handleDisabledLists()
+    },
+
+    timestamp: {
+      handler (val) {
+        this.emitValue()
+      },
+      deep: true
     }
   },
 
