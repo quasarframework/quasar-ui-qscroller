@@ -8,7 +8,7 @@ import QDateScroller from './QDateScroller'
 import props from '../utils/props'
 import {
   getDayIdentifier,
-  parsed,
+  parseTimestamp,
   parseDate,
   getDateObject,
   getDate,
@@ -177,10 +177,10 @@ export default {
           this.type = 'date'
           start = parseDate(this.value[0])
           start = getDate(start) + ' ' + getTime(start)
-          start = getDate(parsed(start))
+          start = getDate(parseTimestamp(start))
           end = parseDate(this.value[1])
           end = getDate(end) + ' ' + getTime(end)
-          end = getDate(parsed(end))
+          end = getDate(parseTimestamp(end))
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
@@ -231,7 +231,7 @@ export default {
           now = new Date()
           now = parseDate(now)
           start = getDate(now) + ' ' + getTime(now)
-          start = getDate(parsed(start))
+          start = getDate(parseTimestamp(start))
           end = start
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start

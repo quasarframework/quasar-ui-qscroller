@@ -9,7 +9,7 @@ import QTimeScroller from './QTimeScroller'
 import props from '../utils/props'
 import {
   Timestamp,
-  parsed,
+  parseTimestamp,
   parseDate,
   getDateObject,
   getDate,
@@ -85,7 +85,7 @@ export default {
 
     date () {
       const timestamp = copyTimestamp(this.timestamp)
-      this.timestamp = parsed(this.date + ' ' + this.time)
+      this.timestamp = parseTimestamp(this.date + ' ' + this.time)
       if (!compareTimestamps(timestamp, this.timestamp)) {
         this.emitValue()
       }
@@ -93,7 +93,7 @@ export default {
 
     time () {
       const timestamp = copyTimestamp(this.timestamp)
-      this.timestamp = parsed(this.date + ' ' + this.time)
+      this.timestamp = parseTimestamp(this.date + ' ' + this.time)
       if (!compareTimestamps(timestamp, this.timestamp)) {
         this.emitValue()
       }
@@ -138,7 +138,7 @@ export default {
           this.type = 'date'
           now = parseDate(this.value)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object Array]':
@@ -151,7 +151,7 @@ export default {
           now.hour = parseInt(this.value[3], 10)
           now.minute = parseInt(this.value[4], 10)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object Object]':
@@ -164,7 +164,7 @@ export default {
           now.hour = parseInt(this.value.hour, 10)
           now.minute = parseInt(this.value.minute, 10)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object String]':
@@ -172,7 +172,7 @@ export default {
           this.type = 'string'
           now = parseDate(new Date())
           if (this.value) {
-            const tm = parsed(this.value)
+            const tm = parseTimestamp(this.value)
             if (tm.year) now.year = tm.year
             if (tm.month) now.month = tm.month
             if (tm.day) now.day = tm.day
@@ -180,7 +180,7 @@ export default {
             if (tm.minute) now.minute = tm.minute
           }
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
       }

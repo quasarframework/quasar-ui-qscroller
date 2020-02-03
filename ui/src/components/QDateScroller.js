@@ -10,7 +10,7 @@ import ScrollerBase from '../mixins/scroller-base'
 import props from '../utils/props'
 import {
   Timestamp,
-  parsed,
+  parseTimestamp,
   parseDate,
   getDateObject,
   getDate,
@@ -338,7 +338,7 @@ export default {
           this.type = 'date'
           now = parseDate(this.value)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object Array]':
@@ -349,7 +349,7 @@ export default {
           now.month = parseInt(this.value[1], 10)
           now.day = parseInt(this.value[2], 10)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object Object]':
@@ -360,7 +360,7 @@ export default {
           now.month = parseInt(this.value.month, 10)
           now.day = parseInt(this.value.day, 10)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
         case '[object String]':
@@ -368,13 +368,13 @@ export default {
           this.type = 'string'
           now = parseDate(new Date())
           if (this.value) {
-            const tm = parsed(this.value)
+            const tm = parseTimestamp(this.value)
             now.year = tm.year
             now.month = tm.month
             now.day = tm.day
           }
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.fromTimestamp()
           return
       }
@@ -404,7 +404,7 @@ export default {
     monthNameLabel (month) {
       const now = parseDate(new Date())
       const date = getDate(now) + ' 00:00'
-      const timestamp = parsed(date)
+      const timestamp = parseTimestamp(date)
       timestamp.day = 1
       timestamp.month = parseInt(month, 10)
       return this.monthFormatter(timestamp, this.shortMonthLabel)
