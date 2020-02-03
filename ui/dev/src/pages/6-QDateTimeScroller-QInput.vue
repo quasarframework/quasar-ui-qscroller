@@ -9,7 +9,7 @@
         with QInput, rounded-borders, no-header
       </q-card-section>
       <q-card-section class="col-12">
-        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-##">
+        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
           <template v-slot:append>
             <span>
               <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -35,7 +35,7 @@
         with QInput, vertical-bar, no-header
       </q-card-section>
       <q-card-section class="col-12">
-        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-##">
+        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
           <template v-slot:append>
             <span>
               <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -61,7 +61,7 @@
         with QInput, border colors, no-header
       </q-card-section>
       <q-card-section class="col-12">
-        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-##">
+        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
           <template v-slot:append>
             <span>
               <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -89,7 +89,7 @@
         with QInput, colors, rounded-borders, no-border, vertical-bar
       </q-card-section>
       <q-card-section class="col-12">
-        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-##">
+        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
           <template v-slot:append>
             <span>
               <q-icon name="far fa-calendar" class="cursor-pointer" />
@@ -121,7 +121,7 @@
         with QInput, rounded-borders, vertical-bar, dense
       </q-card-section>
       <q-card-section class="col-12">
-        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-##">
+        <q-input color="blue-8" filled v-model="value" label="Enter date/time" mask="####-##-## ##:##">
           <template v-slot:append>
             <span>
               <q-icon name="far fa-calendar" class="cursor-pointer" />
