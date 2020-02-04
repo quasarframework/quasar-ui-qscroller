@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-ui-qscroller",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
   "description": "QScroller - Embed string, time, date and range scrollers in your Quasar Apps",
   "license": "MIT",

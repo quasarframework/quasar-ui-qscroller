@@ -10,7 +10,7 @@ import ScrollerBase from '../mixins/scroller-base'
 import props from '../utils/props'
 import {
   Timestamp,
-  parsed,
+  parseTimestamp,
   parseDate,
   PARSE_TIME,
   getDateObject,
@@ -222,8 +222,10 @@ export default {
     },
 
     timestamp: {
-      handler (val) {
-        this.emitValue()
+      handler (val, oldVal) {
+        if (oldVal === null || val.date !== oldVal.date) {
+          this.emitValue()
+        }
       },
       deep: true
     }
@@ -288,7 +290,7 @@ export default {
           this.type = 'date'
           now = parseDate(this.value)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
           // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
@@ -300,7 +302,7 @@ export default {
           now.hour = parseInt(this.value[0], 10)
           now.minute = parseInt(this.value[1], 10)
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
           // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
@@ -312,7 +314,7 @@ export default {
           now.hour = parseInt(this.value.hour, 10)
           now.minute = parseInt(this.value.minute, 10)
           date = getDate(now) + ' ' + getTime(now, 10)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
           // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
           this.fromTimestamp()
@@ -327,7 +329,7 @@ export default {
             now.minute = parseInt(parts[3] || 0, 10)
           }
           date = getDate(now) + ' ' + getTime(now)
-          this.timestamp = parsed(date)
+          this.timestamp = parseTimestamp(date)
           this.timestamp.minute = Math.floor((this.timestamp.minute / this.minuteInterval)) * this.minuteInterval
           if (this.timestamp.hour >= 24) {
             this.timestamp.hour %= 24
