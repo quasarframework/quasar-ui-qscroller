@@ -173,11 +173,11 @@ export default {
           now = parseDate(new Date())
           if (this.value) {
             const tm = parseTimestamp(this.value)
-            if (tm.year) now.year = tm.year
-            if (tm.month) now.month = tm.month
-            if (tm.day) now.day = tm.day
-            if (tm.hour) now.hour = tm.hour
-            if (tm.minute) now.minute = tm.minute
+            if (tm.year !== void 0) now.year = tm.year
+            if (tm.month !== void 0) now.month = tm.month
+            if (tm.day !== void 0) now.day = tm.day
+            if (tm.hour !== void 0) now.hour = tm.hour
+            if (tm.minute !== void 0) now.minute = tm.minute
           }
           date = getDate(now) + ' ' + getTime(now)
           this.timestamp = parseTimestamp(date)
