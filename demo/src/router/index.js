@@ -24,9 +24,11 @@ export default function (/* { store, ssrContext } */) {
 
   // we get each page from server first!
   if (process.env.MODE === 'ssr' && process.env.CLIENT) {
+    /* eslint-disable no-console */
     console.log('!!!!')
     console.log('On route change we deliberately load page from server -- in order to test hydration errors')
     console.log('!!!!')
+    /* eslint-enable no-console */
 
     let reload = false
     Router.beforeEach((to, _, next) => {
