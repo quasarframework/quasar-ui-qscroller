@@ -1,16 +1,23 @@
 const path = require('path')
+const fs = require('fs')
+const fse = require('fs-extra')
 const rollup = require('rollup')
 const uglify = require('uglify-es')
 const buble = require('@rollup/plugin-buble')
 const json = require('@rollup/plugin-json')
 const cjs = require('@rollup/plugin-commonjs')
-const nodeResolve = require('@rollup/plugin-node-resolve')
+const { nodeResolve } = require('@rollup/plugin-node-resolve')
 
 const buildConf = require('./config')
 const buildUtils = require('./utils')
 
 const bubleConfig = {
   objectAssign: 'Object.assign'
+}
+
+const nodeResolveConfig = {
+  extensions: ['.js'],
+  preferBuiltins: false
 }
 
 const cjsConfig = {
@@ -20,10 +27,7 @@ const cjsConfig = {
 }
 
 const rollupPlugins = [
-  nodeResolve({
-    extensions: ['.js'],
-    preferBuiltins: false
-  }),
+  nodeResolve(nodeResolveConfig),
   json(),
   cjs(cjsConfig),
   buble(bubleConfig)
@@ -33,10 +37,10 @@ const builds = [
   {
     rollup: {
       input: {
-        input: resolve(`entry/index.esm.js`)
+        input: resolve('entry/index.esm.js')
       },
       output: {
-        file: resolve(`../dist/index.esm.js`),
+        file: resolve('../dist/index.esm.js'),
         format: 'es'
       }
     },
@@ -48,10 +52,10 @@ const builds = [
   {
     rollup: {
       input: {
-        input: resolve(`entry/index.common.js`)
+        input: resolve('entry/index.common.js')
       },
       output: {
-        file: resolve(`../dist/index.common.js`),
+        file: resolve('../dist/index.common.js'),
         format: 'cjs'
       }
     },
@@ -63,11 +67,11 @@ const builds = [
   {
     rollup: {
       input: {
-        input: resolve(`entry/index.umd.js`)
+        input: resolve('entry/index.umd.js')
       },
       output: {
         name: 'QScroller',
-        file: resolve(`../dist/index.umd.js`),
+        file: resolve('../dist/index.umd.js'),
         format: 'umd'
       }
     },
@@ -78,6 +82,10 @@ const builds = [
     }
   }
 ]
+
+// Add your asset folders here
+// addAssets(builds, 'icon-set', 'iconSet')
+// addAssets(builds, 'lang', 'lang')
 
 build(builds)
   .then(() => {
@@ -90,6 +98,38 @@ build(builds)
 
 function resolve (_path) {
   return path.resolve(__dirname, _path)
+}
+
+// eslint-disable-next-line no-unused-vars
+function addAssets (builds, type, injectName) {
+  const
+    files = fs.readdirSync(resolve('../../ui/src/components/' + type)),
+    plugins = [buble(bubleConfig)],
+    outputDir = resolve(`../dist/${type}`)
+
+  fse.mkdirp(outputDir)
+
+  files
+    .filter(file => file.endsWith('.js'))
+    .forEach(file => {
+      const name = file.substr(0, file.length - 3).replace(/-([a-z])/g, g => g[1].toUpperCase())
+      builds.push({
+        rollup: {
+          input: {
+            input: resolve(`../src/components/${type}/${file}`),
+            plugins
+          },
+          output: {
+            file: addExtension(resolve(`../dist/${type}/${file}`), 'umd'),
+            format: 'umd',
+            name: `QScroller.${injectName}.${name}`
+          }
+        },
+        build: {
+          minified: true
+        }
+      })
+    })
 }
 
 function build (builds) {
@@ -160,6 +200,7 @@ function buildEntry (config) {
 }
 
 function injectVueRequirement (code) {
+  // eslint-disable-next-line
   const index = code.indexOf(`Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue`)
 
   if (index === -1) {

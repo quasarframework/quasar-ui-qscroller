@@ -1,5 +1,5 @@
 export default {
-  name: 'Resize',
+  name: 'resize',
 
   inserted (el, binding) {
     const callback = binding.value
