@@ -1,8 +1,8 @@
 
 const routes = [
   {
-    path: '',
-    redirect: 'docs'
+    path: '/',
+    redirect: '/docs'
   },
   {
     path: '/docs',

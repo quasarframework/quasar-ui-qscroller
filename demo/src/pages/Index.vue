@@ -26,7 +26,7 @@ This page created with [QMarkdown](https://quasarframework.github.io/quasar-ui-q
 <script>
 import Hero from '../components/Hero'
 import markdown from '../markdown/scroller.md'
-import Api from 'api'
+import Api from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
 
 export default {
   name: 'PageIndex',
