@@ -130,6 +130,11 @@ $ yarn dev:electron
 $ yarn build
 ```
 
+# build just the JSON API
+```bash
+$ yarn build:api
+```
+
 # Donate
 
 If you appreciate the work that went into this, please consider donating to [Quasar](https://donate.quasar.dev) or [Jeff](https://github.com/sponsors/hawkeye64).

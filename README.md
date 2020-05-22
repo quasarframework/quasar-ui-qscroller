@@ -7,10 +7,28 @@ QScroller (Vue Plugin, UMD and Quasar App Extension)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/quasarframework/quasar-ui-qscroller.svg)]()
 
 # Structure
-* [/ui](ui) - standalone npm package
+
+* [/ui](ui) - standalone npm package (go here for more information)
 * [/app-extension](app-extension) - Quasar app extension
-* [/demo](demo) - demo and examples
+* [/demo](demo) - docs, demo and examples project
 * [live demo](https://quasarframework.github.io/quasar-ui-qscroller/docs) - live docs, demo and examples
+
+# Demo Workflow
+If you fork or download this project, make sure you have the Quasar CLI globally installed:
+
+```
+$ npm i -g @quasar/cli
+```
+
+The workflow to build the demo, on a fresh project, is as follows:
+```
+$ cd ui
+$ yarn
+$ yarn build
+$ cd ../demo
+$ yarn
+$ quasar dev
+```
 
 # Donate
 If you appreciate the work that went into this, please consider donating to [Quasar](https://donate.quasar.dev) or [Jeff](https://github.com/sponsors/hawkeye64).
