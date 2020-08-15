@@ -11,7 +11,7 @@
         />
 
         <q-toolbar-title>
-          quasar-ui-qscroller v{{ version }}
+          QScroller v{{ version }}
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>

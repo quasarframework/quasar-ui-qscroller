@@ -206,7 +206,7 @@ QScroller has a property `view` which can take one of the following:
 
 ## string view
 
-![QScroller](statics/q-scroller.png =200x200)
+![QScroller](q-scroller.png =200x200)
 
 
 The `string` view can take any type of arbitray data and display it in a list-like manner so an item can be selected. All other scrollers have this base functionality. Some scrollers, will be based on multiple instances of this functionality.
@@ -240,7 +240,7 @@ Then, your `v-model` variable should contain a `value` from your list for an ini
 
 ## time view
 
-![Time view](statics/q-time-scroller.png =200x200) ![Time view-ampm](statics/q-time-scroller-ampm.png =200x200)
+![Time view](q-time-scroller.png =200x200) ![Time view-ampm](q-time-scroller-ampm.png =200x200)
 
 When `view="time"` the scroller will show the current time clock. If the `v-model` contains an empty string, the current time will be selected. And, the emit for `input` will be a string.
 
@@ -250,7 +250,7 @@ The `v-model` can take types containing String, Array, Object, or Date. See the 
 
 ## time-range view
 
-![time-range view](statics/q-time-range-scroller.png =200x200) ![time-range view-ampm](statics/q-time-range-scroller-ampm.png =200x200)
+![time-range view](q-time-range-scroller.png =200x200) ![time-range view-ampm](q-time-range-scroller-ampm.png =200x200)
 
 When `view="time-range"` the scroller will show the current time clock in a start and an end section. If the `v-model` contains an empty string, the current time will be selected. And, the emit for `input` will be a string.
 
@@ -262,7 +262,7 @@ The `v-model` can take an array of types containing String, Array, Object, or Da
 
 ## date view
 
-![date view](statics/q-date-scroller.png =200x200)
+![date view](q-date-scroller.png =200x200)
 
 When `view="date"` the scroller will show dates. If the `v-model` contains an empty string, the current date will be selected. And, the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `year-begin` and `year-stop` properties.
 
@@ -270,7 +270,7 @@ The `v-model` can take types containing String, Array, Object, or Date. See the 
 
 ## date-range view
 
-![date-range view](statics/q-date-range-scroller.png =300x300)
+![date-range view](q-date-range-scroller.png =300x300)
 
 When `view="date-range"` the scroller will show the dates in a start and end section. If the `v-model` contains an empty string, the current date will be selected for both. And, the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `start-year-begin`, `start-year-stop`, `end-year-begin` and `end-year-stop` properties for the respective start and end sections.
 
@@ -281,7 +281,7 @@ The `v-model` can take an array of types containing String, Array, Object, or Da
 
 ## date-time view
 
-![date-time view](statics/q-date-time-scroller.png =300x300) ![date-time view-ampm](statics/q-date-time-scroller-ampm.png =300x300)
+![date-time view](q-date-time-scroller.png =300x300) ![date-time view-ampm](q-date-time-scroller-ampm.png =300x300)
 
 When `view="date-time"` the scroller will show date and time selection. If the `v-model` contains an empty string, the current date and time will be selected. And the emit for `input` will be a string. The default is 5 years before and after the current date. You can control this with the `year-begin` and `year-stop` properties.
 
@@ -382,5 +382,5 @@ And finally, where `view="date-time"` you can use one of the following for `v-mo
 ```
 
 ::: info
-Whatever format is used for the `v-model` will be the same format returned via the `input` emit.
+Whatever format is used for the `v-model` will be the same format returned via the `input` event.
 :::

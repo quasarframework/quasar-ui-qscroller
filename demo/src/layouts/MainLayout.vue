@@ -6,11 +6,10 @@
           flat
           dense
           round
+          icon="menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu"
-        >
-          <q-icon name="menu" />
-        </q-btn>
+        />
 
         <q-toolbar-title>
           QScroller <span class="text-subtitle2">v{{ version }}</span>
@@ -36,20 +35,22 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      show-if-above
       bordered
       aria-label="Menu"
       class="menu"
     >
       <q-list>
         <q-item-label header>Essential Links</q-item-label>
+      <q-separator />
       </q-list>
-      <q-separator />
       <essential-links />
-      <q-separator />
     </q-drawer>
 
     <q-drawer
+      ref="drawer"
       v-model="rightDrawerOpen"
+      show-if-above
       side="right"
       bordered
       aria-label="Table of Contents"
@@ -76,7 +77,9 @@
     </q-drawer>
 
     <q-page-container>
+      <transition name="fade">
       <router-view />
+      </transition>
     </q-page-container>
   </q-layout>
 </template>
@@ -88,7 +91,7 @@ const { setScrollPosition } = scroll
 import { version } from 'ui'
 
 export default {
-  name: 'MyLayout',
+  name: 'MainLayout',
   components: {
     'essential-links': () => import('../components/EssentialLinks')
   },
@@ -100,11 +103,6 @@ export default {
       activeToc: 0
     }
   },
-  computed: {
-    ...mapGetters({
-      toc: 'common/toc'
-    })
-  },
   mounted () {
     // code to handle anchor link on refresh/new page, etc
     if (location.hash !== '') {
@@ -113,6 +111,11 @@ export default {
         this.scrollTo(id)
       }, 200)
     }
+  },
+  computed: {
+    ...mapGetters({
+      toc: 'common/toc'
+    })
   },
   methods: {
     scrollTo (id) {
@@ -148,7 +151,7 @@ export default {
           continue
         }
 
-        if (item.offsetTop >= position + 100) {
+        if (item.offsetTop >= position + 50) {
           if (last === void 0) {
             last = section.id
           }

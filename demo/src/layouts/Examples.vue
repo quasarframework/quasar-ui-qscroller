@@ -36,6 +36,7 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      show-if-above
       bordered
       aria-label="Menu"
       class="menu"
@@ -48,8 +49,10 @@
           icon="fas fa-cogs"
           label="QScroller"
           caption="QScroller Examples"
+          class="menu"
         >
-          <q-list dense bordered separator>
+          <q-separator />
+          <q-list dense>
 
             <q-item clickable to="/examples/string">
               <q-item-section>
@@ -103,7 +106,9 @@
     </q-drawer>
 
     <q-drawer
+      ref="drawer"
       v-model="rightDrawerOpen"
+      show-if-above
       side="right"
       bordered
       aria-label="Table of Contents"
@@ -164,19 +169,19 @@ export default {
       activeToc: 0
     }
   },
-  computed: {
-    ...mapGetters({
-      toc: 'common/toc'
-    })
-  },
   mounted () {
     // code to handle anchor link on refresh/new page, etc
     if (location.hash !== '') {
-      const id = location.hash.substring(1, location.hash.length)
+      const id = location.hash.slice(1)
       setTimeout(() => {
         this.scrollTo(id)
       }, 200)
     }
+  },
+  computed: {
+    ...mapGetters({
+      toc: 'common/toc'
+    })
   },
   methods: {
     scrollTo (id) {
@@ -212,7 +217,7 @@ export default {
           continue
         }
 
-        if (item.offsetTop >= position + 100) {
+        if (item.offsetTop >= position + 50) {
           if (last === void 0) {
             last = section.id
           }
