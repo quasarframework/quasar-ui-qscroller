@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[52],{"849e":function(n,e,t){"use strict";t.r(e),e["default"]="<template>\n  <div class=\"q-pa-md row justify-evenly q-gutter-sm\">\n    <span>Coming soon!</span>\n  </div>\n</template>\n\n<script>\nexport default {\n  name: 'TimeRangeSlots',\n\n  data () {\n    return {\n      value: ''\n    }\n  }\n}\n<\/script>\n"}}]);
