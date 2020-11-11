@@ -5,7 +5,6 @@ const rollup = require('rollup')
 const uglify = require('uglify-es')
 const buble = require('@rollup/plugin-buble')
 const json = require('@rollup/plugin-json')
-const cjs = require('@rollup/plugin-commonjs')
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
 
 const buildConf = require('./config')
@@ -20,16 +19,9 @@ const nodeResolveConfig = {
   preferBuiltins: false
 }
 
-const cjsConfig = {
-  include: [
-    /node_modules/
-  ]
-}
-
 const rollupPlugins = [
   nodeResolve(nodeResolveConfig),
   json(),
-  cjs(cjsConfig),
   buble(bubleConfig)
 ]
 
@@ -84,13 +76,13 @@ const builds = [
   }
 ]
 
-// Add your asset folders here
+// Add your asset folders here, if needed
 // addAssets(builds, 'icon-set', 'iconSet')
 // addAssets(builds, 'lang', 'lang')
 
 build(builds)
   .then(() => {
-    require('./build.api')
+    // require('./build.api.js')
   })
 
 /**
@@ -142,7 +134,7 @@ function build (builds) {
 function genConfig (opts) {
   Object.assign(opts.rollup.input, {
     plugins: rollupPlugins,
-    external: [ 'vue', 'quasar' ]
+    external: ['vue', 'quasar']
   })
 
   Object.assign(opts.rollup.output, {
@@ -208,7 +200,7 @@ function injectVueRequirement (code) {
     return code
   }
 
-  const checkMe = ` if (Vue === void 0) {
+  const checkMe = ` if (Vue === undefined) {
     console.error('[ Quasar ] Vue is required to run. Please add a script tag for it before loading Quasar.')
     return
   }
