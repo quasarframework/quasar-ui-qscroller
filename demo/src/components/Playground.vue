@@ -115,17 +115,11 @@
 </template>
 
 <script>
-import { Platform } from 'quasar'
-
 export default {
   name: 'Playground',
   data () {
     return {
       displayLocale: false
-    }
-  },
-  mounted () {
-    if (Platform.is.mobile) {
     }
   },
   computed: {

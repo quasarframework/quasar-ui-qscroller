@@ -617,7 +617,8 @@ export default {
           width: '100vw',
           height: '400px'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '400px',
           height: '200px',
@@ -632,7 +633,8 @@ export default {
           width: '100vw',
           height: '400px'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '400px',
           height: '200px',

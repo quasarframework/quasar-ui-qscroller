@@ -100,7 +100,8 @@ export default {
           width: '90vw',
           height: '70vh'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '200px',
           height: '200px',
@@ -114,7 +115,8 @@ export default {
           width: '90vw',
           height: '70vh'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '200px',
           height: '200px',
