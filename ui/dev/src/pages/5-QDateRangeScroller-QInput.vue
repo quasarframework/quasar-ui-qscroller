@@ -156,7 +156,8 @@ export default {
           width: '90vw',
           height: '90vh'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '200px',
           height: '200px',
@@ -167,7 +168,7 @@ export default {
   },
   watch: {
     value (val) {
-      let type = Object.prototype.toString.call(this.value)
+      const type = Object.prototype.toString.call(this.value)
       if (type === '[object Array]') {
         this.inputValue = `${val[0]} - ${val[1]}`
       }

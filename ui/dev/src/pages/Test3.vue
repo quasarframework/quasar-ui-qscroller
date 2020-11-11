@@ -356,7 +356,8 @@ export default {
           width: '100vw',
           height: '100vh'
         }
-      } else {
+      }
+      else {
         return {
           maxHeight: '200px',
           height: '200px',
