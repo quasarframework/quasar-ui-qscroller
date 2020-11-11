@@ -14,7 +14,7 @@ import {
   getDate,
   getTime,
   padNumber
-} from '../utils/timestamp'
+} from '../utils/Timestamp'
 
 /* @vue/component */
 export default {
@@ -125,9 +125,11 @@ export default {
           this.$emit('input', [
             this.startDate, this.endDate
           ])
-        } else if (this.type === 'object') {
+        }
+        else if (this.type === 'object') {
           this.$emit('input', `{ start: ${this.startDate}, end: ${this.endDate} }`)
-        } else { // if (this.type === 'string') {
+        }
+        else { // if (this.type === 'string') {
           this.$emit('input', `${this.startDate}${this.displaySeparator}${this.endDate}`)
         }
       }
@@ -184,7 +186,8 @@ export default {
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
@@ -196,7 +199,8 @@ export default {
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
@@ -208,7 +212,8 @@ export default {
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
@@ -220,7 +225,8 @@ export default {
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
@@ -236,7 +242,8 @@ export default {
           if (this.isValidDate(start) && this.isValidDate(end)) {
             this.startDate = start
             this.endDate = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`)
           }
@@ -285,7 +292,9 @@ export default {
           'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
-          input: v => { this.startDate = v }
+          input: v => {
+            this.startDate = v
+          }
         }
       })
     },
@@ -327,7 +336,9 @@ export default {
           childHeight: this.bodyHeight
         },
         on: {
-          input: v => { this.endDate = v }
+          input: v => {
+            this.endDate = v
+          }
         }
       })
     },

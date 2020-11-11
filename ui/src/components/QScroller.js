@@ -30,7 +30,7 @@ export default {
   },
 
   computed: {
-    renderProps () {
+    __renderProps () {
       let component = 'div'
       switch (this.view) {
         case 'string':
@@ -70,7 +70,7 @@ export default {
   },
 
   render (h) {
-    const { component } = this.renderProps
+    const { component } = this.__renderProps
 
     const data = {
       props: {

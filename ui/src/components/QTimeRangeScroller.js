@@ -14,7 +14,7 @@ import {
   getDate,
   getTime,
   padNumber
-} from '../utils/timestamp'
+} from '../utils/Timestamp'
 
 /* @vue/component */
 export default {
@@ -122,9 +122,11 @@ export default {
           this.$emit('input', [
             this.startTime, this.endTime
           ])
-        } else if (this.type === 'object') {
+        }
+        else if (this.type === 'object') {
           this.$emit('input', `{ start: ${this.startTime}, end: ${this.endTime} }`)
-        } else { // if (this.type === 'string') {
+        }
+        else { // if (this.type === 'string') {
           this.$emit('input', `${this.startTime}${this.displaySeparator}${this.endTime}`)
         }
       }
@@ -179,7 +181,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
@@ -191,7 +194,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
@@ -203,7 +207,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
@@ -215,7 +220,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
@@ -231,7 +237,8 @@ export default {
           if (this.isValidTime(start) && this.isValidTime(end)) {
             this.startTime = start
             this.endTime = end
-          } else {
+          }
+          else {
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`)
           }
@@ -274,7 +281,9 @@ export default {
           'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
-          input: v => { this.startTime = v }
+          input: v => {
+            this.startTime = v
+          }
         }
       })
     },
@@ -310,7 +319,9 @@ export default {
           childHeight: this.bodyHeight
         },
         on: {
-          input: v => { this.endTime = v }
+          input: v => {
+            this.endTime = v
+          }
         }
       })
     },

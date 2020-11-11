@@ -17,7 +17,7 @@ import {
   copyTimestamp,
   compareTimestamps,
   padNumber
-} from '../utils/timestamp'
+} from '../utils/Timestamp'
 
 /* @vue/component */
 export default {
@@ -235,7 +235,9 @@ export default {
           'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
-          input: v => { this.date = v }
+          input: v => {
+            this.date = v
+          }
         }
       })
     },
@@ -270,7 +272,9 @@ export default {
           childHeight: this.bodyHeight
         },
         on: {
-          input: v => { this.time = v }
+          input: v => {
+            this.time = v
+          }
         }
       })
     },

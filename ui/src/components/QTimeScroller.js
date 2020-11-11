@@ -19,7 +19,7 @@ import {
   copyTimestamp,
   padNumber,
   createNativeLocaleFormatter
-} from '../utils/timestamp'
+} from '../utils/Timestamp'
 
 /* @vue/component */
 export default {
@@ -166,12 +166,15 @@ export default {
       this.ampm = this.amPmLabels[this.ampmIndex]
       if (this.hour12 === true) {
         this.handle12Hour()
-      } else {
+      }
+      else {
         this.timestamp.hour = parseInt(this.hour, 10)
       }
+
       if (this.ampmInitialized === true) {
         this.emitValue()
-      } else {
+      }
+      else {
         this.ampmInitialized = true
       }
     },
@@ -179,13 +182,17 @@ export default {
     hour () {
       if (this.hour12 === true) {
         this.handle12Hour()
-      } else {
+      }
+      else {
         this.timestamp.hour = parseInt(this.hour, 10)
       }
+
       this.timestamp.hour %= 24
+
       if (this.hourInitialized === true) {
         this.emitValue()
-      } else {
+      }
+      else {
         this.hourInitialized = true
       }
     },
@@ -194,7 +201,8 @@ export default {
       this.timestamp.minute = parseInt(this.minute, 10)
       if (this.minuteInitialized === true) {
         this.emitValue()
-      } else {
+      }
+      else {
         this.minuteInitialized = true
       }
     },
@@ -207,7 +215,8 @@ export default {
       this.hour = padNumber(this.timestamp.hour, 2)
       if (this.hour12 === true) {
         this.handle12Hour()
-      } else {
+      }
+      else {
         this.hour = padNumber(this.timestamp.hour, 2)
       }
       this.emitValue()
@@ -242,17 +251,21 @@ export default {
         if (this.ampmIndex === 0) {
           if (hour === 12) {
             this.timestamp.hour = 0
-          } else {
+          }
+          else {
             this.timestamp.hour = parseInt(this.hour, 10)
           }
-        } else if (this.ampmIndex === 1) {
+        }
+        else if (this.ampmIndex === 1) {
           if (hour === 0) {
             this.timestamp.hour = 12
             this.hour = padNumber(this.timestamp.hour, 2)
-          } else {
+          }
+          else {
             this.timestamp.hour = hour < 12 ? hour + 12 : hour
           }
-        } else {
+        }
+        else {
           this.timestamp.hour = parseInt(this.hour, 10)
         }
       }
@@ -350,20 +363,25 @@ export default {
         if (this.timestamp.hour === 12) {
           this.hour = '12'
           this.ampmIndex = 1
-        } else if (this.timestamp.hour === 0) {
+        }
+        else if (this.timestamp.hour === 0) {
           this.hour = '12'
           this.ampmIndex = 0
-        } else if (this.timestamp.hour > 12) {
+        }
+        else if (this.timestamp.hour > 12) {
           this.hour = padNumber(this.timestamp.hour - 12, 2)
           this.ampmIndex = 1
-        } else if (this.timestamp.hour === 0) {
+        }
+        else if (this.timestamp.hour === 0) {
           this.hour = '12'
           this.ampmIndex = 0
-        } else {
+        }
+        else {
           this.hour = padNumber(this.timestamp.hour, 2)
           this.ampmIndex = 0
         }
-      } else {
+      }
+      else {
         this.hour = padNumber(this.timestamp.hour, 2)
       }
     },
@@ -387,7 +405,9 @@ export default {
           'q-scroller__vertical-bar': this.verticalBar === true
         },
         on: {
-          input: (val) => { this.hour = val }
+          input: (val) => {
+            this.hour = val
+          }
         }
       })
     },
@@ -408,7 +428,9 @@ export default {
           'q-scroller__vertical-bar': this.verticalBar === true && this.hour12 === true
         },
         on: {
-          input: (val) => { this.minute = val }
+          input: (val) => {
+            this.minute = val
+          }
         }
       })
     },
@@ -426,7 +448,9 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         on: {
-          input: (val) => { this.ampm = val }
+          input: (val) => {
+            this.ampm = val
+          }
         }
       })
     },

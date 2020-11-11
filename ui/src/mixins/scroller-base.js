@@ -116,7 +116,8 @@ export default {
           let scrollToEl
           if (dir === -1) {
             scrollToEl = elem.previousElementSibling
-          } else {
+          }
+          else {
             scrollToEl = elem.nextElementSibling
           }
           if (scrollToEl && scrollToEl.nodeName === 'BUTTON' && scrollToEl.innerText.length > 0) {
@@ -248,7 +249,8 @@ export default {
             }
           }
           event.preventDefault()
-        } else {
+        }
+        else {
           /* eslint-disable-next-line */
           console.error(`QScroller: index (${index}) is out of bounds (${this.items.length})`)
         }
@@ -263,7 +265,8 @@ export default {
             const klass = `q-scroller__item--selected${this.dense ? '--dense' : ''}`
             elem.classList.remove(klass)
             this.$emit('input', item.value)
-          } else {
+          }
+          else {
             const klass = `.q-scroller__item--selected${this.dense ? '--dense' : ''}`
             let selected = this.$el.querySelector(klass)
             while (selected) {

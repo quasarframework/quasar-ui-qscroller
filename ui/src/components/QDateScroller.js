@@ -21,7 +21,7 @@ import {
   padNumber,
   createNativeLocaleFormatter,
   DAYS_IN_MONTH_MAX
-} from '../utils/timestamp'
+} from '../utils/Timestamp'
 
 /* @vue/component */
 export default {
@@ -436,7 +436,9 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         on: {
-          input: (val) => { this.year = val }
+          input: (val) => {
+            this.year = val
+          }
         }
       })
     },
@@ -466,7 +468,9 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         on: {
-          input: (val) => { this.month = val }
+          input: (val) => {
+            this.month = val
+          }
         }
       })
     },
@@ -493,7 +497,9 @@ export default {
           disabledTextColor: this.disabledTextColor
         },
         on: {
-          input: (val) => { this.day = val }
+          input: (val) => {
+            this.day = val
+          }
         }
       })
     },

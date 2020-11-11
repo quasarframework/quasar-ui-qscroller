@@ -52,7 +52,8 @@ export default {
           if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {
             self.bodyHeight -= 2
           }
-        } else {
+        }
+        else {
           self.bodyHeight = this.childHeight
         }
       }, 200)

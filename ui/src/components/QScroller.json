@@ -289,6 +289,7 @@
     },
     "am-pm-labels": {
       "type": "Array",
+      "tsType": "StringArray",
       "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
@@ -328,6 +329,7 @@
     },
     "disabled-hours": {
       "type": "Array",
+      "tsType": "StringArray",
       "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
@@ -340,6 +342,7 @@
     },
     "disabled-minutes": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
@@ -384,6 +387,7 @@
     },
     "start-am-pm-labels": {
       "type": "Array",
+      "tsType": "StringArray",
       "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
@@ -396,6 +400,7 @@
     },
     "end-am-pm-labels": {
       "type": "Array",
+      "tsType": "StringArray",
       "category": "content",
       "desc": "This is an array of two strings to replace the AM/PM labels. Only applicable when the `hour12` property is used",
       "applicable": [
@@ -408,6 +413,7 @@
     },
     "start-hour-interval": {
       "type": [ "String", "Number" ],
+      "tsType": "StringOrNumber",
       "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
@@ -420,6 +426,7 @@
     },
     "end-hour-interval": {
       "type": [ "String", "Number" ],
+      "tsType": "StringOrNumber",
       "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
@@ -432,6 +439,7 @@
     },
     "start-minute-interval": {
       "type": [ "String", "Number" ],
+      "tsType": "StringOrNumber",
       "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
@@ -444,6 +452,7 @@
     },
     "end-minute-interval": {
       "type": [ "String", "Number" ],
+      "tsType": "StringOrNumber",
       "category": "content",
       "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
       "default": "1",
@@ -456,6 +465,7 @@
     },
     "start-disabled-hours": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
@@ -467,6 +477,7 @@
     },
     "end-disabled-hours": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Hours that should be disabled (always use 0 through to 24)",
       "applicable": [
@@ -478,6 +489,7 @@
     },
     "start-disabled-minutes": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
@@ -489,6 +501,7 @@
     },
     "end-disabled-minutes": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Minutes that should be disabled (always use 0 through to 59)",
       "applicable": [
@@ -534,6 +547,7 @@
     },
     "disabled-years": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
@@ -546,6 +560,7 @@
     },
     "disabled-months": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
@@ -558,6 +573,7 @@
     },
     "disabled-days": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
@@ -598,6 +614,7 @@
 
     "start-disabled-years": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
@@ -609,6 +626,7 @@
     },
     "end-disabled-years": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of years that should be disabled",
       "applicable": [
@@ -620,6 +638,7 @@
     },
     "start-disabled-months": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
@@ -631,6 +650,7 @@
     },
     "end-disabled-months": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of months that should be disabled",
       "applicable": [
@@ -642,6 +662,7 @@
     },
     "start-disabled-days": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
@@ -653,6 +674,7 @@
     },
     "end-disabled-days": {
       "type": "Array",
+      "tsType": "NumberArray",
       "category": "content",
       "desc": "Array of days that should be disabled",
       "applicable": [
