@@ -63,7 +63,7 @@
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-vue": "^6.2.2",
     "open": "^7.3.0",
-    "postcss": "^7.0.32",
+    "postcss": "^8.2.3",
     "postcss-rtl": "^1.7.3",
     "quasar": "^1.14.3",
     "quasar-json-api": "^1.2.2",
