@@ -282,12 +282,15 @@ export default {
 
     updatePosition () {
       const self = this
+      const item = this.items.find(item => item.value === this.value)
+      const innerText = item?.label ?? item.value
       setTimeout(() => {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         let found
         let selected = self.$el.querySelector(klass)
+
         while (selected) {
-          if (selected.innerText === self.value) {
+          if (selected.innerText === innerText) {
             found = selected
           }
           selected.classList.remove(klass.slice(1))
