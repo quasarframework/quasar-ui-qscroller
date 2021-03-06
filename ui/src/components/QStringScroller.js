@@ -42,7 +42,12 @@ export default {
     },
 
     displayed () {
-      return this.value
+      if (!this.value) {
+        return ''
+      }
+      const item = this.items.find(item => item.value === this.value)
+
+      return item.label || item.value
     }
   },
 

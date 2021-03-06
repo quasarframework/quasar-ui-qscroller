@@ -83,6 +83,15 @@ export default {
 
     itemHeight () {
       return this.dense ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT
+    },
+
+    showLabel () {
+      if (!this.value) {
+        return ''
+      }
+      const item = this.items.find(item => item.value === this.value)
+
+      return item.label || item.value
     }
   },
 
@@ -132,7 +141,7 @@ export default {
             setScrollPosition(this.$el, pos, 10)
             this.scrollTimer = setTimeout(() => {
               scrollToEl.classList.add(klass.slice(1))
-              const items = this.items.filter(v => v.value === scrollToEl.innerText)
+              const items = this.items.filter(v => v.value === scrollToEl.innerText || (v.label !== undefined && v.label === scrollToEl.innerText))
               if (items.length > 0 && items[0].disabled !== true) {
                 this.$emit('input', items[0].value)
               }
@@ -244,7 +253,7 @@ export default {
         if (index > -1 && index < this.items.length) {
           const item = this.items[index]
           if (this.disable !== true && item.disabled !== true) {
-            if (item.value !== this.value) {
+            if (item.value !== this.showLabel) {
               this.$emit('input', item.value)
             }
           }
@@ -286,8 +295,9 @@ export default {
         const klass = `.q-scroller__item--selected${self.dense ? '--dense' : ''}`
         let found
         let selected = self.$el.querySelector(klass)
+
         while (selected) {
-          if (selected.innerText === self.value) {
+          if (selected.innerText === self.showLabel) {
             found = selected
           }
           selected.classList.remove(klass.slice(1))

@@ -86,11 +86,13 @@ export default {
         class: {
           'shadow-20': this.noShadow === false
         }
-      }, slot ? slot(this.slotData) : [
-        h('span', {
-          staticClass: 'ellipsis'
-        }, this.displayed)
-      ])
+      }, slot
+        ? slot(this.slotData)
+        : [
+            h('span', {
+              staticClass: 'ellipsis'
+            }, this.displayed)
+          ])
     },
 
     // the close button
@@ -122,9 +124,11 @@ export default {
         class: {
           'shadow-up-20': this.noShadow === false
         }
-      }, slot ? slot(this.slotData) : [
-        this.__renderFooterButton(h)
-      ])
+      }, slot
+        ? slot(this.slotData)
+        : [
+            this.__renderFooterButton(h)
+          ])
     }
   },
 
