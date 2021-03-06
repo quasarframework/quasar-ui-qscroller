@@ -47,7 +47,7 @@ export default {
       }
       const item = this.items.find(item => item.value === this.value)
 
-      return item?.label ?? item.value
+      return item.label || item.value
     }
   },
 
