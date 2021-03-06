@@ -205,7 +205,7 @@ export default {
       value: '',
       showScroller: false,
       items: [
-        { value: 'Anteater', noCaps: true, iconRight: '', disabled: false, align: 'around' },
+        { label: 'testLabel', value: 'Anteater', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Baboons', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Cheetah', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Chimpanzee', noCaps: true, iconRight: '', disabled: false, align: 'around' },

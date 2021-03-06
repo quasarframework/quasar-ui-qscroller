@@ -1,5 +1,6 @@
 .DS_Store
 .thumbs.db
+.history
 node_modules
 dist
 yarn.lock
