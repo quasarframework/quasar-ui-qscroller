@@ -297,7 +297,9 @@ export default {
         let selected = self.$el.querySelector(klass)
 
         while (selected) {
-          if (selected.innerText === self.showLabel) {
+          // safari and ios add a Line break on innerText
+          // of the dom object which prevent matching
+          if (selected.innerText.replace(/\n|\r/g, '') === self.showLabel) {
             found = selected
           }
           selected.classList.remove(klass.slice(1))
