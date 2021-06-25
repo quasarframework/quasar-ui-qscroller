@@ -26,9 +26,7 @@ module.exports = {
     // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     // 'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
-    'plugin:quasar/standard',
-
-    'standard'
+    'plugin:quasar/standard'
 
   ],
 
@@ -50,30 +48,57 @@ module.exports = {
 
   // add your custom rules here
   rules: {
-    // allow async-await
-    'generator-star-spacing': 'off',
-    // allow paren-less arrow functions
-    'arrow-parens': 'off',
+    'brace-style': [ 'error', 'stroustrup', { allowSingleLine: true } ],
+    'prefer-const': 'error',
+    'prefer-promise-reject-errors': 'off',
+    'multiline-ternary': 'off',
+    'no-prototype-builtins': 'off',
+    'no-case-declarations': 'off',
+    'generator-star-spacing': 'off', // allow async-await
+    'arrow-parens': 'off', // allow paren-less arrow functions
+    'object-property-newline': 'off',
     'one-var': 'off',
+    'no-void': 'off',
+    'no-lone-blocks': 'error',
+    'no-unused-expressions': 'error',
+    'no-useless-concat': 'error',
+    'no-useless-return': 'error',
+    'no-unneeded-ternary': 'error',
+    'no-confusing-arrow': [ 'error', { allowParens: true } ],
+    'operator-linebreak': [ 'error', 'before' ],
+
+    'array-bracket-spacing': [ 'error', 'always', { singleValue: false } ],
+    'object-curly-spacing': [ 'error', 'always' ],
+    'computed-property-spacing': [ 'error', 'always' ],
+    'template-curly-spacing': [ 'error', 'always' ],
 
     'import/first': 'off',
-    'import/named': 'error',
-    'import/namespace': 'error',
-    'import/default': 'error',
-    'import/export': 'error',
+    // 'import/named': 'error',
+    // 'import/namespace': 'error',
+    // 'import/default': 'error',
+    // 'import/export': 'error',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'prefer-promise-reject-errors': 'off',
-
     'import/no-webpack-loader-syntax': 'off',
 
-    'brace-style': [2, 'stroustrup', { allowSingleLine: false }],
+    // 'promise/always-return': 'warn',
 
-    'quasar/no-invalid-props': 'error',
-    'quasar/no-invalid-qfield-usage': 'error',
+    'vue/no-mutating-props': 'off',
+    'vue/custom-event-name-casing': 'off',
+
+    'vue/no-deprecated-slot-attribute': 'off', // Vue 3?
+    'vue/no-deprecated-slot-scope-attribute': 'off', // Vue 3?
+    'vue/no-deprecated-v-bind-sync': 'off', // Vue 3?
+
+    'vue/require-default-prop': 'off',
+    'vue/require-prop-types': 'off',
+
+    'quasar/no-invalid-props': 'warn',
+    'quasar/no-invalid-qfield-usage': 'warn',
 
     'no-void': 'off',
+
     // allow console.log during development only
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     // allow debugger during development only

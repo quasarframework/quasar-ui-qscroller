@@ -127,7 +127,7 @@ export default {
     },
 
     displayTime () {
-      if (this.timestamp.hasTime !== true) return ''
+      if (this.timestamp.hasTime !== true) return '00:00'
       if (this.noMinutes === true) return padNumber(this.hour, 2) + 'h'
       else if (this.noHours === true) return ':' + padNumber(this.minute, 2)
       let time = this.timeFormatter(this.timestamp, this.shortTimeLabel)
@@ -152,7 +152,6 @@ export default {
       return createNativeLocaleFormatter(
         this.locale,
         (tms, short) => short ? (tms.minute === 0 ? shortHourOptions : shortOptions) : longOptions
-
       )
     }
   },

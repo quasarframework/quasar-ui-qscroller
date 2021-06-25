@@ -34,10 +34,10 @@ export default {
 
   data () {
     return {
-      valueStr: ['09:00', '09:00'],
-      valueObj: [{ hour: '09', minute: '10' }, { hour: '09', minute: '10' }],
-      valueArr: [['09', '20'], ['09', '20']],
-      valueDate: [new Date(), new Date()]
+      valueStr: [ '09:00', '09:00' ],
+      valueObj: [ { hour: '09', minute: '10' }, { hour: '09', minute: '10' } ],
+      valueArr: [ [ '09', '20' ], [ '09', '20' ] ],
+      valueDate: [ new Date(), new Date() ]
     }
   },
 

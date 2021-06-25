@@ -144,7 +144,7 @@ export default {
       let last
 
       for (const i in toc) {
-        const section = toc[i]
+        const section = toc[ i ]
         const item = document.getElementById(section.id)
 
         if (item === null) {
