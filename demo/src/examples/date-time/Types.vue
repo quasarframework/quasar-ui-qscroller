@@ -36,7 +36,7 @@ export default {
     return {
       valueStr: '2020-10-01 10:10',
       valueObj: { year: '2020', month: '11', day: 10, hour: 12, minute: 35 },
-      valueArr: [2020, 12, '25', '08', '05'],
+      valueArr: [ 2020, 12, '25', '08', '05' ],
       valueDate: new Date()
     }
   },

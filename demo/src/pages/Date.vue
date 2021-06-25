@@ -32,9 +32,9 @@ export default {
     return {
       tempToc: [],
       locationUrl: 'https://github.com/quasarframework/quasar-ui-qscroller/tree/dev/demo/src/examples/date/',
-      jsPaths: [`https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.umd.min.js`],
+      jsPaths: [`https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${ version }/dist/index.umd.min.js`],
       cssPaths: [
-        `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${version}/dist/index.min.css`,
+        `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${ version }/dist/index.min.css`,
         'https://cdn.jsdelivr.net/npm/@quasar/extras/fontawesome-v5/fontawesome-v5.css'
       ]
     }

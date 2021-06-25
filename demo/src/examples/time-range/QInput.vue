@@ -116,14 +116,14 @@ export default {
     value (val) {
       const type = Object.prototype.toString.call(this.value)
       if (type === '[object Array]') {
-        this.inputValue = `${val[0]} - ${val[1]}`
+        this.inputValue = `${ val[ 0 ] } - ${ val[ 1 ] }`
       }
     },
     inputValue (val) {
       const parts = val.split(' - ')
-      if (parts[0] !== this.value[0] || parts[1] !== this.value[1]) {
-        this.value[0] = parts[0]
-        this.value[1] = parts[1]
+      if (parts[ 0 ] !== this.value[ 0 ] || parts[ 1 ] !== this.value[ 1 ]) {
+        this.value[ 0 ] = parts[ 0 ]
+        this.value[ 1 ] = parts[ 1 ]
       }
     }
   }

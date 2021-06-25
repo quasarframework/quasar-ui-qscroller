@@ -545,11 +545,11 @@ export default {
       date1: '2019-04-03',
       date2: '2019-04-03',
       dateTime1: '2019-05-10 06:30',
-      timeRange: ['09:05', '23:30'],
+      timeRange: [ '09:05', '23:30' ],
       timeRangeInput: '09:05 - 23:30',
-      dateRange: ['2019-08-08', '2019-09-04'],
+      dateRange: [ '2019-08-08', '2019-09-04' ],
       dateRangeInput: '2019-08-08 - 2019-09-04',
-      disabledMinutes: [1, 2, 5, 6, 7, 8, 9],
+      disabledMinutes: [ 1, 2, 5, 6, 7, 8, 9 ],
       data: [
         { value: 'Anteater', noCaps: true, iconRight: '', disabled: false, align: 'around' },
         { value: 'Baboons', noCaps: true, iconRight: '', disabled: false, align: 'around' },
@@ -654,31 +654,31 @@ export default {
 
     timeRangeInput (val) {
       const parts = val.split(' - ')
-      if (parts[0] !== this.timeRange[0] || parts[1] !== this.timeRange[1]) {
-        this.timeRange[0] = parts[0]
-        this.timeRange[1] = parts[1]
+      if (parts[ 0 ] !== this.timeRange[ 0 ] || parts[ 1 ] !== this.timeRange[ 1 ]) {
+        this.timeRange[ 0 ] = parts[ 0 ]
+        this.timeRange[ 1 ] = parts[ 1 ]
       }
     },
 
     timeRange (val) {
       const type = Object.prototype.toString.call(val)
       if (type === '[object Array]') {
-        this.timeRangeInput = `${val[0]} - ${val[1]}`
+        this.timeRangeInput = `${ val[ 0 ] } - ${ val[ 1 ] }`
       }
     },
 
     dateRangeInput (val) {
       const parts = val.split(' - ')
-      if (parts[0] !== this.dateRange[0] || parts[1] !== this.dateRange[1]) {
-        this.dateRange[0] = parts[0]
-        this.dateRange[1] = parts[1]
+      if (parts[ 0 ] !== this.dateRange[ 0 ] || parts[ 1 ] !== this.dateRange[ 1 ]) {
+        this.dateRange[ 0 ] = parts[ 0 ]
+        this.dateRange[ 1 ] = parts[ 1 ]
       }
     },
 
     dateRange (val) {
       const type = Object.prototype.toString.call(val)
       if (type === '[object Array]') {
-        this.dateRangeInput = `${val[0]} - ${val[1]}`
+        this.dateRangeInput = `${ val[ 0 ] } - ${ val[ 1 ] }`
       }
     }
   },
@@ -686,8 +686,8 @@ export default {
     validateTime (timeString) {
       const parts = this.timeRangeInput.split('-')
       if (parts.length === 2) {
-        const start = parts[0].trim()
-        const end = parts[1].trim()
+        const start = parts[ 0 ].trim()
+        const end = parts[ 1 ].trim()
         if (this.isValidTime(start) && this.isValidTime(end)) {
           return true
         }
@@ -697,8 +697,8 @@ export default {
     isValidTime (time) {
       const parts = time.split(':')
       if (parts.length === 2) {
-        const hour = parseInt(parts[0], 10)
-        const minute = parseInt(parts[1], 10)
+        const hour = parseInt(parts[ 0 ], 10)
+        const minute = parseInt(parts[ 1 ], 10)
         if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
           return true
         }
