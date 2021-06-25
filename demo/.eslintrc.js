@@ -26,9 +26,7 @@ module.exports = {
     // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     // 'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
-    'plugin:quasar/standard',
-
-    'standard'
+    'plugin:quasar/standard'
 
   ],
 
