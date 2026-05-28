@@ -1,6 +1,6 @@
 import { slugify } from "@md-plugins/shared";
-import examplesPageList from "src/examples/listing";
-import mdPageList from "src/markdown/listing";
+import examplesPageList from "@/examples/listing";
+import mdPageList from "@/markdown/listing";
 import type { RouteRecordRaw } from "vue-router";
 
 function getMarkdownPath(key: string): string {
@@ -31,7 +31,7 @@ function getExamplePath(key: string): string {
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    component: () => import("src/.q-press/layouts/MarkdownLayout.vue"),
+    component: () => import("@/.q-press/layouts/MarkdownLayout.vue"),
     children: [
       ...Object.entries(mdPageList)
         .filter(([key]) => key.includes("landing-page.md"))
@@ -58,7 +58,7 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/Error404.vue"),
+    component: () => import("@/pages/Error404.vue"),
   },
 ];
 
