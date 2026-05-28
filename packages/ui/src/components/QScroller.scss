@@ -1,3 +1,5 @@
+@use "sass:meta";
 @use "scroller.scss";
+
 // include colorize css
-@import "q-colorize-mixin/dist/index";
+@include meta.load-css("q-colorize-mixin/dist/index");
