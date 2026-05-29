@@ -155,6 +155,12 @@
       "applicable": ["All"],
       "desc": "If the component should not display the footer"
     },
+    "no-caps": {
+      "type": "Boolean",
+      "category": "style",
+      "applicable": ["string"],
+      "desc": "Prevents string item labels from being transformed to uppercase"
+    },
     "hour12": {
       "type": "Boolean",
       "category": "behavior",

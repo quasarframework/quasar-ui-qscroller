@@ -29,6 +29,7 @@ export default {
       default: "grey-7",
     },
     childHeight: [Number, String],
+    noCaps: Boolean,
   },
   base: {
     value: null, // [Number, String, Object, Array, Date, Function],
