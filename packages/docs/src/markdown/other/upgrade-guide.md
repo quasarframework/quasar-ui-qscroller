@@ -41,8 +41,16 @@ npm install @quasar/quasar-ui-qscroller@beta
 
 Use the package entrypoint instead of old source-file imports:
 
-```ts
+```ts [twoslash]
 import { QScroller } from "@quasar/quasar-ui-qscroller";
+
+QScroller
+// ^?
+```
+
+Import the component stylesheet alongside the component:
+
+```ts
 import "@quasar/quasar-ui-qscroller/dist/index.css";
 ```
 
