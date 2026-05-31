@@ -27,13 +27,14 @@ quasar ext add @quasar/qscroller@beta
 
 For direct UI package installs:
 
-```bash
+```tabs
+<<| bash pnpm |>>
 pnpm add @quasar/quasar-ui-qscroller@beta
-# or
+<<| bash bun |>>
 bun add @quasar/quasar-ui-qscroller@beta
-# or
+<<| bash yarn |>>
 yarn add @quasar/quasar-ui-qscroller@beta
-# or
+<<| bash npm |>>
 npm install @quasar/quasar-ui-qscroller@beta
 ```
 
