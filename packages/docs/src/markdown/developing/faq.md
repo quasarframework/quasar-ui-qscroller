@@ -4,6 +4,28 @@ desc: Frequently asked questions
 keys: developing
 ---
 
+:::details Q. Do I need to import QScroller CSS myself?
+
+The App Extension adds the stylesheet for you.
+
+If you install the UI package directly, import the stylesheet in your boot file or app entry:
+
+```ts
+import "@quasar/quasar-ui-qscroller/dist/index.css";
+```
+
+Quasar CLI projects can also centralize the stylesheet in `quasar.config.ts`:
+
+```ts
+// Note: using ~ tells Quasar the file resides in node_modules
+css: [
+  "app.scss",
+  "~@quasar/quasar-ui-qscroller/dist/index.css",
+],
+```
+
+:::
+
 :::details Q. When should I use QScroller instead of QSelect or QDate?
 
 Use QScroller when the user benefits from seeing nearby choices while they adjust a value. It is
