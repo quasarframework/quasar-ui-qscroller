@@ -26,6 +26,18 @@ css: [
 
 :::
 
+:::details Q. Can I inspect the component API from the CLI?
+
+Yes. After the App Extension is installed, run:
+
+```bash
+quasar describe QScroller
+```
+
+The same generated API is shown on the [Using QScroller](/developing/using-qscroller) page.
+
+:::
+
 :::details Q. When should I use QScroller instead of QSelect or QDate?
 
 Use QScroller when the user benefits from seeing nearby choices while they adjust a value. It is
