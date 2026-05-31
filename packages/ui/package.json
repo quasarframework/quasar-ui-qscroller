@@ -1,6 +1,6 @@
 {
   "name": "@quasar/quasar-ui-qscroller",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "description": "QScroller - string, time, date, and range scrollers for Quasar",
   "keywords": [
     "date",
