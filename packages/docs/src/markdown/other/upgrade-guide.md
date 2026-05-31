@@ -45,7 +45,7 @@ Use the package entrypoint instead of old source-file imports:
 ```ts [twoslash]
 import { QScroller } from "@quasar/quasar-ui-qscroller";
 
-QScroller
+QScroller;
 // ^?
 ```
 

@@ -14,7 +14,7 @@ export default defineIndexScript((api) => {
   api.registerDescribeApi("QScroller", "~@quasar/quasar-ui-qscroller/dist/api/QScroller.json");
 
   api.extendQuasarConf(() => ({
-    boot: ["~@quasar/quasar-app-extension-qscroller/src/boot/vite-register.ts"],
+    boot: ["~@quasar/quasar-app-extension-qscroller/dist/boot/vite-register.js"],
     css: ["~@quasar/quasar-ui-qscroller/src/index.scss"],
   }));
 });
