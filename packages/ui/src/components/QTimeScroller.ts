@@ -150,14 +150,18 @@ export default defineLegacyComponent({
         hour12: this.hour12,
         hour: "2-digit",
         minute: "2-digit",
-      };
+      } satisfies Intl.DateTimeFormatOptions;
       const shortOptions = {
         timeZone: "UTC",
         hour12: this.hour12,
         hour: "numeric",
         minute: "2-digit",
-      };
-      const shortHourOptions = { timeZone: "UTC", hour12: this.hour12, hour: "numeric" };
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortHourOptions = {
+        timeZone: "UTC",
+        hour12: this.hour12,
+        hour: "numeric",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (tms, short) =>
         short ? (tms.minute === 0 ? shortHourOptions : shortOptions) : longOptions,

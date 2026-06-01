@@ -159,24 +159,32 @@ export default defineLegacyComponent({
     },
 
     dateFormatter() {
-      const year = this.shortYearLabel ? "2-digit" : "numeric";
-      const month = this.shortMonthLabel ? "numeric" : "2-digit";
-      const day = this.shortDayLabel ? "numeric" : "2-digit";
-      const options = { timeZone: "UTC", year: year, month: month, day: day };
+      const year: Intl.DateTimeFormatOptions["year"] = this.shortYearLabel ? "2-digit" : "numeric";
+      const month: Intl.DateTimeFormatOptions["month"] = this.shortMonthLabel
+        ? "numeric"
+        : "2-digit";
+      const day: Intl.DateTimeFormatOptions["day"] = this.shortDayLabel ? "numeric" : "2-digit";
+      const options = { timeZone: "UTC", year, month, day } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, _short) => options);
     },
 
     dayFormatter() {
-      const options = { timeZone: "UTC", day: "numeric" };
+      const options = { timeZone: "UTC", day: "numeric" } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, _short) => options);
     },
 
     // showWeekdays = true
     weekdayFormatter() {
-      const longOptions = { timeZone: "UTC", weekday: "long" };
-      const shortOptions = { timeZone: "UTC", weekday: "short" };
+      const longOptions = {
+        timeZone: "UTC",
+        weekday: "long",
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        weekday: "short",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
@@ -184,8 +192,11 @@ export default defineLegacyComponent({
     },
 
     monthFormatter() {
-      const longOptions = { timeZone: "UTC", month: "long" };
-      const shortOptions = { timeZone: "UTC", month: "short" };
+      const longOptions = { timeZone: "UTC", month: "long" } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        month: "short",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
@@ -193,8 +204,14 @@ export default defineLegacyComponent({
     },
 
     yearFormatter() {
-      const longOptions = { timeZone: "UTC", year: "numeric" };
-      const shortOptions = { timeZone: "UTC", year: "2-digit" };
+      const longOptions = {
+        timeZone: "UTC",
+        year: "numeric",
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        year: "2-digit",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
@@ -202,8 +219,16 @@ export default defineLegacyComponent({
     },
 
     yearMonthFormatter() {
-      const longOptions = { timeZone: "UTC", month: "long", year: "numeric" };
-      const shortOptions = { timeZone: "UTC", month: "short", year: "2-digit" };
+      const longOptions = {
+        timeZone: "UTC",
+        month: "long",
+        year: "numeric",
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        month: "short",
+        year: "2-digit",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
@@ -211,8 +236,16 @@ export default defineLegacyComponent({
     },
 
     yearDayFormatter() {
-      const longOptions = { timeZone: "UTC", day: "numeric", year: "numeric" };
-      const shortOptions = { timeZone: "UTC", day: "2-digit", year: "2-digit" };
+      const longOptions = {
+        timeZone: "UTC",
+        day: "numeric",
+        year: "numeric",
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        day: "2-digit",
+        year: "2-digit",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
@@ -220,14 +253,27 @@ export default defineLegacyComponent({
     },
 
     yearMonthDayFormatter() {
-      const options = { timeZone: "UTC", year: "numeric", month: "short", day: "numeric" };
+      const options = {
+        timeZone: "UTC",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, _short) => options);
     },
 
     monthDayFormatter() {
-      const longOptions = { timeZone: "UTC", day: "numeric", month: "long" };
-      const shortOptions = { timeZone: "UTC", day: "2-digit", month: "short" };
+      const longOptions = {
+        timeZone: "UTC",
+        day: "numeric",
+        month: "long",
+      } satisfies Intl.DateTimeFormatOptions;
+      const shortOptions = {
+        timeZone: "UTC",
+        day: "2-digit",
+        month: "short",
+      } satisfies Intl.DateTimeFormatOptions;
 
       return createNativeLocaleFormatter(this.locale, (_tms, short) =>
         short ? shortOptions : longOptions,
