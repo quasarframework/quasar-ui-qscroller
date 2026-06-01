@@ -1,7 +1,7 @@
 // Mixins
 import Common from "../mixins/common";
 import DateTimeBase from "../mixins/date-base";
-import { QColorizeMixin } from "../mixins/colorize";
+import { ScrollerColorMixin } from "../mixins/colorize";
 
 // Components
 import ScrollerBase from "../mixins/scroller-base";
@@ -28,7 +28,7 @@ import { defineLegacyComponent } from "../utils/vue-compat";
 export default defineLegacyComponent({
   name: "QDateScroller",
 
-  mixins: [DateTimeBase, QColorizeMixin, Common],
+  mixins: [DateTimeBase, ScrollerColorMixin, Common],
 
   props: {
     ...props.date,

@@ -8,8 +8,23 @@ export default defineLegacyComponent({
   computed: {
     style() {
       const style: Record<string, unknown> = {};
-      style["--scroller-border-color"] = this.calculateColor(this.borderColor);
-      style["--scroller-bar-color"] = this.calculateColor(this.barColor);
+      this.setCssColorVar(style, "--q-scroller-border-color", this.borderColor, "#ccc");
+      this.setCssColorVar(style, "--q-scroller-bar-color", this.barColor, "#ccc");
+      this.setCssColorVar(style, "--q-scroller-color", this.textColor, "currentColor");
+      this.setCssColorVar(style, "--q-scroller-background", this.color, "transparent");
+      this.setCssColorVar(
+        style,
+        "--q-scroller-inner-color",
+        this.innerTextColor ?? this.textColor,
+        "currentColor",
+      );
+      this.setCssColorVar(style, "--q-scroller-inner-background", this.innerColor, "transparent");
+      this.setCssColorVar(
+        style,
+        "--q-scroller-disabled-color",
+        this.disabledTextColor,
+        "currentColor",
+      );
       style.height = this.bodyHeight;
       return style;
     },
@@ -38,6 +53,13 @@ export default defineLegacyComponent({
   },
 
   methods: {
+    getRenderedHeight(refName: "header" | "footer", fallback: number) {
+      const element = this.$refs[refName] as HTMLElement | undefined;
+      const height = element?.getBoundingClientRect().height;
+
+      return height !== void 0 && height > 0 ? height : fallback;
+    },
+
     onResize() {
       this.adjustBodyHeight();
     },
@@ -46,8 +68,10 @@ export default defineLegacyComponent({
       const self = this;
       setTimeout(() => {
         if (this.childHeight === void 0) {
-          self.headerHeight = self.noHeader === true ? 0 : self.dense === true ? 25 : 50;
-          self.footerHeight = self.noFooter === true ? 0 : self.dense === true ? 25 : 50;
+          self.headerHeight =
+            self.noHeader === true ? 0 : self.getRenderedHeight("header", self.dense ? 30 : 50);
+          self.footerHeight =
+            self.noFooter === true ? 0 : self.getRenderedHeight("footer", self.dense ? 30 : 50);
           self.height = self.$el.getBoundingClientRect().height;
           self.bodyHeight = self.height - self.headerHeight - self.footerHeight;
           if (self.noHeader !== true && self.noFooter !== true && self.noBorder !== true) {

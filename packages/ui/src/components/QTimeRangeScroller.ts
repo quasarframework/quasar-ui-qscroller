@@ -1,7 +1,7 @@
 // Mixins
 import Common from "../mixins/common";
 import TimeBase from "../mixins/time-base";
-import { QColorizeMixin } from "../mixins/colorize";
+import { ScrollerColorMixin } from "../mixins/colorize";
 import QTimeScroller from "./QTimeScroller";
 
 // Util
@@ -21,7 +21,7 @@ import { defineLegacyComponent } from "../utils/vue-compat";
 export default defineLegacyComponent({
   name: "QTimeRangeScroller",
 
-  mixins: [TimeBase, QColorizeMixin, Common],
+  mixins: [TimeBase, ScrollerColorMixin, Common],
 
   props: {
     ...props.timeRange,

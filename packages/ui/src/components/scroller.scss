@@ -17,11 +17,30 @@ $header-height-dense: 30px;
 $footer-height-dense: 30px;
 
 .q-scroller {
+  --q-scroller-item-height: #{$item-height};
+  --q-scroller-item-bar-top: #{$item-bar-top};
+  --q-scroller-selected-font-size: #{$selected-font-size};
+  --q-scroller-font-size: #{$font-size};
+  --q-scroller-header-font-size: #{$header-font-size};
+  --q-scroller-footer-font-size: #{$footer-font-size};
+  --q-scroller-header-height: #{$header-height};
+  --q-scroller-footer-height: #{$footer-height};
+  --q-scroller-item-height-dense: #{$item-height-dense};
+  --q-scroller-item-bar-top-dense: #{$item-bar-top-dense};
+  --q-scroller-selected-font-size-dense: #{$selected-font-size-dense};
+  --q-scroller-font-size-dense: #{$font-size-dense};
+  --q-scroller-header-font-size-dense: #{$header-font-size-dense};
+  --q-scroller-footer-font-size-dense: #{$footer-font-size-dense};
+  --q-scroller-header-height-dense: #{$header-height-dense};
+  --q-scroller-footer-height-dense: #{$footer-height-dense};
+
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  color: var(--q-scroller-color, inherit);
+  background: var(--q-scroller-background, transparent);
   transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
   &__content {
@@ -36,6 +55,8 @@ $footer-height-dense: 30px;
     position: relative;
     padding: 0;
     margin: 0;
+    color: var(--q-scroller-inner-color, inherit);
+    background: var(--q-scroller-inner-background, transparent);
   }
 
   &__overflow-hidden {
@@ -48,55 +69,55 @@ $footer-height-dense: 30px;
   }
 
   &__border {
-    border: 1px solid var(--scroller-border-color, #ccc);
+    border: 1px solid var(--q-scroller-border-color, #ccc);
   }
 
   &__header {
     display: flex;
     flex: 10000 1 0%;
     z-index: 1;
-    min-height: $header-height;
-    max-height: $header-height;
+    min-height: var(--q-scroller-header-height);
+    max-height: var(--q-scroller-header-height);
     padding: 0;
     margin: 0;
     font-weight: 700;
-    font-size: $header-font-size;
+    font-size: var(--q-scroller-header-font-size);
   }
 
   &__header--dense {
     display: flex;
     flex: 10000 1 0%;
     z-index: 1;
-    min-height: $header-height-dense;
-    max-height: $header-height-dense;
+    min-height: var(--q-scroller-header-height-dense);
+    max-height: var(--q-scroller-header-height-dense);
     padding: 0;
     margin: 0;
     font-weight: 700;
-    font-size: $header-font-size-dense;
+    font-size: var(--q-scroller-header-font-size-dense);
   }
 
   &__footer {
     display: flex;
     flex: 10000 1 0%;
     z-index: 1;
-    min-height: $footer-height;
-    max-height: $footer-height;
+    min-height: var(--q-scroller-footer-height);
+    max-height: var(--q-scroller-footer-height);
     padding: 0;
     margin: 0;
     font-weight: 700;
-    font-size: $footer-font-size;
+    font-size: var(--q-scroller-footer-font-size);
   }
 
   &__footer--dense {
     display: flex;
     flex: 10000 1 0%;
     z-index: 1;
-    min-height: $footer-height-dense;
-    max-height: $footer-height-dense;
+    min-height: var(--q-scroller-footer-height-dense);
+    max-height: var(--q-scroller-footer-height-dense);
     padding: 0;
     margin: 0;
     font-weight: 700;
-    font-size: $footer-font-size-dense;
+    font-size: var(--q-scroller-footer-font-size-dense);
   }
 
   &__padding {
@@ -113,18 +134,18 @@ $footer-height-dense: 30px;
 
     &::before {
       content: "";
-      top: $item-bar-top;
+      top: var(--q-scroller-item-bar-top);
       position: absolute;
       margin: 0 auto;
-      height: $item-height;
-      line-height: $item-height;
+      height: var(--q-scroller-item-height);
+      line-height: var(--q-scroller-item-height);
       width: 90%;
       left: 0;
       right: 0;
       box-sizing: border-box;
       text-align: left;
-      border-top: 1px solid var(--scroller-bar-color, #ccc);
-      border-bottom: 1px solid var(--scroller-bar-color, #ccc);
+      border-top: 1px solid var(--q-scroller-bar-color, #ccc);
+      border-bottom: 1px solid var(--q-scroller-bar-color, #ccc);
     }
   }
 
@@ -135,23 +156,23 @@ $footer-height-dense: 30px;
 
     &::before {
       content: "";
-      top: $item-bar-top-dense;
+      top: var(--q-scroller-item-bar-top-dense);
       position: absolute;
       margin: 0 auto;
-      height: $item-height-dense;
-      line-height: $item-height-dense;
+      height: var(--q-scroller-item-height-dense);
+      line-height: var(--q-scroller-item-height-dense);
       width: 90%;
       left: 0;
       right: 0;
       box-sizing: border-box;
       text-align: left;
-      border-top: 1px solid var(--scroller-bar-color, #ccc);
-      border-bottom: 1px solid var(--scroller-bar-color, #ccc);
+      border-top: 1px solid var(--q-scroller-bar-color, #ccc);
+      border-bottom: 1px solid var(--q-scroller-bar-color, #ccc);
     }
   }
 
   &__vertical-bar {
-    border-right: 1px solid var(--scroller-bar-color, #ccc);
+    border-right: 1px solid var(--q-scroller-bar-color, #ccc);
   }
 
   &__cancel-btn {
@@ -159,15 +180,15 @@ $footer-height-dense: 30px;
   }
 
   &__item {
-    height: $item-height;
-    min-height: $item-height;
-    max-height: $item-height;
+    height: var(--q-scroller-item-height);
+    min-height: var(--q-scroller-item-height);
+    max-height: var(--q-scroller-item-height);
     padding: 0;
     margin: 0;
     width: 100%;
     opacity: 0.8;
-    font-size: $font-size;
-    line-height: $font-size;
+    font-size: var(--q-scroller-font-size);
+    line-height: var(--q-scroller-font-size);
 
     &--selected {
       background-color: transparent;
@@ -175,12 +196,14 @@ $footer-height-dense: 30px;
       padding: 0;
       margin: 0;
       opacity: 1;
+      font-size: var(--q-scroller-selected-font-size);
       font-weight: 800 !important;
     }
 
     &--disabled {
       pointer-events: none;
       opacity: 0.3;
+      color: var(--q-scroller-disabled-color, inherit);
       font-weight: 300;
       padding: 0;
       margin: 0;
@@ -188,15 +211,15 @@ $footer-height-dense: 30px;
   }
 
   &__item--dense {
-    height: $item-height-dense;
-    min-height: $item-height-dense;
-    max-height: $item-height-dense;
+    height: var(--q-scroller-item-height-dense);
+    min-height: var(--q-scroller-item-height-dense);
+    max-height: var(--q-scroller-item-height-dense);
     padding: 0;
     margin: 0;
     width: 100%;
     opacity: 0.8;
-    font-size: $font-size-dense;
-    line-height: $font-size-dense;
+    font-size: var(--q-scroller-font-size-dense);
+    line-height: var(--q-scroller-font-size-dense);
   }
 
   &__item--selected--dense {
@@ -205,12 +228,14 @@ $footer-height-dense: 30px;
     opacity: 1;
     padding: 0;
     margin: 0;
+    font-size: var(--q-scroller-selected-font-size-dense);
     font-weight: 800 !important;
   }
 
   &__item--disabled--dense {
     pointer-events: none;
     opacity: 0.2;
+    color: var(--q-scroller-disabled-color, inherit);
     font-weight: 300;
     padding: 0;
     margin: 0;

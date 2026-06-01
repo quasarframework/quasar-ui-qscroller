@@ -9,6 +9,26 @@ QScroller gives you compact wheel-style controls for values that should be easy 
 down. Use it for string choices, date and time inputs, range boundaries, or any place where showing
 nearby values makes the picker easier to understand.
 
+## Styling With CSS Variables
+
+QScroller v3 uses CSS custom properties for its internal colors and sizing. The color props are still
+the easiest way to set common colors, but CSS variables are useful when you want one app-level theme
+to control every scroller.
+
+```scss
+.settings-scroller {
+  --q-scroller-border-color: var(--q-primary);
+  --q-scroller-bar-color: color-mix(in srgb, var(--q-primary), transparent 45%);
+  --q-scroller-item-height: 30px;
+  --q-scroller-header-height: 56px;
+  --q-scroller-footer-height: 44px;
+  --q-scroller-disabled-color: color-mix(in srgb, currentColor, transparent 45%);
+}
+```
+
+Dense mode has matching `-dense` variables, such as `--q-scroller-item-height-dense`,
+`--q-scroller-header-height-dense`, and `--q-scroller-font-size-dense`.
+
 ## API
 
 `QScroller` is the generic wrapper. Set `view` to choose between string, time, date, date-time, time

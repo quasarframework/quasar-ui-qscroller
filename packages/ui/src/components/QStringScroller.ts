@@ -1,6 +1,6 @@
 // Mixins
 import Common from "../mixins/common";
-import { QColorizeMixin } from "../mixins/colorize";
+import { ScrollerColorMixin } from "../mixins/colorize";
 
 // Components
 import ScrollerBase from "../mixins/scroller-base";
@@ -13,7 +13,7 @@ import { defineLegacyComponent } from "../utils/vue-compat";
 export default defineLegacyComponent({
   name: "QStringScroller",
 
-  mixins: [QColorizeMixin, Common],
+  mixins: [ScrollerColorMixin, Common],
 
   props: {
     ...props.common,

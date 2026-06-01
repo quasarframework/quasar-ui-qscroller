@@ -24,18 +24,18 @@
       "type": "String",
       "category": "style",
       "applicable": ["All"],
-      "desc": "This is the color of the middle bars. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
-      "examples": ["bar-color=\"blue-8\"", "bar-color=\"#ccc\"", "bar-color=\"ghostwhite\""]
+      "desc": "This is the color of the middle bars. It accepts CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
+      "examples": ["bar-color=\"primary\"", "bar-color=\"#ccc\"", "bar-color=\"var(--my-border)\""]
     },
     "border-color": {
       "type": "String",
       "category": "style",
       "applicable": ["All"],
-      "desc": "This is the color of outside border when `no-border` property is not `true`. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
+      "desc": "This is the color of outside border when `no-border` property is not `true`. It accepts CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
       "examples": [
-        "border-color=\"blue-8\"",
+        "border-color=\"primary\"",
         "border-color=\"#ccc\"",
-        "border-color=\"ghostwhite\""
+        "border-color=\"var(--my-border)\""
       ]
     },
     "color": {
@@ -43,35 +43,39 @@
       "category": "style",
       "applicable": ["All"],
       "default": "primary",
-      "desc": "This is the color of the background (header and footer). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
-      "examples": ["color=\"blue-8\"", "color=\"#ccc\"", "color=\"ghostwhite\""]
+      "desc": "This is the color of the background (header and footer). It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
+      "examples": ["color=\"blue-8\"", "color=\"#ccc\"", "color=\"var(--my-panel)\""]
     },
     "text-color": {
       "type": "String",
       "category": "style",
       "applicable": ["All"],
       "default": "white",
-      "desc": "This is the color of the text (header and footer). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
-      "examples": ["text-color=\"blue-8\"", "text-color=\"#ccc\"", "text-color=\"ghostwhite\""]
+      "desc": "This is the color of the text (header and footer). It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
+      "examples": ["text-color=\"blue-8\"", "text-color=\"#ccc\"", "text-color=\"var(--my-text)\""]
     },
     "inner-color": {
       "type": "String",
       "category": "style",
       "applicable": ["string", "time", "date", "date-time"],
       "default": "white",
-      "desc": "This is the color of the background (scroller area). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
-      "examples": ["inner-color=\"blue-8\"", "inner-color=\"#ccc\"", "inner-color=\"ghostwhite\""]
+      "desc": "This is the color of the background (scroller area). It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
+      "examples": [
+        "inner-color=\"blue-8\"",
+        "inner-color=\"#ccc\"",
+        "inner-color=\"var(--my-panel)\""
+      ]
     },
     "inner-text-color": {
       "type": "String",
       "category": "style",
       "applicable": ["string", "time", "date", "date-time"],
       "default": "primary",
-      "desc": "This is the color of the text (scroller area). It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
+      "desc": "This is the color of the text (scroller area). It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
       "examples": [
         "inner-text-color=\"blue-8\"",
         "inner-text-color=\"#ccc\"",
-        "inner-text-color=\"ghostwhite\""
+        "inner-text-color=\"var(--my-text)\""
       ]
     },
     "disabled-text-color": {
@@ -79,11 +83,11 @@
       "category": "style",
       "applicable": ["all"],
       "default": "grey-7",
-      "desc": "Sets the color that will be used when in the disabled state",
+      "desc": "Sets the color that will be used when in the disabled state. It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
       "examples": [
         "disabled-text-color=\"yellow-2\"",
         "disabled-text-color=\"#dadada\"",
-        "disabled-text-color=\"ghostwhite\""
+        "disabled-text-color=\"var(--my-muted-text)\""
       ]
     },
     "disable-validation": {
@@ -98,19 +102,23 @@
       "category": "style",
       "applicable": ["time-range", "date-range"],
       "default": "red-1",
-      "desc": "This is the error color of the background (end inner section) when end section is less than start section. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
-      "examples": ["error-color=\"blue-8\"", "error-color=\"#ccc\"", "error-color=\"ghostwhite\""]
+      "desc": "This is the error color of the background (end inner section) when end section is less than start section. It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
+      "examples": [
+        "error-color=\"blue-8\"",
+        "error-color=\"#ccc\"",
+        "error-color=\"var(--my-error)\""
+      ]
     },
     "error-text-color": {
       "type": "String",
       "category": "style",
       "applicable": ["time-range", "date-range"],
       "default": "red-10",
-      "desc": "This is the error color of the text (end inner section) when end section is less than start section. It can be from the Quasar color palette or a CSS hash value (ie: '#0000FF')",
+      "desc": "This is the error color of the text (end inner section) when end section is less than start section. It accepts Quasar color class names, CSS colors, CSS variables, and Quasar brand colors such as `primary`.",
       "examples": [
         "error-text-color=\"blue-8\"",
         "error-text-color=\"#ccc\"",
-        "error-text-color=\"ghostwhite\""
+        "error-text-color=\"var(--my-error-text)\""
       ]
     },
     "dense": {

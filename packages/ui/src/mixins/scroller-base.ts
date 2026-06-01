@@ -1,5 +1,5 @@
 // Mixins
-import { QColorizeMixin } from "./colorize";
+import { ScrollerColorMixin } from "./colorize";
 
 // Utils
 import props from "../utils/props";
@@ -33,7 +33,7 @@ const ITEM_HEIGHT_DENSE = 24;
 export default defineLegacyComponent({
   name: "ScrollerBase",
 
-  mixins: [QColorizeMixin],
+  mixins: [ScrollerColorMixin],
 
   props: {
     ...props.common,
@@ -325,17 +325,16 @@ export default defineLegacyComponent({
     // render functions
     // -------------------------------
     __renderItem(h, item) {
-      return h(QBtn, {
+      const disabled = this.disable === true || item.disabled === true;
+      const data = this.setTextColor(disabled === true ? this.disabledTextColor : void 0, {
         staticClass: `q-scroller__item${this.dense ? "--dense" : ""} justify-center align-center`,
         class: {
           "q-scroller__item--selected":
             !this.dense && (item.value === this.value || item.label === this.value),
-          "q-scroller__item--disabled":
-            !this.dense && (this.disable === true || item.disabled === true),
+          "q-scroller__item--disabled": !this.dense && disabled === true,
           "q-scroller__item--selected--dense":
             this.dense && (item.value === this.value || item.label === this.value),
-          "q-scroller__item--disabled--dense":
-            this.dense && (this.disable === true || item.disabled === true),
+          "q-scroller__item--disabled--dense": this.dense && disabled === true,
         },
         key: item.item,
         props: {
@@ -348,16 +347,13 @@ export default defineLegacyComponent({
           iconRight: item.iconRight !== void 0 ? item.iconRight : void 0,
           noCaps: item.noCaps !== void 0 ? item.noCaps : void 0,
           align: item.align !== void 0 ? item.align : void 0,
-          color:
-            (this.disable === true || (item.disabled !== void 0 && item.disabled === true)) &&
-            this.disabledTextColor !== void 0
-              ? this.disabledTextColor
-              : void 0,
         },
         on: {
           click: () => this.clickEvent(item),
         },
       });
+
+      return h(QBtn, data);
     },
     __renderPadding(h) {
       return h("div", {
