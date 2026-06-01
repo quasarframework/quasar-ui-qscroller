@@ -114,10 +114,6 @@ importers:
         version: 3.3.3(typescript@6.0.3)
 
   packages/ui:
-    dependencies:
-      q-colorize-mixin:
-        specifier: ^1.0.10
-        version: 1.0.10
     devDependencies:
       '@types/node':
         specifier: ^25.9.1
@@ -2389,9 +2385,6 @@ packages:
   pvutils@1.1.5:
     resolution: {integrity: sha512-KTqnxsgGiQ6ZAzZCVlJH5eOjSnvlyEgx1m8bkRJfOhmGRqfo5KLvmAlACQkrjEtOQ4B7wF9TdSLIs9O90MX9xA==}
     engines: {node: '>=16.0.0'}
-
-  q-colorize-mixin@1.0.10:
-    resolution: {integrity: sha512-pqMSb3mxTps0pfKh2zV/7ukgVvrzQT8+Ic2c3PaTkMI5yGPBbBK+t0SgF1ktBJ0PCYFE1bpK1unK20Z2OlTzlg==}
 
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
@@ -5141,8 +5134,6 @@ snapshots:
       tslib: 2.8.1
 
   pvutils@1.1.5: {}
-
-  q-colorize-mixin@1.0.10: {}
 
   quansync@0.2.11: {}
 

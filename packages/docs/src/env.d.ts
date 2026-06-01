@@ -1,9 +1,6 @@
 /// <reference types="@quasar/app-vite/client" />
 
 declare module "@datatraccorporation/markdown-it-mermaid";
-declare module "q-colorize-mixin" {
-  export const QColorizeMixin: Record<string, unknown>;
-}
 declare module "markdown-it-abbr";
 declare module "markdown-it-deflist";
 declare module "markdown-it-emoji";

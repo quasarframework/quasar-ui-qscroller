@@ -73,9 +73,6 @@
     "test:types": "pnpm build && pnpm typecheck",
     "release": "pnpm publish --tag beta"
   },
-  "dependencies": {
-    "q-colorize-mixin": "^1.0.10"
-  },
   "devDependencies": {
     "@types/node": "^25.9.1",
     "@types/rtlcss": "^3.5.4",

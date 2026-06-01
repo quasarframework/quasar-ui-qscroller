@@ -1,7 +1,7 @@
 // Mixins
 import Common from "../mixins/common";
 import TimeBase from "../mixins/time-base";
-import { QColorizeMixin } from "q-colorize-mixin";
+import { QColorizeMixin } from "../mixins/colorize";
 import QTimeScroller from "./QTimeScroller";
 
 // Util

@@ -1,5 +1,5 @@
 // Mixins
-import { QColorizeMixin } from "q-colorize-mixin";
+import { QColorizeMixin } from "./colorize";
 
 // Utils
 import props from "../utils/props";

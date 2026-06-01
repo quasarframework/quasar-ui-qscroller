@@ -1,7 +1,7 @@
 // Mixins
 import Common from "../mixins/common";
 import DateTimeBase from "../mixins/date-base";
-import { QColorizeMixin } from "q-colorize-mixin";
+import { QColorizeMixin } from "../mixins/colorize";
 
 // Components
 import ScrollerBase from "../mixins/scroller-base";
