@@ -34,7 +34,7 @@ Yes. After the App Extension is installed, run:
 quasar describe QScroller
 ```
 
-The same generated API is shown on the [Using QScroller](/developing/using-qscroller) page.
+The same generated API is shown on the [QScroller](/developing/qscroller) page.
 
 :::
 

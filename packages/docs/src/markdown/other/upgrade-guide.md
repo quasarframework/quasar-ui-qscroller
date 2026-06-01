@@ -4,7 +4,7 @@ desc: Upgrade to QScroller v3
 keys: other
 related:
   - /getting-started/installation-types
-  - /developing/using-qscroller
+  - /developing/qscroller
 ---
 
 QScroller v3 modernizes the package for Vue 3, Quasar v2, `@quasar/app-vite` v3, and ESM-first

@@ -4,7 +4,7 @@ desc: How to install QScroller
 keys: Getting Started
 related:
   - /getting-started/introduction
-  - /developing/using-qscroller
+  - /developing/qscroller
 ---
 
 QScroller can be installed as a Quasar App Extension, as a Vue plugin, as a direct component import, or through the UMD bundle.

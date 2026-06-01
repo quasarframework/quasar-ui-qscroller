@@ -4,7 +4,7 @@ desc: What is QScroller
 keys: Getting Started
 related:
   - /getting-started/installation-types
-  - /developing/using-qscroller
+  - /developing/qscroller
 ---
 
 ## What is QScroller
