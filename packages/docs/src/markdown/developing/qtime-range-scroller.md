@@ -5,8 +5,7 @@ keys: developing
 examples: QTimeRangeScroller
 ---
 
-`QTimeRangeScroller` renders start and end time scrollers together. It validates that the end time
-does not come before the start time unless `disable-validation` is enabled.
+`QTimeRangeScroller` renders start and end time scrollers together. It validates that the end time does not come before the start time unless `disable-validation` is enabled.
 
 <script import>
 import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'

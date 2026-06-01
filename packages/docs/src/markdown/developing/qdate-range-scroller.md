@@ -5,8 +5,7 @@ keys: developing
 examples: QDateRangeScroller
 ---
 
-`QDateRangeScroller` renders start and end date scrollers together. It validates that the end date
-does not come before the start date unless `disable-validation` is enabled.
+`QDateRangeScroller` renders start and end date scrollers together. It validates that the end date does not come before the start date unless `disable-validation` is enabled.
 
 <script import>
 import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'

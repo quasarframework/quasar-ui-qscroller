@@ -5,18 +5,13 @@ keys: developing
 examples: QScroller
 ---
 
-`QScroller` is the generic wrapper component. Use it when you want to choose the active scroller
-with the `view` prop instead of importing one dedicated component directly.
+`QScroller` is the generic wrapper component. Use it when you want to choose the active scroller with the `view` prop instead of importing one dedicated component directly.
 
-Available `view` values are `string`, `time`, `date`, `date-time`, `time-range`, and `date-range`.
-If you already know which scroller you need, prefer the dedicated component page so your imports and
-templates stay explicit.
+Available `view` values are `string`, `time`, `date`, `date-time`, `time-range`, and `date-range`. If you already know which scroller you need, prefer the dedicated component page so your imports and templates stay explicit.
 
 ## Styling With CSS Variables
 
-QScroller v3 uses CSS custom properties for its internal colors and sizing. The color props are still
-the easiest way to set common colors, but CSS variables are useful when you want one app-level theme
-to control every scroller.
+QScroller v3 uses CSS custom properties for its internal colors and sizing. The color props are still the easiest way to set common colors, but CSS variables are useful when you want one app-level theme to control every scroller.
 
 ```scss
 .settings-scroller {
@@ -29,8 +24,7 @@ to control every scroller.
 }
 ```
 
-Dense mode has matching `-dense` variables, such as `--q-scroller-item-height-dense`,
-`--q-scroller-header-height-dense`, and `--q-scroller-font-size-dense`.
+Dense mode has matching `-dense` variables, such as `--q-scroller-item-height-dense`, `--q-scroller-header-height-dense`, and `--q-scroller-font-size-dense`.
 
 <script import>
 import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
@@ -40,8 +34,7 @@ import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
 
 ## String View
 
-Use `view="string"` when a single wrapper component is convenient but the choices still come from a
-fixed list.
+Use `view="string"` when a single wrapper component is convenient but the choices still come from a fixed list.
 
 <MarkdownExample title="Basic String Scroller" file="Basic" no-edit/>
 
