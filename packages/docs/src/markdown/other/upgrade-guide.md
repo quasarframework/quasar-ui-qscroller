@@ -13,9 +13,9 @@ tooling.
 ## Requirements
 
 - Vue 3 and Quasar v2.
-- Quasar CLI Vite with `@quasar/app-vite` v3 beta for the App Extension.
+- Quasar CLI Vite with `@quasar/app-vite` >=3.0.0-beta.35 for the App Extension.
 - Node.js 22.13 or newer.
-- pnpm 11.4 or newer when working in this repository.
+- pnpm 11.5 or newer when working in this repository.
 
 ## Update Packages
 

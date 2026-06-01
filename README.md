@@ -1,45 +1,45 @@
-> It's likely this App Extension will be deprecated (no support for Quasar v2/Vue 3) unless it gets a strong representation from developers using it.
+# QScroller
 
-# QScroller (Vue Plugin, UMD and Quasar App Extension)
+[![UI package](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller/beta?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![App Extension](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller/beta?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
 
-![@quasar/quasar-ui-qscroller](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller.svg?label=@quasar/quasar-ui-qscroller)
-![@quasar/quasar-app-extension-qscroller](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller.svg?label=@quasar/quasar-app-extension-qscroller)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/quasarframework/quasar-ui-qscroller.svg)]()
-[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/quasarframework/quasar-ui-qscroller.svg)]()
+QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
 
-# Structure
+## Packages
 
-- [/ui](ui) - standalone npm package (go here for more information)
-- [/app-extension](app-extension) - Quasar app extension
-- [/demo](demo) - docs, demo and examples project
-- [live demo](https://quasarframework.github.io/quasar-ui-qscroller/docs) - live docs, demo and examples
+- [packages/ui](packages/ui) - standalone Vue/Quasar component package.
+- [packages/app-extension](packages/app-extension) - Quasar App Extension wrapper.
+- [packages/docs](packages/docs) - documentation, demos, and examples.
 
-# Demo Workflow
+## Install
 
-If you fork or download this project, make sure you have the Quasar CLI globally installed:
-
-```
-$ npm i -g @quasar/cli
-```
-
-The workflow to build the demo, on a fresh project, is as follows:
-
-```
-$ cd ui
-$ yarn
-$ yarn build
-$ cd ../demo
-$ yarn
-$ quasar dev
+```bash
+pnpm add @quasar/quasar-ui-qscroller@beta
+# or
+bun add @quasar/quasar-ui-qscroller@beta
+# or
+yarn add @quasar/quasar-ui-qscroller@beta
+# or
+npm install @quasar/quasar-ui-qscroller@beta
+# or, in a Quasar CLI project
+quasar ext add @quasar/qscroller@beta
 ```
 
-# Support
+## Development
+
+```bash
+pnpm install
+pnpm verify
+pnpm --filter docs dev
+```
+
+## Support
 
 If QScroller is useful in your workflow and you want to support ongoing maintenance:
 
 GitHub Sponsors: https://github.com/sponsors/hawkeye64
 PayPal: https://paypal.me/hawkeye64
 
-# License
+## License
 
 MIT (c) Jeff Galbraith <jeff@quasar.dev>

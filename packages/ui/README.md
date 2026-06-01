@@ -1,158 +1,106 @@
 # QScroller
 
-[![npm](https://img.shields.io/npm/v/quasar-ui-qscroller.svg?label=quasar-ui-qscroller)](https://www.npmjs.com/package/quasar-ui-qscroller)
-[![npm](https://img.shields.io/npm/dt/quasar-ui-qscroller.svg)](https://www.npmjs.com/package/quasar-ui-qscroller)
+[![npm](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller/beta?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![npm](https://img.shields.io/npm/dt/@quasar/quasar-ui-qscroller.svg)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
 
-QScroller is a [Quasar](https://quasar.dev) component. It allows you to have time and date selections or a combination of both, including range selections.
+QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
 
-# Examples and Documentation
+## Install
 
-Can be found [here](https://quasarframework.github.io/quasar-ui-qscroller)
+```bash
+pnpm add @quasar/quasar-ui-qscroller@beta
+# or
+bun add @quasar/quasar-ui-qscroller@beta
+# or
+yarn add @quasar/quasar-ui-qscroller@beta
+# or
+npm install @quasar/quasar-ui-qscroller@beta
+```
 
-# Usage
+## Quasar CLI Vite
 
-## Quasar CLI project
+Use the App Extension when you want QScroller registered for the whole app:
 
-Install the [App Extension](../app-extension).
+```bash
+quasar ext add @quasar/qscroller@beta
+```
 
-**OR**:
+Or register the UI package manually in a boot file:
 
-Create and register a boot file:
-
-```js
-import Vue from "vue";
+```ts
+import { defineBoot } from "@quasar/app-vite";
 import Plugin from "@quasar/quasar-ui-qscroller";
 import "@quasar/quasar-ui-qscroller/dist/index.css";
 
-Vue.use(Plugin);
+export default defineBoot(({ app }) => {
+  app.use(Plugin);
+});
 ```
 
-**OR**:
+## Vue 3 Or Vite
 
-```html
-<style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
-
-<script>
-  import { QScroller } from "@quasar/quasar-ui-qscroller";
-
-  export default {
-    components: {
-      QScroller,
-    },
-  };
-</script>
-```
-
-## Vue CLI project
-
-```js
-import Vue from "vue";
+```ts
+import { createApp } from "vue";
 import Plugin from "@quasar/quasar-ui-qscroller";
 import "@quasar/quasar-ui-qscroller/dist/index.css";
+import App from "./App.vue";
 
-Vue.use(Plugin);
+const app = createApp(App);
+
+app.use(Plugin);
+app.mount("#app");
 ```
 
-**OR**:
+## Component Import
 
-```html
+```vue
 <style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
 
-<script>
-  import { QScroller } from "@quasar/quasar-ui-qscroller";
-
-  export default {
-    components: {
-      QScroller,
-    },
-  };
+<script setup lang="ts">
+import {
+  QDateRangeScroller,
+  QDateScroller,
+  QDateTimeScroller,
+  QScroller,
+  QStringScroller,
+  QTimeRangeScroller,
+  QTimeScroller,
+} from "@quasar/quasar-ui-qscroller";
 </script>
 ```
 
-## UMD variant
+## UMD
 
-Exports `window.QScroller`.
+The UMD bundle exposes `window.QScroller`.
 
-Add the following tag(s) after the Quasar ones:
-
-```html
-<head>
-  <!-- AFTER the Quasar stylesheet tags: -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.min.css"
-    rel="stylesheet"
-    type="text/css"
-  />
-</head>
-<body>
-  <!-- at end of body, AFTER Quasar script(s): -->
-  <script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.umd.min.js"></script>
-</body>
-```
-
-If you need the RTL variant of the CSS, then go for the following (instead of the above stylesheet link):
+Add the QScroller assets after the Quasar assets:
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.rtl.min.css"
+  href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@beta/dist/index.min.css"
   rel="stylesheet"
   type="text/css"
 />
+<script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@beta/dist/index.umd.min.js"></script>
 ```
 
-# Building the Projects
+Use `dist/index.rtl.min.css` when your app needs the RTL stylesheet.
 
-## Setup
-
-In both the `ui` and `ui/dev` folders:
+## Development
 
 ```bash
-$ yarn
+pnpm install
+pnpm --filter @quasar/quasar-ui-qscroller build
+pnpm --filter @quasar/quasar-ui-qscroller typecheck
 ```
 
-## Developing
-
-In the `ui` folder
-
-```bash
-# start dev in SPA mode
-$ yarn dev
-
-# start dev in UMD mode
-$ yarn dev:umd
-
-# start dev in SSR mode
-$ yarn dev:ssr
-
-# start dev in Cordova iOS mode
-$ yarn dev:ios
-
-# start dev in Cordova Android mode
-$ yarn dev:android
-
-# start dev in Electron mode
-$ yarn dev:electron
-```
-
-## Building package
-
-```bash
-$ yarn build
-```
-
-# build just the JSON API
-
-```bash
-$ yarn build:api
-```
-
-# Support
+## Support
 
 If QScroller is useful in your workflow and you want to support ongoing maintenance:
 
 GitHub Sponsors: https://github.com/sponsors/hawkeye64
 PayPal: https://paypal.me/hawkeye64
 
-# License
+## License
 
 MIT (c) Jeff Galbraith <jeff@quasar.dev>
