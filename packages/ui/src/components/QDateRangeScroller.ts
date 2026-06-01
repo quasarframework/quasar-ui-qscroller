@@ -1,7 +1,6 @@
 // Mixins
-import Common from "../mixins/common";
+import Common, { renderCommon } from "../mixins/common";
 import DateBase from "../mixins/date-base";
-import { ScrollerColorMixin } from "../mixins/colorize";
 import QDateScroller from "./QDateScroller";
 
 // Util
@@ -15,15 +14,21 @@ import {
   getTime,
   padNumber,
 } from "../utils/Timestamp";
-import { defineLegacyComponent } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
   name: "QDateRangeScroller",
 
-  mixins: [DateBase, ScrollerColorMixin, Common],
+  mixins: [DateBase, Common],
+
+  render() {
+    return renderCommon(this);
+  },
 
   props: {
+    ...props.common,
+    ...props.base,
     ...props.dateRange,
     ...props.verticalBar,
     ...props.locale,
@@ -41,17 +46,20 @@ export default defineLegacyComponent({
     };
   },
 
-  mounted() {
+  beforeMount() {
     this.splitDate();
+  },
+
+  mounted() {
     this.adjustBodyHeight();
   },
 
   computed: {
     slotData() {
       if (this.$refs.startDate && this.$refs.endDate) {
-        return [this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()];
+        return { value: [this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()] };
       }
-      return [];
+      return { value: [] };
     },
 
     displayed() {
@@ -89,6 +97,10 @@ export default defineLegacyComponent({
 
   methods: {
     emitValue() {
+      if (this.type === null || this.startDate === "" || this.endDate === "") {
+        return;
+      }
+
       let startParts, endParts, start, end;
       switch (this.type) {
         case "date":
@@ -133,16 +145,6 @@ export default defineLegacyComponent({
           this.$emit("input", [this.startDate, this.endDate]);
           return;
       }
-      if (this.startDate !== "" && this.endDate !== "") {
-        if (this.type === "array") {
-          this.$emit("input", [this.startDate, this.endDate]);
-        } else if (this.type === "object") {
-          this.$emit("input", `{ start: ${this.startDate}, end: ${this.endDate} }`);
-        } else {
-          // if (this.type === 'string') {
-          this.$emit("input", `${this.startDate}${this.displaySeparator}${this.endDate}`);
-        }
-      }
     },
 
     isValidRange() {
@@ -176,19 +178,32 @@ export default defineLegacyComponent({
     splitDate() {
       // QDateRangeScroller takes an array of Date, Object, Array or String
       let start, end, now;
-      let type = Object.prototype.toString.call(this.value);
-      if (
-        type !== "[object Array]" &&
-        type !== "[object Undefined]" &&
-        type !== "[object String]"
-      ) {
+      const valueType = Object.prototype.toString.call(this.value);
+
+      if (valueType === "[object Undefined]" || this.value === null) {
+        this.type = "string";
+        now = new Date();
+        now = parseDate(now);
+        start = getDate(now) + " " + getTime(now);
+        start = getDate(parseTimestamp(start));
+        end = start;
+        if (this.isValidDate(start) && this.isValidDate(end)) {
+          this.startDate = start;
+          this.endDate = end;
+        } else {
+          /* eslint-disable-next-line */
+          console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
+        }
+        return;
+      }
+
+      if (Array.isArray(this.value) !== true || this.value.length < 2) {
         /* eslint-disable-next-line */
         console.error(`QDateRangeScroller: value needs to be an array of types (${this.value})`);
         return;
       }
-      // use first item to determine type
-      type = Object.prototype.toString.call(this.value[0]);
-      switch (type) {
+
+      switch (Object.prototype.toString.call(this.value[0])) {
         case "[object Date]":
           this.type = "date";
           start = parseDate(this.value[0]);
@@ -276,7 +291,11 @@ export default defineLegacyComponent({
             /* eslint-disable-next-line */
             console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
           }
+          return;
       }
+
+      /* eslint-disable-next-line */
+      console.error(`QDateRangeScroller: value needs to be an array of types (${this.value})`);
     },
 
     // -------------------------------
@@ -373,7 +392,10 @@ export default defineLegacyComponent({
     },
 
     __renderScrollers(h) {
-      return [this.__renderStartDate(h), this.__renderEndDate(h)];
+      return [
+        callLegacyMethod(this, "__renderStartDate", h),
+        callLegacyMethod(this, "__renderEndDate", h),
+      ];
     },
   },
 });

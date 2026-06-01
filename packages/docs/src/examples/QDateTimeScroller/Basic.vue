@@ -6,6 +6,7 @@
       year-stop="2028"
       minute-interval="15"
       class="example-scroller"
+      no-footer
       @input="selectedDateTime = $event"
     />
 

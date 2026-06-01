@@ -8,7 +8,7 @@ import QTimeRangeScroller from "./QTimeRangeScroller";
 import QDateRangeScroller from "./QDateRangeScroller";
 
 import props from "../utils/props";
-import { defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
@@ -85,6 +85,6 @@ export default defineLegacyComponent({
       scopedSlots: this.$slots,
     };
 
-    return this.__renderComponent(h, component, data);
+    return callLegacyMethod(this, "__renderComponent", h, component, data);
   },
 });

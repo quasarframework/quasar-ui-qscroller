@@ -1,6 +1,4 @@
-import { defineLegacyComponent } from "../utils/vue-compat";
-
-type RenderData = {
+export type RenderData = {
   class?: Record<string, boolean>;
   style?: Record<string, string>;
   [key: string]: unknown;
@@ -41,7 +39,7 @@ function isCssColorValue(color: string): boolean {
   return CSS_COLOR_VALUE_RE.test(color) || SIMPLE_CSS_COLOR_NAME_RE.test(color);
 }
 
-function toCssColor(color: string | undefined, fallback: string): string {
+export function calculateScrollerColor(color: string | undefined, fallback: string): string {
   const normalized = normalizeColor(color);
 
   if (normalized === void 0) {
@@ -88,73 +86,78 @@ function addStyle(data: RenderData, style: Record<string, string>): RenderData {
   return data;
 }
 
-export const ScrollerColorMixin = defineLegacyComponent({
-  name: "ScrollerColorMixin",
+export function setScrollerCssColorVar(
+  style: Record<string, unknown>,
+  name: string,
+  color: string | undefined,
+  fallback: string,
+) {
+  style[name] = calculateScrollerColor(color, fallback);
+  return style;
+}
 
-  methods: {
-    calculateColor(color: string | undefined, defaultColor = "black") {
-      return toCssColor(color, defaultColor);
-    },
+export function setScrollerBackgroundColor(color: string | undefined, data: RenderData = {}) {
+  const normalized = normalizeColor(color);
 
-    setCssColorVar(
-      style: Record<string, unknown>,
-      name: string,
-      color: string | undefined,
-      fallback: string,
-    ) {
-      style[name] = toCssColor(color, fallback);
-      return style;
-    },
+  if (normalized === void 0) {
+    return data;
+  }
 
-    setBothColors(color: string | undefined, bgColor: string | undefined, data: RenderData = {}) {
-      return this.setTextColor(color, this.setBackgroundColor(bgColor, data));
-    },
+  if (shouldUseColorClass(normalized) === true) {
+    return addClass(data, `bg-${normalized}`);
+  }
 
-    setBackgroundColor(color: string | undefined, data: RenderData = {}) {
-      const normalized = normalizeColor(color);
+  return addStyle(data, {
+    "background-color": calculateScrollerColor(normalized, "transparent"),
+  });
+}
 
-      if (normalized === void 0) {
-        return data;
-      }
+export function setScrollerTextColor(color: string | undefined, data: RenderData = {}) {
+  const normalized = normalizeColor(color);
 
-      if (shouldUseColorClass(normalized) === true) {
-        return addClass(data, `bg-${normalized}`);
-      }
+  if (normalized === void 0) {
+    return data;
+  }
 
-      return addStyle(data, {
-        "background-color": toCssColor(normalized, "transparent"),
-      });
-    },
+  if (shouldUseColorClass(normalized) === true) {
+    return addClass(data, `text-${normalized}`);
+  }
 
-    setTextColor(color: string | undefined, data: RenderData = {}) {
-      const normalized = normalizeColor(color);
+  const cssColor = calculateScrollerColor(normalized, "currentColor");
 
-      if (normalized === void 0) {
-        return data;
-      }
+  return addStyle(data, {
+    color: cssColor,
+    "caret-color": cssColor,
+  });
+}
 
-      if (shouldUseColorClass(normalized) === true) {
-        return addClass(data, `text-${normalized}`);
-      }
+export function setScrollerBothColors(
+  color: string | undefined,
+  bgColor: string | undefined,
+  data: RenderData = {},
+) {
+  return setScrollerTextColor(color, setScrollerBackgroundColor(bgColor, data));
+}
 
-      const cssColor = toCssColor(normalized, "currentColor");
+export function setScrollerBorderColor(color: string | undefined, data: RenderData = {}) {
+  const normalized = normalizeColor(color);
 
-      return addStyle(data, {
-        color: cssColor,
-        "caret-color": cssColor,
-      });
-    },
+  if (normalized === void 0) {
+    return data;
+  }
 
-    setBorderColor(color: string | undefined, data: RenderData = {}) {
-      const normalized = normalizeColor(color);
+  return addStyle(data, {
+    "border-color": calculateScrollerColor(normalized, "currentColor"),
+  });
+}
 
-      if (normalized === void 0) {
-        return data;
-      }
-
-      return addStyle(data, {
-        "border-color": toCssColor(normalized, "currentColor"),
-      });
-    },
-  },
-});
+export function useScrollerColors() {
+  return {
+    calculateScrollerColor,
+    setScrollerCssColorVar,
+    setScrollerBackgroundColor,
+    setScrollerTextColor,
+    setScrollerBothColors,
+    setScrollerBorderColor,
+  };
+}

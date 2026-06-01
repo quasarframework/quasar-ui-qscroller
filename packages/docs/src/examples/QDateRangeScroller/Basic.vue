@@ -7,6 +7,7 @@
       end-year-begin="2024"
       end-year-stop="2028"
       class="example-scroller"
+      no-footer
       @input="selectedRange = $event"
     />
 

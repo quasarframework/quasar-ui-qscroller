@@ -1,7 +1,6 @@
 // Mixins
-import Common from "../mixins/common";
+import Common, { renderCommon } from "../mixins/common";
 import DateTimeBase from "../mixins/date-base";
-import { ScrollerColorMixin } from "../mixins/colorize";
 
 // Components
 import ScrollerBase from "../mixins/scroller-base";
@@ -22,15 +21,21 @@ import {
   createNativeLocaleFormatter,
   DAYS_IN_MONTH_MAX,
 } from "../utils/Timestamp";
-import { defineLegacyComponent } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
   name: "QDateScroller",
 
-  mixins: [DateTimeBase, ScrollerColorMixin, Common],
+  mixins: [DateTimeBase, Common],
+
+  render() {
+    return renderCommon(this);
+  },
 
   props: {
+    ...props.common,
+    ...props.base,
     ...props.date,
     ...props.verticalBar,
     ...props.locale,
@@ -68,7 +73,7 @@ export default defineLegacyComponent({
 
   computed: {
     slotData() {
-      return this.timestamp;
+      return { value: this.timestamp };
     },
 
     displayed() {
@@ -482,7 +487,7 @@ export default defineLegacyComponent({
           items: this.yearsList,
           dense: this.dense,
           disable: this.disable,
-          height: this.bodyHeight,
+          childHeight: this.bodyHeight,
           textColor: this.innerTextColor,
           color: this.innerColor,
           disabledTextColor: this.disabledTextColor,
@@ -514,7 +519,7 @@ export default defineLegacyComponent({
           items: this.monthsList,
           dense: this.dense,
           disable: this.disable,
-          height: this.bodyHeight,
+          childHeight: this.bodyHeight,
           textColor: this.innerTextColor,
           color: this.innerColor,
           disabledTextColor: this.disabledTextColor,
@@ -543,7 +548,7 @@ export default defineLegacyComponent({
           items: this.daysList,
           dense: this.dense,
           disable: this.disable,
-          height: this.bodyHeight,
+          childHeight: this.bodyHeight,
           textColor: this.innerTextColor,
           color: this.innerColor,
           disabledTextColor: this.disabledTextColor,
@@ -557,9 +562,9 @@ export default defineLegacyComponent({
     },
     __renderScrollers(h) {
       return [
-        this.noYears !== true && this.__renderYearsScroller(h),
-        this.noMonths !== true && this.__renderMonthsScroller(h),
-        this.noDays !== true && this.__renderDaysScroller(h),
+        this.noYears !== true && callLegacyMethod(this, "__renderYearsScroller", h),
+        this.noMonths !== true && callLegacyMethod(this, "__renderMonthsScroller", h),
+        this.noDays !== true && callLegacyMethod(this, "__renderDaysScroller", h),
       ];
     },
   },

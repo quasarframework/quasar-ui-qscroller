@@ -1,7 +1,6 @@
 // Mixins
-import Common from "../mixins/common";
+import Common, { renderCommon } from "../mixins/common";
 import TimeBase from "../mixins/time-base";
-import { ScrollerColorMixin } from "../mixins/colorize";
 import QTimeScroller from "./QTimeScroller";
 
 // Util
@@ -15,17 +14,25 @@ import {
   getTime,
   padNumber,
 } from "../utils/Timestamp";
-import { defineLegacyComponent } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
   name: "QTimeRangeScroller",
 
-  mixins: [TimeBase, ScrollerColorMixin, Common],
+  mixins: [TimeBase, Common],
+
+  render() {
+    return renderCommon(this);
+  },
 
   props: {
+    ...props.common,
+    ...props.base,
     ...props.timeRange,
     ...props.verticalBar,
+    ...props.locale,
+    hour12: Boolean,
   },
 
   data() {
@@ -40,17 +47,20 @@ export default defineLegacyComponent({
     };
   },
 
-  mounted() {
+  beforeMount() {
     this.splitTime();
+  },
+
+  mounted() {
     this.adjustBodyHeight();
   },
 
   computed: {
     slotData() {
       if (this.$refs.startTime && this.$refs.endTime) {
-        return [this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()];
+        return { value: [this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()] };
       }
-      return "";
+      return { value: [] };
     },
 
     displayed() {
@@ -88,6 +98,10 @@ export default defineLegacyComponent({
 
   methods: {
     emitValue() {
+      if (this.type === null || this.startTime === "" || this.endTime === "") {
+        return;
+      }
+
       let startParts, endParts, start, end;
       switch (this.type) {
         case "date":
@@ -122,16 +136,6 @@ export default defineLegacyComponent({
           this.$emit("input", [this.startTime, this.endTime]);
           return;
       }
-      if (this.startTime !== "" && this.endTime !== "") {
-        if (this.type === "array") {
-          this.$emit("input", [this.startTime, this.endTime]);
-        } else if (this.type === "object") {
-          this.$emit("input", `{ start: ${this.startTime}, end: ${this.endTime} }`);
-        } else {
-          // if (this.type === 'string') {
-          this.$emit("input", `${this.startTime}${this.displaySeparator}${this.endTime}`);
-        }
-      }
     },
 
     isValidRange() {
@@ -163,19 +167,32 @@ export default defineLegacyComponent({
     splitTime() {
       // QTimeRangeScroller takes an array of Date, Object, Array or String
       let start, end, now;
-      let type = Object.prototype.toString.call(this.value);
-      if (
-        type !== "[object Array]" &&
-        type !== "[object Undefined]" &&
-        type !== "[object String]"
-      ) {
+      const valueType = Object.prototype.toString.call(this.value);
+
+      if (valueType === "[object Undefined]" || this.value === null) {
+        this.type = "string";
+        now = new Date();
+        now = parseDate(now);
+        start = getDate(now) + " " + getTime(now);
+        start = getTime(parseTimestamp(start));
+        end = start;
+        if (this.isValidTime(start) && this.isValidTime(end)) {
+          this.startTime = start;
+          this.endTime = end;
+        } else {
+          /* eslint-disable-next-line */
+          console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
+        }
+        return;
+      }
+
+      if (Array.isArray(this.value) !== true || this.value.length < 2) {
         /* eslint-disable-next-line */
         console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`);
         return;
       }
-      // use first item to determine type
-      type = Object.prototype.toString.call(this.value[0]);
-      switch (type) {
+
+      switch (Object.prototype.toString.call(this.value[0])) {
         case "[object Date]":
           this.type = "date";
           start = parseDate(this.value[0]);
@@ -255,7 +272,11 @@ export default defineLegacyComponent({
             /* eslint-disable-next-line */
             console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
           }
+          return;
       }
+
+      /* eslint-disable-next-line */
+      console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`);
     },
 
     // -------------------------------
@@ -340,7 +361,10 @@ export default defineLegacyComponent({
     },
 
     __renderScrollers(h) {
-      return [this.__renderStartTime(h), this.__renderEndTime(h)];
+      return [
+        callLegacyMethod(this, "__renderStartTime", h),
+        callLegacyMethod(this, "__renderEndTime", h),
+      ];
     },
   },
 });

@@ -1,13 +1,13 @@
-// Mixins
-import { ScrollerColorMixin } from "./colorize";
+import { useScrollerColors } from "../composables/use-scroller-colors";
 
 // Utils
 import props from "../utils/props";
 import { debounce, QBtn, QResizeObserver, scroll } from "quasar";
-import { defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
 
 // tree shake other scroll functions
-const { getScrollPosition, setScrollPosition, getScrollTarget } = scroll as any;
+const { getVerticalScrollPosition, setVerticalScrollPosition, getScrollTarget } = scroll as any;
+const { setScrollerBothColors, setScrollerTextColor } = useScrollerColors();
 
 /*
   The list of items should be an object that has this format:
@@ -32,8 +32,6 @@ const ITEM_HEIGHT_DENSE = 24;
 
 export default defineLegacyComponent({
   name: "ScrollerBase",
-
-  mixins: [ScrollerColorMixin],
 
   props: {
     ...props.common,
@@ -132,8 +130,8 @@ export default defineLegacyComponent({
               selected.classList.remove(klass.slice(1));
               selected = this.$el.querySelector(klass);
             }
-            const pos = getScrollPosition(this.$el) + this.itemHeight * dir;
-            setScrollPosition(this.$el, pos, 10);
+            const pos = getVerticalScrollPosition(this.$el) + this.itemHeight * dir;
+            setVerticalScrollPosition(this.$el, pos, 10);
             this.scrollTimer = setTimeout(() => {
               scrollToEl.classList.add(klass.slice(1));
               const items = this.items.filter(
@@ -166,7 +164,7 @@ export default defineLegacyComponent({
 
     getElementOffsets(childEl, _parentEl) {
       const target = getScrollTarget(childEl);
-      const scrollTop = getScrollPosition(target);
+      const scrollTop = getVerticalScrollPosition(target);
       const top = childEl.offsetTop - scrollTop;
       const offset: Record<string, number> = {};
       offset.x = childEl.offsetLeft;
@@ -316,7 +314,7 @@ export default defineLegacyComponent({
         if (found) {
           found.classList.add(klass.slice(1));
           const pos = found.offsetTop - self.padding;
-          setScrollPosition(self.$el, pos, 100);
+          setVerticalScrollPosition(self.$el, pos, 100);
         }
       }, 150);
     },
@@ -326,7 +324,7 @@ export default defineLegacyComponent({
     // -------------------------------
     __renderItem(h, item) {
       const disabled = this.disable === true || item.disabled === true;
-      const data = this.setTextColor(disabled === true ? this.disabledTextColor : void 0, {
+      const data = setScrollerTextColor(disabled === true ? this.disabledTextColor : void 0, {
         staticClass: `q-scroller__item${this.dense ? "--dense" : ""} justify-center align-center`,
         class: {
           "q-scroller__item--selected":
@@ -349,7 +347,7 @@ export default defineLegacyComponent({
           align: item.align !== void 0 ? item.align : void 0,
         },
         on: {
-          click: () => this.clickEvent(item),
+          click: () => callLegacyMethod(this, "clickEvent", item),
         },
       });
 
@@ -365,16 +363,16 @@ export default defineLegacyComponent({
     __renderContents(h) {
       return h(
         "div",
-        this.setBothColors(this.textColor, void 0, {
+        setScrollerBothColors(this.textColor, void 0, {
           staticClass: "q-scroller__body",
           on: {
-            wheel: (event) => this.wheelEvent(event),
+            wheel: (event) => callLegacyMethod(this, "wheelEvent", event),
           },
         }),
         [
-          this.__renderPadding(h),
-          this.items.map((item) => this.__renderItem(h, item)),
-          this.__renderPadding(h),
+          callLegacyMethod(this, "__renderPadding", h),
+          this.items.map((item) => callLegacyMethod(this, "__renderItem", h, item)),
+          callLegacyMethod(this, "__renderPadding", h),
         ],
       );
     },
@@ -384,7 +382,7 @@ export default defineLegacyComponent({
     const resize = [
       h(QResizeObserver, {
         props: { debounce: 0 },
-        on: { resize: this.onResize },
+        on: { resize: () => callLegacyMethod(this, "onResize") },
       }),
     ];
 
@@ -399,10 +397,10 @@ export default defineLegacyComponent({
           ...this.$attrs,
         },
         on: {
-          scroll: (event) => this.scrollEvent(event),
+          scroll: (event) => callLegacyMethod(this, "scrollEvent", event),
         },
       },
-      resize.concat([this.__renderContents(h)]),
+      resize.concat([callLegacyMethod(this, "__renderContents", h)]),
     );
   },
 });

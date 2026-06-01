@@ -4,6 +4,7 @@
       :value="selectedTime"
       minute-interval="15"
       class="example-scroller"
+      no-footer
       @input="selectedTime = $event"
     />
 

@@ -1,5 +1,123 @@
 import { QBtn, QResizeObserver } from "quasar";
-import { defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
+import { useScrollerColors } from "../composables/use-scroller-colors";
+import { callLegacyMethod, defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
+
+const { setScrollerBackgroundColor, setScrollerBothColors, setScrollerCssColorVar } =
+  useScrollerColors();
+
+function renderCommonBody(vm, render) {
+  return render(
+    "div",
+    setScrollerBackgroundColor(vm.innerColor, {
+      staticClass: `q-scroller__body q-scroller__horizontal-bar${vm.dense === true ? "--dense" : ""} row full-width`,
+      class: {
+        "q-scroller__overflow-hidden": vm.$q.platform.is.mobile !== true,
+      },
+      style: {
+        height: (vm.childHeight === void 0 ? vm.bodyHeight : vm.childHeight) + "px",
+      },
+    }),
+    [callLegacyMethod(vm, "__renderScrollers", render)],
+  );
+}
+
+function renderCommonHeader(vm, render) {
+  if (vm.noHeader) return "";
+
+  const slot = vm.$slots.header;
+
+  return render(
+    "div",
+    {
+      ref: "header",
+      staticClass:
+        (vm.dense ? "q-scroller__header--dense" : "q-scroller__header") +
+        " flex justify-around items-center full-width q-pa-xs",
+      class: {
+        "shadow-20": vm.noShadow === false,
+      },
+    },
+    slot
+      ? slot(vm.slotData)
+      : [
+          render(
+            "span",
+            {
+              staticClass: "ellipsis",
+            },
+            vm.displayed,
+          ),
+        ],
+  );
+}
+
+function renderCommonFooterButton(vm, render) {
+  return [
+    render(QBtn, {
+      staticClass: "q-scroller__cancel-btn q-ml-xs",
+      props: {
+        flat: true,
+        dense: true,
+        round: true,
+        icon: "close",
+      },
+      on: {
+        click: () => {
+          vm.$emit("close");
+        },
+      },
+    }),
+  ];
+}
+
+function renderCommonFooter(vm, render) {
+  if (vm.noFooter) return "";
+
+  const slot = vm.$slots.footer;
+
+  return render(
+    "div",
+    {
+      ref: "footer",
+      staticClass:
+        (vm.dense ? "q-scroller__footer--dense" : "q-scroller__footer") +
+        " flex justify-around items-center full-width q-pa-xs",
+      class: {
+        "shadow-up-20": vm.noShadow === false,
+      },
+    },
+    slot ? slot(vm.slotData) : [renderCommonFooterButton(vm, render)],
+  );
+}
+
+export function renderCommon(vm) {
+  const resize = [
+    h(QResizeObserver, {
+      props: { debounce: 0 },
+      on: { resize: vm.onResize },
+    }),
+  ];
+
+  return h(
+    "div",
+    setScrollerBothColors(vm.textColor, vm.color, {
+      ref: "scroller",
+      staticClass: "q-scroller",
+      class: {
+        "q-scroller__disabled": vm.disable === true,
+        "rounded-borders": vm.roundedBorders === true,
+        "q-scroller__border": vm.noBorder !== true,
+        "q-scroller__overflow-hidden": true,
+      },
+      style: vm.style,
+    }),
+    resize.concat([
+      renderCommonHeader(vm, h),
+      renderCommonBody(vm, h),
+      renderCommonFooter(vm, h),
+    ]),
+  );
+}
 
 /* @vue/mixin */
 export default defineLegacyComponent({
@@ -8,18 +126,23 @@ export default defineLegacyComponent({
   computed: {
     style() {
       const style: Record<string, unknown> = {};
-      this.setCssColorVar(style, "--q-scroller-border-color", this.borderColor, "#ccc");
-      this.setCssColorVar(style, "--q-scroller-bar-color", this.barColor, "#ccc");
-      this.setCssColorVar(style, "--q-scroller-color", this.textColor, "currentColor");
-      this.setCssColorVar(style, "--q-scroller-background", this.color, "transparent");
-      this.setCssColorVar(
+      setScrollerCssColorVar(style, "--q-scroller-border-color", this.borderColor, "#ccc");
+      setScrollerCssColorVar(style, "--q-scroller-bar-color", this.barColor, "#ccc");
+      setScrollerCssColorVar(style, "--q-scroller-color", this.textColor, "currentColor");
+      setScrollerCssColorVar(style, "--q-scroller-background", this.color, "transparent");
+      setScrollerCssColorVar(
         style,
         "--q-scroller-inner-color",
         this.innerTextColor ?? this.textColor,
         "currentColor",
       );
-      this.setCssColorVar(style, "--q-scroller-inner-background", this.innerColor, "transparent");
-      this.setCssColorVar(
+      setScrollerCssColorVar(
+        style,
+        "--q-scroller-inner-background",
+        this.innerColor,
+        "transparent",
+      );
+      setScrollerCssColorVar(
         style,
         "--q-scroller-disabled-color",
         this.disabledTextColor,
@@ -83,115 +206,9 @@ export default defineLegacyComponent({
       }, 200);
     },
 
-    // -------------------------------
-    // common render functions
-    // -------------------------------
-
-    __renderBody(render) {
-      return render(
-        "div",
-        this.setBackgroundColor(this.innerColor, {
-          staticClass: `q-scroller__body q-scroller__horizontal-bar${this.dense === true ? "--dense" : ""} row full-width`,
-          class: {
-            "q-scroller__overflow-hidden": this.$q.platform.is.mobile !== true,
-          },
-          style: {
-            height: (this.childHeight === void 0 ? this.bodyHeight : this.childHeight) + "px",
-          },
-        }),
-        [this.__renderScrollers(render)],
-      );
-    },
-
-    __renderHeader(render) {
-      if (this.noHeader) return "";
-      const slot = this.$slots.header;
-      return render(
-        "div",
-        {
-          ref: "header",
-          staticClass:
-            (this.dense ? "q-scroller__header--dense" : "q-scroller__header") +
-            " flex justify-around items-center full-width q-pa-xs",
-          class: {
-            "shadow-20": this.noShadow === false,
-          },
-        },
-        slot
-          ? slot(this.slotData)
-          : [
-              render(
-                "span",
-                {
-                  staticClass: "ellipsis",
-                },
-                this.displayed,
-              ),
-            ],
-      );
-    },
-
-    // the close button
-    __renderFooterButton(render) {
-      return [
-        render(QBtn, {
-          staticClass: "q-scroller__cancel-btn q-ml-xs",
-          props: {
-            flat: true,
-            dense: true,
-            round: true,
-            icon: "close",
-          },
-          on: {
-            click: () => {
-              this.$emit("close");
-            },
-          },
-        }),
-      ];
-    },
-
-    __renderFooter(render) {
-      if (this.noFooter) return "";
-      const slot = this.$slots.footer;
-      return render(
-        "div",
-        {
-          ref: "footer",
-          staticClass:
-            (this.dense ? "q-scroller__footer--dense" : "q-scroller__footer") +
-            " flex justify-around items-center full-width q-pa-xs",
-          class: {
-            "shadow-up-20": this.noShadow === false,
-          },
-        },
-        slot ? slot(this.slotData) : [this.__renderFooterButton(render)],
-      );
-    },
   },
 
   render() {
-    const resize = [
-      h(QResizeObserver, {
-        props: { debounce: 0 },
-        on: { resize: this.onResize },
-      }),
-    ];
-
-    return h(
-      "div",
-      this.setBothColors(this.textColor, this.color, {
-        ref: "scroller",
-        staticClass: "q-scroller",
-        class: {
-          "q-scroller__disabled": this.disable === true,
-          "rounded-borders": this.roundedBorders === true,
-          "q-scroller__border": this.noBorder !== true,
-          "q-scroller__overflow-hidden": true,
-        },
-        style: this.style,
-      }),
-      resize.concat([this.__renderHeader(h), this.__renderBody(h), this.__renderFooter(h)]),
-    );
+    return renderCommon(this);
   },
 });

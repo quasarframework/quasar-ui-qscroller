@@ -1,8 +1,18 @@
 <template>
   <div class="q-pa-md row q-col-gutter-lg items-start">
-    <q-date-scroller :value="date" style="height: 260px; max-width: 280px" @input="date = $event" />
+    <q-date-scroller
+      :value="date"
+      no-footer
+      style="height: 260px; max-width: 280px"
+      @input="date = $event"
+    />
 
-    <q-time-scroller :value="time" style="height: 260px; max-width: 220px" @input="time = $event" />
+    <q-time-scroller
+      :value="time"
+      no-footer
+      style="height: 260px; max-width: 220px"
+      @input="time = $event"
+    />
 
     <div class="col-12 text-caption">Date: {{ date }} · Time: {{ time }}</div>
   </div>

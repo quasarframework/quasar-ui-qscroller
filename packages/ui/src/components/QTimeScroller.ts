@@ -1,7 +1,6 @@
 // Mixins
-import Common from "../mixins/common";
+import Common, { renderCommon } from "../mixins/common";
 import TimeBase from "../mixins/time-base";
-import { ScrollerColorMixin } from "../mixins/colorize";
 
 // Components
 import ScrollerBase from "../mixins/scroller-base";
@@ -20,17 +19,31 @@ import {
   padNumber,
   createNativeLocaleFormatter,
 } from "../utils/Timestamp";
-import { defineLegacyComponent } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
   name: "QTimeScroller",
 
-  mixins: [TimeBase, ScrollerColorMixin, Common],
+  mixins: [TimeBase, Common],
+
+  render() {
+    return renderCommon(this);
+  },
 
   props: {
+    ...props.common,
+    ...props.base,
     ...props.time,
     ...props.verticalBar,
+    ...props.locale,
+    hour12: Boolean,
+    amPmLabels: {
+      type: Array,
+      default: () => ["AM", "PM"],
+      validator: (v) =>
+        Array.isArray(v) && v.length === 2 && typeof v[0] === "string" && typeof v[1] === "string",
+    },
   },
 
   data() {
@@ -68,7 +81,7 @@ export default defineLegacyComponent({
 
   computed: {
     slotData() {
-      return this.timestamp;
+      return { value: this.timestamp };
     },
 
     displayed() {
@@ -466,9 +479,9 @@ export default defineLegacyComponent({
 
     __renderScrollers(h) {
       return [
-        this.noHours !== true && this.__renderHoursScroller(h),
-        this.noMinutes !== true && this.__renderMinutesScroller(h),
-        this.hour12 === true && this.__renderAmPmScroller(h),
+        this.noHours !== true && callLegacyMethod(this, "__renderHoursScroller", h),
+        this.noMinutes !== true && callLegacyMethod(this, "__renderMinutesScroller", h),
+        this.hour12 === true && callLegacyMethod(this, "__renderAmPmScroller", h),
       ];
     },
   },

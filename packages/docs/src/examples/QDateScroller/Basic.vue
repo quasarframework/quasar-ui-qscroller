@@ -5,6 +5,7 @@
       year-begin="2024"
       year-stop="2028"
       class="example-scroller"
+      no-footer
       @input="selectedDate = $event"
     />
 

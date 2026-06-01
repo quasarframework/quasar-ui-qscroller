@@ -1,7 +1,6 @@
 // Mixins
-import Common from "../mixins/common";
+import Common, { renderCommon } from "../mixins/common";
 import DateTimeBase from "../mixins/date-time-base";
-import { ScrollerColorMixin } from "../mixins/colorize";
 import QDateScroller from "./QDateScroller";
 import QTimeScroller from "./QTimeScroller";
 
@@ -18,19 +17,32 @@ import {
   compareTimestamps,
   padNumber,
 } from "../utils/Timestamp";
-import { defineLegacyComponent } from "../utils/vue-compat";
+import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
 /* @vue/component */
 export default defineLegacyComponent({
   name: "QDateTimeScroller",
 
-  mixins: [DateTimeBase, ScrollerColorMixin, Common],
+  mixins: [DateTimeBase, Common],
+
+  render() {
+    return renderCommon(this);
+  },
 
   props: {
+    ...props.common,
+    ...props.base,
     ...props.time,
     ...props.date,
     ...props.verticalBar,
     ...props.locale,
+    hour12: Boolean,
+    amPmLabels: {
+      type: Array,
+      default: () => ["AM", "PM"],
+      validator: (v) =>
+        Array.isArray(v) && v.length === 2 && typeof v[0] === "string" && typeof v[1] === "string",
+    },
   },
 
   data() {
@@ -60,7 +72,7 @@ export default defineLegacyComponent({
 
   computed: {
     slotData() {
-      return this.timestamp;
+      return { value: this.timestamp };
     },
 
     displayed() {
@@ -238,8 +250,6 @@ export default defineLegacyComponent({
           noBorder: true,
           noHeader: true,
           noFooter: true,
-          startDate: this.startDate,
-          endDate: this.EndDate,
           disabledYears: this.disabledYears,
           disabledMonths: this.disabledMonths,
           disabledDays: this.disabledDays,
@@ -283,7 +293,7 @@ export default defineLegacyComponent({
           noHeader: true,
           noFooter: true,
           hour12: this.hour12,
-          amPmLabels: this.ampPmLabels,
+          amPmLabels: this.amPmLabels,
           minuteInterval: this.minuteInterval,
           hourInterval: this.hourInterval,
           shortTimeLabel: this.shortTimeLabel,
@@ -302,7 +312,10 @@ export default defineLegacyComponent({
     },
 
     __renderScrollers(h) {
-      return [this.__renderDate(h), this.__renderTime(h)];
+      return [
+        callLegacyMethod(this, "__renderDate", h),
+        callLegacyMethod(this, "__renderTime", h),
+      ];
     },
   },
 });

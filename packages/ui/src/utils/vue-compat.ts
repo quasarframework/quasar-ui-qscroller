@@ -1,4 +1,4 @@
-import { h } from "vue";
+import { defineComponent, h } from "vue";
 import type { VNodeChild } from "vue";
 
 export interface LegacyRenderData {
@@ -25,7 +25,7 @@ function toHandlerName(name: string): string {
 export function defineLegacyComponent<T extends Record<string, unknown>>(
   component: T & ThisType<any>,
 ): T {
-  return component;
+  return defineComponent(component as any) as unknown as T;
 }
 
 export function legacyH(
@@ -55,4 +55,22 @@ export function legacyH(
   }
 
   return h(type as any, normalized, (children ?? scopedSlots) as any);
+}
+
+export function callLegacyMethod<T = unknown>(
+  vm: Record<string, any>,
+  name: string,
+  ...args: unknown[]
+): T {
+  const direct = vm?.[name];
+  if (typeof direct === "function") {
+    return direct.apply(vm, args);
+  }
+
+  const fallback = vm?.$options?.methods?.[name];
+  if (typeof fallback === "function") {
+    return fallback.apply(vm, args);
+  }
+
+  throw new TypeError(`${name} is not a function`);
 }

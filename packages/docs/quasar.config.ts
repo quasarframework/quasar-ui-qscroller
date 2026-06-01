@@ -17,6 +17,8 @@ export default defineConfig(async (ctx) => {
     extras: ["fontawesome-v7", "roboto-font", "material-icons"],
 
     build: {
+      vueOptionsAPI: true,
+
       target: {
         browser: ["es2022", "firefox115", "chrome115", "safari14"],
         node: "node20",
@@ -43,7 +45,6 @@ export default defineConfig(async (ctx) => {
           ...(Array.isArray(alias)
             ? alias
             : Object.entries(alias ?? {}).map(([find, replacement]) => ({ find, replacement }))),
-          // Consume workspace source in docs so examples track local UI edits.
           {
             find: /^@quasar\/quasar-ui-qscroller$/,
             replacement: ctx.appPaths.appDir + "/../ui/src/index.ts",

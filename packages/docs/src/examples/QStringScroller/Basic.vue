@@ -4,6 +4,7 @@
       :value="selectedSize"
       :items="sizes"
       class="example-scroller"
+      no-footer
       @input="selectedSize = $event"
     />
 

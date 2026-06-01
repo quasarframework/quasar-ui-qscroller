@@ -4,6 +4,7 @@
       :value="selected"
       :items="items"
       view="string"
+      no-footer
       style="height: 220px; max-width: 280px"
       @input="selected = $event"
     />
