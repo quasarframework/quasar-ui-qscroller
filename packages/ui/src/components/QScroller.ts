@@ -1,17 +1,14 @@
-// Scrollers
-import ScrollerBase from "../mixins/scroller-base";
-import QStringScroller from "./QStringScroller";
-import QDateScroller from "./QDateScroller";
-import QTimeScroller from "./QTimeScroller";
-import QDateTimeScroller from "./QDateTimeScroller";
-import QTimeRangeScroller from "./QTimeRangeScroller";
+import { computed, defineComponent, h, ref } from "vue";
+import ScrollerBase from "./private/ScrollerBase";
 import QDateRangeScroller from "./QDateRangeScroller";
-
+import QDateScroller from "./QDateScroller";
+import QDateTimeScroller from "./QDateTimeScroller";
+import QStringScroller from "./QStringScroller";
+import QTimeRangeScroller from "./QTimeRangeScroller";
+import QTimeScroller from "./QTimeScroller";
 import props from "../utils/props";
-import { callLegacyMethod, defineLegacyComponent, legacyH as h } from "../utils/vue-compat";
 
-/* @vue/component */
-export default defineLegacyComponent({
+export default defineComponent({
   name: "QScroller",
 
   props: {
@@ -30,61 +27,38 @@ export default defineLegacyComponent({
     amPmLabels: Array,
   },
 
-  computed: {
-    __renderProps() {
-      let component: unknown = "div";
-      switch (this.view) {
+  setup(props, { attrs, slots }) {
+    const componentRef = ref();
+
+    const component = computed(() => {
+      switch (props.view) {
         case "string":
-          component = QStringScroller;
-          if (!this.items || !Array.isArray(this.items)) {
+          if (!props.items || Array.isArray(props.items) !== true) {
             throw new Error(
               'QScroller: items [array] prop is required when view="string" (default)',
             );
           }
-          break;
+          return QStringScroller;
         case "time":
-          component = QTimeScroller;
-          break;
+          return QTimeScroller;
         case "date":
-          component = QDateScroller;
-          break;
+          return QDateScroller;
         case "date-time":
-          component = QDateTimeScroller;
-          break;
+          return QDateTimeScroller;
         case "time-range":
-          component = QTimeRangeScroller;
-          break;
+          return QTimeRangeScroller;
         case "date-range":
-          component = QDateRangeScroller;
-          break;
+          return QDateRangeScroller;
         default:
-          component = ScrollerBase;
-          break;
+          return ScrollerBase;
       }
+    });
 
-      return { component };
-    },
-  },
-
-  methods: {
-    __renderComponent(render, component, data) {
-      return render(component, data);
-    },
-  },
-
-  render() {
-    const { component } = this.__renderProps;
-
-    const data = {
-      props: {
-        ...this.$props,
-      },
-      attrs: {
-        ...this.$attrs,
-      },
-      scopedSlots: this.$slots,
-    };
-
-    return callLegacyMethod(this, "__renderComponent", h, component, data);
+    return () =>
+      h(component.value, {
+        ref: componentRef,
+        ...props,
+        ...attrs,
+      }, slots);
   },
 });

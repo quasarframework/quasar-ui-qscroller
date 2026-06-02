@@ -1,6 +1,6 @@
 export type RenderData = {
-  class?: Record<string, boolean>;
-  style?: Record<string, string>;
+  class?: unknown;
+  style?: Record<string, string | number>;
   [key: string]: unknown;
 };
 
@@ -69,15 +69,18 @@ function shouldUseColorClass(color: string | undefined): boolean {
 }
 
 function addClass(data: RenderData, className: string): RenderData {
-  data.class = {
-    ...data.class,
-    [className]: true,
-  };
+  if (data.class === void 0) {
+    data.class = [className];
+  } else if (Array.isArray(data.class) === true) {
+    data.class = [...data.class, className];
+  } else {
+    data.class = [data.class, className];
+  }
 
   return data;
 }
 
-function addStyle(data: RenderData, style: Record<string, string>): RenderData {
+function addStyle(data: RenderData, style: Record<string, string | number>): RenderData {
   data.style = {
     ...data.style,
     ...style,

@@ -17,8 +17,6 @@ export default defineConfig(async (ctx) => {
     extras: ["fontawesome-v7", "roboto-font", "material-icons"],
 
     build: {
-      vueOptionsAPI: true,
-
       target: {
         browser: ["es2022", "firefox115", "chrome115", "safari14"],
         node: "node20",

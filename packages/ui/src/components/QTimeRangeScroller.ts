@@ -1,9 +1,6 @@
-// Mixins
-import Common, { renderCommon } from "../mixins/common";
-import TimeBase from "../mixins/time-base";
+import { computed, defineComponent, h, ref, watch } from "vue";
+import { useScrollerShell } from "../composables/use-scroller-shell";
 import QTimeScroller from "./QTimeScroller";
-
-// Util
 import props from "../utils/props";
 import {
   getTimeIdentifier,
@@ -14,17 +11,10 @@ import {
   getTime,
   padNumber,
 } from "../utils/Timestamp";
-import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
+import { isValidTime } from "../utils/validation";
 
-/* @vue/component */
-export default defineLegacyComponent({
+export default defineComponent({
   name: "QTimeRangeScroller",
-
-  mixins: [TimeBase, Common],
-
-  render() {
-    return renderCommon(this);
-  },
 
   props: {
     ...props.common,
@@ -35,336 +25,276 @@ export default defineLegacyComponent({
     hour12: Boolean,
   },
 
-  data() {
-    return {
-      headerHeight: 50,
-      footerHeight: 50,
-      bodyHeight: 100,
-      height: 0,
-      startTime: "",
-      endTime: "",
-      type: null,
-    };
-  },
+  emits: ["close", "input", "invalid-range"],
 
-  beforeMount() {
-    this.splitTime();
-  },
+  setup(props, { emit, slots }) {
+    const { bodyHeight, renderCommon } = useScrollerShell(props);
+    const startTimeRef = ref<{ displayTime?: string; getTimestamp: () => unknown } | null>(null);
+    const endTimeRef = ref<{ displayTime?: string; getTimestamp: () => unknown } | null>(null);
+    const startTime = ref("");
+    const endTime = ref("");
+    const type = ref<string | null>(null);
+    const syncing = ref(false);
 
-  mounted() {
-    this.adjustBodyHeight();
-  },
-
-  computed: {
-    slotData() {
-      if (this.$refs.startTime && this.$refs.endTime) {
-        return { value: [this.$refs.startTime.getTimestamp(), this.$refs.endTime.getTimestamp()] };
+    const slotData = computed(() => {
+      if (startTimeRef.value && endTimeRef.value) {
+        return { value: [startTimeRef.value.getTimestamp(), endTimeRef.value.getTimestamp()] };
       }
       return { value: [] };
-    },
+    });
 
-    displayed() {
-      return this.displayTime;
-    },
+    const displayed = computed(() => displayTime.value);
 
-    displayTime() {
-      if (this.startTime !== "" && this.endTime !== "") {
-        if (this.$refs.startTime && this.$refs.endTime) {
-          return (
-            this.$refs.startTime.displayTime +
-            this.displaySeparator +
-            this.$refs.endTime.displayTime
-          );
-        }
-        return `${this.startTime}${this.displaySeparator}${this.endTime}`;
+    const rangeIsValid = computed(() => {
+      if (props.disableValidation === true) {
+        return true;
       }
-      return `${this.displaySeparator}`;
-    },
-  },
 
-  watch: {
-    value() {
-      this.splitTime();
-    },
+      if (startTime.value && endTime.value) {
+        const start = parseDate(new Date());
+        const end = parseDate(new Date());
+        const startParts = startTime.value.split(":");
+        const endParts = endTime.value.split(":");
+        start.hour = parseInt(startParts[0], 10);
+        start.minute = parseInt(startParts[1], 10);
+        end.hour = parseInt(endParts[0], 10);
+        end.minute = parseInt(endParts[1], 10);
+        return getTimeIdentifier(end) >= getTimeIdentifier(start);
+      }
 
-    startTime() {
-      this.emitValue();
-    },
+      return true;
+    });
 
-    endTime() {
-      this.emitValue();
-    },
-  },
+    const displayTime = computed(() => {
+      if (startTime.value !== "" && endTime.value !== "") {
+        if (startTimeRef.value?.displayTime && endTimeRef.value?.displayTime) {
+          return `${startTimeRef.value.displayTime}${props.displaySeparator}${endTimeRef.value.displayTime}`;
+        }
+        return `${startTime.value}${props.displaySeparator}${endTime.value}`;
+      }
+      return `${props.displaySeparator}`;
+    });
 
-  methods: {
-    emitValue() {
-      if (this.type === null || this.startTime === "" || this.endTime === "") {
+    function emitValue() {
+      if (type.value === null || startTime.value === "" || endTime.value === "") {
         return;
       }
 
-      let startParts, endParts, start, end;
-      switch (this.type) {
+      let startParts;
+      let endParts;
+      let start;
+      let end;
+
+      switch (type.value) {
         case "date":
           start = parseDate(new Date());
           end = parseDate(new Date());
-          startParts = this.startTime.split(":");
-          endParts = this.endTime.split(":");
+          startParts = startTime.value.split(":");
+          endParts = endTime.value.split(":");
           start.hour = parseInt(startParts[0], 10);
           start.minute = parseInt(startParts[1], 10);
           end.hour = parseInt(endParts[0], 10);
           end.minute = parseInt(endParts[1], 10);
-          this.$emit("input", [getDateObject(start), getDateObject(end)]);
+          emit("input", [getDateObject(start), getDateObject(end)]);
           return;
         case "array":
-          startParts = this.startTime.split(":");
-          endParts = this.endTime.split(":");
-          this.$emit("input", [
+          startParts = startTime.value.split(":");
+          endParts = endTime.value.split(":");
+          emit("input", [
             [parseInt(startParts[0], 10), parseInt(startParts[1], 10)],
             [parseInt(endParts[0], 10), parseInt(endParts[1], 10)],
           ]);
           return;
         case "object":
-          startParts = this.startTime.split(":");
-          endParts = this.endTime.split(":");
-          this.$emit("input", [
+          startParts = startTime.value.split(":");
+          endParts = endTime.value.split(":");
+          emit("input", [
             { hour: parseInt(startParts[0], 10), minute: parseInt(startParts[1], 10) },
             { hour: parseInt(endParts[0], 10), minute: parseInt(endParts[1], 10) },
           ]);
-
           return;
         case "string":
-          this.$emit("input", [this.startTime, this.endTime]);
-          return;
+          emit("input", [startTime.value, endTime.value]);
       }
-    },
+    }
 
-    isValidRange() {
-      if (this.disableValidation === true) {
-        return true;
-      }
-      // check if endTime is > startTime
-      if (this.startTime && this.endTime) {
-        const start = parseDate(new Date());
-        const end = parseDate(new Date());
-        const startParts = this.startTime.split(":");
-        const endParts = this.endTime.split(":");
-        start.hour = parseInt(startParts[0]);
-        start.minute = parseInt(startParts[1]);
-        end.hour = parseInt(endParts[0]);
-        end.minute = parseInt(endParts[1]);
-        const startTime = getTimeIdentifier(start);
-        const endTime = getTimeIdentifier(end);
-        if (endTime >= startTime) {
-          return true;
-        }
-        this.$emit("invalid-range", { startTime: this.startTime, endTime: this.endTime });
-        return false;
-      }
-      // until everything is mounted, just return true
-      return true;
-    },
+    function splitTime() {
+      syncing.value = true;
 
-    splitTime() {
-      // QTimeRangeScroller takes an array of Date, Object, Array or String
-      let start, end, now;
-      const valueType = Object.prototype.toString.call(this.value);
+      let start;
+      let end;
+      let now;
+      const valueType = Object.prototype.toString.call(props.value);
 
-      if (valueType === "[object Undefined]" || this.value === null) {
-        this.type = "string";
-        now = new Date();
-        now = parseDate(now);
-        start = getDate(now) + " " + getTime(now);
-        start = getTime(parseTimestamp(start));
+      if (valueType === "[object Undefined]" || props.value === null) {
+        type.value = "string";
+        now = parseDate(new Date());
+        start = getTime(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
         end = start;
-        if (this.isValidTime(start) && this.isValidTime(end)) {
-          this.startTime = start;
-          this.endTime = end;
+        if (isValidTime(start) && isValidTime(end)) {
+          startTime.value = start;
+          endTime.value = end;
         } else {
-          /* eslint-disable-next-line */
           console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
         }
+        syncing.value = false;
         return;
       }
 
-      if (Array.isArray(this.value) !== true || this.value.length < 2) {
-        /* eslint-disable-next-line */
-        console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`);
+      if (Array.isArray(props.value) !== true || props.value.length < 2) {
+        syncing.value = false;
+        console.error(`QTimeRangeScroller: value needs to be an array of types (${props.value})`);
         return;
       }
 
-      switch (Object.prototype.toString.call(this.value[0])) {
+      switch (Object.prototype.toString.call(props.value[0])) {
         case "[object Date]":
-          this.type = "date";
-          start = parseDate(this.value[0]);
-          start = getDate(start) + " " + getTime(start);
-          start = getTime(parseTimestamp(start));
-          end = parseDate(this.value[1]);
-          end = getDate(end) + " " + getTime(end);
-          end = getTime(parseTimestamp(end));
-          if (this.isValidTime(start) && this.isValidTime(end)) {
-            this.startTime = start;
-            this.endTime = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
-          }
-          return;
+          type.value = "date";
+          start = getTime(parseTimestamp(`${getDate(parseDate(props.value[0]))} ${getTime(parseDate(props.value[0]))}`));
+          end = getTime(parseTimestamp(`${getDate(parseDate(props.value[1]))} ${getTime(parseDate(props.value[1]))}`));
+          break;
         case "[object Array]":
-          this.type = "array";
+          type.value = "array";
           start =
-            padNumber(parseInt(this.value[0][0], 10), 2) +
-            ":" +
-            padNumber(parseInt(this.value[0][1], 10), 2);
+            `${padNumber(parseInt(props.value[0][0], 10), 2)}:${padNumber(parseInt(props.value[0][1], 10), 2)}`;
           end =
-            padNumber(parseInt(this.value[1][0], 10), 2) +
-            ":" +
-            padNumber(parseInt(this.value[1][1], 10), 2);
-          if (this.isValidTime(start) && this.isValidTime(end)) {
-            this.startTime = start;
-            this.endTime = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
-          }
-          return;
+            `${padNumber(parseInt(props.value[1][0], 10), 2)}:${padNumber(parseInt(props.value[1][1], 10), 2)}`;
+          break;
         case "[object Object]":
-          this.type = "object";
+          type.value = "object";
           start =
-            padNumber(parseInt(this.value[0].hour, 10), 2) +
-            ":" +
-            padNumber(parseInt(this.value[0].minute, 10), 2);
+            `${padNumber(parseInt(props.value[0].hour, 10), 2)}:${padNumber(parseInt(props.value[0].minute, 10), 2)}`;
           end =
-            padNumber(parseInt(this.value[1].hour, 10), 2) +
-            ":" +
-            padNumber(parseInt(this.value[1].minute, 10), 2);
-          if (this.isValidTime(start) && this.isValidTime(end)) {
-            this.startTime = start;
-            this.endTime = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
-          }
-          return;
+            `${padNumber(parseInt(props.value[1].hour, 10), 2)}:${padNumber(parseInt(props.value[1].minute, 10), 2)}`;
+          break;
         case "[object String]":
-          this.type = "string";
-          start = this.value[0];
-          end = this.value[1];
-          if (this.isValidTime(start) && this.isValidTime(end)) {
-            this.startTime = start;
-            this.endTime = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
-          }
-          return;
+          type.value = "string";
+          start = props.value[0];
+          end = props.value[1];
+          break;
         case "[object Undefined]":
-          // if nothing is provided, then use current time as array of strings
-          this.type = "string";
-          now = new Date();
-          now = parseDate(now);
-          start = getDate(now) + " " + getTime(now);
-          start = getTime(parseTimestamp(start));
+          type.value = "string";
+          now = parseDate(new Date());
+          start = getTime(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
           end = start;
-          if (this.isValidTime(start) && this.isValidTime(end)) {
-            this.startTime = start;
-            this.endTime = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
-          }
+          break;
+        default:
+          syncing.value = false;
+          console.error(`QTimeRangeScroller: value needs to be an array of types (${props.value})`);
           return;
       }
 
-      /* eslint-disable-next-line */
-      console.error(`QTimeRangeScroller: value needs to be an array of types (${this.value})`);
-    },
+      if (isValidTime(start) && isValidTime(end)) {
+        startTime.value = start;
+        endTime.value = end;
+      } else {
+        console.error(`QTimeRangeScroller: invalid start or end times (${start} ${end})`);
+      }
 
-    // -------------------------------
-    // render functions
-    // -------------------------------
-    __renderStartTime(h) {
+      syncing.value = false;
+    }
+
+    watch(() => props.value, splitTime);
+    watch(startTime, () => {
+      if (syncing.value !== true) {
+        emitValue();
+      }
+    });
+    watch(endTime, () => {
+      if (syncing.value !== true) {
+        emitValue();
+      }
+    });
+    watch(rangeIsValid, (value) => {
+      if (value === false) {
+        emit("invalid-range", { startTime: startTime.value, endTime: endTime.value });
+      }
+    });
+
+    splitTime();
+
+    function renderStartTime() {
       return h(QTimeScroller, {
-        ref: "startTime",
-        staticClass: "col-6",
-        props: {
-          value: this.startTime,
-          locale: this.locale,
-          barColor: this.barColor,
-          textColor: this.textColor,
-          color: this.color,
-          innerTextColor: this.innerTextColor,
-          innerColor: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-          dense: this.dense,
-          disable: this.disable,
-          noBorder: true,
-          noHeader: true,
-          noFooter: true,
-          hour12: this.hour12,
-          amPmLabels: this.startAmPmLabels,
-          minuteInterval: this.startMinuteInterval,
-          hourInterval: this.startHourInterval,
-          shortTimeLabel: this.startShortTimeLabel,
-          disabledHours: this.startDisabledHours,
-          disabledMinutes: this.startDisabledMinutes,
-          noMinutes: this.startNoMinutes,
-          noHours: this.startNoHours,
-          childHeight: this.bodyHeight,
-        },
-        class: {
-          "q-scroller__vertical-bar": this.verticalBar === true,
-        },
-        on: {
-          input: (v) => {
-            this.startTime = v;
+        ref: startTimeRef,
+        class: [
+          "col-6",
+          {
+            "q-scroller__vertical-bar": props.verticalBar === true,
           },
+        ],
+        value: startTime.value,
+        locale: props.locale,
+        barColor: props.barColor,
+        textColor: props.textColor,
+        color: props.color,
+        innerTextColor: props.innerTextColor,
+        innerColor: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        dense: props.dense,
+        disable: props.disable,
+        noBorder: true,
+        noHeader: true,
+        noFooter: true,
+        hour12: props.hour12,
+        amPmLabels: props.startAmPmLabels,
+        minuteInterval: props.startMinuteInterval,
+        hourInterval: props.startHourInterval,
+        shortTimeLabel: props.startShortTimeLabel,
+        disabledHours: props.startDisabledHours,
+        disabledMinutes: props.startDisabledMinutes,
+        noMinutes: props.startNoMinutes,
+        noHours: props.startNoHours,
+        childHeight: bodyHeight.value,
+        onInput: (value) => {
+          startTime.value = value;
         },
       });
-    },
+    }
 
-    __renderEndTime(h) {
-      const isValidRange = this.isValidRange();
+    function renderEndTime() {
       return h(QTimeScroller, {
-        ref: "endTime",
-        staticClass: "col-6",
-        props: {
-          value: this.endTime,
-          locale: this.locale,
-          barColor: this.barColor,
-          textColor: this.textColor,
-          color: this.color,
-          innerTextColor: isValidRange ? this.innerTextColor : this.errorTextColor,
-          innerColor: isValidRange ? this.innerColor : this.errorColor,
-          disabledTextColor: this.disabledTextColor,
-          dense: this.dense,
-          disable: this.disable,
-          noBorder: true,
-          noHeader: true,
-          noFooter: true,
-          hour12: this.hour12,
-          amPmLabels: this.endAmPmLabels,
-          minuteInterval: this.endMinuteInterval,
-          hourInterval: this.endHourInterval,
-          shortTimeLabel: this.endShortTimeLabel,
-          disabledHours: this.endDisabledHours,
-          disabledMinutes: this.endDisabledMinutes,
-          noMinutes: this.endNoMinutes,
-          noHours: this.endNoHours,
-          childHeight: this.bodyHeight,
-        },
-        on: {
-          input: (v) => {
-            this.endTime = v;
-          },
+        ref: endTimeRef,
+        class: "col-6",
+        value: endTime.value,
+        locale: props.locale,
+        barColor: props.barColor,
+        textColor: props.textColor,
+        color: props.color,
+        innerTextColor: rangeIsValid.value ? props.innerTextColor : props.errorTextColor,
+        innerColor: rangeIsValid.value ? props.innerColor : props.errorColor,
+        disabledTextColor: props.disabledTextColor,
+        dense: props.dense,
+        disable: props.disable,
+        noBorder: true,
+        noHeader: true,
+        noFooter: true,
+        hour12: props.hour12,
+        amPmLabels: props.endAmPmLabels,
+        minuteInterval: props.endMinuteInterval,
+        hourInterval: props.endHourInterval,
+        shortTimeLabel: props.endShortTimeLabel,
+        disabledHours: props.endDisabledHours,
+        disabledMinutes: props.endDisabledMinutes,
+        noMinutes: props.endNoMinutes,
+        noHours: props.endNoHours,
+        childHeight: bodyHeight.value,
+        onInput: (value) => {
+          endTime.value = value;
         },
       });
-    },
+    }
 
-    __renderScrollers(h) {
-      return [
-        callLegacyMethod(this, "__renderStartTime", h),
-        callLegacyMethod(this, "__renderEndTime", h),
-      ];
-    },
+    function renderScrollers() {
+      return [renderStartTime(), renderEndTime()];
+    }
+
+    return () =>
+      renderCommon({
+        displayed,
+        emitClose: () => emit("close"),
+        renderScrollers,
+        slotData,
+        slots,
+      });
   },
 });

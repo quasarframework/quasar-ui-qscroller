@@ -1,22 +1,10 @@
-// Mixins
-import Common, { renderCommon } from "../mixins/common";
-
-// Components
-import ScrollerBase from "../mixins/scroller-base";
-
-// Util
+import { computed, defineComponent, h, ref } from "vue";
+import { useScrollerShell } from "../composables/use-scroller-shell";
+import ScrollerBase from "./private/ScrollerBase";
 import props from "../utils/props";
-import { defineLegacyComponent } from "../utils/vue-compat";
 
-/* @vue/component */
-export default defineLegacyComponent({
+export default defineComponent({
   name: "QStringScroller",
-
-  mixins: [Common],
-
-  render() {
-    return renderCommon(this);
-  },
 
   props: {
     ...props.common,
@@ -27,94 +15,87 @@ export default defineLegacyComponent({
     },
   },
 
-  data() {
-    return {
-      headerHeight: 50,
-      footerHeight: 50,
-      bodyHeight: 100,
-      height: 0,
-    };
-  },
+  emits: ["close", "input"],
 
-  mounted() {
-    this.adjustBodyHeight();
-  },
+  setup(props, { attrs, slots, emit, expose }) {
+    const items = computed(() => ((props.items ?? []) as Array<Record<string, any>>));
+    const scrollerRef = ref<{
+      canScroll: (dir: number) => boolean;
+      getItemIndex: (value: unknown) => number;
+      move: (dir: number) => boolean;
+    } | null>(null);
 
-  computed: {
-    slotData() {
-      return { value: this.value };
-    },
+    const { renderCommon } = useScrollerShell(props);
 
-    displayed() {
-      if (!this.value) {
+    const slotData = computed(() => ({ value: props.value }));
+
+    const displayed = computed(() => {
+      if (!props.value) {
         return "";
       }
-      const item = this.items.find((item) => item.value === this.value);
 
-      return item.label || item.value;
-    },
-  },
+      const item = items.value.find((entry) => entry.value === props.value);
+      return item?.label ?? item?.value ?? "";
+    });
 
-  methods: {
-    canMovePrevious() {
-      if (this.$refs.scroller) {
-        return this.$refs.scroller.canScroll(-1);
-      }
-      return false;
-    },
+    function canMovePrevious() {
+      return scrollerRef.value?.canScroll(-1) ?? false;
+    }
 
-    canMoveNext() {
-      if (this.$refs.scroller) {
-        return this.$refs.scroller.canScroll(1);
-      }
-      return false;
-    },
+    function canMoveNext() {
+      return scrollerRef.value?.canScroll(1) ?? false;
+    }
 
-    previous() {
-      if (this.$refs.scroller) {
-        return this.$refs.scroller.move(-1);
-      }
-      return false;
-    },
+    function previous() {
+      return scrollerRef.value?.move(-1) ?? false;
+    }
 
-    next() {
-      if (this.$refs.scroller) {
-        return this.$refs.scroller.move(1);
-      }
-      return false;
-    },
+    function next() {
+      return scrollerRef.value?.move(1) ?? false;
+    }
 
-    getItemIndex(value) {
-      if (this.$refs.scroller) {
-        return this.$refs.scroller.getItemIndex(value);
-      }
-      return -1;
-    },
+    function getItemIndex(value: unknown) {
+      return scrollerRef.value?.getItemIndex(value) ?? -1;
+    }
 
-    getCurrentIndex() {
-      return this.getItemIndex(this.value);
-    },
+    function getCurrentIndex() {
+      return getItemIndex(props.value);
+    }
 
-    // -------------------------------
-    // render functions
-    // -------------------------------
-    __renderScrollers(h) {
+    expose({
+      canMoveNext,
+      canMovePrevious,
+      getCurrentIndex,
+      getItemIndex,
+      next,
+      previous,
+    });
+
+    function renderScrollers() {
       return h(ScrollerBase, {
-        ref: "scroller",
-        props: {
-          value: this.value,
-          items: this.items,
-          dense: this.dense,
-          disable: this.disable,
-          textColor: this.innerTextColor,
-          color: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-          noCaps: this.noCaps,
-        },
-        attrs: {
-          ...this.$attrs,
+        ref: scrollerRef,
+        value: props.value,
+        items: items.value,
+        dense: props.dense,
+        disable: props.disable,
+        textColor: props.innerTextColor,
+        color: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        noCaps: props.noCaps,
+        ...attrs,
+        onInput: (value) => {
+          emit("input", value);
         },
       });
-    },
+    }
+
+    return () =>
+      renderCommon({
+        displayed,
+        emitClose: () => emit("close"),
+        renderScrollers,
+        slotData,
+        slots,
+      });
   },
 });

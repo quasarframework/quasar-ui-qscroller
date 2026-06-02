@@ -1,9 +1,6 @@
-// Mixins
-import Common, { renderCommon } from "../mixins/common";
-import DateBase from "../mixins/date-base";
+import { computed, defineComponent, h, ref, watch } from "vue";
+import { useScrollerShell } from "../composables/use-scroller-shell";
 import QDateScroller from "./QDateScroller";
-
-// Util
 import props from "../utils/props";
 import {
   getDayIdentifier,
@@ -14,17 +11,10 @@ import {
   getTime,
   padNumber,
 } from "../utils/Timestamp";
-import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
+import { isValidDate } from "../utils/validation";
 
-/* @vue/component */
-export default defineLegacyComponent({
+export default defineComponent({
   name: "QDateRangeScroller",
-
-  mixins: [DateBase, Common],
-
-  render() {
-    return renderCommon(this);
-  },
 
   props: {
     ...props.common,
@@ -34,100 +24,94 @@ export default defineLegacyComponent({
     ...props.locale,
   },
 
-  data() {
-    return {
-      headerHeight: 50,
-      footerHeight: 50,
-      bodyHeight: 100,
-      height: 0,
-      startDate: "",
-      endDate: "",
-      type: null,
-    };
-  },
+  emits: ["close", "input", "invalid-range"],
 
-  beforeMount() {
-    this.splitDate();
-  },
+  setup(props, { emit, slots }) {
+    const { bodyHeight, renderCommon } = useScrollerShell(props);
+    const startDateRef = ref<{ displayDate?: string; getTimestamp: () => unknown } | null>(null);
+    const endDateRef = ref<{ displayDate?: string; getTimestamp: () => unknown } | null>(null);
+    const startDate = ref("");
+    const endDate = ref("");
+    const type = ref<string | null>(null);
+    const syncing = ref(false);
 
-  mounted() {
-    this.adjustBodyHeight();
-  },
-
-  computed: {
-    slotData() {
-      if (this.$refs.startDate && this.$refs.endDate) {
-        return { value: [this.$refs.startDate.getTimestamp(), this.$refs.endDate.getTimestamp()] };
+    const slotData = computed(() => {
+      if (startDateRef.value && endDateRef.value) {
+        return { value: [startDateRef.value.getTimestamp(), endDateRef.value.getTimestamp()] };
       }
       return { value: [] };
-    },
+    });
 
-    displayed() {
-      return this.displayDate;
-    },
+    const displayed = computed(() => displayDate.value);
 
-    displayDate() {
-      if (this.startDate !== "" && this.endDate !== "") {
-        if (this.$refs.startDate && this.$refs.endDate) {
-          return (
-            this.$refs.startDate.displayDate +
-            this.displaySeparator +
-            this.$refs.endDate.displayDate
-          );
-        }
-        return `${this.startDate}${this.displaySeparator}${this.endDate}`;
+    const rangeIsValid = computed(() => {
+      if (props.disableValidation === true) {
+        return true;
       }
-      return `${this.displaySeparator}`;
-    },
-  },
 
-  watch: {
-    value() {
-      this.splitDate();
-    },
+      if (startDate.value && endDate.value) {
+        const start = parseDate(new Date());
+        const end = parseDate(new Date());
+        const startParts = startDate.value.split("-");
+        const endParts = endDate.value.split("-");
+        start.year = parseInt(startParts[0], 10);
+        start.month = parseInt(startParts[1], 10);
+        start.day = parseInt(startParts[2], 10);
+        end.year = parseInt(endParts[0], 10);
+        end.month = parseInt(endParts[1], 10);
+        end.day = parseInt(endParts[2], 10);
+        return getDayIdentifier(end) >= getDayIdentifier(start);
+      }
 
-    startDate() {
-      this.emitValue();
-    },
+      return true;
+    });
 
-    endDate() {
-      this.emitValue();
-    },
-  },
+    const displayDate = computed(() => {
+      if (startDate.value !== "" && endDate.value !== "") {
+        if (startDateRef.value?.displayDate && endDateRef.value?.displayDate) {
+          return `${startDateRef.value.displayDate}${props.displaySeparator}${endDateRef.value.displayDate}`;
+        }
+        return `${startDate.value}${props.displaySeparator}${endDate.value}`;
+      }
+      return `${props.displaySeparator}`;
+    });
 
-  methods: {
-    emitValue() {
-      if (this.type === null || this.startDate === "" || this.endDate === "") {
+    function emitValue() {
+      if (type.value === null || startDate.value === "" || endDate.value === "") {
         return;
       }
 
-      let startParts, endParts, start, end;
-      switch (this.type) {
+      let startParts;
+      let endParts;
+      let start;
+      let end;
+
+      switch (type.value) {
         case "date":
           start = parseDate(new Date());
           end = parseDate(new Date());
-          startParts = this.startDate.split("-");
-          endParts = this.endDate.split("-");
+          startParts = startDate.value.split("-");
+          endParts = endDate.value.split("-");
           start.year = parseInt(startParts[0], 10);
           start.month = parseInt(startParts[1], 10);
           start.day = parseInt(startParts[2], 10);
           end.year = parseInt(endParts[0], 10);
           end.month = parseInt(endParts[1], 10);
           end.day = parseInt(endParts[2], 10);
-          this.$emit("input", [getDateObject(start), getDateObject(end)]);
+          emit("input", [getDateObject(start), getDateObject(end)]);
           return;
         case "array":
-          startParts = this.startDate.split("-");
-          endParts = this.endDate.split("-");
-          this.$emit("input", [
+          startParts = startDate.value.split("-");
+          endParts = endDate.value.split("-");
+          emit("input", [
             [parseInt(startParts[0], 10), parseInt(startParts[1], 10), parseInt(startParts[2], 10)],
             [parseInt(endParts[0], 10), parseInt(endParts[1], 10), parseInt(endParts[2], 10)],
           ]);
           return;
         case "object":
-          startParts = this.startDate.split("-");
-          endParts = this.endDate.split("-");
-          this.$emit("input", [
+          startParts = startDate.value.split("-");
+          endParts = endDate.value.split("-");
+          emit("input", [
             {
               year: parseInt(startParts[0], 10),
               month: parseInt(startParts[1], 10),
@@ -139,263 +123,187 @@ export default defineLegacyComponent({
               day: parseInt(endParts[2], 10),
             },
           ]);
-
           return;
         case "string":
-          this.$emit("input", [this.startDate, this.endDate]);
-          return;
+          emit("input", [startDate.value, endDate.value]);
       }
-    },
+    }
 
-    isValidRange() {
-      if (this.disableValidation === true) {
-        return true;
-      }
-      // check if endDate is > startDate
-      if (this.startDate && this.endDate) {
-        const start = parseDate(new Date());
-        const end = parseDate(new Date());
-        const startParts = this.startDate.split("-");
-        const endParts = this.endDate.split("-");
-        start.year = parseInt(startParts[0], 10);
-        start.month = parseInt(startParts[1], 10);
-        start.day = parseInt(startParts[2], 10);
-        end.year = parseInt(endParts[0], 10);
-        end.month = parseInt(endParts[1], 10);
-        end.day = parseInt(endParts[2], 10);
-        const startDate = getDayIdentifier(start);
-        const endDate = getDayIdentifier(end);
-        if (endDate >= startDate) {
-          return true;
-        }
-        this.$emit("invalid-range", { startDate: this.startDate, endDate: this.endDate });
-        return false;
-      }
-      // until everything is mounted, just return true
-      return true;
-    },
+    function splitDate() {
+      syncing.value = true;
 
-    splitDate() {
-      // QDateRangeScroller takes an array of Date, Object, Array or String
-      let start, end, now;
-      const valueType = Object.prototype.toString.call(this.value);
+      let start;
+      let end;
+      let now;
+      const valueType = Object.prototype.toString.call(props.value);
 
-      if (valueType === "[object Undefined]" || this.value === null) {
-        this.type = "string";
-        now = new Date();
-        now = parseDate(now);
-        start = getDate(now) + " " + getTime(now);
-        start = getDate(parseTimestamp(start));
+      if (valueType === "[object Undefined]" || props.value === null) {
+        type.value = "string";
+        now = parseDate(new Date());
+        start = getDate(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
         end = start;
-        if (this.isValidDate(start) && this.isValidDate(end)) {
-          this.startDate = start;
-          this.endDate = end;
+        if (isValidDate(start) && isValidDate(end)) {
+          startDate.value = start;
+          endDate.value = end;
         } else {
-          /* eslint-disable-next-line */
           console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
         }
+        syncing.value = false;
         return;
       }
 
-      if (Array.isArray(this.value) !== true || this.value.length < 2) {
-        /* eslint-disable-next-line */
-        console.error(`QDateRangeScroller: value needs to be an array of types (${this.value})`);
+      if (Array.isArray(props.value) !== true || props.value.length < 2) {
+        syncing.value = false;
+        console.error(`QDateRangeScroller: value needs to be an array of types (${props.value})`);
         return;
       }
 
-      switch (Object.prototype.toString.call(this.value[0])) {
+      switch (Object.prototype.toString.call(props.value[0])) {
         case "[object Date]":
-          this.type = "date";
-          start = parseDate(this.value[0]);
-          start = getDate(start) + " " + getTime(start);
-          start = getDate(parseTimestamp(start));
-          end = parseDate(this.value[1]);
-          end = getDate(end) + " " + getTime(end);
-          end = getDate(parseTimestamp(end));
-          if (this.isValidDate(start) && this.isValidDate(end)) {
-            this.startDate = start;
-            this.endDate = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
-          }
-          return;
+          type.value = "date";
+          start = getDate(parseTimestamp(`${getDate(parseDate(props.value[0]))} ${getTime(parseDate(props.value[0]))}`));
+          end = getDate(parseTimestamp(`${getDate(parseDate(props.value[1]))} ${getTime(parseDate(props.value[1]))}`));
+          break;
         case "[object Array]":
-          this.type = "array";
+          type.value = "array";
           start =
-            padNumber(parseInt(this.value[0][0], 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[0][1], 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[0][2], 10), 2);
+            `${padNumber(parseInt(props.value[0][0], 10), 2)}-${padNumber(parseInt(props.value[0][1], 10), 2)}-${padNumber(parseInt(props.value[0][2], 10), 2)}`;
           end =
-            padNumber(parseInt(this.value[1][0], 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[1][1], 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[1][2], 10), 2);
-          if (this.isValidDate(start) && this.isValidDate(end)) {
-            this.startDate = start;
-            this.endDate = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
-          }
-          return;
+            `${padNumber(parseInt(props.value[1][0], 10), 2)}-${padNumber(parseInt(props.value[1][1], 10), 2)}-${padNumber(parseInt(props.value[1][2], 10), 2)}`;
+          break;
         case "[object Object]":
-          this.type = "object";
+          type.value = "object";
           start =
-            padNumber(parseInt(this.value[0].year, 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[0].month, 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[0].day, 10), 2);
+            `${padNumber(parseInt(props.value[0].year, 10), 2)}-${padNumber(parseInt(props.value[0].month, 10), 2)}-${padNumber(parseInt(props.value[0].day, 10), 2)}`;
           end =
-            padNumber(parseInt(this.value[1].year, 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[1].month, 10), 2) +
-            "-" +
-            padNumber(parseInt(this.value[1].day, 10), 2);
-          if (this.isValidDate(start) && this.isValidDate(end)) {
-            this.startDate = start;
-            this.endDate = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
-          }
-          return;
+            `${padNumber(parseInt(props.value[1].year, 10), 2)}-${padNumber(parseInt(props.value[1].month, 10), 2)}-${padNumber(parseInt(props.value[1].day, 10), 2)}`;
+          break;
         case "[object String]":
-          this.type = "string";
-          start = this.value[0];
-          end = this.value[1];
-          if (this.isValidDate(start) && this.isValidDate(end)) {
-            this.startDate = start;
-            this.endDate = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
-          }
-          return;
+          type.value = "string";
+          start = props.value[0];
+          end = props.value[1];
+          break;
         case "[object Undefined]":
-          // if nothing is provided, then use current time as array of strings
-          this.type = "string";
-          now = new Date();
-          now = parseDate(now);
-          start = getDate(now) + " " + getTime(now);
-          start = getDate(parseTimestamp(start));
+          type.value = "string";
+          now = parseDate(new Date());
+          start = getDate(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
           end = start;
-          if (this.isValidDate(start) && this.isValidDate(end)) {
-            this.startDate = start;
-            this.endDate = end;
-          } else {
-            /* eslint-disable-next-line */
-            console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
-          }
+          break;
+        default:
+          syncing.value = false;
+          console.error(`QDateRangeScroller: value needs to be an array of types (${props.value})`);
           return;
       }
 
-      /* eslint-disable-next-line */
-      console.error(`QDateRangeScroller: value needs to be an array of types (${this.value})`);
-    },
+      if (isValidDate(start) && isValidDate(end)) {
+        startDate.value = start;
+        endDate.value = end;
+      } else {
+        console.error(`QDateRangeScroller: invalid start or end dates (${start} ${end})`);
+      }
 
-    // -------------------------------
-    // render functions
-    // -------------------------------
-    __renderStartDate(h) {
+      syncing.value = false;
+    }
+
+    watch(() => props.value, splitDate);
+    watch(startDate, () => {
+      if (syncing.value !== true) {
+        emitValue();
+      }
+    });
+    watch(endDate, () => {
+      if (syncing.value !== true) {
+        emitValue();
+      }
+    });
+    watch(rangeIsValid, (value) => {
+      if (value === false) {
+        emit("invalid-range", { startDate: startDate.value, endDate: endDate.value });
+      }
+    });
+
+    splitDate();
+
+    function renderStartDate() {
       return h(QDateScroller, {
-        ref: "startDate",
-        staticClass: "col-6",
-        props: {
-          value: this.startDate,
-          locale: this.locale,
-          barColor: this.barColor,
-          textColor: this.textColor,
-          color: this.color,
-          innerTextColor: this.innerTextColor,
-          innerColor: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-          dense: this.dense,
-          disable: this.disable,
-          noBorder: true,
-          noHeader: true,
-          noFooter: true,
-          // startDate: this.startStartDate,
-          // endDate: this.startEndDate,
-          disabledYears: this.startDisabledYears,
-          disabledMonths: this.startDisabledMonths,
-          disabledDays: this.startDisabledDays,
-          // shortYearLabel: this.startShortYearLabel,
-          // shortMonthLabel: this.startShortMonthLabel,
-          // shortDayLabel: this.startShortDayLabel,
-          // showMonthLabel: this.startShowMonthLabel,
-          // showWeekdayLabel: this.startShowWeekdayLabel,
-          noDays: this.startNoDays,
-          noMonths: this.startNoMonths,
-          noYears: this.startNoYears,
-          yearBegin: this.startYearBegin,
-          yearStop: this.startYearStop,
-          childHeight: this.bodyHeight,
-        },
-        class: {
-          "q-scroller__vertical-bar": this.verticalBar === true,
-        },
-        on: {
-          input: (v) => {
-            this.startDate = v;
+        ref: startDateRef,
+        class: [
+          "col-6",
+          {
+            "q-scroller__vertical-bar": props.verticalBar === true,
           },
+        ],
+        value: startDate.value,
+        locale: props.locale,
+        barColor: props.barColor,
+        textColor: props.textColor,
+        color: props.color,
+        innerTextColor: props.innerTextColor,
+        innerColor: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        dense: props.dense,
+        disable: props.disable,
+        noBorder: true,
+        noHeader: true,
+        noFooter: true,
+        disabledYears: props.startDisabledYears,
+        disabledMonths: props.startDisabledMonths,
+        disabledDays: props.startDisabledDays,
+        noDays: props.startNoDays,
+        noMonths: props.startNoMonths,
+        noYears: props.startNoYears,
+        yearBegin: props.startYearBegin,
+        yearStop: props.startYearStop,
+        childHeight: bodyHeight.value,
+        onInput: (value) => {
+          startDate.value = value;
         },
       });
-    },
+    }
 
-    __renderEndDate(h) {
-      const isValidRange = this.isValidRange();
+    function renderEndDate() {
       return h(QDateScroller, {
-        ref: "endDate",
-        staticClass: "col-6",
-        props: {
-          value: this.endDate,
-          locale: this.locale,
-          barColor: this.barColor,
-          textColor: this.textColor,
-          color: this.color,
-          innerTextColor: isValidRange ? this.innerTextColor : this.errorTextColor,
-          innerColor: isValidRange ? this.innerColor : this.errorColor,
-          disabledTextColor: this.disabledTextColor,
-          dense: this.dense,
-          disable: this.disable,
-          noBorder: true,
-          noHeader: true,
-          noFooter: true,
-          // startDate: this.endStartDate,
-          // endDate: this.endStartDate,
-          disabledYears: this.endDisabledYears,
-          disabledMonths: this.endDisabledMonths,
-          disabledDays: this.endDisabledDays,
-          // shortYearLabel: this.endShortYearLabel,
-          // shortMonthLabel: this.endShortMonthLabel,
-          // shortDayLabel: this.endShortDayLabel,
-          // showMonthLabel: this.endShowMonthLabel,
-          // showWeekdayLabel: this.endShowWeekdayLabel,
-          noDays: this.endNoDays,
-          noMonths: this.endNoMonths,
-          noYears: this.endNoYears,
-          yearBegin: this.endYearBegin,
-          yearStop: this.endYearStop,
-          childHeight: this.bodyHeight,
-        },
-        on: {
-          input: (v) => {
-            this.endDate = v;
-          },
+        ref: endDateRef,
+        class: "col-6",
+        value: endDate.value,
+        locale: props.locale,
+        barColor: props.barColor,
+        textColor: props.textColor,
+        color: props.color,
+        innerTextColor: rangeIsValid.value ? props.innerTextColor : props.errorTextColor,
+        innerColor: rangeIsValid.value ? props.innerColor : props.errorColor,
+        disabledTextColor: props.disabledTextColor,
+        dense: props.dense,
+        disable: props.disable,
+        noBorder: true,
+        noHeader: true,
+        noFooter: true,
+        disabledYears: props.endDisabledYears,
+        disabledMonths: props.endDisabledMonths,
+        disabledDays: props.endDisabledDays,
+        noDays: props.endNoDays,
+        noMonths: props.endNoMonths,
+        noYears: props.endNoYears,
+        yearBegin: props.endYearBegin,
+        yearStop: props.endYearStop,
+        childHeight: bodyHeight.value,
+        onInput: (value) => {
+          endDate.value = value;
         },
       });
-    },
+    }
 
-    __renderScrollers(h) {
-      return [
-        callLegacyMethod(this, "__renderStartDate", h),
-        callLegacyMethod(this, "__renderEndDate", h),
-      ];
-    },
+    function renderScrollers() {
+      return [renderStartDate(), renderEndDate()];
+    }
+
+    return () =>
+      renderCommon({
+        displayed,
+        emitClose: () => emit("close"),
+        renderScrollers,
+        slotData,
+        slots,
+      });
   },
 });

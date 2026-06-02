@@ -1,11 +1,6 @@
-// Mixins
-import Common, { renderCommon } from "../mixins/common";
-import TimeBase from "../mixins/time-base";
-
-// Components
-import ScrollerBase from "../mixins/scroller-base";
-
-// Util
+import { computed, defineComponent, h, ref, watch } from "vue";
+import { useScrollerShell } from "../composables/use-scroller-shell";
+import ScrollerBase from "./private/ScrollerBase";
 import props from "../utils/props";
 import {
   Timestamp,
@@ -19,17 +14,9 @@ import {
   padNumber,
   createNativeLocaleFormatter,
 } from "../utils/Timestamp";
-import { callLegacyMethod, defineLegacyComponent } from "../utils/vue-compat";
 
-/* @vue/component */
-export default defineLegacyComponent({
+export default defineComponent({
   name: "QTimeScroller",
-
-  mixins: [TimeBase, Common],
-
-  render() {
-    return renderCommon(this);
-  },
 
   props: {
     ...props.common,
@@ -41,448 +28,411 @@ export default defineLegacyComponent({
     amPmLabels: {
       type: Array,
       default: () => ["AM", "PM"],
-      validator: (v) =>
-        Array.isArray(v) && v.length === 2 && typeof v[0] === "string" && typeof v[1] === "string",
+      validator: (value) =>
+        Array.isArray(value) &&
+        value.length === 2 &&
+        typeof value[0] === "string" &&
+        typeof value[1] === "string",
     },
   },
 
-  data() {
-    return {
-      headerHeight: 50,
-      footerHeight: 50,
-      bodyHeight: 100,
-      height: 0,
-      ampm: "",
-      hour: "",
-      minute: "",
-      ampmIndex: -1, // 2 states: 0=AM, 1=PM (indices into amPmLabels)
-      timestamp: null,
-      type: null,
-      disabledMinutesList: [],
-      disabledHoursList: [],
-      hourInitialized: false,
-      minuteInitialized: false,
-      ampmInitialized: false,
-    };
-  },
+  emits: ["close", "input"],
 
-  created() {
-    this.timestamp = copyTimestamp(Timestamp);
-  },
+  setup(props, { emit, expose, slots }) {
+    const { renderCommon } = useScrollerShell(props);
+    const amPmLabels = computed(() => props.amPmLabels as string[]);
+    const timestamp = ref(copyTimestamp(Timestamp));
+    const type = ref<string | null>(null);
+    const ampmIndex = ref(-1);
+    const hour = ref("");
+    const minute = ref("");
+    const disabledMinutesList = ref<string[]>([]);
+    const disabledHoursList = ref<string[]>([]);
+    const syncing = ref(false);
 
-  beforeMount() {
-    this.handleDisabledLists();
-    this.splitTime();
-  },
+    const ampm = computed(() => amPmLabels.value[ampmIndex.value] ?? "");
 
-  mounted() {
-    this.adjustBodyHeight();
-  },
+    const slotData = computed(() => ({ value: timestamp.value }));
+    const displayed = computed(() => displayTime.value);
 
-  computed: {
-    slotData() {
-      return { value: this.timestamp };
-    },
+    const ampmList = computed(() =>
+      amPmLabels.value.map((value) => ({
+        value,
+        disabled: false,
+        noCaps: true,
+      })),
+    );
 
-    displayed() {
-      return this.displayTime;
-    },
-
-    ampmList() {
-      return this.amPmLabels.map((ap) => {
-        return {
-          value: ap,
-          disabled: false,
-          noCaps: true,
-        };
-      });
-    },
-
-    minutesList() {
+    const minutesList = computed(() => {
       let count = 60;
-      if (this.minuteInterval !== void 0 && parseInt(this.minuteInterval, 10) > 0) {
-        count /= parseInt(this.minuteInterval, 10);
+      const interval = parseInt(String(props.minuteInterval ?? 1), 10);
+      if (props.minuteInterval !== void 0 && interval > 0) {
+        count /= interval;
       }
-      let data: any[] = [];
-      for (let index = 0; index < count; ++index) {
-        data.push(index);
-      }
-      data = data.map((m) => {
-        m *= this.minuteInterval ? parseInt(this.minuteInterval, 10) : 1;
-        m = m < 10 ? "0" + m : "" + m;
-        return {
-          value: m,
-          disabled: this.disabledMinutesList.includes(m),
-        };
-      });
-      return data;
-    },
 
-    hoursList() {
-      let count = this.hour12 === true ? 12 : 24;
-      if (this.hourInterval !== void 0 && parseInt(this.hourInterval) > 0) {
-        count /= parseInt(this.hourInterval, 10);
-      }
-      let data: any[] = [];
-      for (let index = 0; index < count; ++index) {
-        data.push(index);
-      }
-      data = data.map((h) => {
-        h = this.hour12 ? h + 1 : h;
-        h *= this.hourInterval ? parseInt(this.hourInterval, 10) : 1;
-        h = h < 10 ? "0" + h : "" + h;
-        return {
-          value: h,
-          disabled: this.disabledHoursList.includes(h),
-        };
-      });
-      return data;
-    },
+      return Array.from({ length: count }, (_, index) => index)
+        .map((entry) => {
+          const value = entry * (props.minuteInterval ? parseInt(String(props.minuteInterval), 10) : 1);
+          const padded = value < 10 ? `0${value}` : `${value}`;
+          return {
+            value: padded,
+            disabled: disabledMinutesList.value.includes(padded),
+          };
+        });
+    });
 
-    displayTime() {
-      if (this.timestamp.hasTime !== true) return "00:00";
-      if (this.noMinutes === true) return padNumber(this.hour, 2) + "h";
-      else if (this.noHours === true) return ":" + padNumber(this.minute, 2);
-      let time = this.timeFormatter(this.timestamp, this.shortTimeLabel);
-      if (this.amPmLabels !== void 0 && this.amPmLabels.length > 0 && this.ampmIndex > -1) {
-        const c = time.substr(-this.amPmLabels[this.ampmIndex].length);
-        if (c !== this.amPmLabels[this.ampmIndex]) {
-          const rindex = time.lastIndexOf(" ");
-          if (rindex > -1) {
-            time = time.slice(0, rindex + 1);
-            time += this.amPmLabels[this.ampmIndex];
-          }
-        }
+    const hoursList = computed(() => {
+      let count = props.hour12 === true ? 12 : 24;
+      const interval = parseInt(String(props.hourInterval ?? 1), 10);
+      if (props.hourInterval !== void 0 && interval > 0) {
+        count /= interval;
       }
-      return time;
-    },
 
-    timeFormatter() {
+      return Array.from({ length: count }, (_, index) => index)
+        .map((entry) => {
+          let value = props.hour12 === true ? entry + 1 : entry;
+          value *= props.hourInterval ? parseInt(String(props.hourInterval), 10) : 1;
+          const padded = value < 10 ? `0${value}` : `${value}`;
+          return {
+            value: padded,
+            disabled: disabledHoursList.value.includes(padded),
+          };
+        });
+    });
+
+    const timeFormatter = computed(() => {
       const longOptions = {
         timeZone: "UTC",
-        hour12: this.hour12,
+        hour12: props.hour12,
         hour: "2-digit",
         minute: "2-digit",
       } satisfies Intl.DateTimeFormatOptions;
       const shortOptions = {
         timeZone: "UTC",
-        hour12: this.hour12,
+        hour12: props.hour12,
         hour: "numeric",
         minute: "2-digit",
       } satisfies Intl.DateTimeFormatOptions;
       const shortHourOptions = {
         timeZone: "UTC",
-        hour12: this.hour12,
+        hour12: props.hour12,
         hour: "numeric",
       } satisfies Intl.DateTimeFormatOptions;
 
-      return createNativeLocaleFormatter(this.locale, (tms, short) =>
-        short ? (tms.minute === 0 ? shortHourOptions : shortOptions) : longOptions,
+      return createNativeLocaleFormatter(props.locale, (value, short) =>
+        short ? (value.minute === 0 ? shortHourOptions : shortOptions) : longOptions,
       );
-    },
-  },
+    });
 
-  watch: {
-    value() {
-      this.splitTime();
-    },
+    const displayTime = computed(() => {
+      if (timestamp.value.hasTime !== true) return "00:00";
+      if (props.noMinutes === true) return `${padNumber(parseInt(hour.value || "0", 10), 2)}h`;
+      if (props.noHours === true) return `:${padNumber(parseInt(minute.value || "0", 10), 2)}`;
 
-    ampmIndex() {
-      this.ampm = this.amPmLabels[this.ampmIndex];
-      if (this.hour12 === true) {
-        this.handle12Hour();
-      } else {
-        this.timestamp.hour = parseInt(this.hour, 10);
-      }
-
-      if (this.ampmInitialized === true) {
-        this.emitValue();
-      } else {
-        this.ampmInitialized = true;
-      }
-    },
-
-    hour() {
-      if (this.hour12 === true) {
-        this.handle12Hour();
-      } else {
-        this.timestamp.hour = parseInt(this.hour, 10);
-      }
-
-      this.timestamp.hour %= 24;
-
-      if (this.hourInitialized === true) {
-        this.emitValue();
-      } else {
-        this.hourInitialized = true;
-      }
-    },
-
-    minute() {
-      this.timestamp.minute = parseInt(this.minute, 10);
-      if (this.minuteInitialized === true) {
-        this.emitValue();
-      } else {
-        this.minuteInitialized = true;
-      }
-    },
-
-    ampm() {
-      this.ampmIndex = this.amPmLabels.findIndex((ap) => ap === this.ampm);
-    },
-
-    hour12() {
-      this.hour = padNumber(this.timestamp.hour, 2);
-      if (this.hour12 === true) {
-        this.handle12Hour();
-      } else {
-        this.hour = padNumber(this.timestamp.hour, 2);
-      }
-      this.emitValue();
-    },
-
-    disabledMinutes() {
-      this.handleDisabledLists();
-    },
-
-    disabledHours() {
-      this.handleDisabledLists();
-    },
-
-    timestamp: {
-      handler(val, oldVal) {
-        if (oldVal === null || val.date !== oldVal.date) {
-          this.emitValue();
-        }
-      },
-      deep: true,
-    },
-  },
-
-  methods: {
-    getTimestamp() {
-      return this.timestamp;
-    },
-
-    handle12Hour() {
-      if (this.hour12 === true && this.ampmIndex > -1) {
-        const hour = parseInt(this.hour, 10);
-        if (this.ampmIndex === 0) {
-          if (hour === 12) {
-            this.timestamp.hour = 0;
-          } else {
-            this.timestamp.hour = parseInt(this.hour, 10);
+      let value = timeFormatter.value(timestamp.value, props.shortTimeLabel);
+      if (amPmLabels.value.length > 0 && ampmIndex.value > -1) {
+        const suffix = value.substring(value.length - amPmLabels.value[ampmIndex.value].length);
+        if (suffix !== amPmLabels.value[ampmIndex.value]) {
+          const replacementIndex = value.lastIndexOf(" ");
+          if (replacementIndex > -1) {
+            value = `${value.slice(0, replacementIndex + 1)}${amPmLabels.value[ampmIndex.value]}`;
           }
-        } else if (this.ampmIndex === 1) {
-          if (hour === 0) {
-            this.timestamp.hour = 12;
-            this.hour = padNumber(this.timestamp.hour, 2);
-          } else {
-            this.timestamp.hour = hour < 12 ? hour + 12 : hour;
-          }
-        } else {
-          this.timestamp.hour = parseInt(this.hour, 10);
         }
       }
-    },
 
-    emitValue() {
-      switch (this.type) {
+      return value;
+    });
+
+    function handle12Hour() {
+      if (props.hour12 !== true || ampmIndex.value < 0) {
+        return;
+      }
+
+      const parsedHour = parseInt(hour.value, 10);
+      if (ampmIndex.value === 0) {
+        timestamp.value.hour = parsedHour === 12 ? 0 : parsedHour;
+        return;
+      }
+
+      if (ampmIndex.value === 1) {
+        if (parsedHour === 0) {
+          timestamp.value.hour = 12;
+          hour.value = padNumber(timestamp.value.hour, 2);
+          return;
+        }
+
+        timestamp.value.hour = parsedHour < 12 ? parsedHour + 12 : parsedHour;
+        return;
+      }
+
+      timestamp.value.hour = parsedHour;
+    }
+
+    function emitValue() {
+      switch (type.value) {
         case "date":
-          this.$emit("input", getDateObject(this.timestamp));
+          emit("input", getDateObject(timestamp.value));
           return;
         case "array":
-          this.$emit("input", [
-            padNumber(this.timestamp.hour, 2),
-            padNumber(this.timestamp.minute, 2),
+          emit("input", [
+            padNumber(timestamp.value.hour, 2),
+            padNumber(timestamp.value.minute, 2),
           ]);
           return;
         case "object":
-          this.$emit("input", {
-            hour: padNumber(this.timestamp.hour, 2),
-            minute: padNumber(this.timestamp.minute, 2),
+          emit("input", {
+            hour: padNumber(timestamp.value.hour, 2),
+            minute: padNumber(timestamp.value.minute, 2),
           });
           return;
         case "string":
-          this.$emit(
+          emit(
             "input",
-            [padNumber(this.timestamp.hour, 2), padNumber(this.timestamp.minute, 2)].join(":"),
+            [padNumber(timestamp.value.hour, 2), padNumber(timestamp.value.minute, 2)].join(":"),
           );
       }
-    },
+    }
 
-    handleDisabledLists() {
-      this.disabledMinutesList = [];
-      this.disabledHoursList = [];
+    function handleDisabledLists() {
+      disabledMinutesList.value = [];
+      disabledHoursList.value = [];
 
-      this.disabledMinutes.forEach((m) =>
-        this.disabledMinutesList.push(padNumber(parseInt(m, 10), 2)),
+      (props.disabledMinutes as Array<string | number>).forEach((entry) =>
+        disabledMinutesList.value.push(padNumber(parseInt(String(entry), 10), 2)),
       );
-      this.disabledHours.forEach((h) => this.disabledHoursList.push(padNumber(parseInt(h, 10), 2)));
-    },
+      (props.disabledHours as Array<string | number>).forEach((entry) =>
+        disabledHoursList.value.push(padNumber(parseInt(String(entry), 10), 2)),
+      );
+    }
 
-    splitTime() {
-      const type = Object.prototype.toString.call(this.value);
-      let now, date;
-      switch (type) {
-        case "[object Date]":
-          this.type = "date";
-          now = parseDate(this.value);
-          date = getDate(now) + " " + getTime(now);
-          this.timestamp = parseTimestamp(date);
-          this.timestamp.minute =
-            Math.floor(this.timestamp.minute / this.minuteInterval) * this.minuteInterval;
-          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
-          this.fromTimestamp();
-          return;
-        case "[object Array]":
-          this.type = "array";
-          // 1st item is hour, 2nd item is minutes
-          now = parseDate(new Date());
-          now.hour = parseInt(this.value[0], 10);
-          now.minute = parseInt(this.value[1], 10);
-          date = getDate(now) + " " + getTime(now);
-          this.timestamp = parseTimestamp(date);
-          this.timestamp.minute =
-            Math.floor(this.timestamp.minute / this.minuteInterval) * this.minuteInterval;
-          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
-          this.fromTimestamp();
-          return;
-        case "[object Object]":
-          this.type = "object";
-          // object must contain keys 'hour', 'minute'
-          now = parseDate(new Date());
-          now.hour = parseInt(this.value.hour, 10);
-          now.minute = parseInt(this.value.minute, 10);
-          date = getDate(now) + " " + getTime(now);
-          this.timestamp = parseTimestamp(date);
-          this.timestamp.minute =
-            Math.floor(this.timestamp.minute / this.minuteInterval) * this.minuteInterval;
-          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
-          this.fromTimestamp();
-          return;
-        case "[object String]":
-          // use today's date (but not time, unless it wasn't passed in)
-          this.type = "string";
-          now = parseDate(new Date());
-          if (this.value) {
-            const parts = PARSE_TIME.exec(this.value);
-            now.hour = parseInt(parts[1], 10);
-            now.minute = parseInt(parts[3] || "0", 10);
-          }
-          date = getDate(now) + " " + getTime(now);
-          this.timestamp = parseTimestamp(date);
-          this.timestamp.minute =
-            Math.floor(this.timestamp.minute / this.minuteInterval) * this.minuteInterval;
-          if (this.timestamp.hour >= 24) {
-            this.timestamp.hour %= 24;
-          }
-          // this.ampmIndex = this.timestamp.hour > 12 && this.timestamp.minute >= 0 ? 1 : 0
-          this.fromTimestamp();
-          return;
-      }
-      if (this.value !== "") {
-        /* eslint-disable-next-line */
-        console.error(`QTimeScroller: invalid time format - '${this.value}'`);
-      }
-    },
+    function fromTimestamp() {
+      minute.value = padNumber(timestamp.value.minute, 2);
 
-    fromTimestamp() {
-      this.minute = padNumber(this.timestamp.minute, 2);
-      if (this.hour12 === true) {
-        if (this.timestamp.hour === 12) {
-          this.hour = "12";
-          this.ampmIndex = 1;
-        } else if (this.timestamp.hour === 0) {
-          this.hour = "12";
-          this.ampmIndex = 0;
-        } else if (this.timestamp.hour > 12) {
-          this.hour = padNumber(this.timestamp.hour - 12, 2);
-          this.ampmIndex = 1;
+      if (props.hour12 === true) {
+        if (timestamp.value.hour === 12) {
+          hour.value = "12";
+          ampmIndex.value = 1;
+        } else if (timestamp.value.hour === 0) {
+          hour.value = "12";
+          ampmIndex.value = 0;
+        } else if (timestamp.value.hour > 12) {
+          hour.value = padNumber(timestamp.value.hour - 12, 2);
+          ampmIndex.value = 1;
         } else {
-          this.hour = padNumber(this.timestamp.hour, 2);
-          this.ampmIndex = 0;
+          hour.value = padNumber(timestamp.value.hour, 2);
+          ampmIndex.value = 0;
         }
       } else {
-        this.hour = padNumber(this.timestamp.hour, 2);
+        hour.value = padNumber(timestamp.value.hour, 2);
       }
-    },
+    }
 
-    // -------------------------------
-    // render functions
-    // -------------------------------
-    __renderHoursScroller(h) {
+    function splitTime() {
+      syncing.value = true;
+
+      const valueType = Object.prototype.toString.call(props.value);
+      let now;
+      let value;
+
+      switch (valueType) {
+        case "[object Date]":
+          type.value = "date";
+          now = parseDate(props.value);
+          value = `${getDate(now)} ${getTime(now)}`;
+          timestamp.value = parseTimestamp(value);
+          timestamp.value.minute =
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+          fromTimestamp();
+          syncing.value = false;
+          return;
+        case "[object Array]":
+          type.value = "array";
+          value = props.value as Array<string | number>;
+          now = parseDate(new Date());
+          now.hour = parseInt(String(value[0]), 10);
+          now.minute = parseInt(String(value[1]), 10);
+          value = `${getDate(now)} ${getTime(now)}`;
+          timestamp.value = parseTimestamp(value);
+          timestamp.value.minute =
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+          fromTimestamp();
+          syncing.value = false;
+          return;
+        case "[object Object]":
+          type.value = "object";
+          value = props.value as { hour: string | number; minute: string | number };
+          now = parseDate(new Date());
+          now.hour = parseInt(String(value.hour), 10);
+          now.minute = parseInt(String(value.minute), 10);
+          value = `${getDate(now)} ${getTime(now)}`;
+          timestamp.value = parseTimestamp(value);
+          timestamp.value.minute =
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+          fromTimestamp();
+          syncing.value = false;
+          return;
+        case "[object String]":
+          type.value = "string";
+          now = parseDate(new Date());
+          if (props.value) {
+            const parts = PARSE_TIME.exec(String(props.value));
+            now.hour = parseInt(parts?.[1] ?? "0", 10);
+            now.minute = parseInt(parts?.[3] ?? "0", 10);
+          }
+          value = `${getDate(now)} ${getTime(now)}`;
+          timestamp.value = parseTimestamp(value);
+          timestamp.value.minute =
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+          if (timestamp.value.hour >= 24) {
+            timestamp.value.hour %= 24;
+          }
+          fromTimestamp();
+          syncing.value = false;
+          return;
+      }
+
+      syncing.value = false;
+
+      if (props.value !== "") {
+        console.error(`QTimeScroller: invalid time format - '${props.value}'`);
+      }
+    }
+
+    watch(() => props.value, splitTime);
+
+    watch(hour, () => {
+      if (syncing.value === true) {
+        return;
+      }
+
+      if (props.hour12 === true) {
+        handle12Hour();
+      } else {
+        timestamp.value.hour = parseInt(hour.value, 10);
+      }
+
+      timestamp.value.hour %= 24;
+      emitValue();
+    });
+
+    watch(minute, () => {
+      if (syncing.value === true) {
+        return;
+      }
+
+      timestamp.value.minute = parseInt(minute.value, 10);
+      emitValue();
+    });
+
+    watch(ampmIndex, () => {
+      if (syncing.value === true) {
+        return;
+      }
+
+      if (props.hour12 === true) {
+        handle12Hour();
+      } else {
+        timestamp.value.hour = parseInt(hour.value, 10);
+      }
+
+      emitValue();
+    });
+
+    watch(() => props.hour12, () => {
+      syncing.value = true;
+      if (props.hour12 === true) {
+        fromTimestamp();
+      } else {
+        hour.value = padNumber(timestamp.value.hour, 2);
+      }
+      syncing.value = false;
+      emitValue();
+    });
+
+    watch(() => props.disabledMinutes, handleDisabledLists, { deep: true });
+    watch(() => props.disabledHours, handleDisabledLists, { deep: true });
+
+    handleDisabledLists();
+    splitTime();
+
+    expose({
+      displayTime,
+      getTimestamp: () => timestamp.value,
+    });
+
+    function renderHoursScroller() {
       return h(ScrollerBase, {
-        staticClass: "col",
-        props: {
-          value: this.hour,
-          items: this.hoursList,
-          dense: this.dense,
-          disable: this.disable,
-          textColor: this.innerTextColor,
-          color: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-        },
-        class: {
-          "q-scroller__vertical-bar": this.verticalBar === true,
-        },
-        on: {
-          input: (val) => {
-            this.hour = val;
+        class: [
+          "col",
+          {
+            "q-scroller__vertical-bar": props.verticalBar === true,
           },
+        ],
+        value: hour.value,
+        items: hoursList.value,
+        dense: props.dense,
+        disable: props.disable,
+        textColor: props.innerTextColor,
+        color: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        onInput: (value) => {
+          hour.value = value;
         },
       });
-    },
+    }
 
-    __renderMinutesScroller(h) {
+    function renderMinutesScroller() {
       return h(ScrollerBase, {
-        staticClass: "col",
-        props: {
-          value: this.minute,
-          items: this.minutesList,
-          dense: this.dense,
-          disable: this.disable,
-          textColor: this.innerTextColor,
-          color: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-        },
-        class: {
-          "q-scroller__vertical-bar": this.verticalBar === true && this.hour12 === true,
-        },
-        on: {
-          input: (val) => {
-            this.minute = val;
+        class: [
+          "col",
+          {
+            "q-scroller__vertical-bar": props.verticalBar === true && props.hour12 === true,
           },
+        ],
+        value: minute.value,
+        items: minutesList.value,
+        dense: props.dense,
+        disable: props.disable,
+        textColor: props.innerTextColor,
+        color: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        onInput: (value) => {
+          minute.value = value;
         },
       });
-    },
+    }
 
-    __renderAmPmScroller(h) {
+    function renderAmPmScroller() {
       return h(ScrollerBase, {
-        staticClass: "col",
-        props: {
-          value: this.ampm,
-          items: this.ampmList,
-          dense: this.dense,
-          disable: this.disable,
-          textColor: this.innerTextColor,
-          color: this.innerColor,
-          disabledTextColor: this.disabledTextColor,
-        },
-        on: {
-          input: (val) => {
-            this.ampm = val;
-          },
+        class: "col",
+        value: ampm.value,
+        items: ampmList.value,
+        dense: props.dense,
+        disable: props.disable,
+        textColor: props.innerTextColor,
+        color: props.innerColor,
+        disabledTextColor: props.disabledTextColor,
+        onInput: (value) => {
+          ampmIndex.value = amPmLabels.value.findIndex((entry) => entry === value);
         },
       });
-    },
+    }
 
-    __renderScrollers(h) {
+    function renderScrollers() {
       return [
-        this.noHours !== true && callLegacyMethod(this, "__renderHoursScroller", h),
-        this.noMinutes !== true && callLegacyMethod(this, "__renderMinutesScroller", h),
-        this.hour12 === true && callLegacyMethod(this, "__renderAmPmScroller", h),
+        props.noHours !== true ? renderHoursScroller() : null,
+        props.noMinutes !== true ? renderMinutesScroller() : null,
+        props.hour12 === true ? renderAmPmScroller() : null,
       ];
-    },
+    }
+
+    return () =>
+      renderCommon({
+        displayed,
+        emitClose: () => emit("close"),
+        renderScrollers,
+        slotData,
+        slots,
+      });
   },
 });
