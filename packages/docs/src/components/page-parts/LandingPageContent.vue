@@ -750,4 +750,189 @@ const supportItems = [
     border-radius: 20px;
   }
 }
+
+
+/* codex-theme-override:start */
+.landing-page {
+  --landing-page-text: #{$brand-light-text};
+  --landing-heading: #{$brand-light-text};
+  --landing-border: #{rgba($brand-secondary, 0.16)};
+  --landing-border-strong: #{rgba($brand-secondary, 0.24)};
+  --landing-surface: #{rgba($brand-light, 0.78)};
+  --landing-surface-strong: #{rgba($brand-light, 0.92)};
+  --landing-text-soft: #{rgba($brand-light-text, 0.78)};
+  --landing-shadow: 0 28px 60px #{rgba($brand-primary, 0.14)};
+  --landing-card-shadow: 0 16px 34px #{rgba($brand-secondary, 0.12)};
+  --landing-chip-bg: #{rgba($brand-light, 0.52)};
+  --landing-chip-text: #{$brand-primary};
+  --landing-solid-bg: #{$brand-primary};
+  --landing-solid-text: #{$brand-light};
+  --landing-solid-shadow: 0 18px 30px #{rgba($brand-primary, 0.24)};
+  --landing-ghost-bg: #{rgba($brand-light, 0.46)};
+  --landing-ghost-text: #{$brand-light-text};
+  --landing-pill-border: #{rgba($brand-secondary, 0.14)};
+  --landing-pill-bg: #{rgba($brand-light, 0.44)};
+  --landing-pill-text: #{$brand-primary};
+  --landing-panel-gradient-top: #{rgba($brand-light, 0.7)};
+  --landing-panel-gradient-bottom: #{rgba($brand-light, 0.22)};
+  --landing-panel-bg: #{rgba($brand-light-bg, 0.88)};
+  --landing-preview-card-border: #{rgba($brand-secondary, 0.18)};
+  --landing-preview-card-bg: #{rgba($brand-light, 0.82)};
+  --landing-preview-card-shadow: 0 22px 38px #{rgba($brand-secondary, 0.14)};
+  --landing-accent-line: #{rgba($brand-primary, 0.4)};
+  --landing-icon-bg: #{rgba($brand-primary, 0.1)};
+  --landing-icon-color: #{$brand-primary};
+  --landing-spot-accent: #{rgba($brand-primary, 0.14)};
+  --landing-resource-link-bg: #{rgba($brand-light, 0.48)};
+  --landing-resource-link-text: #{$brand-light-text};
+  --landing-resource-item-border: #{rgba($brand-secondary, 0.1)};
+  --landing-resource-item-bg: #{rgba($brand-light, 0.42)};
+  --landing-accent-text: #{$brand-primary};
+  --landing-mesh-color: #{rgba($brand-primary, 0.16)};
+  --landing-hero-glow-1: #{rgba($brand-primary, 0.18)};
+  --landing-hero-glow-2: #{rgba($brand-secondary, 0.12)};
+  --landing-hero-start: #{rgba($brand-light, 0.96)};
+  --landing-hero-end: #{rgba($brand-light-bg, 0.96)};
+  color: var(--landing-page-text);
+}
+
+body.body--dark .landing-page {
+  --landing-page-text: #{$brand-dark-text};
+  --landing-heading: #{$brand-dark-text};
+  --landing-border: #{rgba($brand-light, 0.12)};
+  --landing-border-strong: #{rgba($brand-light, 0.2)};
+  --landing-surface: #{rgba($dark-pill, 0.74)};
+  --landing-surface-strong: #{rgba($dark-pill, 0.88)};
+  --landing-text-soft: #{rgba($brand-dark-text, 0.82)};
+  --landing-shadow: 0 28px 60px #{rgba($brand-dark-bg, 0.28)};
+  --landing-card-shadow: 0 16px 34px #{rgba($brand-dark-bg, 0.24)};
+  --landing-chip-bg: #{rgba($brand-light, 0.08)};
+  --landing-chip-text: #{$brand-primary};
+  --landing-solid-bg: #{$brand-light};
+  --landing-solid-text: #{$brand-dark-bg};
+  --landing-solid-shadow: 0 18px 30px #{rgba($brand-dark-bg, 0.28)};
+  --landing-ghost-bg: #{rgba($brand-light, 0.08)};
+  --landing-ghost-text: #{$brand-dark-text};
+  --landing-pill-border: #{rgba($brand-light, 0.12)};
+  --landing-pill-bg: #{rgba($brand-light, 0.05)};
+  --landing-pill-text: #{$brand-primary};
+  --landing-panel-gradient-top: #{rgba($brand-light, 0.08)};
+  --landing-panel-gradient-bottom: #{rgba($brand-light, 0.02)};
+  --landing-panel-bg: #{rgba($brand-dark-bg, 0.56)};
+  --landing-preview-card-border: #{rgba($brand-light, 0.12)};
+  --landing-preview-card-bg: #{rgba($brand-dark-bg, 0.78)};
+  --landing-preview-card-shadow: 0 22px 38px #{rgba($brand-dark-bg, 0.28)};
+  --landing-accent-line: #{rgba($brand-primary, 0.55)};
+  --landing-icon-bg: #{rgba($brand-primary, 0.16)};
+  --landing-icon-color: #{$brand-primary};
+  --landing-spot-accent: #{rgba($brand-primary, 0.18)};
+  --landing-resource-link-bg: #{rgba($brand-light, 0.06)};
+  --landing-resource-link-text: #{$brand-dark-text};
+  --landing-resource-item-border: #{rgba($brand-light, 0.08)};
+  --landing-resource-item-bg: #{rgba($brand-light, 0.04)};
+  --landing-accent-text: #{$brand-primary};
+  --landing-mesh-color: #{rgba($brand-light, 0.12)};
+  --landing-hero-glow-1: #{rgba($brand-primary, 0.22)};
+  --landing-hero-glow-2: #{rgba($brand-light, 0.08)};
+  --landing-hero-start: #{rgba($brand-dark-bg, 0.96)};
+  --landing-hero-end: #{rgba($dark-pill, 0.96)};
+}
+
+.hero {
+  background:
+    radial-gradient(circle at top left, var(--landing-hero-glow-1), transparent 34%),
+    radial-gradient(circle at 82% 20%, var(--landing-hero-glow-2), transparent 20%),
+    linear-gradient(145deg, var(--landing-hero-start), var(--landing-hero-end));
+  box-shadow: var(--landing-shadow);
+}
+
+.hero__mesh {
+  background: radial-gradient(circle, var(--landing-mesh-color), transparent 68%);
+}
+
+.hero__eyebrow,
+.section-heading__eyebrow,
+.resource-card__eyebrow,
+.preview-panel__kicker {
+  border-color: var(--landing-border-strong);
+  background: var(--landing-chip-bg);
+  color: var(--landing-chip-text);
+}
+
+.hero-title,
+.hero-subtitle,
+.preview-panel__copy h2,
+.section-heading__title,
+.feature-card__title,
+.resource-card__title {
+  color: var(--landing-heading);
+}
+
+.hero-button--solid {
+  background: var(--landing-solid-bg);
+  color: var(--landing-solid-text);
+  box-shadow: var(--landing-solid-shadow);
+}
+
+.hero-button--ghost {
+  background: var(--landing-ghost-bg);
+  border-color: var(--landing-border-strong);
+  color: var(--landing-ghost-text);
+}
+
+.hero-pill {
+  border-color: var(--landing-pill-border);
+  background: var(--landing-pill-bg);
+  color: var(--landing-pill-text);
+}
+
+.preview-panel,
+.feature-card,
+.resource-card {
+  background: var(--landing-surface);
+  box-shadow: var(--landing-card-shadow);
+}
+
+.preview-panel {
+  background:
+    linear-gradient(180deg, var(--landing-panel-gradient-top), var(--landing-panel-gradient-bottom)),
+    var(--landing-panel-bg);
+}
+
+.preview-card {
+  border-color: var(--landing-preview-card-border);
+  background: var(--landing-preview-card-bg);
+  box-shadow: var(--landing-preview-card-shadow);
+}
+
+.feature-card::before {
+  background: linear-gradient(90deg, var(--landing-accent-line), transparent 65%);
+}
+
+.feature-card__icon {
+  background: var(--landing-icon-bg);
+  color: var(--landing-icon-color);
+}
+
+.resource-card--primary {
+  background:
+    radial-gradient(circle at top right, var(--landing-spot-accent), transparent 30%),
+    var(--landing-surface-strong);
+}
+
+.resource-link {
+  border-color: var(--landing-border-strong);
+  background: var(--landing-resource-link-bg);
+  color: var(--landing-resource-link-text);
+}
+
+.resource-list__item {
+  border-color: var(--landing-resource-item-border);
+  background: var(--landing-resource-item-bg);
+}
+
+.resource-list__title {
+  color: var(--landing-accent-text);
+}
+/* codex-theme-override:end */
 </style>
