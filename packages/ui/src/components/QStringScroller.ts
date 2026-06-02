@@ -18,7 +18,7 @@ export default defineComponent({
   emits: ["close", "input"],
 
   setup(props, { attrs, slots, emit, expose }) {
-    const items = computed(() => ((props.items ?? []) as Array<Record<string, any>>));
+    const items = computed(() => (props.items ?? []) as Array<Record<string, any>>);
     const scrollerRef = ref<{
       canScroll: (dir: number) => boolean;
       getItemIndex: (value: unknown) => number;

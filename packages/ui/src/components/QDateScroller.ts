@@ -73,12 +73,14 @@ export default defineComponent({
     );
 
     const yearsList = computed(() => {
-      let yearBegin = props.yearBegin && parseInt(String(props.yearBegin), 10) > 0
-        ? parseInt(String(props.yearBegin), 10)
-        : 0;
-      let yearStop = props.yearStop && parseInt(String(props.yearStop), 10) > 0
-        ? parseInt(String(props.yearStop), 10)
-        : 0;
+      let yearBegin =
+        props.yearBegin && parseInt(String(props.yearBegin), 10) > 0
+          ? parseInt(String(props.yearBegin), 10)
+          : 0;
+      let yearStop =
+        props.yearStop && parseInt(String(props.yearStop), 10) > 0
+          ? parseInt(String(props.yearStop), 10)
+          : 0;
 
       const currentYear = new Date().getFullYear();
       if (yearBegin === 0) {
@@ -204,7 +206,13 @@ export default defineComponent({
     );
 
     const displayDate = computed(() => {
-      if (!props.locale || !year.value || !month.value || !day.value || timestamp.value.hasDay === false) {
+      if (
+        !props.locale ||
+        !year.value ||
+        !month.value ||
+        !day.value ||
+        timestamp.value.hasDay === false
+      ) {
         return "";
       }
       if (props.noDays === true && props.noMonths === true) {
@@ -319,7 +327,11 @@ export default defineComponent({
           return;
         case "[object Object]":
           type.value = "object";
-          value = props.value as { year: string | number; month: string | number; day: string | number };
+          value = props.value as {
+            year: string | number;
+            month: string | number;
+            day: string | number;
+          };
           now = parseDate(new Date());
           now.year = parseInt(String(value.year), 10);
           now.month = parseInt(String(value.month), 10);

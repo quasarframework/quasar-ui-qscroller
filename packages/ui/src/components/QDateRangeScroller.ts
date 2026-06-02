@@ -161,22 +161,26 @@ export default defineComponent({
       switch (Object.prototype.toString.call(props.value[0])) {
         case "[object Date]":
           type.value = "date";
-          start = getDate(parseTimestamp(`${getDate(parseDate(props.value[0]))} ${getTime(parseDate(props.value[0]))}`));
-          end = getDate(parseTimestamp(`${getDate(parseDate(props.value[1]))} ${getTime(parseDate(props.value[1]))}`));
+          start = getDate(
+            parseTimestamp(
+              `${getDate(parseDate(props.value[0]))} ${getTime(parseDate(props.value[0]))}`,
+            ),
+          );
+          end = getDate(
+            parseTimestamp(
+              `${getDate(parseDate(props.value[1]))} ${getTime(parseDate(props.value[1]))}`,
+            ),
+          );
           break;
         case "[object Array]":
           type.value = "array";
-          start =
-            `${padNumber(parseInt(props.value[0][0], 10), 2)}-${padNumber(parseInt(props.value[0][1], 10), 2)}-${padNumber(parseInt(props.value[0][2], 10), 2)}`;
-          end =
-            `${padNumber(parseInt(props.value[1][0], 10), 2)}-${padNumber(parseInt(props.value[1][1], 10), 2)}-${padNumber(parseInt(props.value[1][2], 10), 2)}`;
+          start = `${padNumber(parseInt(props.value[0][0], 10), 2)}-${padNumber(parseInt(props.value[0][1], 10), 2)}-${padNumber(parseInt(props.value[0][2], 10), 2)}`;
+          end = `${padNumber(parseInt(props.value[1][0], 10), 2)}-${padNumber(parseInt(props.value[1][1], 10), 2)}-${padNumber(parseInt(props.value[1][2], 10), 2)}`;
           break;
         case "[object Object]":
           type.value = "object";
-          start =
-            `${padNumber(parseInt(props.value[0].year, 10), 2)}-${padNumber(parseInt(props.value[0].month, 10), 2)}-${padNumber(parseInt(props.value[0].day, 10), 2)}`;
-          end =
-            `${padNumber(parseInt(props.value[1].year, 10), 2)}-${padNumber(parseInt(props.value[1].month, 10), 2)}-${padNumber(parseInt(props.value[1].day, 10), 2)}`;
+          start = `${padNumber(parseInt(props.value[0].year, 10), 2)}-${padNumber(parseInt(props.value[0].month, 10), 2)}-${padNumber(parseInt(props.value[0].day, 10), 2)}`;
+          end = `${padNumber(parseInt(props.value[1].year, 10), 2)}-${padNumber(parseInt(props.value[1].month, 10), 2)}-${padNumber(parseInt(props.value[1].day, 10), 2)}`;
           break;
         case "[object String]":
           type.value = "string";

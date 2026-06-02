@@ -55,10 +55,14 @@ export default defineComponent({
     });
 
     return () =>
-      h(component.value, {
-        ref: componentRef,
-        ...props,
-        ...attrs,
-      }, slots);
+      h(
+        component.value,
+        {
+          ref: componentRef,
+          ...props,
+          ...attrs,
+        },
+        slots,
+      );
   },
 });

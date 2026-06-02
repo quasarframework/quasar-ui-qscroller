@@ -1,4 +1,14 @@
-import { computed, h, onBeforeUnmount, onMounted, ref, watch, type Ref, type Slots, type VNodeChild } from "vue";
+import {
+  computed,
+  h,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  type Ref,
+  type Slots,
+  type VNodeChild,
+} from "vue";
 import { QBtn, QResizeObserver, useQuasar } from "quasar";
 import {
   setScrollerBackgroundColor,
@@ -61,12 +71,7 @@ export function useScrollerShell(props: ShellProps) {
       props.innerTextColor ?? props.textColor,
       "currentColor",
     );
-    setScrollerCssColorVar(
-      style,
-      "--q-scroller-inner-background",
-      props.innerColor,
-      "transparent",
-    );
+    setScrollerCssColorVar(style, "--q-scroller-inner-background", props.innerColor, "transparent");
     setScrollerCssColorVar(
       style,
       "--q-scroller-disabled-color",
@@ -76,10 +81,7 @@ export function useScrollerShell(props: ShellProps) {
     return style;
   });
 
-  function getRenderedHeight(
-    element: HTMLElement | null,
-    fallback: number,
-  ) {
+  function getRenderedHeight(element: HTMLElement | null, fallback: number) {
     const measuredHeight = element?.getBoundingClientRect().height;
     return measuredHeight !== void 0 && measuredHeight > 0 ? measuredHeight : fallback;
   }
@@ -91,24 +93,27 @@ export function useScrollerShell(props: ShellProps) {
 
     resizeTimer = setTimeout(() => {
       if (props.childHeight !== void 0) {
-        bodyHeight.value = typeof props.childHeight === "string"
-          ? parseInt(props.childHeight, 10) || DEFAULT_HEIGHT
-          : props.childHeight;
+        bodyHeight.value =
+          typeof props.childHeight === "string"
+            ? parseInt(props.childHeight, 10) || DEFAULT_HEIGHT
+            : props.childHeight;
         return;
       }
 
-      headerHeight.value = props.noHeader === true
-        ? 0
-        : getRenderedHeight(
-            headerRef.value,
-            props.dense === true ? DEFAULT_HEADER_HEIGHT_DENSE : DEFAULT_HEADER_HEIGHT,
-          );
-      footerHeight.value = props.noFooter === true
-        ? 0
-        : getRenderedHeight(
-            footerRef.value,
-            props.dense === true ? DEFAULT_FOOTER_HEIGHT_DENSE : DEFAULT_FOOTER_HEIGHT,
-          );
+      headerHeight.value =
+        props.noHeader === true
+          ? 0
+          : getRenderedHeight(
+              headerRef.value,
+              props.dense === true ? DEFAULT_HEADER_HEIGHT_DENSE : DEFAULT_HEADER_HEIGHT,
+            );
+      footerHeight.value =
+        props.noFooter === true
+          ? 0
+          : getRenderedHeight(
+              footerRef.value,
+              props.dense === true ? DEFAULT_FOOTER_HEIGHT_DENSE : DEFAULT_FOOTER_HEIGHT,
+            );
 
       height.value = shellRef.value?.getBoundingClientRect().height ?? 0;
       bodyHeight.value = height.value - headerHeight.value - footerHeight.value;
@@ -119,13 +124,7 @@ export function useScrollerShell(props: ShellProps) {
     }, 200);
   }
 
-  function renderCommon({
-    displayed,
-    emitClose,
-    renderScrollers,
-    slotData,
-    slots,
-  }: ShellOptions) {
+  function renderCommon({ displayed, emitClose, renderScrollers, slotData, slots }: ShellOptions) {
     const headerSlot = slots.header?.(slotData.value);
     const footerSlot = slots.footer?.(slotData.value);
 

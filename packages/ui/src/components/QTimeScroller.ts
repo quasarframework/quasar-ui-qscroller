@@ -70,15 +70,15 @@ export default defineComponent({
         count /= interval;
       }
 
-      return Array.from({ length: count }, (_, index) => index)
-        .map((entry) => {
-          const value = entry * (props.minuteInterval ? parseInt(String(props.minuteInterval), 10) : 1);
-          const padded = value < 10 ? `0${value}` : `${value}`;
-          return {
-            value: padded,
-            disabled: disabledMinutesList.value.includes(padded),
-          };
-        });
+      return Array.from({ length: count }, (_, index) => index).map((entry) => {
+        const value =
+          entry * (props.minuteInterval ? parseInt(String(props.minuteInterval), 10) : 1);
+        const padded = value < 10 ? `0${value}` : `${value}`;
+        return {
+          value: padded,
+          disabled: disabledMinutesList.value.includes(padded),
+        };
+      });
     });
 
     const hoursList = computed(() => {
@@ -88,16 +88,15 @@ export default defineComponent({
         count /= interval;
       }
 
-      return Array.from({ length: count }, (_, index) => index)
-        .map((entry) => {
-          let value = props.hour12 === true ? entry + 1 : entry;
-          value *= props.hourInterval ? parseInt(String(props.hourInterval), 10) : 1;
-          const padded = value < 10 ? `0${value}` : `${value}`;
-          return {
-            value: padded,
-            disabled: disabledHoursList.value.includes(padded),
-          };
-        });
+      return Array.from({ length: count }, (_, index) => index).map((entry) => {
+        let value = props.hour12 === true ? entry + 1 : entry;
+        value *= props.hourInterval ? parseInt(String(props.hourInterval), 10) : 1;
+        const padded = value < 10 ? `0${value}` : `${value}`;
+        return {
+          value: padded,
+          disabled: disabledHoursList.value.includes(padded),
+        };
+      });
     });
 
     const timeFormatter = computed(() => {
@@ -174,10 +173,7 @@ export default defineComponent({
           emit("input", getDateObject(timestamp.value));
           return;
         case "array":
-          emit("input", [
-            padNumber(timestamp.value.hour, 2),
-            padNumber(timestamp.value.minute, 2),
-          ]);
+          emit("input", [padNumber(timestamp.value.hour, 2), padNumber(timestamp.value.minute, 2)]);
           return;
         case "object":
           emit("input", {
@@ -241,7 +237,8 @@ export default defineComponent({
           value = `${getDate(now)} ${getTime(now)}`;
           timestamp.value = parseTimestamp(value);
           timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
+            Number(props.minuteInterval);
           fromTimestamp();
           syncing.value = false;
           return;
@@ -254,7 +251,8 @@ export default defineComponent({
           value = `${getDate(now)} ${getTime(now)}`;
           timestamp.value = parseTimestamp(value);
           timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
+            Number(props.minuteInterval);
           fromTimestamp();
           syncing.value = false;
           return;
@@ -267,7 +265,8 @@ export default defineComponent({
           value = `${getDate(now)} ${getTime(now)}`;
           timestamp.value = parseTimestamp(value);
           timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
+            Number(props.minuteInterval);
           fromTimestamp();
           syncing.value = false;
           return;
@@ -282,7 +281,8 @@ export default defineComponent({
           value = `${getDate(now)} ${getTime(now)}`;
           timestamp.value = parseTimestamp(value);
           timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) * Number(props.minuteInterval);
+            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
+            Number(props.minuteInterval);
           if (timestamp.value.hour >= 24) {
             timestamp.value.hour %= 24;
           }
@@ -338,16 +338,19 @@ export default defineComponent({
       emitValue();
     });
 
-    watch(() => props.hour12, () => {
-      syncing.value = true;
-      if (props.hour12 === true) {
-        fromTimestamp();
-      } else {
-        hour.value = padNumber(timestamp.value.hour, 2);
-      }
-      syncing.value = false;
-      emitValue();
-    });
+    watch(
+      () => props.hour12,
+      () => {
+        syncing.value = true;
+        if (props.hour12 === true) {
+          fromTimestamp();
+        } else {
+          hour.value = padNumber(timestamp.value.hour, 2);
+        }
+        syncing.value = false;
+        emitValue();
+      },
+    );
 
     watch(() => props.disabledMinutes, handleDisabledLists, { deep: true });
     watch(() => props.disabledHours, handleDisabledLists, { deep: true });

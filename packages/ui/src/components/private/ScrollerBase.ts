@@ -1,4 +1,13 @@
-import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  h,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+} from "vue";
 import { debounce, QBtn, QResizeObserver, scroll, useQuasar } from "quasar";
 import { useScrollerColors } from "../../composables/use-scroller-colors";
 import props from "../../utils/props";
@@ -21,7 +30,7 @@ export default defineComponent({
 
   setup(props, { attrs, emit, expose }) {
     const $q = useQuasar();
-    const items = computed(() => ((props.items ?? []) as Array<Record<string, any>>));
+    const items = computed(() => (props.items ?? []) as Array<Record<string, any>>);
     const rootRef = ref<HTMLElement | null>(null);
     const scrollTimer = ref<ReturnType<typeof setTimeout> | null>(null);
     const height = ref(0);
@@ -125,10 +134,7 @@ export default defineComponent({
 
       const scrollToEl = dir === -1 ? elem.previousElementSibling : elem.nextElementSibling;
 
-      if (
-        scrollToEl instanceof HTMLButtonElement &&
-        scrollToEl.innerText.length > 0
-      ) {
+      if (scrollToEl instanceof HTMLButtonElement && scrollToEl.innerText.length > 0) {
         if (scrollTimer.value !== null) {
           clearTimeout(scrollTimer.value);
         }
@@ -198,7 +204,10 @@ export default defineComponent({
 
     function wheelEvent(event: WheelEvent) {
       if (props.disable !== true) {
-        const delta = "wheelDeltaY" in event ? (event as WheelEvent & { wheelDeltaY: number }).wheelDeltaY : -event.deltaY;
+        const delta =
+          "wheelDeltaY" in event
+            ? (event as WheelEvent & { wheelDeltaY: number }).wheelDeltaY
+            : -event.deltaY;
         const dir = delta < 0 ? 1 : -1;
         move(dir);
       }
@@ -353,11 +362,7 @@ export default defineComponent({
           class: "q-scroller__body",
           onWheel: wheelEvent,
         }),
-        [
-          renderPadding(),
-          ...items.value.map(renderItem),
-          renderPadding(),
-        ],
+        [renderPadding(), ...items.value.map(renderItem), renderPadding()],
       );
     }
 

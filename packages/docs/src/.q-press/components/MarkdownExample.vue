@@ -93,15 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  inject,
-  markRaw,
-  onBeforeUnmount,
-  onMounted,
-  reactive,
-  ref,
-} from "vue";
+import { computed, inject, markRaw, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { openURL } from "quasar";
 
 import { fabGithub, fabCodepen } from "@quasar/extras/fontawesome-v7";

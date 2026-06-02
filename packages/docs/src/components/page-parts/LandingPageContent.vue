@@ -22,7 +22,10 @@
           <div class="hero-buttons">
             <q-btn
               to="/getting-started/introduction"
-              no-caps rounded unelevated class="hero-button hero-button--solid"
+              no-caps
+              rounded
+              unelevated
+              class="hero-button hero-button--solid"
             >
               <div class="hero-button__content q-anchor--skip">
                 <span class="hero-button__slot hero-button__slot--empty" aria-hidden="true" />
@@ -35,7 +38,10 @@
 
             <q-btn
               to="/other/upgrade-guide"
-              no-caps rounded unelevated class="hero-button hero-button--ghost"
+              no-caps
+              rounded
+              unelevated
+              class="hero-button hero-button--ghost"
             >
               <div class="hero-button__content q-anchor--skip">
                 <span class="hero-button__slot hero-button__slot--empty" aria-hidden="true" />
@@ -50,7 +56,10 @@
               href="https://github.com/quasarframework/quasar-ui-qscroller/tree/v3-beta"
               target="_blank"
               rel="noopener noreferrer"
-              no-caps rounded unelevated class="hero-button hero-button--ghost"
+              no-caps
+              rounded
+              unelevated
+              class="hero-button hero-button--ghost"
             >
               <div class="hero-button__content q-anchor--skip">
                 <span class="hero-button__slot">
@@ -63,11 +72,7 @@
           </div>
 
           <div class="hero-pills">
-            <span
-              v-for="pill in heroPills"
-              :key="pill"
-              class="hero-pill"
-            >
+            <span v-for="pill in heroPills" :key="pill" class="hero-pill">
               {{ pill }}
             </span>
           </div>
@@ -123,11 +128,7 @@
       </div>
 
       <div class="feature-grid">
-        <article
-          v-for="feature in featureCards"
-          :key="feature.title"
-          class="feature-card"
-        >
+        <article v-for="feature in featureCards" :key="feature.title" class="feature-card">
           <div class="feature-card__icon">
             <q-icon :name="feature.icon" />
           </div>
@@ -140,10 +141,12 @@
     <section class="resource-section">
       <article class="resource-card resource-card--primary">
         <div class="resource-card__eyebrow">Ecosystem</div>
-        <h2 class="resource-card__title">Built in the same docs workflow as the other md-plugins sites</h2>
+        <h2 class="resource-card__title">
+          Built in the same docs workflow as the other md-plugins sites
+        </h2>
         <p class="resource-card__body">
-          This site runs on Q-Press and the shared md-plugins tooling, so the docs, examples, and
-          navigation fit into the same family as the sibling Quasar UI projects.
+          This site runs on Q-Press and md-plugins, so the docs, examples, and navigation stay in
+          step with the sibling Quasar UI projects.
         </p>
 
         <div class="resource-card__actions">
@@ -181,19 +184,16 @@
 
       <article class="resource-card resource-card--secondary">
         <div class="resource-card__eyebrow">Need Help?</div>
-        <h2 class="resource-card__title">Start with the intro, then use the examples as live reference</h2>
+        <h2 class="resource-card__title">
+          Start with the intro, then use the examples as live reference
+        </h2>
         <p class="resource-card__body">
-          The docs are structured to move quickly from install and upgrade steps into working
-          examples. If something feels off, GitHub Discussions and the repo issue tracker are the
-          best places to surface it.
+          The docs move quickly from install and upgrade steps into working examples. If something
+          feels off, GitHub Discussions and the issue tracker are the best places to surface it.
         </p>
 
         <div class="resource-list">
-          <div
-            v-for="item in supportItems"
-            :key="item.title"
-            class="resource-list__item"
-          >
+          <div v-for="item in supportItems" :key="item.title" class="resource-list__item">
             <div class="resource-list__title">{{ item.title }}</div>
             <div class="resource-list__body">{{ item.body }}</div>
           </div>
@@ -246,7 +246,7 @@ const featureCards = [
 const supportItems = [
   {
     title: "Introduction First",
-    body: "Use the getting-started docs to choose between direct UI-package usage and the app extension path.",
+    body: "Start in getting-started to choose between direct UI-package usage and the app extension path.",
   },
   {
     title: "Upgrade Notes",
@@ -267,14 +267,15 @@ const supportItems = [
   --landing-surface-strong: rgba(92, 64, 51, 0.86);
   --landing-text-soft: rgba(245, 245, 220, 0.8);
   --landing-shadow: 0 28px 60px rgba(35, 20, 14, 0.28);
+  padding: 28px clamp(16px, 2.4vw, 34px) 42px;
   color: $brand-dark-text;
 }
 
 .hero {
   position: relative;
   overflow: hidden;
-  margin-bottom: 40px;
-  padding: clamp(28px, 5vw, 52px);
+  margin-bottom: 32px;
+  padding: clamp(24px, 4vw, 44px);
   border: 1px solid var(--landing-border);
   border-radius: 34px;
   background:
@@ -309,7 +310,7 @@ const supportItems = [
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 30px;
+  gap: 24px;
   align-items: center;
   grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
 }
@@ -318,7 +319,7 @@ const supportItems = [
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: 14px;
 }
 
 .hero__eyebrow,
@@ -377,14 +378,14 @@ const supportItems = [
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  padding-top: 8px;
-  margin-bottom: 10px;
+  gap: 10px 12px;
+  padding-top: 6px;
+  margin-bottom: 6px;
 }
 
 .hero-button {
-  min-height: 48px;
-  padding: 0 20px;
+  min-height: 50px;
+  padding: 0 18px;
   border: 1px solid transparent;
   text-decoration: none;
   transition:
@@ -418,9 +419,9 @@ const supportItems = [
 
 .hero-button__content {
   display: grid;
-  grid-template-columns: 1.25rem minmax(0, 1fr) 1.25rem;
+  grid-template-columns: 1.5rem minmax(0, 1fr) 1.5rem;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 12px;
   min-width: 0;
   width: 100%;
   font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
@@ -432,12 +433,16 @@ const supportItems = [
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .hero-button__slot--empty {
   visibility: hidden;
+}
+
+.hero-button__slot :deep(.q-icon) {
+  font-size: 1.3rem;
 }
 
 .hero-button__label {
@@ -469,7 +474,7 @@ const supportItems = [
 
 .preview-panel {
   width: 100%;
-  padding: 22px;
+  padding: 20px;
   border: 1px solid var(--landing-border);
   border-radius: 28px;
   background:
@@ -488,7 +493,7 @@ const supportItems = [
 }
 
 .preview-panel__note {
-  color: rgba(245, 245, 220, 0.62);
+  color: var(--landing-note-text);
   font-size: 0.84rem;
   font-weight: 600;
 }
@@ -514,7 +519,8 @@ const supportItems = [
 
 .preview-stack {
   position: relative;
-  min-height: 350px;
+  min-height: clamp(250px, 30vw, 310px);
+  padding: 10px 14px 6px;
 }
 
 .preview-card {
@@ -532,27 +538,27 @@ const supportItems = [
 }
 
 .preview-card--primary {
-  top: 0;
-  left: 0;
-  width: min(100%, 360px);
+  top: 10px;
+  left: 10px;
+  width: min(82%, 300px);
   transform: rotate(-2deg);
 }
 
 .preview-card--secondary {
-  right: 0;
-  bottom: 0;
-  width: min(78%, 290px);
+  right: 6px;
+  bottom: 4px;
+  width: min(56%, 220px);
   transform: rotate(4deg);
 }
 
 .feature-section,
 .resource-section {
-  margin-top: 36px;
+  margin-top: 28px;
 }
 
 .section-heading {
   max-width: 760px;
-  margin: 0 auto 24px;
+  margin: 0 auto 20px;
   text-align: center;
 }
 
@@ -561,6 +567,7 @@ const supportItems = [
   font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
   font-size: clamp(2rem, 4vw, 2.8rem);
   line-height: 1.12;
+  text-wrap: balance;
   color: $brand-light;
 }
 
@@ -581,11 +588,11 @@ const supportItems = [
 .resource-card {
   position: relative;
   overflow: hidden;
-  padding: 22px;
+  padding: 20px;
   border: 1px solid var(--landing-border);
   border-radius: 24px;
   background: var(--landing-surface);
-  box-shadow: 0 16px 34px rgba(27, 15, 10, 0.14);
+  box-shadow: var(--landing-card-shadow);
 }
 
 .feature-card::before {
@@ -622,13 +629,15 @@ const supportItems = [
 .feature-card__body,
 .resource-card__body {
   margin: 0;
-  color: rgba(245, 245, 220, 0.76);
+  color: var(--landing-body-text);
+  font-size: 0.97rem;
   line-height: 1.68;
 }
 
 .resource-section {
   display: grid;
-  gap: 18px;
+  gap: 16px;
+  align-items: start;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
 }
 
@@ -638,11 +647,15 @@ const supportItems = [
     var(--landing-surface-strong);
 }
 
+.resource-card__eyebrow {
+  margin-bottom: 14px;
+}
+
 .resource-card__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .resource-link {
@@ -670,15 +683,18 @@ const supportItems = [
 
 .resource-list {
   display: grid;
-  gap: 14px;
-  margin-top: 18px;
+  gap: 0;
+  margin-top: 16px;
 }
 
 .resource-list__item {
-  padding: 16px 18px;
-  border: 1px solid rgba(245, 245, 220, 0.08);
-  border-radius: 18px;
-  background: rgba(245, 245, 220, 0.04);
+  padding: 12px 0;
+  border-top: 1px solid var(--landing-resource-item-border);
+}
+
+.resource-list__item:first-child {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .resource-list__title {
@@ -690,8 +706,9 @@ const supportItems = [
 }
 
 .resource-list__body {
-  color: rgba(245, 245, 220, 0.72);
-  line-height: 1.62;
+  color: var(--landing-body-text);
+  font-size: 0.93rem;
+  line-height: 1.55;
 }
 
 @media (max-width: 1100px) {
@@ -707,6 +724,10 @@ const supportItems = [
 }
 
 @media (max-width: 700px) {
+  .landing-page {
+    padding: 18px 12px 30px;
+  }
+
   .hero {
     padding: 24px 18px;
     border-radius: 24px;
@@ -728,6 +749,7 @@ const supportItems = [
 
   .preview-stack {
     min-height: 260px;
+    padding: 6px 0 0;
   }
 
   .preview-card--primary {
@@ -751,11 +773,12 @@ const supportItems = [
   }
 }
 
-
 /* codex-theme-override:start */
 .landing-page {
   --landing-page-text: #{$brand-light-text};
   --landing-heading: #{$brand-light-text};
+  --landing-body-text: #{rgba($brand-light-text, 0.84)};
+  --landing-note-text: #{rgba($brand-light-text, 0.66)};
   --landing-border: #{rgba($brand-secondary, 0.16)};
   --landing-border-strong: #{rgba($brand-secondary, 0.24)};
   --landing-surface: #{rgba($brand-light, 0.78)};
@@ -764,7 +787,7 @@ const supportItems = [
   --landing-shadow: 0 28px 60px #{rgba($brand-primary, 0.14)};
   --landing-card-shadow: 0 16px 34px #{rgba($brand-secondary, 0.12)};
   --landing-chip-bg: #{rgba($brand-light, 0.52)};
-  --landing-chip-text: #{$brand-primary};
+  --landing-chip-text: #{$header-btn-color--light};
   --landing-solid-bg: #{$brand-primary};
   --landing-solid-text: #{$brand-light};
   --landing-solid-shadow: 0 18px 30px #{rgba($brand-primary, 0.24)};
@@ -772,22 +795,22 @@ const supportItems = [
   --landing-ghost-text: #{$brand-light-text};
   --landing-pill-border: #{rgba($brand-secondary, 0.14)};
   --landing-pill-bg: #{rgba($brand-light, 0.44)};
-  --landing-pill-text: #{$brand-primary};
+  --landing-pill-text: #{$header-btn-color--light};
   --landing-panel-gradient-top: #{rgba($brand-light, 0.7)};
   --landing-panel-gradient-bottom: #{rgba($brand-light, 0.22)};
   --landing-panel-bg: #{rgba($brand-light-bg, 0.88)};
   --landing-preview-card-border: #{rgba($brand-secondary, 0.18)};
   --landing-preview-card-bg: #{rgba($brand-light, 0.82)};
   --landing-preview-card-shadow: 0 22px 38px #{rgba($brand-secondary, 0.14)};
-  --landing-accent-line: #{rgba($brand-primary, 0.4)};
-  --landing-icon-bg: #{rgba($brand-primary, 0.1)};
-  --landing-icon-color: #{$brand-primary};
-  --landing-spot-accent: #{rgba($brand-primary, 0.14)};
+  --landing-accent-line: #{rgba($header-btn-color--light, 0.4)};
+  --landing-icon-bg: #{rgba($header-btn-color--light, 0.1)};
+  --landing-icon-color: #{$header-btn-color--light};
+  --landing-spot-accent: #{rgba($header-btn-color--light, 0.14)};
   --landing-resource-link-bg: #{rgba($brand-light, 0.48)};
   --landing-resource-link-text: #{$brand-light-text};
   --landing-resource-item-border: #{rgba($brand-secondary, 0.1)};
   --landing-resource-item-bg: #{rgba($brand-light, 0.42)};
-  --landing-accent-text: #{$brand-primary};
+  --landing-accent-text: #{$header-btn-color--light};
   --landing-mesh-color: #{rgba($brand-primary, 0.16)};
   --landing-hero-glow-1: #{rgba($brand-primary, 0.18)};
   --landing-hero-glow-2: #{rgba($brand-secondary, 0.12)};
@@ -799,6 +822,8 @@ const supportItems = [
 body.body--dark .landing-page {
   --landing-page-text: #{$brand-dark-text};
   --landing-heading: #{$brand-dark-text};
+  --landing-body-text: #{rgba($brand-dark-text, 0.8)};
+  --landing-note-text: #{rgba($brand-dark-text, 0.64)};
   --landing-border: #{rgba($brand-light, 0.12)};
   --landing-border-strong: #{rgba($brand-light, 0.2)};
   --landing-surface: #{rgba($dark-pill, 0.74)};
@@ -807,7 +832,7 @@ body.body--dark .landing-page {
   --landing-shadow: 0 28px 60px #{rgba($brand-dark-bg, 0.28)};
   --landing-card-shadow: 0 16px 34px #{rgba($brand-dark-bg, 0.24)};
   --landing-chip-bg: #{rgba($brand-light, 0.08)};
-  --landing-chip-text: #{$brand-primary};
+  --landing-chip-text: #{$header-btn-color--dark};
   --landing-solid-bg: #{$brand-light};
   --landing-solid-text: #{$brand-dark-bg};
   --landing-solid-shadow: 0 18px 30px #{rgba($brand-dark-bg, 0.28)};
@@ -815,22 +840,22 @@ body.body--dark .landing-page {
   --landing-ghost-text: #{$brand-dark-text};
   --landing-pill-border: #{rgba($brand-light, 0.12)};
   --landing-pill-bg: #{rgba($brand-light, 0.05)};
-  --landing-pill-text: #{$brand-primary};
+  --landing-pill-text: #{$header-btn-color--dark};
   --landing-panel-gradient-top: #{rgba($brand-light, 0.08)};
   --landing-panel-gradient-bottom: #{rgba($brand-light, 0.02)};
   --landing-panel-bg: #{rgba($brand-dark-bg, 0.56)};
   --landing-preview-card-border: #{rgba($brand-light, 0.12)};
   --landing-preview-card-bg: #{rgba($brand-dark-bg, 0.78)};
   --landing-preview-card-shadow: 0 22px 38px #{rgba($brand-dark-bg, 0.28)};
-  --landing-accent-line: #{rgba($brand-primary, 0.55)};
-  --landing-icon-bg: #{rgba($brand-primary, 0.16)};
-  --landing-icon-color: #{$brand-primary};
-  --landing-spot-accent: #{rgba($brand-primary, 0.18)};
+  --landing-accent-line: #{rgba($header-btn-color--dark, 0.55)};
+  --landing-icon-bg: #{rgba($header-btn-color--dark, 0.16)};
+  --landing-icon-color: #{$header-btn-color--dark};
+  --landing-spot-accent: #{rgba($header-btn-color--dark, 0.18)};
   --landing-resource-link-bg: #{rgba($brand-light, 0.06)};
   --landing-resource-link-text: #{$brand-dark-text};
   --landing-resource-item-border: #{rgba($brand-light, 0.08)};
   --landing-resource-item-bg: #{rgba($brand-light, 0.04)};
-  --landing-accent-text: #{$brand-primary};
+  --landing-accent-text: #{$header-btn-color--dark};
   --landing-mesh-color: #{rgba($brand-light, 0.12)};
   --landing-hero-glow-1: #{rgba($brand-primary, 0.22)};
   --landing-hero-glow-2: #{rgba($brand-light, 0.08)};
@@ -895,7 +920,11 @@ body.body--dark .landing-page {
 
 .preview-panel {
   background:
-    linear-gradient(180deg, var(--landing-panel-gradient-top), var(--landing-panel-gradient-bottom)),
+    linear-gradient(
+      180deg,
+      var(--landing-panel-gradient-top),
+      var(--landing-panel-gradient-bottom)
+    ),
     var(--landing-panel-bg);
 }
 
