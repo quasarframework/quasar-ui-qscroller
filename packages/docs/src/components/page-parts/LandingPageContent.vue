@@ -20,37 +20,46 @@
           </p>
 
           <div class="hero-buttons">
-            <router-link
+            <q-btn
               to="/getting-started/introduction"
-              class="hero-button hero-button--solid q-btn q-btn-item non-selectable no-outline q-btn--standard q-btn--rectangle q-btn--actionable q-focusable q-hoverable q-btn--no-uppercase q-btn--rounded"
+              no-caps rounded unelevated class="hero-button hero-button--solid"
             >
-              <div class="hero-button__content row no-wrap justify-center items-center q-anchor--skip">
+              <div class="hero-button__content q-anchor--skip">
+                <span class="hero-button__slot hero-button__slot--empty" aria-hidden="true" />
                 <span class="hero-button__label">Get Started</span>
-                <q-icon :name="biArrowRightCircle" />
+                <span class="hero-button__slot">
+                  <q-icon :name="biArrowRightCircle" />
+                </span>
               </div>
-            </router-link>
+            </q-btn>
 
-            <router-link
+            <q-btn
               to="/other/upgrade-guide"
-              class="hero-button hero-button--ghost q-btn q-btn-item non-selectable no-outline q-btn--standard q-btn--rectangle q-btn--actionable q-focusable q-hoverable q-btn--no-uppercase q-btn--rounded"
+              no-caps rounded unelevated class="hero-button hero-button--ghost"
             >
-              <div class="hero-button__content row no-wrap justify-center items-center q-anchor--skip">
+              <div class="hero-button__content q-anchor--skip">
+                <span class="hero-button__slot hero-button__slot--empty" aria-hidden="true" />
                 <span class="hero-button__label">Upgrade Guide</span>
-                <q-icon name="upgrade" />
+                <span class="hero-button__slot">
+                  <q-icon name="upgrade" />
+                </span>
               </div>
-            </router-link>
+            </q-btn>
 
-            <a
+            <q-btn
               href="https://github.com/quasarframework/quasar-ui-qscroller/tree/v3-beta"
               target="_blank"
               rel="noopener noreferrer"
-              class="hero-button hero-button--ghost q-btn q-btn-item non-selectable no-outline q-btn--standard q-btn--rectangle q-btn--actionable q-focusable q-hoverable q-btn--no-uppercase q-btn--rounded"
+              no-caps rounded unelevated class="hero-button hero-button--ghost"
             >
-              <div class="hero-button__content row no-wrap justify-center items-center q-anchor--skip">
-                <q-icon :name="fabGithub" />
+              <div class="hero-button__content q-anchor--skip">
+                <span class="hero-button__slot">
+                  <q-icon :name="fabGithub" />
+                </span>
                 <span class="hero-button__label">GitHub Repo</span>
+                <span class="hero-button__slot hero-button__slot--empty" aria-hidden="true" />
               </div>
-            </a>
+            </q-btn>
           </div>
 
           <div class="hero-pills">
@@ -370,6 +379,7 @@ const supportItems = [
   flex-wrap: wrap;
   gap: 12px;
   padding-top: 8px;
+  margin-bottom: 10px;
 }
 
 .hero-button {
@@ -389,6 +399,11 @@ const supportItems = [
   transform: translateY(-1px);
 }
 
+.hero-button :deep(.q-btn__content) {
+  width: 100%;
+  min-width: 0;
+}
+
 .hero-button--solid {
   background: $brand-light;
   color: $brand-dark-bg;
@@ -402,15 +417,32 @@ const supportItems = [
 }
 
 .hero-button__content {
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr) 1.25rem;
+  align-items: center;
+  column-gap: 10px;
   min-width: 0;
+  width: 100%;
   font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
 }
 
+.hero-button__slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.hero-button__slot--empty {
+  visibility: hidden;
+}
+
 .hero-button__label {
   white-space: nowrap;
+  text-align: center;
 }
 
 .hero-pills {
@@ -556,8 +588,7 @@ const supportItems = [
   box-shadow: 0 16px 34px rgba(27, 15, 10, 0.14);
 }
 
-.feature-card::before,
-.resource-card::before {
+.feature-card::before {
   content: "";
   position: absolute;
   inset: 0 auto auto 0;
