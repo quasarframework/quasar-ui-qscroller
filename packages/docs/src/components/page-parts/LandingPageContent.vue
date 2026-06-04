@@ -473,6 +473,8 @@ const supportItems = [
 }
 
 .preview-panel {
+  position: relative;
+  overflow: visible;
   width: 100%;
   padding: 20px;
   border: 1px solid var(--landing-border);
@@ -519,8 +521,22 @@ const supportItems = [
 
 .preview-stack {
   position: relative;
-  min-height: clamp(250px, 30vw, 310px);
-  padding: 10px 14px 6px;
+  isolation: isolate;
+  min-height: clamp(330px, 34vw, 390px);
+  padding: 18px 14px 24px;
+  overflow: visible;
+}
+
+.preview-stack::before {
+  content: "";
+  position: absolute;
+  inset: 28px 18px 40px;
+  z-index: -1;
+  border: 1px solid var(--landing-preview-card-border);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(210, 105, 30, 0.18), transparent 42%), rgba(245, 245, 220, 0.06);
+  transform: rotate(2deg);
 }
 
 .preview-card {
@@ -533,22 +549,31 @@ const supportItems = [
 
   :deep(.q-img) {
     display: block;
+    height: 100%;
     width: 100%;
+  }
+
+  :deep(.q-img__image) {
+    object-fit: contain !important;
   }
 }
 
 .preview-card--primary {
-  top: 10px;
-  left: 10px;
-  width: min(82%, 300px);
-  transform: rotate(-2deg);
+  top: 18px;
+  left: 12px;
+  z-index: 2;
+  width: min(58%, 290px);
+  height: clamp(260px, 28vw, 340px);
+  transform: rotate(-3deg);
 }
 
 .preview-card--secondary {
-  right: 6px;
-  bottom: 4px;
-  width: min(56%, 220px);
-  transform: rotate(4deg);
+  right: -28px;
+  bottom: 32px;
+  z-index: 3;
+  width: min(68%, 340px);
+  height: clamp(210px, 23vw, 300px);
+  transform: rotate(5deg);
 }
 
 .feature-section,
@@ -748,13 +773,20 @@ const supportItems = [
   }
 
   .preview-stack {
-    min-height: 260px;
+    min-height: 460px;
     padding: 6px 0 0;
+  }
+
+  .preview-stack::before {
+    display: none;
   }
 
   .preview-card--primary {
     position: relative;
+    left: auto;
+    top: auto;
     width: 100%;
+    height: 250px;
     transform: none;
   }
 
@@ -957,7 +989,6 @@ body.body--dark .landing-page {
 
 .resource-list__item {
   border-color: var(--landing-resource-item-border);
-  background: var(--landing-resource-item-bg);
 }
 
 .resource-list__title {
