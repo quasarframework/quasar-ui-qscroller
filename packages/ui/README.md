@@ -28,7 +28,7 @@ quasar ext add @quasar/qscroller@beta
 Or register the UI package manually in a boot file:
 
 ```ts
-import { defineBoot } from "@quasar/app-vite";
+import { defineBoot } from "#q-app";
 import Plugin from "@quasar/quasar-ui-qscroller";
 import "@quasar/quasar-ui-qscroller/dist/index.css";
 
