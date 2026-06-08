@@ -17,6 +17,22 @@ tooling.
 - Node.js 22.13 or newer.
 - pnpm 11.5 or newer when working in this repository.
 
+## Timestamp Utilities
+
+QScroller v3 no longer publishes the old QScroller-owned Timestamp utility as a public import. Date and time helpers have moved to the standalone, framework-agnostic `@timestamp-js/core` package.
+
+If your application imported Timestamp helpers from QScroller, add `@timestamp-js/core` as a direct dependency and update those imports:
+
+```bash
+pnpm add @timestamp-js/core
+```
+
+```ts
+import { parseTimestamp, today } from "@timestamp-js/core";
+```
+
+This is a breaking change for applications that used QScroller's previous Timestamp export surface directly. QScroller components continue to manage their own date/time model behavior internally.
+
 ## Update Packages
 
 For Quasar App Extension installs:
