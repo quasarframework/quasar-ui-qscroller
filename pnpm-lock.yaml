@@ -117,6 +117,10 @@ importers:
         version: 3.3.3(typescript@6.0.3)
 
   packages/ui:
+    dependencies:
+      '@timestamp-js/core':
+        specifier: 0.1.0-alpha.0
+        version: 0.1.0-alpha.0
     devDependencies:
       '@types/node':
         specifier: ^25.9.2
@@ -1188,6 +1192,9 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
+
+  '@timestamp-js/core@0.1.0-alpha.0':
+    resolution: {integrity: sha512-8QU+/Hpy+6asYAgMg5UdG+E2O1Nwkwzai4fx3DfDocW/qJM0NG6S/C6mbMNtn/UwXQ16LS+Hli2zRUdtBEkldA==}
 
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
@@ -3899,6 +3906,8 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2': {}
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@timestamp-js/core@0.1.0-alpha.0': {}
 
   '@tybys/wasm-util@0.10.2':
     dependencies:

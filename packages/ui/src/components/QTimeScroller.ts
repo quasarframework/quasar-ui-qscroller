@@ -276,7 +276,7 @@ export default defineComponent({
           if (props.value) {
             const parts = PARSE_TIME.exec(String(props.value));
             now.hour = parseInt(parts?.[1] ?? "0", 10);
-            now.minute = parseInt(parts?.[3] ?? "0", 10);
+            now.minute = parseInt(parts?.[2] ?? "0", 10);
           }
           value = `${getDate(now)} ${getTime(now)}`;
           timestamp.value = parseTimestamp(value);
