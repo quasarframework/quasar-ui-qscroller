@@ -1,19 +1,18 @@
 import { computed, defineComponent, h, ref, watch } from "vue";
+import {
+  PARSE_TIME,
+  Timestamp as EmptyTimestamp,
+  createNativeLocaleFormatter,
+  getDate,
+  getDateObject,
+  padNumber,
+  parseDate,
+  parseTimestamp,
+  type Timestamp,
+} from "@timestamp-js/core";
 import { useScrollerShell } from "../composables/use-scroller-shell";
 import ScrollerBase from "./private/ScrollerBase";
 import props from "../utils/props";
-import {
-  Timestamp,
-  parseTimestamp,
-  parseDate,
-  PARSE_TIME,
-  getDateObject,
-  getDate,
-  getTime,
-  copyTimestamp,
-  padNumber,
-  createNativeLocaleFormatter,
-} from "../utils/Timestamp";
 
 export default defineComponent({
   name: "QTimeScroller",
@@ -41,7 +40,7 @@ export default defineComponent({
   setup(props, { emit, expose, slots }) {
     const { renderCommon } = useScrollerShell(props);
     const amPmLabels = computed(() => props.amPmLabels as string[]);
-    const timestamp = ref(copyTimestamp(Timestamp));
+    const timestamp = ref<Timestamp>(EmptyTimestamp);
     const type = ref<string | null>(null);
     const ampmIndex = ref(-1);
     const hour = ref("");
@@ -142,29 +141,44 @@ export default defineComponent({
       return value;
     });
 
-    function handle12Hour() {
+    function selectedHour() {
+      const parsedHour = parseInt(hour.value, 10);
       if (props.hour12 !== true || ampmIndex.value < 0) {
-        return;
+        return parsedHour;
       }
 
-      const parsedHour = parseInt(hour.value, 10);
       if (ampmIndex.value === 0) {
-        timestamp.value.hour = parsedHour === 12 ? 0 : parsedHour;
-        return;
+        return parsedHour === 12 ? 0 : parsedHour;
       }
 
       if (ampmIndex.value === 1) {
         if (parsedHour === 0) {
-          timestamp.value.hour = 12;
-          hour.value = padNumber(timestamp.value.hour, 2);
-          return;
+          hour.value = "12";
+          return 12;
         }
 
-        timestamp.value.hour = parsedHour < 12 ? parsedHour + 12 : parsedHour;
-        return;
+        return parsedHour < 12 ? parsedHour + 12 : parsedHour;
       }
 
-      timestamp.value.hour = parsedHour;
+      return parsedHour;
+    }
+
+    function fallbackDate() {
+      return parseDate(new Date()) ?? EmptyTimestamp;
+    }
+
+    function snapMinute(value: number) {
+      const interval = Number(props.minuteInterval);
+      return interval > 0 ? Math.floor(value / interval) * interval : value;
+    }
+
+    function timestampFromTimeParts(base: Timestamp, nextHour: number, nextMinute: number) {
+      const normalizedHour = ((nextHour % 24) + 24) % 24;
+      return (
+        parseTimestamp(
+          `${getDate(base)} ${padNumber(normalizedHour, 2)}:${padNumber(nextMinute, 2)}`,
+        ) ?? base
+      );
     }
 
     function emitValue() {
@@ -233,59 +247,47 @@ export default defineComponent({
       switch (valueType) {
         case "[object Date]":
           type.value = "date";
-          now = parseDate(props.value);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
-          timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
-            Number(props.minuteInterval);
+          now = parseDate(props.value) ?? EmptyTimestamp;
+          timestamp.value = timestampFromTimeParts(now, now.hour, snapMinute(now.minute));
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object Array]":
           type.value = "array";
           value = props.value as Array<string | number>;
-          now = parseDate(new Date());
-          now.hour = parseInt(String(value[0]), 10);
-          now.minute = parseInt(String(value[1]), 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
-          timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
-            Number(props.minuteInterval);
+          now = fallbackDate();
+          timestamp.value = timestampFromTimeParts(
+            now,
+            parseInt(String(value[0]), 10),
+            snapMinute(parseInt(String(value[1]), 10)),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object Object]":
           type.value = "object";
           value = props.value as { hour: string | number; minute: string | number };
-          now = parseDate(new Date());
-          now.hour = parseInt(String(value.hour), 10);
-          now.minute = parseInt(String(value.minute), 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
-          timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
-            Number(props.minuteInterval);
+          now = fallbackDate();
+          timestamp.value = timestampFromTimeParts(
+            now,
+            parseInt(String(value.hour), 10),
+            snapMinute(parseInt(String(value.minute), 10)),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object String]":
           type.value = "string";
-          now = parseDate(new Date());
+          now = fallbackDate();
           if (props.value) {
             const parts = PARSE_TIME.exec(String(props.value));
-            now.hour = parseInt(parts?.[1] ?? "0", 10);
-            now.minute = parseInt(parts?.[2] ?? "0", 10);
+            now = timestampFromTimeParts(
+              now,
+              parseInt(parts?.[1] ?? "0", 10),
+              snapMinute(parseInt(parts?.[2] ?? "0", 10)),
+            );
           }
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
-          timestamp.value.minute =
-            Math.floor(timestamp.value.minute / Number(props.minuteInterval)) *
-            Number(props.minuteInterval);
-          if (timestamp.value.hour >= 24) {
-            timestamp.value.hour %= 24;
-          }
+          timestamp.value = now;
           fromTimestamp();
           syncing.value = false;
           return;
@@ -305,13 +307,11 @@ export default defineComponent({
         return;
       }
 
-      if (props.hour12 === true) {
-        handle12Hour();
-      } else {
-        timestamp.value.hour = parseInt(hour.value, 10);
-      }
-
-      timestamp.value.hour %= 24;
+      timestamp.value = timestampFromTimeParts(
+        timestamp.value,
+        selectedHour(),
+        timestamp.value.minute,
+      );
       emitValue();
     });
 
@@ -320,7 +320,11 @@ export default defineComponent({
         return;
       }
 
-      timestamp.value.minute = parseInt(minute.value, 10);
+      timestamp.value = timestampFromTimeParts(
+        timestamp.value,
+        timestamp.value.hour,
+        parseInt(minute.value, 10),
+      );
       emitValue();
     });
 
@@ -329,12 +333,11 @@ export default defineComponent({
         return;
       }
 
-      if (props.hour12 === true) {
-        handle12Hour();
-      } else {
-        timestamp.value.hour = parseInt(hour.value, 10);
-      }
-
+      timestamp.value = timestampFromTimeParts(
+        timestamp.value,
+        selectedHour(),
+        timestamp.value.minute,
+      );
       emitValue();
     });
 

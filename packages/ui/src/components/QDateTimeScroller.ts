@@ -1,19 +1,20 @@
 import { computed, defineComponent, h, ref, watch } from "vue";
+import {
+  Timestamp as EmptyTimestamp,
+  compareTimestamps,
+  copyTimestamp,
+  getDate,
+  getDateObject,
+  getTime,
+  padNumber,
+  parseDate,
+  parseTimestamp,
+  type Timestamp,
+} from "@timestamp-js/core";
 import { useScrollerShell } from "../composables/use-scroller-shell";
 import QDateScroller from "./QDateScroller";
 import QTimeScroller from "./QTimeScroller";
 import props from "../utils/props";
-import {
-  Timestamp,
-  parseTimestamp,
-  parseDate,
-  getDateObject,
-  getDate,
-  getTime,
-  copyTimestamp,
-  compareTimestamps,
-  padNumber,
-} from "../utils/Timestamp";
 
 export default defineComponent({
   name: "QDateTimeScroller",
@@ -43,7 +44,7 @@ export default defineComponent({
     const { bodyHeight, renderCommon } = useScrollerShell(props);
     const dateRef = ref<{ displayDate?: string; getTimestamp: () => unknown } | null>(null);
     const timeRef = ref<{ displayTime?: string; getTimestamp: () => unknown } | null>(null);
-    const timestamp = ref(copyTimestamp(Timestamp));
+    const timestamp = ref<Timestamp>(EmptyTimestamp);
     const type = ref<string | null>(null);
     const date = ref("");
     const time = ref("");
@@ -105,61 +106,85 @@ export default defineComponent({
       time.value = getTime(timestamp.value);
     }
 
+    function fallbackDate() {
+      return parseDate(new Date()) ?? EmptyTimestamp;
+    }
+
+    function timestampFromParts(
+      base: Timestamp,
+      nextYear: number,
+      nextMonth: number,
+      nextDay: number,
+      nextHour: number,
+      nextMinute: number,
+    ) {
+      return (
+        parseTimestamp(
+          `${padNumber(nextYear, 4)}-${padNumber(nextMonth, 2)}-${padNumber(nextDay, 2)} ${padNumber(nextHour, 2)}:${padNumber(nextMinute, 2)}`,
+        ) ?? base
+      );
+    }
+
+    function parseDateTime(value: string) {
+      return parseTimestamp(value) ?? timestamp.value;
+    }
+
     function splitDateTime() {
       syncing.value = true;
 
       const valueType = Object.prototype.toString.call(props.value);
       let now;
-      let value;
 
       switch (valueType) {
         case "[object Date]":
           type.value = "date";
-          now = parseDate(props.value);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = parseDate(props.value) ?? EmptyTimestamp;
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object Array]":
           type.value = "array";
-          now = parseDate(new Date());
-          now.year = parseInt(props.value[0], 10);
-          now.month = parseInt(props.value[1], 10);
-          now.day = parseInt(props.value[2], 10);
-          now.hour = parseInt(props.value[3], 10);
-          now.minute = parseInt(props.value[4], 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = timestampFromParts(
+            fallbackDate(),
+            parseInt(props.value[0], 10),
+            parseInt(props.value[1], 10),
+            parseInt(props.value[2], 10),
+            parseInt(props.value[3], 10),
+            parseInt(props.value[4], 10),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object Object]":
           type.value = "object";
-          now = parseDate(new Date());
-          now.year = parseInt(props.value.year, 10);
-          now.month = parseInt(props.value.month, 10);
-          now.day = parseInt(props.value.day, 10);
-          now.hour = parseInt(props.value.hour, 10);
-          now.minute = parseInt(props.value.minute, 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = timestampFromParts(
+            fallbackDate(),
+            parseInt(props.value.year, 10),
+            parseInt(props.value.month, 10),
+            parseInt(props.value.day, 10),
+            parseInt(props.value.hour, 10),
+            parseInt(props.value.minute, 10),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object String]":
           type.value = "string";
-          now = parseDate(new Date());
+          now = fallbackDate();
           if (props.value) {
             const parsed = parseTimestamp(props.value);
-            if (parsed.year !== void 0) now.year = parsed.year;
-            if (parsed.month !== void 0) now.month = parsed.month;
-            if (parsed.day !== void 0) now.day = parsed.day;
-            if (parsed.hour !== void 0) now.hour = parsed.hour;
-            if (parsed.minute !== void 0) now.minute = parsed.minute;
+            if (parsed !== null) {
+              now = timestampFromParts(
+                now,
+                parsed.year,
+                parsed.month,
+                parsed.day,
+                parsed.hour,
+                parsed.minute,
+              );
+            }
           }
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = now;
           fromTimestamp();
           syncing.value = false;
           return;
@@ -180,7 +205,7 @@ export default defineComponent({
       }
 
       const previous = copyTimestamp(timestamp.value);
-      timestamp.value = parseTimestamp(`${date.value} ${time.value}`);
+      timestamp.value = parseDateTime(`${date.value} ${time.value}`);
       if (compareTimestamps(previous, timestamp.value) !== true) {
         emitValue();
       }
@@ -192,7 +217,7 @@ export default defineComponent({
       }
 
       const previous = copyTimestamp(timestamp.value);
-      timestamp.value = parseTimestamp(`${date.value} ${time.value}`);
+      timestamp.value = parseDateTime(`${date.value} ${time.value}`);
       if (compareTimestamps(previous, timestamp.value) !== true) {
         emitValue();
       }

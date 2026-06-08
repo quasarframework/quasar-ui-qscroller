@@ -1,21 +1,21 @@
 import { computed, defineComponent, h, ref, watch } from "vue";
+import {
+  DAYS_IN_MONTH_MAX,
+  Timestamp as EmptyTimestamp,
+  compareTimestamps,
+  copyTimestamp,
+  createNativeLocaleFormatter,
+  daysInMonth,
+  getDateObject,
+  getTime,
+  padNumber,
+  parseDate,
+  parseTimestamp,
+  type Timestamp,
+} from "@timestamp-js/core";
 import { useScrollerShell } from "../composables/use-scroller-shell";
 import ScrollerBase from "./private/ScrollerBase";
 import props from "../utils/props";
-import {
-  parseTimestamp,
-  parseDate,
-  getDateObject,
-  getDate,
-  getTime,
-  daysInMonth,
-  copyTimestamp,
-  compareTimestamps,
-  padNumber,
-  createNativeLocaleFormatter,
-  DAYS_IN_MONTH_MAX,
-  Timestamp,
-} from "../utils/Timestamp";
 
 export default defineComponent({
   name: "QDateScroller",
@@ -35,7 +35,7 @@ export default defineComponent({
     const day = ref("");
     const month = ref("");
     const year = ref("");
-    const timestamp = ref(copyTimestamp(Timestamp));
+    const timestamp = ref<Timestamp>(EmptyTimestamp);
     const type = ref<string | null>(null);
     const disabledYearsList = ref<string[]>([]);
     const disabledMonthsList = ref<string[]>([]);
@@ -286,11 +286,31 @@ export default defineComponent({
       year.value = padNumber(timestamp.value.year, 4);
     }
 
+    function fallbackDate() {
+      return parseDate(new Date()) ?? EmptyTimestamp;
+    }
+
+    function timestampFromDateParts(
+      base: Timestamp,
+      nextYear: number,
+      nextMonth: number,
+      nextDay: number,
+    ) {
+      return (
+        parseTimestamp(
+          `${padNumber(nextYear, 4)}-${padNumber(nextMonth, 2)}-${padNumber(nextDay, 2)} ${getTime(base)}`,
+        ) ?? base
+      );
+    }
+
     function toTimestamp() {
       const previous = copyTimestamp(timestamp.value);
-      timestamp.value.day = parseInt(day.value, 10);
-      timestamp.value.month = parseInt(month.value, 10);
-      timestamp.value.year = parseInt(year.value, 10);
+      timestamp.value = timestampFromDateParts(
+        timestamp.value,
+        parseInt(year.value, 10),
+        parseInt(month.value, 10),
+        parseInt(day.value, 10),
+      );
 
       if (compareTimestamps(previous, timestamp.value) !== true) {
         emitValue();
@@ -307,21 +327,19 @@ export default defineComponent({
       switch (valueType) {
         case "[object Date]":
           type.value = "date";
-          now = parseDate(props.value);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = parseDate(props.value) ?? EmptyTimestamp;
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object Array]":
           type.value = "array";
           value = props.value as Array<string | number>;
-          now = parseDate(new Date());
-          now.year = parseInt(String(value[0]), 10);
-          now.month = parseInt(String(value[1]), 10);
-          now.day = parseInt(String(value[2]), 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = timestampFromDateParts(
+            fallbackDate(),
+            parseInt(String(value[0]), 10),
+            parseInt(String(value[1]), 10),
+            parseInt(String(value[2]), 10),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
@@ -332,26 +350,25 @@ export default defineComponent({
             month: string | number;
             day: string | number;
           };
-          now = parseDate(new Date());
-          now.year = parseInt(String(value.year), 10);
-          now.month = parseInt(String(value.month), 10);
-          now.day = parseInt(String(value.day), 10);
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = timestampFromDateParts(
+            fallbackDate(),
+            parseInt(String(value.year), 10),
+            parseInt(String(value.month), 10),
+            parseInt(String(value.day), 10),
+          );
           fromTimestamp();
           syncing.value = false;
           return;
         case "[object String]":
           type.value = "string";
-          now = parseDate(new Date());
+          now = fallbackDate();
           if (props.value) {
             const parsed = parseTimestamp(String(props.value));
-            now.year = parsed.year;
-            now.month = parsed.month;
-            now.day = parsed.day;
+            if (parsed !== null) {
+              now = timestampFromDateParts(now, parsed.year, parsed.month, parsed.day);
+            }
           }
-          value = `${getDate(now)} ${getTime(now)}`;
-          timestamp.value = parseTimestamp(value);
+          timestamp.value = now;
           fromTimestamp();
           syncing.value = false;
           return;
@@ -365,11 +382,8 @@ export default defineComponent({
     }
 
     function monthNameLabel(monthValue: number) {
-      const now = parseDate(new Date());
-      const value = `${getDate(now)} 00:00`;
-      const formatted = parseTimestamp(value);
-      formatted.day = 1;
-      formatted.month = monthValue;
+      const now = fallbackDate();
+      const formatted = timestampFromDateParts(now, now.year, monthValue, 1);
       return monthFormatter.value(formatted, props.shortMonthLabel === true);
     }
 

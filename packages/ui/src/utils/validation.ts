@@ -1,4 +1,4 @@
-import { daysInMonth } from "./Timestamp";
+import { daysInMonth } from "@timestamp-js/core";
 
 export function isValidTime(value: string) {
   const parts = value.split(":");

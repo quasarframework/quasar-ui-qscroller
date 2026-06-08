@@ -1,16 +1,18 @@
 import { computed, defineComponent, h, ref, watch } from "vue";
+import {
+  Timestamp as EmptyTimestamp,
+  getDate,
+  getDateObject,
+  getTime,
+  getTimeIdentifier,
+  padNumber,
+  parseDate,
+  parseTimestamp,
+  type Timestamp,
+} from "@timestamp-js/core";
 import { useScrollerShell } from "../composables/use-scroller-shell";
 import QTimeScroller from "./QTimeScroller";
 import props from "../utils/props";
-import {
-  getTimeIdentifier,
-  parseTimestamp,
-  parseDate,
-  getDateObject,
-  getDate,
-  getTime,
-  padNumber,
-} from "../utils/Timestamp";
 import { isValidTime } from "../utils/validation";
 
 export default defineComponent({
@@ -45,21 +47,24 @@ export default defineComponent({
 
     const displayed = computed(() => displayTime.value);
 
+    function fallbackDate() {
+      return parseDate(new Date()) ?? EmptyTimestamp;
+    }
+
+    function timestampFromTime(value: string, base: Timestamp = fallbackDate()): Timestamp {
+      return parseTimestamp(`${getDate(base)} ${value}`) ?? base;
+    }
+
     const rangeIsValid = computed(() => {
       if (props.disableValidation === true) {
         return true;
       }
 
       if (startTime.value && endTime.value) {
-        const start = parseDate(new Date());
-        const end = parseDate(new Date());
-        const startParts = startTime.value.split(":");
-        const endParts = endTime.value.split(":");
-        start.hour = parseInt(startParts[0], 10);
-        start.minute = parseInt(startParts[1], 10);
-        end.hour = parseInt(endParts[0], 10);
-        end.minute = parseInt(endParts[1], 10);
-        return getTimeIdentifier(end) >= getTimeIdentifier(start);
+        return (
+          getTimeIdentifier(timestampFromTime(endTime.value)) >=
+          getTimeIdentifier(timestampFromTime(startTime.value))
+        );
       }
 
       return true;
@@ -82,20 +87,13 @@ export default defineComponent({
 
       let startParts;
       let endParts;
-      let start;
-      let end;
 
       switch (type.value) {
         case "date":
-          start = parseDate(new Date());
-          end = parseDate(new Date());
-          startParts = startTime.value.split(":");
-          endParts = endTime.value.split(":");
-          start.hour = parseInt(startParts[0], 10);
-          start.minute = parseInt(startParts[1], 10);
-          end.hour = parseInt(endParts[0], 10);
-          end.minute = parseInt(endParts[1], 10);
-          emit("input", [getDateObject(start), getDateObject(end)]);
+          emit("input", [
+            getDateObject(timestampFromTime(startTime.value)),
+            getDateObject(timestampFromTime(endTime.value)),
+          ]);
           return;
         case "array":
           startParts = startTime.value.split(":");
@@ -128,8 +126,8 @@ export default defineComponent({
 
       if (valueType === "[object Undefined]" || props.value === null) {
         type.value = "string";
-        now = parseDate(new Date());
-        start = getTime(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
+        now = fallbackDate();
+        start = getTime(now);
         end = start;
         if (isValidTime(start) && isValidTime(end)) {
           startTime.value = start;
@@ -150,16 +148,8 @@ export default defineComponent({
       switch (Object.prototype.toString.call(props.value[0])) {
         case "[object Date]":
           type.value = "date";
-          start = getTime(
-            parseTimestamp(
-              `${getDate(parseDate(props.value[0]))} ${getTime(parseDate(props.value[0]))}`,
-            ),
-          );
-          end = getTime(
-            parseTimestamp(
-              `${getDate(parseDate(props.value[1]))} ${getTime(parseDate(props.value[1]))}`,
-            ),
-          );
+          start = getTime(parseDate(props.value[0]) ?? EmptyTimestamp);
+          end = getTime(parseDate(props.value[1]) ?? EmptyTimestamp);
           break;
         case "[object Array]":
           type.value = "array";
@@ -178,8 +168,8 @@ export default defineComponent({
           break;
         case "[object Undefined]":
           type.value = "string";
-          now = parseDate(new Date());
-          start = getTime(parseTimestamp(`${getDate(now)} ${getTime(now)}`));
+          now = fallbackDate();
+          start = getTime(now);
           end = start;
           break;
         default:
