@@ -199,6 +199,7 @@ const docsMenus: SiteMenuItem[] = [
       { name: "QDateScroller", path: "/developing/qdate-scroller" },
       { name: "QDateTimeScroller", path: "/developing/qdate-time-scroller" },
       { name: "QDateRangeScroller", path: "/developing/qdate-range-scroller" },
+      { name: "Timestamp Recipes", path: "/developing/timestamp-recipes" },
       { name: "FAQ", path: "/developing/faq" },
     ],
   },

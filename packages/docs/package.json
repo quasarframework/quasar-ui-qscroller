@@ -23,6 +23,7 @@
   "dependencies": {
     "@md-plugins/vite-ssg-plugin": "^0.1.0-beta.28",
     "@quasar/extras": "2.0.0",
+    "@timestamp-js/core": "0.1.0-beta.0",
     "@vue/server-renderer": "^3.5.0",
     "markdown-it": "^14.2.0",
     "markdown-it-container": "^4.0.0",

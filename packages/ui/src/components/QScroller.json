@@ -8,7 +8,7 @@
       "category": "model",
       "applicable": ["All"],
       "required": true,
-      "desc": "The `type` property is dependent on the `view` property",
+      "desc": "The value shape is dependent on the `view` property. Date, time, date-time, and range values can be normalized with `@timestamp-js/core` helpers such as `parseTimestamp()`, `getDate()`, `getTime()`, and `getDateTime()` when the selected value needs validation, persistence, or API formatting.",
       "examples": ["v-model=\"myVar\""]
     },
     "view": {
@@ -94,7 +94,7 @@
       "type": "Boolean",
       "category": "behavior",
       "applicable": ["time-range", "date-range"],
-      "desc": "Disables range checking validation (ie: allows right-side of range to be less than left-side range)",
+      "desc": "Disables range checking validation (ie: allows right-side of range to be less than left-side range). Use `@timestamp-js/core` helpers such as `createTimestampRange()`, `isRangeOverlapping()`, and `findRangeGaps()` when range rules need to be handled by application logic.",
       "addedIn": "v1.0.0"
     },
     "error-color": {
@@ -236,7 +236,7 @@
     "hour-interval": {
       "type": ["String", "Number"],
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when emitted values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time", "date-time"],
       "examples": [":hour-interval=\"2\""]
@@ -244,7 +244,7 @@
     "minute-interval": {
       "type": ["String", "Number"],
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when emitted values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time", "date-time"],
       "examples": [":minute-interval=\"2\""]
@@ -307,7 +307,7 @@
       "type": ["String", "Number"],
       "tsType": "StringOrNumber",
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when start values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time-range"],
       "examples": [":start-hour-interval=\"2\""]
@@ -316,7 +316,7 @@
       "type": ["String", "Number"],
       "tsType": "StringOrNumber",
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when end values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time-range"],
       "examples": [":end-hour-interval=\"2\""]
@@ -325,7 +325,7 @@
       "type": ["String", "Number"],
       "tsType": "StringOrNumber",
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when start values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time-range"],
       "examples": [":start-minute-interval=\"2\""]
@@ -334,7 +334,7 @@
       "type": ["String", "Number"],
       "tsType": "StringOrNumber",
       "category": "content",
-      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed",
+      "desc": "Used to create intervals. For instance, if '2', then every other value will be displayed. Use `roundToInterval()`, `floorToInterval()`, or `ceilToInterval()` from `@timestamp-js/core` when end values need to be snapped before saving.",
       "default": "1",
       "applicable": ["time-range"],
       "examples": [":end-minute-interval=\"2\""]
@@ -585,7 +585,7 @@
       }
     },
     "invalid-range": {
-      "desc": "Emitted when an end range value is less than the start range",
+      "desc": "Emitted when an end range value is less than the start range. For domain-specific validation, normalize values with `@timestamp-js/core` and compare them with helpers such as `createTimestampRange()` and `isRangeOverlapping()`.",
       "applicable": ["time-range", "date-range"],
       "params": {
         "value": {
@@ -606,7 +606,7 @@
       "scope": {
         "value": {
           "type": ["String", "Object", "Array"],
-          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects",
+          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects. Use `@timestamp-js/core` formatters such as `getDate()`, `getTime()`, `getDateTime()`, and `toUnixMilliseconds()` to display or persist slot values.",
           "__exemption": ["examples"]
         }
       }
@@ -616,7 +616,7 @@
       "scope": {
         "value": {
           "type": ["String", "Object", "Array"],
-          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects",
+          "desc": "When view is `string`, the returned value is the selected string value. For views of `date`, `time` and `date-time`, the returned value is a timestamp object. For views of `time-range` and `date-range` the returned value is an array of timestamp objects. Use `@timestamp-js/core` formatters such as `getDate()`, `getTime()`, `getDateTime()`, and `toUnixMilliseconds()` to display or persist slot values.",
           "__exemption": ["examples"]
         }
       }
