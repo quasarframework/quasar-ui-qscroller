@@ -22,7 +22,7 @@ quasar ext remove @quasar/qscroller
 ## Requirements
 
 - Quasar v2.
-- `@quasar/app-vite` >=3.0.0-beta.43.
+- `@quasar/app-vite` >=3.0.0-beta.44.
 
 ## Support
 
