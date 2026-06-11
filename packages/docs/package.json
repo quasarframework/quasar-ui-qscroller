@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@quasar/extras": "2.0.0",
-    "@timestamp-js/core": "0.1.0-beta.0",
+    "@timestamp-js/core": "0.1.0-rc.0",
     "markdown-it": "^14.2.0",
     "markdown-it-container": "^4.0.0",
     "pinia": "^3.0.4",
@@ -31,10 +31,10 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@md-plugins/quasar-app-extension-q-press": "0.1.0-rc.0",
-    "@md-plugins/vite-examples-plugin": "0.1.0-rc.0",
-    "@md-plugins/vite-md-plugin": "0.1.0-rc.0",
-    "@md-plugins/vite-ssg-plugin": "0.1.0-rc.0",
+    "@md-plugins/quasar-app-extension-q-press": "0.1.0-rc.1",
+    "@md-plugins/vite-examples-plugin": "0.1.0-rc.1",
+    "@md-plugins/vite-md-plugin": "0.1.0-rc.1",
+    "@md-plugins/vite-ssg-plugin": "0.1.0-rc.1",
     "@quasar/app-vite": "3.0.0-rc.1",
     "@quasar/quasar-ui-qscroller": "workspace:*",
     "@types/node": "^25.9.3",
