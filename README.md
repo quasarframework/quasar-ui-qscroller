@@ -2,8 +2,11 @@
 
 [![UI package](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
 [![App Extension](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/533e396c-4793-45af-a0db-6a401f90f748/deploy-status)](https://app.netlify.com/projects/qscroller/deploys)
 
 QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
+
+[Live Q-Press documentation site](https://qscroller.netlify.app/)
 
 # Structure
 
