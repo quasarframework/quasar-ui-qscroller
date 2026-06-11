@@ -10,40 +10,8 @@ allowBuilds:
   esbuild: true
   highlight.js: set this to true or false
 minimumReleaseAgeExclude:
-  - "@quasar/app-vite"
   - "@clack/core"
   - "@clack/prompts"
-  - "@quasar/art@1.0.0"
-  - "@quasar/extras"
-  - "@rolldown/binding-android-arm64@1.0.3"
-  - "@rolldown/binding-darwin-arm64@1.0.3"
-  - "@rolldown/binding-darwin-x64@1.0.3"
-  - "@rolldown/binding-freebsd-x64@1.0.3"
-  - "@rolldown/binding-linux-arm-gnueabihf@1.0.3"
-  - "@rolldown/binding-linux-arm64-gnu@1.0.3"
-  - "@rolldown/binding-linux-arm64-musl@1.0.3"
-  - "@rolldown/binding-linux-ppc64-gnu@1.0.3"
-  - "@rolldown/binding-linux-s390x-gnu@1.0.3"
-  - "@rolldown/binding-linux-x64-gnu@1.0.3"
-  - "@rolldown/binding-linux-x64-musl@1.0.3"
-  - "@rolldown/binding-openharmony-arm64@1.0.3"
-  - "@rolldown/binding-wasm32-wasi@1.0.3"
-  - "@rolldown/binding-win32-arm64-msvc@1.0.3"
-  - "@rolldown/binding-win32-x64-msvc@1.0.3"
-  - "@vue/compiler-core@3.5.35"
-  - "@vue/compiler-dom@3.5.35"
-  - "@vue/compiler-sfc@3.5.35"
-  - "@vue/compiler-ssr@3.5.35"
-  - "@vue/reactivity@3.5.35"
-  - "@vue/runtime-core@3.5.35"
-  - "@vue/runtime-dom@3.5.35"
-  - "@vue/server-renderer@3.5.35"
-  - "@vue/shared@3.5.35"
-  - rolldown@1.0.3
-  - vite-plugin-checker@0.14.1
-  - vue@3.5.35
-  - "@quasar/render-ssr-error@2.2.3"
-  - "@quasar/vite-plugin@1.12.0"
   - "@md-plugins/md-plugin-blockquote"
   - "@md-plugins/md-plugin-codeblocks"
   - "@md-plugins/md-plugin-containers"
@@ -61,17 +29,6 @@ minimumReleaseAgeExclude:
   - "@md-plugins/vite-examples-plugin"
   - "@md-plugins/vite-md-plugin"
   - "@md-plugins/vite-ssg-plugin"
-  - vue-router@5.1.0
-  - tinyglobby@0.2.17
-  - "@vitest/coverage-v8@4.1.8"
-  - "@vitest/expect@4.1.8"
-  - "@vitest/mocker@4.1.8"
-  - "@vitest/pretty-format@4.1.8"
-  - "@vitest/runner@4.1.8"
-  - "@vitest/snapshot@4.1.8"
-  - "@vitest/spy@4.1.8"
-  - "@vitest/utils@4.1.8"
-  - vitest@4.1.8
   - "@oxfmt/binding-android-arm-eabi@0.53.0"
   - "@oxfmt/binding-android-arm64@0.53.0"
   - "@oxfmt/binding-darwin-arm64@0.53.0"
@@ -110,9 +67,52 @@ minimumReleaseAgeExclude:
   - "@oxlint/binding-win32-arm64-msvc@1.68.0"
   - "@oxlint/binding-win32-ia32-msvc@1.68.0"
   - "@oxlint/binding-win32-x64-msvc@1.68.0"
+  - "@quasar/app-vite"
+  - "@quasar/art@1.0.0"
+  - "@quasar/extras"
+  - "@quasar/render-ssr-error@2.2.3"
+  - "@quasar/vite-plugin@1.12.0"
+  - "@rolldown/binding-android-arm64@1.0.3"
+  - "@rolldown/binding-darwin-arm64@1.0.3"
+  - "@rolldown/binding-darwin-x64@1.0.3"
+  - "@rolldown/binding-freebsd-x64@1.0.3"
+  - "@rolldown/binding-linux-arm-gnueabihf@1.0.3"
+  - "@rolldown/binding-linux-arm64-gnu@1.0.3"
+  - "@rolldown/binding-linux-arm64-musl@1.0.3"
+  - "@rolldown/binding-linux-ppc64-gnu@1.0.3"
+  - "@rolldown/binding-linux-s390x-gnu@1.0.3"
+  - "@rolldown/binding-linux-x64-gnu@1.0.3"
+  - "@rolldown/binding-linux-x64-musl@1.0.3"
+  - "@rolldown/binding-openharmony-arm64@1.0.3"
+  - "@rolldown/binding-wasm32-wasi@1.0.3"
+  - "@rolldown/binding-win32-arm64-msvc@1.0.3"
+  - "@rolldown/binding-win32-x64-msvc@1.0.3"
+  - "@timestamp-js/core@0.1.0-beta.0"
+  - "@vitest/coverage-v8@4.1.8"
+  - "@vitest/expect@4.1.8"
+  - "@vitest/mocker@4.1.8"
+  - "@vitest/pretty-format@4.1.8"
+  - "@vitest/runner@4.1.8"
+  - "@vitest/snapshot@4.1.8"
+  - "@vitest/spy@4.1.8"
+  - "@vitest/utils@4.1.8"
+  - "@vue/compiler-core@3.5.35"
+  - "@vue/compiler-dom@3.5.35"
+  - "@vue/compiler-sfc@3.5.35"
+  - "@vue/compiler-ssr@3.5.35"
+  - "@vue/reactivity@3.5.35"
+  - "@vue/runtime-core@3.5.35"
+  - "@vue/runtime-dom@3.5.35"
+  - "@vue/server-renderer@3.5.35"
+  - "@vue/shared@3.5.35"
   - oxfmt@0.53.0
   - oxlint@1.68.0
+  - rolldown@1.0.3
   - semver@7.8.4
-  - "@timestamp-js/core@0.1.0-beta.0"
+  - tinyglobby@0.2.17
+  - vite-plugin-checker@0.14.1
+  - vitest@4.1.8
+  - vue-router@5.1.0
+  - vue@3.5.35
 
 trustLockfile: true
