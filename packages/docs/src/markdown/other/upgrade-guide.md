@@ -38,20 +38,20 @@ This is a breaking change for applications that used QScroller's previous Timest
 For Quasar App Extension installs:
 
 ```bash
-quasar ext add @quasar/qscroller@beta
+quasar ext add @quasar/qscroller
 ```
 
 For direct UI package installs:
 
 ```tabs
 <<| bash pnpm |>>
-pnpm add @quasar/quasar-ui-qscroller@beta
+pnpm add @quasar/quasar-ui-qscroller
 <<| bash bun |>>
-bun add @quasar/quasar-ui-qscroller@beta
+bun add @quasar/quasar-ui-qscroller
 <<| bash yarn |>>
-yarn add @quasar/quasar-ui-qscroller@beta
+yarn add @quasar/quasar-ui-qscroller
 <<| bash npm |>>
-npm install @quasar/quasar-ui-qscroller@beta
+npm install @quasar/quasar-ui-qscroller
 ```
 
 ## Import Changes

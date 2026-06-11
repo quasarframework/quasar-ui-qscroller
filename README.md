@@ -1,7 +1,7 @@
 # QScroller
 
-[![UI package](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller/beta?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
-[![App Extension](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller/beta?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
+[![UI package](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![App Extension](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
 
 QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
 
@@ -17,15 +17,15 @@ This is a pnpm workspace mono-repo. You cannot use npm for building.
 ## Install
 
 ```bash
-pnpm add @quasar/quasar-ui-qscroller@beta
+pnpm add @quasar/quasar-ui-qscroller
 # or
-bun add @quasar/quasar-ui-qscroller@beta
+bun add @quasar/quasar-ui-qscroller
 # or
-yarn add @quasar/quasar-ui-qscroller@beta
+yarn add @quasar/quasar-ui-qscroller
 # or
-npm install @quasar/quasar-ui-qscroller@beta
+npm install @quasar/quasar-ui-qscroller
 # or, in a Quasar CLI project
-quasar ext add @quasar/qscroller@beta
+quasar ext add @quasar/qscroller
 ```
 
 ## Development

@@ -50,8 +50,8 @@ input behavior.
 :::details Q. Can I use it with QInput?
 
 Yes. The scrollers can be placed in popups, dialogs, menus, or appended sections around `QInput`.
-For the beta docs we are keeping the examples focused on the component itself first, then we can add
-more integration examples as the migration settles.
+The docs keep the first examples focused on the component itself. Add integration examples when your
+app needs to show a specific popup, dialog, or form-control pattern.
 
 :::
 

@@ -1,6 +1,6 @@
 # QScroller
 
-[![npm](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller/beta?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![npm](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
 [![npm](https://img.shields.io/npm/dt/@quasar/quasar-ui-qscroller.svg)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
 
 QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
@@ -8,13 +8,13 @@ QScroller provides string, time, date, date-time, and range scrollers for Vue an
 ## Install
 
 ```bash
-pnpm add @quasar/quasar-ui-qscroller@beta
+pnpm add @quasar/quasar-ui-qscroller
 # or
-bun add @quasar/quasar-ui-qscroller@beta
+bun add @quasar/quasar-ui-qscroller
 # or
-yarn add @quasar/quasar-ui-qscroller@beta
+yarn add @quasar/quasar-ui-qscroller
 # or
-npm install @quasar/quasar-ui-qscroller@beta
+npm install @quasar/quasar-ui-qscroller
 ```
 
 ## Quasar CLI Vite
@@ -22,7 +22,7 @@ npm install @quasar/quasar-ui-qscroller@beta
 Use the App Extension when you want QScroller registered for the whole app:
 
 ```bash
-quasar ext add @quasar/qscroller@beta
+quasar ext add @quasar/qscroller
 ```
 
 Or register the UI package manually in a boot file:
@@ -77,11 +77,11 @@ Add the QScroller assets after the Quasar assets:
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@beta/dist/index.min.css"
+  href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.min.css"
   rel="stylesheet"
   type="text/css"
 />
-<script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@beta/dist/index.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.umd.min.js"></script>
 ```
 
 Use `dist/index.rtl.min.css` when your app needs the RTL stylesheet.

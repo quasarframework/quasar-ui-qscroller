@@ -19,12 +19,6 @@ To add QScroller to your Quasar application, run the following in your Quasar ap
 quasar ext add @quasar/qscroller
 ```
 
-While QScroller v3 is in beta, install with:
-
-```bash
-quasar ext add @quasar/qscroller@beta
-```
-
 The QScroller v3 App Extension targets Quasar CLI Vite 3 and requires `@quasar/app-vite` >=3.0.0-rc.1. It does not support webpack-based Quasar applications.
 
 ### Manual Boot File
@@ -33,13 +27,13 @@ If you do not install through the App Extension, install the UI package directly
 
 ```tabs
 <<| bash pnpm |>>
-pnpm add @quasar/quasar-ui-qscroller@beta
+pnpm add @quasar/quasar-ui-qscroller
 <<| bash bun |>>
-bun add @quasar/quasar-ui-qscroller@beta
+bun add @quasar/quasar-ui-qscroller
 <<| bash yarn |>>
-yarn add @quasar/quasar-ui-qscroller@beta
+yarn add @quasar/quasar-ui-qscroller
 <<| bash npm |>>
-npm install @quasar/quasar-ui-qscroller@beta
+npm install @quasar/quasar-ui-qscroller
 ```
 
 Then create and register a boot file:

@@ -4,13 +4,13 @@ The QScroller App Extension installs and registers the
 [`@quasar/quasar-ui-qscroller`](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
 component package in a Quasar CLI Vite project.
 
-[![npm](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller/beta?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
+[![npm](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
 [![npm](https://img.shields.io/npm/dt/@quasar/quasar-app-extension-qscroller.svg)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
 
 ## Install
 
 ```bash
-quasar ext add @quasar/qscroller@beta
+quasar ext add @quasar/qscroller
 ```
 
 ## Uninstall
