@@ -4,6 +4,7 @@ import { version } from "../../../ui/package.json";
 import { slugify } from "../.q-press/components/markdown-utils";
 
 const repoBranch = "v3-beta";
+const codepenPackageVersion = version.includes("-beta.") ? "beta" : version;
 const productName = "QScroller";
 
 export interface SocialLink {
@@ -73,6 +74,27 @@ export interface PrivacyConfig {
   link: string;
 }
 
+export interface CodepenGlobalPackage {
+  packageName: string;
+  globalName: string;
+}
+
+export interface CodepenModulePackage {
+  packageName: string;
+  importUrl: string;
+}
+
+export interface CodepenConfig {
+  cssExternal?: string[];
+  jsExternal?: string[];
+  jsPreProcessor?: string;
+  titleSuffix?: string;
+  jsSetup?: string;
+  head?: string;
+  globalPackages?: CodepenGlobalPackage[];
+  modulePackages?: CodepenModulePackage[];
+}
+
 export interface SiteConfig {
   lang: string;
   title: string;
@@ -82,6 +104,7 @@ export interface SiteConfig {
   copyright: CopyrightConfig;
   githubEditRootSrc: string;
   githubSourceRootSrc?: string;
+  codepen?: CodepenConfig;
   license: LicenseConfig;
   privacy: PrivacyConfig;
   logoConfig: LogoConfig;
@@ -257,6 +280,31 @@ const config: SiteConfig = {
   },
   githubEditRootSrc: `https://github.com/quasarframework/quasar-ui-qscroller/edit/${repoBranch}/packages/docs/src`,
   githubSourceRootSrc: `https://github.com/quasarframework/quasar-ui-qscroller/tree/${repoBranch}/packages/docs/src`,
+  codepen: {
+    jsPreProcessor: "typescript",
+    titleSuffix: `QScroller v${version}`,
+    cssExternal: [
+      `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${codepenPackageVersion}/dist/index.min.css`,
+    ],
+    jsExternal: [
+      `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${codepenPackageVersion}/dist/index.umd.js`,
+    ],
+    globalPackages: [
+      {
+        packageName: "@quasar/quasar-ui-qscroller",
+        globalName: "(globalThis as any).index",
+      },
+    ],
+    modulePackages: [
+      {
+        packageName: "@timestamp-js/core",
+        importUrl: "https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.0/dist/index.js",
+      },
+    ],
+    jsSetup: ["const QScrollerPlugin = (globalThis as any).index", "app.use(QScrollerPlugin)"].join(
+      "\n",
+    ),
+  },
   license: {
     label: "MIT License",
     link: `https://github.com/quasarframework/quasar-ui-qscroller/blob/${repoBranch}/LICENSE`,
