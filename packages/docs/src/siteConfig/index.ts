@@ -292,7 +292,7 @@ const config: SiteConfig = {
     globalPackages: [
       {
         packageName: "@quasar/quasar-ui-qscroller",
-        globalName: "(globalThis as any).index",
+        globalName: "(globalThis as any).QScroller",
       },
     ],
     modulePackages: [
@@ -301,7 +301,7 @@ const config: SiteConfig = {
         importUrl: "https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.0/dist/index.js",
       },
     ],
-    jsSetup: ["const QScrollerPlugin = (globalThis as any).index", "app.use(QScrollerPlugin)"].join(
+    jsSetup: ["const QScrollerPlugin = (globalThis as any).QScroller", "app.use(QScrollerPlugin)"].join(
       "\n",
     ),
   },
