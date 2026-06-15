@@ -302,6 +302,11 @@
 
     <script>
       const { ref } = Vue
+      const scrollerPlugin = globalThis.QScroller
+      const bundleReady =
+        scrollerPlugin !== void 0 &&
+        typeof scrollerPlugin.install === 'function' &&
+        scrollerPlugin.QScroller !== void 0
 
       const app = Vue.createApp({
         setup() {
@@ -310,7 +315,7 @@
           const value = ref("")
 
           return {
-            version: QScroller.version,
+            version: bundleReady === true ? scrollerPlugin.version : 'bundle missing',
             date,
             time,
             value,
@@ -319,7 +324,9 @@
       })
 
       app.use(Quasar)
-      app.use(QScroller)
+      if (bundleReady === true) {
+        app.use(scrollerPlugin)
+      }
       app.mount("#q-app")
     </script>
   </body>
