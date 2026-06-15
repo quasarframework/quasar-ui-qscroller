@@ -46,7 +46,8 @@
                 <q-card-section class="col-12"> no-header, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-header
                     no-footer
@@ -59,7 +60,8 @@
                 <q-card-section class="col-12"> no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     style="max-width: 100px; height: 200px"
@@ -71,7 +73,8 @@
                 <q-card-section class="col-12"> no-shadow, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     no-shadow
@@ -84,7 +87,8 @@
                 <q-card-section class="col-12"> no-border, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     no-border
@@ -97,7 +101,8 @@
                 <q-card-section class="col-12"> rounded-borders, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     rounded-borders
@@ -110,7 +115,8 @@
                 <q-card-section class="col-12"> dense, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     dense
@@ -123,7 +129,8 @@
                 <q-card-section class="col-12"> hour12, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     hour12
@@ -136,7 +143,8 @@
                 <q-card-section class="col-12"> dense, hour12, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     dense
@@ -150,7 +158,8 @@
                 <q-card-section class="col-12"> disabled, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     disable
@@ -163,7 +172,8 @@
                 <q-card-section class="col-12"> dense, disabled, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="value"
+                    :value="value"
+                    @input="value = $event"
                     view="time"
                     no-footer
                     dense
@@ -183,7 +193,8 @@
                 <q-card-section class="col-12"> no-header, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-header
                     no-footer
@@ -196,7 +207,8 @@
                 <q-card-section class="col-12"> no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     style="max-width: 130px; height: 200px"
@@ -208,7 +220,8 @@
                 <q-card-section class="col-12"> no-shadow, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     no-shadow
@@ -221,7 +234,8 @@
                 <q-card-section class="col-12"> no-border, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     no-border
@@ -234,7 +248,8 @@
                 <q-card-section class="col-12"> rounded-borders, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     rounded-borders
@@ -247,7 +262,8 @@
                 <q-card-section class="col-12"> dense, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     dense
@@ -260,7 +276,8 @@
                 <q-card-section class="col-12"> disabled, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     disable
@@ -273,7 +290,8 @@
                 <q-card-section class="col-12"> dense, disabled, no-footer </q-card-section>
                 <q-card-section class="col-12">
                   <q-scroller
-                    v-model="date"
+                    :value="date"
+                    @input="date = $event"
                     view="date"
                     no-footer
                     dense
@@ -284,8 +302,6 @@
               </q-card>
             </div>
 
-            <!-- <q-scroller view="time" v-model="time"></q-scroller> -->
-            <!-- <q-scroller view="date" v-model="date"></q-scroller> -->
           </q-page>
         </q-page-container>
       </q-layout>
@@ -305,14 +321,12 @@
 
       const app = Vue.createApp({
         setup() {
-          const date = ref("")
-          const time = ref("")
-          const value = ref("")
+          const date = ref("2026-05-26")
+          const value = ref("09:30")
 
           return {
             version: bundleReady === true ? scrollerPlugin.version : 'bundle missing',
             date,
-            time,
             value,
           }
         },
