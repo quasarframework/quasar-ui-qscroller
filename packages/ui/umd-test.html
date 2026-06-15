@@ -17,7 +17,7 @@
       type="text/css"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.min.css"
+      href="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.prod.css"
       rel="stylesheet"
       type="text/css"
     />
@@ -286,7 +286,7 @@
             <!-- <q-scroller view="time" v-model="time"></q-scroller> -->
             <!-- <q-scroller view="date" v-model="date"></q-scroller> -->
             <ul class="q-mb-lg">
-              <li>In /ui, run: "yarn build"</li>
+              <li>In /packages/ui, run: "pnpm build"</li>
               <li class="text-red">You need to build & refresh page on each change manually.</li>
               <li>Use self-closing tags only!</li>
               <li>Example: &lt;my-component&gt;&lt;/my-component&gt;</li>
@@ -296,24 +296,25 @@
       </q-layout>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.ie.polyfills.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.umd.prod.js"></script>
     <script src="dist/index.umd.js"></script>
 
     <script>
-      new Vue({
-        el: "#q-app",
-
-        data: function () {
+      const app = Vue.createApp({
+        data() {
           return {
             version: QScroller.version,
             date: "",
             time: "",
             value: "",
-          };
+          }
         },
-      });
+      })
+
+      app.use(Quasar)
+      app.use(QScroller)
+      app.mount("#q-app")
     </script>
   </body>
 </html>
