@@ -301,13 +301,19 @@
     <script src="dist/index.umd.js"></script>
 
     <script>
+      const { ref } = Vue
+
       const app = Vue.createApp({
-        data() {
+        setup() {
+          const date = ref("")
+          const time = ref("")
+          const value = ref("")
+
           return {
             version: QScroller.version,
-            date: "",
-            time: "",
-            value: "",
+            date,
+            time,
+            value,
           }
         },
       })
