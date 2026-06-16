@@ -28,14 +28,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QTimeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QTimeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const stringValue = ref<unknown>("09:00");
-const objectValue = ref<unknown>({ hour: "09", minute: "10" });
-const arrayValue = ref<unknown>(["09", "20"]);
-const dateValue = ref<unknown>(new Date(2026, 4, 30, 9, 30));
+const stringValue = ref<unknown>('09:00')
+const objectValue = ref<unknown>({ hour: '09', minute: '10' })
+const arrayValue = ref<unknown>(['09', '20'])
+const dateValue = ref<unknown>(new Date(2026, 4, 30, 9, 30))
 </script>
 
 <style scoped lang="scss">

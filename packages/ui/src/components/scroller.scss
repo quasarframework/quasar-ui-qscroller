@@ -133,7 +133,7 @@ $footer-height-dense: 30px;
     margin: 0;
 
     &::before {
-      content: "";
+      content: '';
       top: var(--q-scroller-item-bar-top);
       position: absolute;
       margin: 0 auto;
@@ -155,7 +155,7 @@ $footer-height-dense: 30px;
     margin: 0;
 
     &::before {
-      content: "";
+      content: '';
       top: var(--q-scroller-item-bar-top-dense);
       position: absolute;
       margin: 0 auto;

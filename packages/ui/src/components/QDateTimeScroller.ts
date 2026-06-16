@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, watch } from "vue";
+import { computed, defineComponent, h, ref, watch } from 'vue'
 import {
   Timestamp as EmptyTimestamp,
   compareTimestamps,
@@ -10,14 +10,14 @@ import {
   parseDate,
   parseTimestamp,
   type Timestamp,
-} from "@timestamp-js/core";
-import { useScrollerShell } from "../composables/use-scroller-shell";
-import QDateScroller from "./QDateScroller";
-import QTimeScroller from "./QTimeScroller";
-import props from "../utils/props";
+} from '@timestamp-js/core'
+import { useScrollerShell } from '../composables/use-scroller-shell'
+import QDateScroller from './QDateScroller'
+import QTimeScroller from './QTimeScroller'
+import props from '../utils/props'
 
 export default defineComponent({
-  name: "QDateTimeScroller",
+  name: 'QDateTimeScroller',
 
   props: {
     ...props.common,
@@ -29,85 +29,85 @@ export default defineComponent({
     hour12: Boolean,
     amPmLabels: {
       type: Array,
-      default: () => ["AM", "PM"],
+      default: () => ['AM', 'PM'],
       validator: (value) =>
         Array.isArray(value) &&
         value.length === 2 &&
-        typeof value[0] === "string" &&
-        typeof value[1] === "string",
+        typeof value[0] === 'string' &&
+        typeof value[1] === 'string',
     },
   },
 
-  emits: ["close", "input"],
+  emits: ['close', 'input'],
 
   setup(props, { emit, expose, slots }) {
-    const { bodyHeight, renderCommon } = useScrollerShell(props);
-    const dateRef = ref<{ displayDate?: string; getTimestamp: () => unknown } | null>(null);
-    const timeRef = ref<{ displayTime?: string; getTimestamp: () => unknown } | null>(null);
-    const timestamp = ref<Timestamp>(EmptyTimestamp);
-    const type = ref<string | null>(null);
-    const date = ref("");
-    const time = ref("");
-    const syncing = ref(false);
+    const { bodyHeight, renderCommon } = useScrollerShell(props)
+    const dateRef = ref<{ displayDate?: string; getTimestamp: () => unknown } | null>(null)
+    const timeRef = ref<{ displayTime?: string; getTimestamp: () => unknown } | null>(null)
+    const timestamp = ref<Timestamp>(EmptyTimestamp)
+    const type = ref<string | null>(null)
+    const date = ref('')
+    const time = ref('')
+    const syncing = ref(false)
 
-    const slotData = computed(() => ({ value: timestamp.value }));
-    const displayed = computed(() => displayDateTime.value);
+    const slotData = computed(() => ({ value: timestamp.value }))
+    const displayed = computed(() => displayDateTime.value)
 
     const displayDateTime = computed(() => {
-      if (props.locale === "") return "";
-      if (date.value !== "" && time.value !== "") {
+      if (props.locale === '') return ''
+      if (date.value !== '' && time.value !== '') {
         if (dateRef.value?.displayDate && timeRef.value?.displayTime) {
-          return `${dateRef.value.displayDate} ${timeRef.value.displayTime}`;
+          return `${dateRef.value.displayDate} ${timeRef.value.displayTime}`
         }
-        return `${date.value} ${time.value}`;
+        return `${date.value} ${time.value}`
       }
-      return "";
-    });
+      return ''
+    })
 
     function emitValue() {
       switch (type.value) {
-        case "date":
-          emit("input", getDateObject(timestamp.value));
-          return;
-        case "array":
-          emit("input", [
+        case 'date':
+          emit('input', getDateObject(timestamp.value))
+          return
+        case 'array':
+          emit('input', [
             padNumber(timestamp.value.year, 2),
             padNumber(timestamp.value.month, 2),
             padNumber(timestamp.value.day, 2),
             padNumber(timestamp.value.hour, 2),
             padNumber(timestamp.value.minute, 2),
-          ]);
-          return;
-        case "object":
-          emit("input", {
+          ])
+          return
+        case 'object':
+          emit('input', {
             year: padNumber(timestamp.value.year, 2),
             month: padNumber(timestamp.value.month, 2),
             day: padNumber(timestamp.value.day, 2),
             hour: padNumber(timestamp.value.hour, 2),
             minute: padNumber(timestamp.value.minute, 2),
-          });
-          return;
-        case "string":
+          })
+          return
+        case 'string':
           emit(
-            "input",
+            'input',
             [
               padNumber(timestamp.value.year, 2),
               padNumber(timestamp.value.month, 2),
               padNumber(timestamp.value.day, 2),
-            ].join("-") +
-              " " +
-              [padNumber(timestamp.value.hour, 2), padNumber(timestamp.value.minute, 2)].join(":"),
-          );
+            ].join('-') +
+              ' ' +
+              [padNumber(timestamp.value.hour, 2), padNumber(timestamp.value.minute, 2)].join(':'),
+          )
       }
     }
 
     function fromTimestamp() {
-      date.value = getDate(timestamp.value);
-      time.value = getTime(timestamp.value);
+      date.value = getDate(timestamp.value)
+      time.value = getTime(timestamp.value)
     }
 
     function fallbackDate() {
-      return parseDate(new Date()) ?? EmptyTimestamp;
+      return parseDate(new Date()) ?? EmptyTimestamp
     }
 
     function timestampFromParts(
@@ -122,28 +122,28 @@ export default defineComponent({
         parseTimestamp(
           `${padNumber(nextYear, 4)}-${padNumber(nextMonth, 2)}-${padNumber(nextDay, 2)} ${padNumber(nextHour, 2)}:${padNumber(nextMinute, 2)}`,
         ) ?? base
-      );
+      )
     }
 
     function parseDateTime(value: string) {
-      return parseTimestamp(value) ?? timestamp.value;
+      return parseTimestamp(value) ?? timestamp.value
     }
 
     function splitDateTime() {
-      syncing.value = true;
+      syncing.value = true
 
-      const valueType = Object.prototype.toString.call(props.value);
-      let now;
+      const valueType = Object.prototype.toString.call(props.value)
+      let now
 
       switch (valueType) {
-        case "[object Date]":
-          type.value = "date";
-          timestamp.value = parseDate(props.value) ?? EmptyTimestamp;
-          fromTimestamp();
-          syncing.value = false;
-          return;
-        case "[object Array]":
-          type.value = "array";
+        case '[object Date]':
+          type.value = 'date'
+          timestamp.value = parseDate(props.value) ?? EmptyTimestamp
+          fromTimestamp()
+          syncing.value = false
+          return
+        case '[object Array]':
+          type.value = 'array'
           timestamp.value = timestampFromParts(
             fallbackDate(),
             parseInt(props.value[0], 10),
@@ -151,12 +151,12 @@ export default defineComponent({
             parseInt(props.value[2], 10),
             parseInt(props.value[3], 10),
             parseInt(props.value[4], 10),
-          );
-          fromTimestamp();
-          syncing.value = false;
-          return;
-        case "[object Object]":
-          type.value = "object";
+          )
+          fromTimestamp()
+          syncing.value = false
+          return
+        case '[object Object]':
+          type.value = 'object'
           timestamp.value = timestampFromParts(
             fallbackDate(),
             parseInt(props.value.year, 10),
@@ -164,15 +164,15 @@ export default defineComponent({
             parseInt(props.value.day, 10),
             parseInt(props.value.hour, 10),
             parseInt(props.value.minute, 10),
-          );
-          fromTimestamp();
-          syncing.value = false;
-          return;
-        case "[object String]":
-          type.value = "string";
-          now = fallbackDate();
+          )
+          fromTimestamp()
+          syncing.value = false
+          return
+        case '[object String]':
+          type.value = 'string'
+          now = fallbackDate()
           if (props.value) {
-            const parsed = parseTimestamp(props.value);
+            const parsed = parseTimestamp(props.value)
             if (parsed !== null) {
               now = timestampFromParts(
                 now,
@@ -181,62 +181,62 @@ export default defineComponent({
                 parsed.day,
                 parsed.hour,
                 parsed.minute,
-              );
+              )
             }
           }
-          timestamp.value = now;
-          fromTimestamp();
-          syncing.value = false;
-          return;
+          timestamp.value = now
+          fromTimestamp()
+          syncing.value = false
+          return
       }
 
-      syncing.value = false;
+      syncing.value = false
 
-      if (props.value !== "") {
-        console.error(`QDateTimeScroller: invalid time format - '${props.value}'`);
+      if (props.value !== '') {
+        console.error(`QDateTimeScroller: invalid time format - '${props.value}'`)
       }
     }
 
-    watch(() => props.value, splitDateTime);
+    watch(() => props.value, splitDateTime)
 
     watch(date, () => {
       if (syncing.value === true) {
-        return;
+        return
       }
 
-      const previous = copyTimestamp(timestamp.value);
-      timestamp.value = parseDateTime(`${date.value} ${time.value}`);
+      const previous = copyTimestamp(timestamp.value)
+      timestamp.value = parseDateTime(`${date.value} ${time.value}`)
       if (compareTimestamps(previous, timestamp.value) !== true) {
-        emitValue();
+        emitValue()
       }
-    });
+    })
 
     watch(time, () => {
       if (syncing.value === true) {
-        return;
+        return
       }
 
-      const previous = copyTimestamp(timestamp.value);
-      timestamp.value = parseDateTime(`${date.value} ${time.value}`);
+      const previous = copyTimestamp(timestamp.value)
+      timestamp.value = parseDateTime(`${date.value} ${time.value}`)
       if (compareTimestamps(previous, timestamp.value) !== true) {
-        emitValue();
+        emitValue()
       }
-    });
+    })
 
-    splitDateTime();
+    splitDateTime()
 
     expose({
       displayDateTime,
       getTimestamp: () => timestamp.value,
-    });
+    })
 
     function renderDate() {
       return h(QDateScroller, {
         ref: dateRef,
         class: [
-          props.hour12 === true ? "col-7" : "col-8",
+          props.hour12 === true ? 'col-7' : 'col-8',
           {
-            "q-scroller__vertical-bar": props.verticalBar === true,
+            'q-scroller__vertical-bar': props.verticalBar === true,
           },
         ],
         value: date.value,
@@ -265,15 +265,15 @@ export default defineComponent({
         noYears: props.noYears,
         childHeight: bodyHeight.value,
         onInput: (value) => {
-          date.value = value;
+          date.value = value
         },
-      });
+      })
     }
 
     function renderTime() {
       return h(QTimeScroller, {
         ref: timeRef,
-        class: props.hour12 === true ? "col-5" : "col-4",
+        class: props.hour12 === true ? 'col-5' : 'col-4',
         value: time.value,
         locale: props.locale,
         barColor: props.barColor,
@@ -298,22 +298,22 @@ export default defineComponent({
         noHours: props.noHours,
         childHeight: bodyHeight.value,
         onInput: (value) => {
-          time.value = value;
+          time.value = value
         },
-      });
+      })
     }
 
     function renderScrollers() {
-      return [renderDate(), renderTime()];
+      return [renderDate(), renderTime()]
     }
 
     return () =>
       renderCommon({
         displayed,
-        emitClose: () => emit("close"),
+        emitClose: () => emit('close'),
         renderScrollers,
         slotData,
         slots,
-      });
+      })
   },
-});
+})

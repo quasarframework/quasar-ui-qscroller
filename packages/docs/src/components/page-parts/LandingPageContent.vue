@@ -204,59 +204,59 @@
 </template>
 
 <script setup lang="ts">
-import { fabGithub } from "@quasar/extras/fontawesome-v7";
-import { biArrowRightCircle } from "@quasar/extras/bootstrap-icons";
-import siteConfig from "../../siteConfig";
+import { fabGithub } from '@quasar/extras/fontawesome-v7'
+import { biArrowRightCircle } from '@quasar/extras/bootstrap-icons'
+import siteConfig from '../../siteConfig'
 
-const heroPills = ["QStringScroller", "QTimeScroller", "QDateScroller", "Date-Time", "Ranges"];
+const heroPills = ['QStringScroller', 'QTimeScroller', 'QDateScroller', 'Date-Time', 'Ranges']
 
 const featureCards = [
   {
-    icon: "format_list_numbered",
-    title: "String Pickers",
-    body: "Use wheel-style selection for compact choice lists without building a custom dropdown.",
+    icon: 'format_list_numbered',
+    title: 'String Pickers',
+    body: 'Use wheel-style selection for compact choice lists without building a custom dropdown.',
   },
   {
-    icon: "schedule",
-    title: "Time + AM/PM",
-    body: "Switch between 24-hour and 12-hour flows, intervals, disabled values, and range validation.",
+    icon: 'schedule',
+    title: 'Time + AM/PM',
+    body: 'Switch between 24-hour and 12-hour flows, intervals, disabled values, and range validation.',
   },
   {
-    icon: "event",
-    title: "Date + Date-Time",
-    body: "Compose years, months, days, and time columns with shared formatting and locale support.",
+    icon: 'event',
+    title: 'Date + Date-Time',
+    body: 'Compose years, months, days, and time columns with shared formatting and locale support.',
   },
   {
-    icon: "palette",
-    title: "Theming",
-    body: "Tune shell, bar, text, and inner scroller colors with palette names, CSS values, or CSS vars.",
+    icon: 'palette',
+    title: 'Theming',
+    body: 'Tune shell, bar, text, and inner scroller colors with palette names, CSS values, or CSS vars.',
   },
   {
-    icon: "widgets",
-    title: "Consistent API",
-    body: "Keep the same header/footer, slots, border, density, and disabled patterns across every picker.",
+    icon: 'widgets',
+    title: 'Consistent API',
+    body: 'Keep the same header/footer, slots, border, density, and disabled patterns across every picker.',
   },
   {
-    icon: "view_carousel",
-    title: "Inline or Popup",
-    body: "Render scrollers directly in forms or use them inside QInput-style popup workflows when needed.",
+    icon: 'view_carousel',
+    title: 'Inline or Popup',
+    body: 'Render scrollers directly in forms or use them inside QInput-style popup workflows when needed.',
   },
-];
+]
 
 const supportItems = [
   {
-    title: "Introduction First",
-    body: "Start in getting-started to choose between direct UI-package usage and the app extension path.",
+    title: 'Introduction First',
+    body: 'Start in getting-started to choose between direct UI-package usage and the app extension path.',
   },
   {
-    title: "Upgrade Notes",
-    body: "The v3 beta line is Vue 3 and Quasar 2 focused, so the upgrade guide should be your first stop when migrating.",
+    title: 'Upgrade Notes',
+    body: 'The v3 beta line is Vue 3 and Quasar 2 focused, so the upgrade guide should be your first stop when migrating.',
   },
   {
-    title: "Discussions + Issues",
-    body: "Questions, bugs, and API sharp edges are easiest to track in the QScroller repo and GitHub Discussions.",
+    title: 'Discussions + Issues',
+    body: 'Questions, bugs, and API sharp edges are easiest to track in the QScroller repo and GitHub Discussions.',
   },
-];
+]
 </script>
 
 <style lang="scss" scoped>
@@ -328,7 +328,7 @@ const supportItems = [
   border-radius: 999px;
   background: rgba(245, 245, 220, 0.08);
   color: #ffe5b6;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -343,7 +343,7 @@ const supportItems = [
 
 .hero-title {
   margin: 0;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: clamp(3.2rem, 8vw, 6rem);
   line-height: 0.95;
   font-weight: 800;
@@ -354,7 +354,7 @@ const supportItems = [
 .hero-subtitle {
   max-width: 620px;
   margin: 0;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: clamp(1.15rem, 2vw, 1.45rem);
   line-height: 1.45;
   font-weight: 700;
@@ -419,7 +419,7 @@ const supportItems = [
   column-gap: 12px;
   min-width: 0;
   width: 100%;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
 }
@@ -502,7 +502,7 @@ const supportItems = [
 
 .preview-panel__copy h2 {
   margin: 0 0 10px;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: clamp(1.35rem, 2vw, 1.7rem);
   line-height: 1.2;
   color: $brand-light;
@@ -523,7 +523,7 @@ const supportItems = [
 }
 
 .preview-stack::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 28px 18px 40px;
   z-index: -1;
@@ -584,7 +584,7 @@ const supportItems = [
 
 .section-heading__title {
   margin: 14px 0 10px;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: clamp(2rem, 4vw, 2.8rem);
   line-height: 1.12;
   text-wrap: balance;
@@ -616,7 +616,7 @@ const supportItems = [
 }
 
 .feature-card::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0 auto auto 0;
   width: 100%;
@@ -640,7 +640,7 @@ const supportItems = [
 .feature-card__title,
 .resource-card__title {
   margin: 0 0 10px;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: 1.16rem;
   line-height: 1.3;
   color: $brand-light;
@@ -719,7 +719,7 @@ const supportItems = [
 
 .resource-list__title {
   margin-bottom: 6px;
-  font-family: "Montserrat", "Poppins", "Segoe UI", sans-serif;
+  font-family: 'Montserrat', 'Poppins', 'Segoe UI', sans-serif;
   font-size: 0.96rem;
   font-weight: 700;
   color: #ffe3b7;

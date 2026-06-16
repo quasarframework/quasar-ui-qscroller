@@ -301,7 +301,6 @@
                 </q-card-section>
               </q-card>
             </div>
-
           </q-page>
         </q-page-container>
       </q-layout>
@@ -321,8 +320,8 @@
 
       const app = Vue.createApp({
         setup() {
-          const date = ref("2026-05-26")
-          const value = ref("09:30")
+          const date = ref('2026-05-26')
+          const value = ref('09:30')
 
           return {
             version: bundleReady === true ? scrollerPlugin.version : 'bundle missing',
@@ -336,7 +335,7 @@
       if (bundleReady === true) {
         app.use(scrollerPlugin)
       }
-      app.mount("#q-app")
+      app.mount('#q-app')
     </script>
   </body>
 </html>

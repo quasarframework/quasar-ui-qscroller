@@ -19,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QDateScroller, QTimeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QDateScroller, QTimeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const date = ref("2026-05-26");
-const time = ref("09:30");
+const date = ref('2026-05-26')
+const time = ref('09:30')
 </script>

@@ -74,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { QDateRangeScroller, QDateTimeScroller } from "@quasar/quasar-ui-qscroller";
+import { computed, ref } from 'vue'
+import { QDateRangeScroller, QDateTimeScroller } from '@quasar/quasar-ui-qscroller'
 import {
   createTimestampRange,
   durationBetween,
@@ -91,97 +91,95 @@ import {
   toUnixMilliseconds,
   type Timestamp,
   type TimestampRange,
-} from "@timestamp-js/core";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+} from '@timestamp-js/core'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
 type DateTimeValue =
   | string
   | Date
   | Array<string | number>
   | {
-      year: string | number;
-      month: string | number;
-      day: string | number;
-      hour: string | number;
-      minute: string | number;
-    };
+      year: string | number
+      month: string | number
+      day: string | number
+      hour: string | number
+      minute: string | number
+    }
 
-type DateRangeValue = [string, string];
+type DateRangeValue = [string, string]
 
-const initialDateTime = parseTimestamp("2036-06-08 09:30") as Timestamp;
-const storedMilliseconds = ref(toUnixMilliseconds(initialDateTime));
-const dateTimeValue = ref(getDateTime(initialDateTime));
-const dateRangeValue = ref<DateRangeValue>(["2036-06-08", "2036-06-12"]);
+const initialDateTime = parseTimestamp('2036-06-08 09:30') as Timestamp
+const storedMilliseconds = ref(toUnixMilliseconds(initialDateTime))
+const dateTimeValue = ref(getDateTime(initialDateTime))
+const dateRangeValue = ref<DateRangeValue>(['2036-06-08', '2036-06-12'])
 
 const bookingWindow = createTimestampRange(
-  parseTimestamp("2036-06-01 00:00") as Timestamp,
-  parseTimestamp("2036-06-30 00:00") as Timestamp,
-);
+  parseTimestamp('2036-06-01 00:00') as Timestamp,
+  parseTimestamp('2036-06-30 00:00') as Timestamp,
+)
 const blackoutRange = createTimestampRange(
-  parseTimestamp("2036-06-14 00:00") as Timestamp,
-  parseTimestamp("2036-06-17 00:00") as Timestamp,
-);
+  parseTimestamp('2036-06-14 00:00') as Timestamp,
+  parseTimestamp('2036-06-17 00:00') as Timestamp,
+)
 
-const storedIso = computed(() => new Date(storedMilliseconds.value).toISOString());
-const selectedRange = computed(() => createDateRange(dateRangeValue.value));
-const rangeOverlapsBlackout = computed(() =>
-  isRangeOverlapping(selectedRange.value, blackoutRange),
-);
+const storedIso = computed(() => new Date(storedMilliseconds.value).toISOString())
+const selectedRange = computed(() => createDateRange(dateRangeValue.value))
+const rangeOverlapsBlackout = computed(() => isRangeOverlapping(selectedRange.value, blackoutRange))
 const requestedDays = computed(() => {
-  const duration = durationBetween(selectedRange.value.start, selectedRange.value.end);
-  return formatDuration(duration);
-});
+  const duration = durationBetween(selectedRange.value.start, selectedRange.value.end)
+  return formatDuration(duration)
+})
 const nextGap = computed(() => {
-  const [gap] = findRangeGaps(bookingWindow, [blackoutRange]);
-  return gap === undefined ? "No open gaps" : `${getDate(gap.start)} through ${getDate(gap.end)}`;
-});
+  const [gap] = findRangeGaps(bookingWindow, [blackoutRange])
+  return gap === undefined ? 'No open gaps' : `${getDate(gap.start)} through ${getDate(gap.end)}`
+})
 const rangeStatus = computed(() =>
   rangeOverlapsBlackout.value === true
-    ? "This request overlaps the blackout window."
-    : "This request is clear of the blackout window.",
-);
+    ? 'This request overlaps the blackout window.'
+    : 'This request is clear of the blackout window.',
+)
 
 function normalizeDateTime(value: DateTimeValue): Timestamp | null {
   if (value instanceof Date) {
-    return parseDate(value);
+    return parseDate(value)
   }
 
-  if (typeof value === "string") {
-    return parseTimestamp(value);
+  if (typeof value === 'string') {
+    return parseTimestamp(value)
   }
 
   if (Array.isArray(value)) {
-    return parseTimestamp(`${value[0]}-${value[1]}-${value[2]} ${value[3]}:${value[4]}`);
+    return parseTimestamp(`${value[0]}-${value[1]}-${value[2]} ${value[3]}:${value[4]}`)
   }
 
-  return parseTimestamp(`${value.year}-${value.month}-${value.day} ${value.hour}:${value.minute}`);
+  return parseTimestamp(`${value.year}-${value.month}-${value.day} ${value.hour}:${value.minute}`)
 }
 
 function createDateRange(value: DateRangeValue): TimestampRange {
   return createTimestampRange(
     parseTimestamp(`${value[0]} 00:00`) as Timestamp,
     parseTimestamp(`${value[1]} 00:00`) as Timestamp,
-  );
+  )
 }
 
 function onDateTimeInput(value: DateTimeValue) {
-  const timestamp = normalizeDateTime(value);
+  const timestamp = normalizeDateTime(value)
 
   if (timestamp === null) {
-    return;
+    return
   }
 
-  const snapped = roundToInterval(timestamp, 15);
-  storedMilliseconds.value = toUnixMilliseconds(snapped);
-  dateTimeValue.value = getDateTime(fromUnixMilliseconds(storedMilliseconds.value) as Timestamp);
+  const snapped = roundToInterval(timestamp, 15)
+  storedMilliseconds.value = toUnixMilliseconds(snapped)
+  dateTimeValue.value = getDateTime(fromUnixMilliseconds(storedMilliseconds.value) as Timestamp)
 }
 
 function onDateRangeInput(value: unknown) {
   if (Array.isArray(value) !== true || value.length < 2) {
-    return;
+    return
   }
 
-  dateRangeValue.value = [String(value[0]), String(value[1])];
+  dateRangeValue.value = [String(value[0]), String(value[1])]
 }
 </script>
 

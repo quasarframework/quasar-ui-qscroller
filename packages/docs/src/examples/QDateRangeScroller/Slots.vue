@@ -19,19 +19,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QDateRangeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QDateRangeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedRange = ref(["2026-05-24", "2026-05-30"]);
+const selectedRange = ref(['2026-05-24', '2026-05-30'])
 
 function formatRange(value: unknown) {
   if (Array.isArray(value) && value.length === 2) {
-    const [start, end] = value as Array<{ date?: string }>;
-    return `${start?.date ?? selectedRange.value[0]} - ${end?.date ?? selectedRange.value[1]}`;
+    const [start, end] = value as Array<{ date?: string }>
+    return `${start?.date ?? selectedRange.value[0]} - ${end?.date ?? selectedRange.value[1]}`
   }
 
-  return selectedRange.value.join(" - ");
+  return selectedRange.value.join(' - ')
 }
 </script>
 

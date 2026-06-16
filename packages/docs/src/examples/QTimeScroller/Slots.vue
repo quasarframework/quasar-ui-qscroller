@@ -21,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QTimeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QTimeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedTime = ref("09:30");
+const selectedTime = ref('09:30')
 </script>
 
 <style scoped lang="scss">

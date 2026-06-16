@@ -1,15 +1,15 @@
-import { computed, defineComponent, h, ref } from "vue";
-import ScrollerBase from "./private/ScrollerBase";
-import QDateRangeScroller from "./QDateRangeScroller";
-import QDateScroller from "./QDateScroller";
-import QDateTimeScroller from "./QDateTimeScroller";
-import QStringScroller from "./QStringScroller";
-import QTimeRangeScroller from "./QTimeRangeScroller";
-import QTimeScroller from "./QTimeScroller";
-import props from "../utils/props";
+import { computed, defineComponent, h, ref } from 'vue'
+import ScrollerBase from './private/ScrollerBase'
+import QDateRangeScroller from './QDateRangeScroller'
+import QDateScroller from './QDateScroller'
+import QDateTimeScroller from './QDateTimeScroller'
+import QStringScroller from './QStringScroller'
+import QTimeRangeScroller from './QTimeRangeScroller'
+import QTimeScroller from './QTimeScroller'
+import props from '../utils/props'
 
 export default defineComponent({
-  name: "QScroller",
+  name: 'QScroller',
 
   props: {
     ...props.common,
@@ -28,31 +28,31 @@ export default defineComponent({
   },
 
   setup(props, { attrs, slots }) {
-    const componentRef = ref();
+    const componentRef = ref()
 
     const component = computed(() => {
       switch (props.view) {
-        case "string":
+        case 'string':
           if (!props.items || Array.isArray(props.items) !== true) {
             throw new Error(
               'QScroller: items [array] prop is required when view="string" (default)',
-            );
+            )
           }
-          return QStringScroller;
-        case "time":
-          return QTimeScroller;
-        case "date":
-          return QDateScroller;
-        case "date-time":
-          return QDateTimeScroller;
-        case "time-range":
-          return QTimeRangeScroller;
-        case "date-range":
-          return QDateRangeScroller;
+          return QStringScroller
+        case 'time':
+          return QTimeScroller
+        case 'date':
+          return QDateScroller
+        case 'date-time':
+          return QDateTimeScroller
+        case 'time-range':
+          return QTimeRangeScroller
+        case 'date-range':
+          return QDateRangeScroller
         default:
-          return ScrollerBase;
+          return ScrollerBase
       }
-    });
+    })
 
     return () =>
       h(
@@ -63,6 +63,6 @@ export default defineComponent({
           ...attrs,
         },
         slots,
-      );
+      )
   },
-});
+})

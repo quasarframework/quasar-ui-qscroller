@@ -1,13 +1,13 @@
-import type { App, Component } from "vue";
+import type { App, Component } from 'vue'
 
-import QDateRangeScroller from "./components/QDateRangeScroller";
-import QDateScroller from "./components/QDateScroller";
-import QDateTimeScroller from "./components/QDateTimeScroller";
-import QScroller from "./components/QScroller";
-import QStringScroller from "./components/QStringScroller";
-import QTimeRangeScroller from "./components/QTimeRangeScroller";
-import QTimeScroller from "./components/QTimeScroller";
-import { version } from "./version";
+import QDateRangeScroller from './components/QDateRangeScroller'
+import QDateScroller from './components/QDateScroller'
+import QDateTimeScroller from './components/QDateTimeScroller'
+import QScroller from './components/QScroller'
+import QStringScroller from './components/QStringScroller'
+import QTimeRangeScroller from './components/QTimeRangeScroller'
+import QTimeScroller from './components/QTimeScroller'
+import { version } from './version'
 
 const components = [
   QDateRangeScroller,
@@ -17,12 +17,12 @@ const components = [
   QStringScroller,
   QTimeRangeScroller,
   QTimeScroller,
-] as Component[];
+] as Component[]
 
 function install(app: App): void {
   components.forEach((component) => {
-    app.component(String(component.name), component);
-  });
+    app.component(String(component.name), component)
+  })
 }
 
 export {
@@ -35,7 +35,7 @@ export {
   QTimeScroller,
   install,
   version,
-};
+}
 
 export default {
   QDateRangeScroller,
@@ -47,4 +47,4 @@ export default {
   QTimeScroller,
   install,
   version,
-};
+}

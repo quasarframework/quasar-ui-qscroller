@@ -28,20 +28,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QDateRangeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QDateRangeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const stringValue = ref<unknown>(["2026-05-24", "2026-05-30"]);
+const stringValue = ref<unknown>(['2026-05-24', '2026-05-30'])
 const objectValue = ref<unknown>([
-  { year: "2026", month: "05", day: "24" },
-  { year: "2026", month: "05", day: "30" },
-]);
+  { year: '2026', month: '05', day: '24' },
+  { year: '2026', month: '05', day: '30' },
+])
 const arrayValue = ref<unknown>([
-  ["2026", "05", "24"],
-  ["2026", "05", "30"],
-]);
-const dateValue = ref<unknown>([new Date(2026, 4, 24), new Date(2026, 4, 30)]);
+  ['2026', '05', '24'],
+  ['2026', '05', '30'],
+])
+const dateValue = ref<unknown>([new Date(2026, 4, 24), new Date(2026, 4, 30)])
 </script>
 
 <style scoped lang="scss">

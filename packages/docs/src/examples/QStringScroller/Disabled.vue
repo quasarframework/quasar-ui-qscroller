@@ -21,20 +21,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QStringScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QStringScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selected = ref("Gibbon");
+const selected = ref('Gibbon')
 const items = [
-  { value: "Anteater", noCaps: true },
-  { value: "Baboons", noCaps: true, disabled: true },
-  { value: "Cheetah", noCaps: true },
-  { value: "Gibbon", noCaps: true },
-  { value: "Koala", noCaps: true, disabled: true },
-  { value: "Penguin", noCaps: true },
-  { value: "Tiger", noCaps: true },
-];
+  { value: 'Anteater', noCaps: true },
+  { value: 'Baboons', noCaps: true, disabled: true },
+  { value: 'Cheetah', noCaps: true },
+  { value: 'Gibbon', noCaps: true },
+  { value: 'Koala', noCaps: true, disabled: true },
+  { value: 'Penguin', noCaps: true },
+  { value: 'Tiger', noCaps: true },
+]
 </script>
 
 <style scoped lang="scss">

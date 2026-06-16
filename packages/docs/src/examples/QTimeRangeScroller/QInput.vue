@@ -19,14 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { QIcon, QInput, QPopupProxy } from "quasar";
-import { QTimeRangeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { computed, ref } from 'vue'
+import { QIcon, QInput, QPopupProxy } from 'quasar'
+import { QTimeRangeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const showScroller = ref(false);
-const selectedRange = ref(["09:00", "17:00"]);
-const displayValue = computed(() => selectedRange.value.join(" - "));
+const showScroller = ref(false)
+const selectedRange = ref(['09:00', '17:00'])
+const displayValue = computed(() => selectedRange.value.join(' - '))
 </script>
 
 <style scoped lang="scss">

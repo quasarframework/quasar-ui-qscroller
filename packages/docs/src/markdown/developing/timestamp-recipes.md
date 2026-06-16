@@ -25,13 +25,13 @@ import {
   roundToInterval,
   toUnixMilliseconds,
   parseTimestamp,
-} from "@timestamp-js/core";
+} from '@timestamp-js/core'
 
-const input = parseTimestamp("2036-06-08 09:37");
-const snapped = input === null ? null : roundToInterval(input, 15);
+const input = parseTimestamp('2036-06-08 09:37')
+const snapped = input === null ? null : roundToInterval(input, 15)
 
-snapped === null ? null : getDateTime(snapped); // "2036-06-08 09:30"
-snapped === null ? null : toUnixMilliseconds(snapped);
+snapped === null ? null : getDateTime(snapped) // "2036-06-08 09:30"
+snapped === null ? null : toUnixMilliseconds(snapped)
 ```
 
 ## Validate Ranges Outside The Picker
@@ -44,19 +44,19 @@ import {
   findRangeGaps,
   isRangeOverlapping,
   parseTimestamp,
-} from "@timestamp-js/core";
+} from '@timestamp-js/core'
 
 const request = createTimestampRange(
-  parseTimestamp("2036-06-08 00:00")!,
-  parseTimestamp("2036-06-12 00:00")!,
-);
+  parseTimestamp('2036-06-08 00:00')!,
+  parseTimestamp('2036-06-12 00:00')!,
+)
 const blackout = createTimestampRange(
-  parseTimestamp("2036-06-14 00:00")!,
-  parseTimestamp("2036-06-17 00:00")!,
-);
+  parseTimestamp('2036-06-14 00:00')!,
+  parseTimestamp('2036-06-17 00:00')!,
+)
 
-isRangeOverlapping(request, blackout); // false
-findRangeGaps(request, [blackout]); // request is still open
+isRangeOverlapping(request, blackout) // false
+findRangeGaps(request, [blackout]) // request is still open
 ```
 
 ## Preserve UI Precision
@@ -64,11 +64,11 @@ findRangeGaps(request, [blackout]); // request is still open
 QScroller date-time views are minute-focused today. Timestamp can still parse, store, and format seconds and milliseconds for API payloads, audit values, or background scheduling state.
 
 ```ts [twoslash]
-import { makeDateTimeUTC, parseTimestamp } from "@timestamp-js/core";
+import { makeDateTimeUTC, parseTimestamp } from '@timestamp-js/core'
 
-const timestamp = parseTimestamp("2036-06-08T09:30:15.250Z");
+const timestamp = parseTimestamp('2036-06-08T09:30:15.250Z')
 
-timestamp?.second; // 15
-timestamp?.millisecond; // 250
-timestamp === null ? null : makeDateTimeUTC(timestamp).toISOString();
+timestamp?.second // 15
+timestamp?.millisecond // 250
+timestamp === null ? null : makeDateTimeUTC(timestamp).toISOString()
 ```

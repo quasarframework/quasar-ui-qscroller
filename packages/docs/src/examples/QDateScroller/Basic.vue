@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QDateScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QDateScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedDate = ref("2026-05-26");
+const selectedDate = ref('2026-05-26')
 </script>
 
 <style scoped lang="scss">

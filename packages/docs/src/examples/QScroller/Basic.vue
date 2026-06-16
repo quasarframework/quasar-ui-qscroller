@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selected = ref("Medium");
-const items = ["Small", "Medium", "Large", "Extra large"].map((value) => ({ value }));
+const selected = ref('Medium')
+const items = ['Small', 'Medium', 'Large', 'Extra large'].map((value) => ({ value }))
 </script>
 
 <style scoped lang="scss">

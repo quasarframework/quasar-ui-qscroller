@@ -28,7 +28,7 @@ pnpm add @timestamp-js/core
 ```
 
 ```ts
-import { parseTimestamp, today } from "@timestamp-js/core";
+import { parseTimestamp, today } from '@timestamp-js/core'
 ```
 
 This is a breaking change for applications that used QScroller's previous Timestamp export surface directly. QScroller components continue to manage their own date/time model behavior internally.
@@ -59,16 +59,16 @@ npm install @quasar/quasar-ui-qscroller
 Use the package entrypoint instead of old source-file imports:
 
 ```ts [twoslash]
-import { QScroller } from "@quasar/quasar-ui-qscroller";
+import { QScroller } from '@quasar/quasar-ui-qscroller'
 
-QScroller;
+QScroller
 // ^?
 ```
 
 Import the component stylesheet alongside the component:
 
 ```ts
-import "@quasar/quasar-ui-qscroller/dist/index.css";
+import '@quasar/quasar-ui-qscroller/dist/index.css'
 ```
 
 Do not import legacy source paths such as `src/index.sass` or component implementation files. Those

@@ -1,10 +1,10 @@
-import { computed, defineComponent, h, ref } from "vue";
-import { useScrollerShell } from "../composables/use-scroller-shell";
-import ScrollerBase from "./private/ScrollerBase";
-import props from "../utils/props";
+import { computed, defineComponent, h, ref } from 'vue'
+import { useScrollerShell } from '../composables/use-scroller-shell'
+import ScrollerBase from './private/ScrollerBase'
+import props from '../utils/props'
 
 export default defineComponent({
-  name: "QStringScroller",
+  name: 'QStringScroller',
 
   props: {
     ...props.common,
@@ -15,51 +15,51 @@ export default defineComponent({
     },
   },
 
-  emits: ["close", "input"],
+  emits: ['close', 'input'],
 
   setup(props, { attrs, slots, emit, expose }) {
-    const items = computed(() => (props.items ?? []) as Array<Record<string, any>>);
+    const items = computed(() => (props.items ?? []) as Array<Record<string, any>>)
     const scrollerRef = ref<{
-      canScroll: (dir: number) => boolean;
-      getItemIndex: (value: unknown) => number;
-      move: (dir: number) => boolean;
-    } | null>(null);
+      canScroll: (dir: number) => boolean
+      getItemIndex: (value: unknown) => number
+      move: (dir: number) => boolean
+    } | null>(null)
 
-    const { renderCommon } = useScrollerShell(props);
+    const { renderCommon } = useScrollerShell(props)
 
-    const slotData = computed(() => ({ value: props.value }));
+    const slotData = computed(() => ({ value: props.value }))
 
     const displayed = computed(() => {
       if (!props.value) {
-        return "";
+        return ''
       }
 
-      const item = items.value.find((entry) => entry.value === props.value);
-      return item?.label ?? item?.value ?? "";
-    });
+      const item = items.value.find((entry) => entry.value === props.value)
+      return item?.label ?? item?.value ?? ''
+    })
 
     function canMovePrevious() {
-      return scrollerRef.value?.canScroll(-1) ?? false;
+      return scrollerRef.value?.canScroll(-1) ?? false
     }
 
     function canMoveNext() {
-      return scrollerRef.value?.canScroll(1) ?? false;
+      return scrollerRef.value?.canScroll(1) ?? false
     }
 
     function previous() {
-      return scrollerRef.value?.move(-1) ?? false;
+      return scrollerRef.value?.move(-1) ?? false
     }
 
     function next() {
-      return scrollerRef.value?.move(1) ?? false;
+      return scrollerRef.value?.move(1) ?? false
     }
 
     function getItemIndex(value: unknown) {
-      return scrollerRef.value?.getItemIndex(value) ?? -1;
+      return scrollerRef.value?.getItemIndex(value) ?? -1
     }
 
     function getCurrentIndex() {
-      return getItemIndex(props.value);
+      return getItemIndex(props.value)
     }
 
     expose({
@@ -69,7 +69,7 @@ export default defineComponent({
       getItemIndex,
       next,
       previous,
-    });
+    })
 
     function renderScrollers() {
       return h(ScrollerBase, {
@@ -84,18 +84,18 @@ export default defineComponent({
         noCaps: props.noCaps,
         ...attrs,
         onInput: (value) => {
-          emit("input", value);
+          emit('input', value)
         },
-      });
+      })
     }
 
     return () =>
       renderCommon({
         displayed,
-        emitClose: () => emit("close"),
+        emitClose: () => emit('close'),
         renderScrollers,
         slotData,
         slots,
-      });
+      })
   },
-});
+})

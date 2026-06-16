@@ -19,19 +19,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QTimeRangeScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QTimeRangeScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedRange = ref(["09:00", "17:00"]);
+const selectedRange = ref(['09:00', '17:00'])
 
 function formatRange(value: unknown) {
   if (Array.isArray(value) && value.length === 2) {
-    const [start, end] = value as Array<{ time?: string }>;
-    return `${start?.time ?? selectedRange.value[0]} - ${end?.time ?? selectedRange.value[1]}`;
+    const [start, end] = value as Array<{ time?: string }>
+    return `${start?.time ?? selectedRange.value[0]} - ${end?.time ?? selectedRange.value[1]}`
   }
 
-  return selectedRange.value.join(" - ");
+  return selectedRange.value.join(' - ')
 }
 </script>
 

@@ -1,4 +1,4 @@
-import { validateView } from "./views";
+import { validateView } from './views'
 
 /* public properties */
 export default {
@@ -9,11 +9,11 @@ export default {
     disable: Boolean,
     textColor: {
       type: String,
-      default: "white",
+      default: 'white',
     },
     color: {
       type: String,
-      default: "primary",
+      default: 'primary',
     },
   },
   common: {
@@ -26,7 +26,7 @@ export default {
     noShadow: Boolean,
     disabledTextColor: {
       type: String,
-      default: "grey-7",
+      default: 'grey-7',
     },
     childHeight: [Number, String],
     noCaps: Boolean,
@@ -35,39 +35,39 @@ export default {
     value: null, // [Number, String, Object, Array, Date, Function],
     borderColor: {
       type: String,
-      default: "#ccc",
+      default: '#ccc',
     },
     barColor: {
       type: String,
-      default: "#ccc",
+      default: '#ccc',
     },
     textColor: {
       type: String,
-      default: "white",
+      default: 'white',
     },
     color: {
       type: String,
-      default: "primary",
+      default: 'primary',
     },
     innerTextColor: {
       type: String,
-      default: "primary",
+      default: 'primary',
     },
     innerColor: {
       type: String,
-      default: "white",
+      default: 'white',
     },
   },
   locale: {
     locale: {
       type: String,
-      default: "en-us",
+      default: 'en-us',
     },
   },
   view: {
     view: {
       type: String,
-      default: "string",
+      default: 'string',
       validator: validateView,
     },
   },
@@ -124,16 +124,16 @@ export default {
   timeRange: {
     displaySeparator: {
       type: String,
-      default: " - ",
+      default: ' - ',
     },
     disableValidation: Boolean,
     errorColor: {
       type: String,
-      default: "red-1",
+      default: 'red-1',
     },
     errorTextColor: {
       type: String,
-      default: "red-10",
+      default: 'red-10',
     },
     // --------------------------------
     // start time
@@ -159,9 +159,9 @@ export default {
     startNoHours: Boolean,
     startAmPmLabels: {
       type: Array,
-      default: () => ["AM", "PM"],
+      default: () => ['AM', 'PM'],
       validator: (v) =>
-        Array.isArray(v) && v.length === 2 && typeof v[0] === "string" && typeof v[1] === "string",
+        Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string',
     },
 
     // --------------------------------
@@ -188,24 +188,24 @@ export default {
     endNoHours: Boolean,
     endAmPmLabels: {
       type: Array,
-      default: () => ["AM", "PM"],
+      default: () => ['AM', 'PM'],
       validator: (v) =>
-        Array.isArray(v) && v.length === 2 && typeof v[0] === "string" && typeof v[1] === "string",
+        Array.isArray(v) && v.length === 2 && typeof v[0] === 'string' && typeof v[1] === 'string',
     },
   },
   dateRange: {
     displaySeparator: {
       type: String,
-      default: " - ",
+      default: ' - ',
     },
     disableValidation: Boolean,
     errorColor: {
       type: String,
-      default: "red-1",
+      default: 'red-1',
     },
     errorTextColor: {
       type: String,
-      default: "red-10",
+      default: 'red-10',
     },
     // --------------------------------
     // start date
@@ -258,4 +258,4 @@ export default {
     endYearBegin: [Number, String],
     endYearStop: [Number, String],
   },
-};
+}

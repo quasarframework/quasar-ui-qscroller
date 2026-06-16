@@ -13,13 +13,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QDateScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QDateScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedDate = ref("2026-05-30");
-const locale = ref("en-us");
-const locales = ["en-us", "fr", "ro", "se", "ru", "ar", "ca"];
+const selectedDate = ref('2026-05-30')
+const locale = ref('en-us')
+const locales = ['en-us', 'fr', 'ro', 'se', 'ru', 'ar', 'ca']
 </script>
 
 <style scoped lang="scss">

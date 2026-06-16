@@ -13,19 +13,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QStringScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QStringScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const selectedSize = ref("medium");
+const selectedSize = ref('medium')
 
 const sizes = [
-  { label: "Extra small", value: "extra-small" },
-  { label: "Small", value: "small" },
-  { label: "Medium", value: "medium" },
-  { label: "Large", value: "large" },
-  { label: "Extra large", value: "extra-large" },
-];
+  { label: 'Extra small', value: 'extra-small' },
+  { label: 'Small', value: 'small' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'Large', value: 'large' },
+  { label: 'Extra large', value: 'extra-large' },
+]
 </script>
 
 <style scoped lang="scss">

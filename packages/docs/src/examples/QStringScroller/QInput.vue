@@ -20,16 +20,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { QIcon, QInput, QPopupProxy } from "quasar";
-import { QStringScroller } from "@quasar/quasar-ui-qscroller";
-import "@quasar/quasar-ui-qscroller/src/index.scss";
+import { ref } from 'vue'
+import { QIcon, QInput, QPopupProxy } from 'quasar'
+import { QStringScroller } from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-const showScroller = ref(false);
-const selected = ref("Gibbon");
-const items = ["Anteater", "Baboons", "Cheetah", "Gibbon", "Koala", "Penguin", "Tiger"].map(
+const showScroller = ref(false)
+const selected = ref('Gibbon')
+const items = ['Anteater', 'Baboons', 'Cheetah', 'Gibbon', 'Koala', 'Penguin', 'Tiger'].map(
   (value) => ({ value, noCaps: true }),
-);
+)
 </script>
 
 <style scoped lang="scss">
