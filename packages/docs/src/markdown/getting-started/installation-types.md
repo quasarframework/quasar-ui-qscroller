@@ -9,6 +9,23 @@ related:
 
 QScroller can be installed as a Quasar App Extension, as a Vue plugin, as a direct component import, or through the UMD bundle.
 
+## Recommended Path
+
+::: steps
+
+## Use the App Extension in Quasar CLI apps
+
+Choose the App Extension when you want Quasar to add the boot file and stylesheet for you.
+
+## Use the Vue plugin for manual registration
+
+Install the UI package directly when your app owns plugin registration or when you are not using the Quasar CLI App Extension flow.
+
+## Import scrollers directly for targeted bundles
+
+Import only the scroller components your feature uses when you want tighter control over registration.
+:::
+
 ## Quasar CLI
 
 ### App Extension
