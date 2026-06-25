@@ -8,10 +8,10 @@ examples: QTimeRangeScroller
 `QTimeRangeScroller` renders start and end time scrollers together. It validates that the end time does not come before the start time unless `disable-validation` is enabled.
 
 <script import>
-import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
+import QTimeRangeScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QTimeRangeScroller.json'
 </script>
 
-<MarkdownApi :api="QScrollerApi" name="QTimeRangeScroller"/>
+<MarkdownApi :api="QTimeRangeScrollerApi" name="QTimeRangeScroller"/>
 
 ## Basic
 

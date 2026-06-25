@@ -8,10 +8,10 @@ examples: QDateTimeScroller
 `QDateTimeScroller` combines date and time scrollers into one compact control. It is useful when a single field needs both pieces of information, such as appointment starts, reminders, and schedule cutoffs.
 
 <script import>
-import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
+import QDateTimeScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QDateTimeScroller.json'
 </script>
 
-<MarkdownApi :api="QScrollerApi" name="QDateTimeScroller"/>
+<MarkdownApi :api="QDateTimeScrollerApi" name="QDateTimeScroller"/>
 
 ## Basic
 

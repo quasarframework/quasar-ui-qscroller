@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch, type SlotsType, type VNode } from 'vue'
 import {
   DAYS_IN_MONTH_MAX,
   Timestamp as EmptyTimestamp,
@@ -15,20 +15,53 @@ import {
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import ScrollerBase from './private/ScrollerBase'
-import props from '../utils/props'
+import { baseProps, commonProps, dateProps, localeProps, verticalBarProps } from '../utils/props'
+
+export interface QDateScrollerSlotScope {
+  /**
+   * Current selected timestamp value.
+   */
+  value: Timestamp
+}
+
+export interface QDateScrollerSlots {
+  /**
+   * Replaces the header content when the header is displayed.
+   */
+  header: (scope: QDateScrollerSlotScope) => VNode[]
+  /**
+   * Replaces the footer content when the footer is displayed.
+   */
+  footer: (scope: QDateScrollerSlotScope) => VNode[]
+}
 
 export default defineComponent({
   name: 'QDateScroller',
 
   props: {
-    ...props.common,
-    ...props.base,
-    ...props.date,
-    ...props.verticalBar,
-    ...props.locale,
+    ...commonProps,
+    ...baseProps,
+    ...dateProps,
+    ...verticalBarProps,
+    ...localeProps,
   },
 
-  emits: ['close', 'input'],
+  emits: [
+    /**
+     * Emitted when the footer close button is clicked.
+     */
+    'close',
+    /**
+     * Emitted when the selected value changes.
+     *
+     * @param value New model value.
+     * @param-type value Any
+     * @param-required value true
+     */
+    'input',
+  ],
+
+  slots: Object as SlotsType<QDateScrollerSlots>,
 
   setup(props, { emit, expose, slots }) {
     const { bodyHeight, renderCommon } = useScrollerShell(props)
@@ -426,6 +459,9 @@ export default defineComponent({
 
     expose({
       displayDate,
+      /**
+       * Gets the current timestamp value.
+       */
       getTimestamp: () => timestamp.value,
     })
 

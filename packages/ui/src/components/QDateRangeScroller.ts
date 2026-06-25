@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch, type SlotsType, type VNode } from 'vue'
 import {
   Timestamp as EmptyTimestamp,
   getDate,
@@ -11,21 +11,67 @@ import {
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import QDateScroller from './QDateScroller'
-import props from '../utils/props'
+import {
+  baseProps,
+  commonProps,
+  dateRangeProps,
+  localeProps,
+  verticalBarProps,
+} from '../utils/props'
 import { isValidDate } from '../utils/validation'
+
+export interface QDateRangeScrollerSlotScope {
+  /**
+   * Current selected range value.
+   */
+  value: unknown
+}
+
+export interface QDateRangeScrollerSlots {
+  /**
+   * Replaces the header content when the header is displayed.
+   */
+  header: (scope: QDateRangeScrollerSlotScope) => VNode[]
+  /**
+   * Replaces the footer content when the footer is displayed.
+   */
+  footer: (scope: QDateRangeScrollerSlotScope) => VNode[]
+}
 
 export default defineComponent({
   name: 'QDateRangeScroller',
 
   props: {
-    ...props.common,
-    ...props.base,
-    ...props.dateRange,
-    ...props.verticalBar,
-    ...props.locale,
+    ...commonProps,
+    ...baseProps,
+    ...dateRangeProps,
+    ...verticalBarProps,
+    ...localeProps,
   },
 
-  emits: ['close', 'input', 'invalid-range'],
+  emits: [
+    /**
+     * Emitted when the footer close button is clicked.
+     */
+    'close',
+    /**
+     * Emitted when the selected value changes.
+     *
+     * @param value New model value.
+     * @param-type value Any
+     * @param-required value true
+     */
+    'input',
+    /**
+     * Emitted when the end range value is less than the start range.
+     *
+     * @param value Current start and end range values.
+     * @param-type value Object
+     */
+    'invalid-range',
+  ],
+
+  slots: Object as SlotsType<QDateRangeScrollerSlots>,
 
   setup(props, { emit, slots }) {
     const { bodyHeight, renderCommon } = useScrollerShell(props)

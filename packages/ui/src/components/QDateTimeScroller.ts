@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch, type SlotsType, type VNode } from 'vue'
 import {
   Timestamp as EmptyTimestamp,
   compareTimestamps,
@@ -14,19 +14,59 @@ import {
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import QDateScroller from './QDateScroller'
 import QTimeScroller from './QTimeScroller'
-import props from '../utils/props'
+import {
+  baseProps,
+  commonProps,
+  dateProps,
+  localeProps,
+  timeProps,
+  verticalBarProps,
+} from '../utils/props'
+
+export interface QDateTimeScrollerSlotScope {
+  /**
+   * Current selected timestamp value.
+   */
+  value: Timestamp
+}
+
+export interface QDateTimeScrollerSlots {
+  /**
+   * Replaces the header content when the header is displayed.
+   */
+  header: (scope: QDateTimeScrollerSlotScope) => VNode[]
+  /**
+   * Replaces the footer content when the footer is displayed.
+   */
+  footer: (scope: QDateTimeScrollerSlotScope) => VNode[]
+}
 
 export default defineComponent({
   name: 'QDateTimeScroller',
 
   props: {
-    ...props.common,
-    ...props.base,
-    ...props.time,
-    ...props.date,
-    ...props.verticalBar,
-    ...props.locale,
+    ...commonProps,
+    ...baseProps,
+    ...timeProps,
+    ...dateProps,
+    ...verticalBarProps,
+    ...localeProps,
+    /**
+     * Turns on 12 hour time.
+     *
+     * @category behavior
+     * @applicable date-time
+     */
     hour12: Boolean,
+    /**
+     * Labels used for AM/PM values. Only applies when `hour12` is enabled.
+     *
+     * @category content
+     * @applicable date-time
+     * @tsType StringArray
+     * @default ['AM', 'PM']
+     * @example :am-pm-labels="['a', 'p']"
+     */
     amPmLabels: {
       type: Array,
       default: () => ['AM', 'PM'],
@@ -38,7 +78,22 @@ export default defineComponent({
     },
   },
 
-  emits: ['close', 'input'],
+  emits: [
+    /**
+     * Emitted when the footer close button is clicked.
+     */
+    'close',
+    /**
+     * Emitted when the selected value changes.
+     *
+     * @param value New model value.
+     * @param-type value Any
+     * @param-required value true
+     */
+    'input',
+  ],
+
+  slots: Object as SlotsType<QDateTimeScrollerSlots>,
 
   setup(props, { emit, expose, slots }) {
     const { bodyHeight, renderCommon } = useScrollerShell(props)
@@ -227,6 +282,9 @@ export default defineComponent({
 
     expose({
       displayDateTime,
+      /**
+       * Gets the current timestamp value.
+       */
       getTimestamp: () => timestamp.value,
     })
 

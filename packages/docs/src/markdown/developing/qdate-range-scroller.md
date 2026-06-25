@@ -8,10 +8,10 @@ examples: QDateRangeScroller
 `QDateRangeScroller` renders start and end date scrollers together. It validates that the end date does not come before the start date unless `disable-validation` is enabled.
 
 <script import>
-import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
+import QDateRangeScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QDateRangeScroller.json'
 </script>
 
-<MarkdownApi :api="QScrollerApi" name="QDateRangeScroller"/>
+<MarkdownApi :api="QDateRangeScrollerApi" name="QDateRangeScroller"/>
 
 ## Basic
 

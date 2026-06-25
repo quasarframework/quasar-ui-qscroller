@@ -7,7 +7,7 @@
       @input="selectedRange = $event"
     >
       <template #header="{ value }">
-        <div class="text-weight-bold">Shift window</div>
+        <div class="text-weight-bold">Shift range</div>
         <div class="text-caption">{{ formatRange(value) }}</div>
       </template>
 

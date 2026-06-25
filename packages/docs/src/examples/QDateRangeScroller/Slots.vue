@@ -7,7 +7,7 @@
       @input="selectedRange = $event"
     >
       <template #header="{ value }">
-        <div class="text-weight-bold">Booking window</div>
+        <div class="text-weight-bold">Booking range</div>
         <div class="text-caption">{{ formatRange(value) }}</div>
       </template>
 

@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch, type SlotsType, type VNode } from 'vue'
 import {
   Timestamp as EmptyTimestamp,
   getDate,
@@ -12,22 +12,74 @@ import {
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import QTimeScroller from './QTimeScroller'
-import props from '../utils/props'
+import {
+  baseProps,
+  commonProps,
+  localeProps,
+  timeRangeProps,
+  verticalBarProps,
+} from '../utils/props'
 import { isValidTime } from '../utils/validation'
+
+export interface QTimeRangeScrollerSlotScope {
+  /**
+   * Current selected range value.
+   */
+  value: unknown
+}
+
+export interface QTimeRangeScrollerSlots {
+  /**
+   * Replaces the header content when the header is displayed.
+   */
+  header: (scope: QTimeRangeScrollerSlotScope) => VNode[]
+  /**
+   * Replaces the footer content when the footer is displayed.
+   */
+  footer: (scope: QTimeRangeScrollerSlotScope) => VNode[]
+}
 
 export default defineComponent({
   name: 'QTimeRangeScroller',
 
   props: {
-    ...props.common,
-    ...props.base,
-    ...props.timeRange,
-    ...props.verticalBar,
-    ...props.locale,
+    ...commonProps,
+    ...baseProps,
+    ...timeRangeProps,
+    ...verticalBarProps,
+    ...localeProps,
+    /**
+     * Turns on 12 hour time.
+     *
+     * @category behavior
+     * @applicable time-range
+     */
     hour12: Boolean,
   },
 
-  emits: ['close', 'input', 'invalid-range'],
+  emits: [
+    /**
+     * Emitted when the footer close button is clicked.
+     */
+    'close',
+    /**
+     * Emitted when the selected value changes.
+     *
+     * @param value New model value.
+     * @param-type value Any
+     * @param-required value true
+     */
+    'input',
+    /**
+     * Emitted when the end range value is less than the start range.
+     *
+     * @param value Current start and end range values.
+     * @param-type value Object
+     */
+    'invalid-range',
+  ],
+
+  slots: Object as SlotsType<QTimeRangeScrollerSlots>,
 
   setup(props, { emit, slots }) {
     const { bodyHeight, renderCommon } = useScrollerShell(props)

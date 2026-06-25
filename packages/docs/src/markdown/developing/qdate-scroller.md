@@ -8,10 +8,10 @@ examples: QDateScroller
 `QDateScroller` renders year, month, and day columns for compact date selection. Use it when users need nearby date values visible without opening a full calendar.
 
 <script import>
-import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
+import QDateScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QDateScroller.json'
 </script>
 
-<MarkdownApi :api="QScrollerApi" name="QDateScroller"/>
+<MarkdownApi :api="QDateScrollerApi" name="QDateScroller"/>
 
 ## Basic
 

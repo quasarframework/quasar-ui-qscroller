@@ -56,6 +56,24 @@
     "./dist/api/QScroller.json": {
       "default": "./dist/api/QScroller.json"
     },
+    "./dist/api/QStringScroller.json": {
+      "default": "./dist/api/QStringScroller.json"
+    },
+    "./dist/api/QTimeScroller.json": {
+      "default": "./dist/api/QTimeScroller.json"
+    },
+    "./dist/api/QTimeRangeScroller.json": {
+      "default": "./dist/api/QTimeRangeScroller.json"
+    },
+    "./dist/api/QDateScroller.json": {
+      "default": "./dist/api/QDateScroller.json"
+    },
+    "./dist/api/QDateRangeScroller.json": {
+      "default": "./dist/api/QDateRangeScroller.json"
+    },
+    "./dist/api/QDateTimeScroller.json": {
+      "default": "./dist/api/QDateTimeScroller.json"
+    },
     "./*": "./*"
   },
   "publishConfig": {
@@ -78,6 +96,7 @@
     "@timestamp-js/core": "0.1.0-rc.0"
   },
   "devDependencies": {
+    "@md-plugins/quasar-app-extension-q-press": "0.1.0-rc.16",
     "@types/node": "^26.0.0",
     "@types/rtlcss": "^3.5.4",
     "@types/uglify-js": "^3.17.5",

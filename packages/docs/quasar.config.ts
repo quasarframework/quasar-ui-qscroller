@@ -9,6 +9,7 @@ import { viteSearchPlugin } from '@md-plugins/vite-search-plugin'
 export default defineConfig(async (ctx) => {
   const siteConfig = await import('./src/siteConfig')
   const { sidebar } = siteConfig.default
+  const uiDir = ctx.appPaths.appDir + '/../ui'
 
   return {
     boot: [],
@@ -32,6 +33,9 @@ export default defineConfig(async (ctx) => {
           tsConfig.compilerOptions.paths['@quasar/quasar-ui-qscroller'] = [
             './../../ui/src/index.ts',
           ]
+          tsConfig.compilerOptions.paths['@quasar/quasar-ui-qscroller/dist/api/*'] = [
+            './../../ui/dist/api/*',
+          ]
         },
       },
 
@@ -46,7 +50,17 @@ export default defineConfig(async (ctx) => {
             : Object.entries(alias ?? {}).map(([find, replacement]) => ({ find, replacement }))),
           {
             find: /^@quasar\/quasar-ui-qscroller$/,
-            replacement: ctx.appPaths.appDir + '/../ui/src/index.ts',
+            replacement: uiDir + '/src/index.ts',
+          },
+          // Keep API docs in Vite's local module graph during development.
+          {
+            find: /^@quasar\/quasar-ui-qscroller\/dist\/api\/(.+)\.json$/,
+            replacement: uiDir + '/dist/api/$1.json',
+          },
+          // Consume source styles in docs so local UI style edits HMR.
+          {
+            find: /^@quasar\/quasar-ui-qscroller\/(?:dist\/)?index(?:\.rtl)?(?:\.min)?\.css$/,
+            replacement: uiDir + '/src/index.scss',
           },
         ]
 

@@ -10,10 +10,10 @@ examples: QStringScroller
 Use the dedicated component when you know the view is always string-based. Use `QScroller` with `view="string"` only when a single wrapper component helps simplify dynamic templates.
 
 <script import>
-import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
+import QStringScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QStringScroller.json'
 </script>
 
-<MarkdownApi :api="QScrollerApi" name="QStringScroller"/>
+<MarkdownApi :api="QStringScrollerApi" name="QStringScroller"/>
 
 ## Basic
 

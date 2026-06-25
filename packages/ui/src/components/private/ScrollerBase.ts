@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { debounce, QBtn, QResizeObserver, scroll, useQuasar } from 'quasar'
 import { useScrollerColors } from '../../composables/use-scroller-colors'
-import props from '../../utils/props'
+import { commonProps, scrollerProps } from '../../utils/props'
 
 const { getVerticalScrollPosition, setVerticalScrollPosition, getScrollTarget } = scroll as any
 const { setScrollerBothColors, setScrollerTextColor } = useScrollerColors()
@@ -13,8 +13,8 @@ export default defineComponent({
   name: 'ScrollerBase',
 
   props: {
-    ...props.common,
-    ...props.scroller,
+    ...commonProps,
+    ...scrollerProps,
   },
 
   emits: ['input'],

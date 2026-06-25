@@ -135,8 +135,8 @@ const nextGap = computed(() => {
 })
 const rangeStatus = computed(() =>
   rangeOverlapsBlackout.value === true
-    ? 'This request overlaps the blackout window.'
-    : 'This request is clear of the blackout window.',
+    ? 'This request overlaps the blackout period.'
+    : 'This request is clear of the blackout period.',
 )
 
 function normalizeDateTime(value: DateTimeValue): Timestamp | null {
