@@ -290,17 +290,26 @@ const config: SiteConfig = {
     ],
     jsExternal: [
       `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${codepenPackageVersion}/dist/index.umd.js`,
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.2/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-islamic@0.1.0-rc.2/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-saka@0.1.0-rc.2/dist/index.global.min.js',
     ],
     globalPackages: [
       {
         packageName: '@quasar/quasar-ui-qscroller',
         globalName: '(globalThis as any).QScroller',
       },
-    ],
-    modulePackages: [
       {
         packageName: '@timestamp-js/core',
-        importUrl: 'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.0/dist/index.js',
+        globalName: '(globalThis as any).TimestampJsCore',
+      },
+      {
+        packageName: '@timestamp-js/calendar-islamic',
+        globalName: '(globalThis as any).TimestampJsCalendarIslamic',
+      },
+      {
+        packageName: '@timestamp-js/calendar-saka',
+        globalName: '(globalThis as any).TimestampJsCalendarSaka',
       },
     ],
     jsSetup: [
