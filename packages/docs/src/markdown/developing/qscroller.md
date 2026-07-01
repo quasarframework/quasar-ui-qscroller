@@ -36,10 +36,10 @@ import QScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QScroller.json'
 
 Use `view="string"` when a single wrapper component is convenient but the choices still come from a fixed list.
 
-<MarkdownExample title="Basic String Scroller" file="Basic" no-edit/>
+<MarkdownExample title="Basic String Scroller" file="Basic" />
 
 ## Date And Time Views
 
 The same wrapper can render date and time views by changing `view`.
 
-<MarkdownExample title="Date And Time Scrollers" file="DateAndTime" no-edit/>
+<MarkdownExample title="Date And Time Scrollers" file="DateAndTime" />

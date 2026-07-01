@@ -208,7 +208,14 @@ import { fabGithub } from '@quasar/extras/fontawesome-v7'
 import { biArrowRightCircle } from '@quasar/extras/bootstrap-icons'
 import siteConfig from '../../siteConfig'
 
-const heroPills = ['QStringScroller', 'QTimeScroller', 'QDateScroller', 'Date-Time', 'Ranges']
+const heroPills = [
+  'QStringScroller',
+  'QTimeScroller',
+  'QDateScroller',
+  'Date-Time',
+  'Range Pickers',
+  'Calendar Adapters',
+]
 
 const featureCards = [
   {
@@ -225,6 +232,16 @@ const featureCards = [
     icon: 'event',
     title: 'Date + Date-Time',
     body: 'Compose years, months, days, and time columns with shared formatting and locale support.',
+  },
+  {
+    icon: 'date_range',
+    title: 'Range Pickers',
+    body: 'Select date and time ranges with paired scrollers for availability windows, booking flows, and bounded inputs.',
+  },
+  {
+    icon: 'translate',
+    title: 'Calendar Adapters',
+    body: 'Use Timestamp adapters for Gregorian, Hijri, Saka, and Hebrew calendar-aware date selection.',
   },
   {
     icon: 'palette',

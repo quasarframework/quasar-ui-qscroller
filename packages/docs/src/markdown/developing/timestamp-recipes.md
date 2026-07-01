@@ -1,7 +1,7 @@
 ---
 title: Timestamp Recipes
 desc: Use @timestamp-js/core and calendar adapters with QScroller values
-keys: developing,timestamp,utc,range,intervals,calendar,hijri,saka
+keys: developing,timestamp,utc,range,intervals,calendar,hijri,saka,hebrew
 examples: QScroller
 related:
   - /developing/qdate-time-scroller
@@ -13,19 +13,19 @@ QScroller keeps the UI small and focused. `@timestamp-js/core` is the companion 
 
 Use the scroller for collection, then normalize the emitted value into a Timestamp before saving, comparing, or sending the value to an API.
 
-<MarkdownExample title="Timestamp Recipes" file="TimestampRecipes" no-edit/>
+<MarkdownExample title="Timestamp Recipes" file="TimestampRecipes" />
 
 ## Calendar Adapters
 
-`QDateScroller`, `QDateRangeScroller`, and `QDateTimeScroller` model Gregorian dates today. For native calendar systems such as Islamic Civil (Hijri) or Indian National (Saka), compose string scrollers for the visible year, month, and day parts, then use the Timestamp calendar adapter to convert the selected date.
+`QDateScroller`, `QDateRangeScroller`, and `QDateTimeScroller` model Gregorian dates today. For native calendar systems such as Islamic Civil (Hijri), Indian National (Saka), or Hebrew, compose string scrollers for the visible year, month, and day parts, then use the Timestamp calendar adapter to convert the selected date.
 
 Install the adapter package you need beside `@timestamp-js/core`:
 
 ```bash
-pnpm add @timestamp-js/core @timestamp-js/calendar-islamic @timestamp-js/calendar-saka
+pnpm add @timestamp-js/core @timestamp-js/calendar-hebrew @timestamp-js/calendar-islamic @timestamp-js/calendar-saka
 ```
 
-<MarkdownExample title="Calendar Adapter Scrollers" file="CalendarAdapters" no-edit/>
+<MarkdownExample title="Calendar Adapter Scrollers" file="CalendarAdapters" />
 
 ## Store Instants Explicitly
 

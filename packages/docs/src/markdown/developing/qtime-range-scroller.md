@@ -15,46 +15,46 @@ import QTimeRangeScrollerApi from '@quasar/quasar-ui-qscroller/dist/api/QTimeRan
 
 ## Basic
 
-<MarkdownExample title="Basic Time Range Scroller" file="Basic" no-edit/>
+<MarkdownExample title="Basic Time Range Scroller" file="Basic" />
 
 ## 12 Hour
 
 Use `hour12` for AM/PM ranges and customize start/end AM/PM labels when compact labels fit better.
 
-<MarkdownExample title="12 Hour Time Range Scroller" file="TwelveHour" no-edit/>
+<MarkdownExample title="12 Hour Time Range Scroller" file="TwelveHour" />
 
 ## Colors
 
 Use palette names, CSS colors, or CSS custom properties to tune the range scroller.
 
-<MarkdownExample title="Time Range Scroller Colors" file="Colors" no-edit/>
+<MarkdownExample title="Time Range Scroller Colors" file="Colors" />
 
 ## Disabled
 
 Disable the whole range picker or block specific start/end hours and minutes.
 
-<MarkdownExample title="Disabled Time Range Scroller" file="Disabled" no-edit/>
+<MarkdownExample title="Disabled Time Range Scroller" file="Disabled" />
 
 ## Intervals
 
 Set start/end hour and minute intervals when the range should snap to larger steps.
 
-<MarkdownExample title="Time Range Scroller Intervals" file="Intervals" no-edit/>
+<MarkdownExample title="Time Range Scroller Intervals" file="Intervals" />
 
 ## QInput
 
 Use a popup range scroller when the main form should keep a simple input-shaped control.
 
-<MarkdownExample title="Time Range Scroller In QInput" file="QInput" no-edit/>
+<MarkdownExample title="Time Range Scroller In QInput" file="QInput" />
 
 ## Slots
 
 Use slots to display the selected range in custom header or footer content.
 
-<MarkdownExample title="Time Range Scroller Slots" file="Slots" no-edit/>
+<MarkdownExample title="Time Range Scroller Slots" file="Slots" />
 
 ## Value Types
 
 Range scrollers can work with string, object, array, and `Date` pairs.
 
-<MarkdownExample title="Time Range Scroller Value Types" file="Types" no-edit/>
+<MarkdownExample title="Time Range Scroller Value Types" file="Types" />

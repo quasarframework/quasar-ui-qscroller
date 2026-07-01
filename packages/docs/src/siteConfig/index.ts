@@ -290,9 +290,10 @@ const config: SiteConfig = {
     ],
     jsExternal: [
       `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${codepenPackageVersion}/dist/index.umd.js`,
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.2/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-islamic@0.1.0-rc.2/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-saka@0.1.0-rc.2/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.4/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-hebrew@0.1.0-rc.4/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-islamic@0.1.0-rc.4/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-saka@0.1.0-rc.4/dist/index.global.min.js',
     ],
     globalPackages: [
       {
@@ -302,6 +303,10 @@ const config: SiteConfig = {
       {
         packageName: '@timestamp-js/core',
         globalName: '(globalThis as any).TimestampJsCore',
+      },
+      {
+        packageName: '@timestamp-js/calendar-hebrew',
+        globalName: '(globalThis as any).TimestampJsCalendarHebrew',
       },
       {
         packageName: '@timestamp-js/calendar-islamic',
