@@ -29,10 +29,13 @@
     <section class="calendar-adapters__workspace">
       <div class="calendar-adapters__scrollers">
         <q-string-scroller
+          v-bind="scrollerTheme"
+          :key="`year-${calendarId}`"
           :value="yearValue"
           :items="yearItems"
           class="calendar-adapters__scroller"
           dense
+          no-caps
           no-footer
           @input="setYear"
         >
@@ -42,10 +45,13 @@
         </q-string-scroller>
 
         <q-string-scroller
+          v-bind="scrollerTheme"
+          :key="`month-${calendarId}`"
           :value="monthValue"
           :items="monthItems"
           class="calendar-adapters__scroller"
           dense
+          no-caps
           no-footer
           @input="setMonth"
         >
@@ -55,10 +61,13 @@
         </q-string-scroller>
 
         <q-string-scroller
+          v-bind="scrollerTheme"
+          :key="`day-${calendarId}`"
           :value="dayValue"
           :items="dayItems"
           class="calendar-adapters__scroller"
           dense
+          no-caps
           no-footer
           @input="setDay"
         >
@@ -85,6 +94,12 @@
           <q-item-section>
             <q-item-label caption>Selected month length</q-item-label>
             <q-item-label>{{ daysInSelectedMonth }} days</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label caption>Selected month name</q-item-label>
+            <q-item-label>{{ selectedMonthLabel }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -119,15 +134,17 @@ import { computed, reactive, ref } from 'vue'
 import { QStringScroller } from '@quasar/quasar-ui-qscroller'
 import {
   formatCalendarDate,
+  getCalendarMonthNames,
   gregorianCalendar,
   type CalendarDateParts,
   type CalendarSystem,
 } from '@timestamp-js/core'
+import { hebrewCalendar } from '@timestamp-js/calendar-hebrew'
 import { islamicCivilCalendar } from '@timestamp-js/calendar-islamic'
 import { indianNationalCalendar } from '@timestamp-js/calendar-saka'
 import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-type CalendarId = 'islamic-civil' | 'saka'
+type CalendarId = 'hebrew' | 'islamic-civil' | 'saka'
 
 interface CalendarExample {
   id: CalendarId
@@ -135,7 +152,7 @@ interface CalendarExample {
   shortLabel: string
   packageName: string
   calendar: CalendarSystem
-  months: string[]
+  locale: string
 }
 
 interface CalendarSelection {
@@ -151,20 +168,7 @@ const calendarExamples: CalendarExample[] = [
     shortLabel: 'Hijri',
     packageName: '@timestamp-js/calendar-islamic',
     calendar: islamicCivilCalendar,
-    months: [
-      'Muharram',
-      'Safar',
-      'Rabi al-awwal',
-      'Rabi al-thani',
-      'Jumada al-awwal',
-      'Jumada al-thani',
-      'Rajab',
-      "Sha'ban",
-      'Ramadan',
-      'Shawwal',
-      'Dhu al-Qadah',
-      'Dhu al-Hijjah',
-    ],
+    locale: 'en-US',
   },
   {
     id: 'saka',
@@ -172,24 +176,28 @@ const calendarExamples: CalendarExample[] = [
     shortLabel: 'Saka',
     packageName: '@timestamp-js/calendar-saka',
     calendar: indianNationalCalendar,
-    months: [
-      'Chaitra',
-      'Vaisakha',
-      'Jyeshtha',
-      'Ashadha',
-      'Shravana',
-      'Bhadra',
-      'Ashwin',
-      'Kartika',
-      'Agrahayana',
-      'Pausha',
-      'Magha',
-      'Phalguna',
-    ],
+    locale: 'en-US',
+  },
+  {
+    id: 'hebrew',
+    label: 'Hebrew',
+    shortLabel: 'Hebrew',
+    packageName: '@timestamp-js/calendar-hebrew',
+    calendar: hebrewCalendar,
+    locale: 'en-US',
   },
 ]
 
 const calendarId = ref<CalendarId>('islamic-civil')
+const yearRangeRadius = 30
+const scrollerTheme = {
+  barColor: 'color-mix(in srgb, var(--q-primary) 42%, transparent)',
+  borderColor: 'color-mix(in srgb, currentColor 30%, transparent)',
+  color: 'color-mix(in srgb, var(--q-primary) 28%, transparent)',
+  innerColor: 'color-mix(in srgb, currentColor 5%, transparent)',
+  innerTextColor: 'currentColor',
+  textColor: 'currentColor',
+}
 const selections = reactive<Record<CalendarId, CalendarSelection>>({
   'islamic-civil': {
     year: 1445,
@@ -201,15 +209,23 @@ const selections = reactive<Record<CalendarId, CalendarSelection>>({
     month: 1,
     day: 15,
   },
+  hebrew: {
+    year: 5785,
+    month: 1,
+    day: 15,
+  },
 })
+const yearAnchors: Record<CalendarId, number> = {
+  'islamic-civil': selections['islamic-civil'].year,
+  saka: selections.saka.year,
+  hebrew: selections.hebrew.year,
+}
 
 const activeCalendar = computed(
   () => calendarExamples.find((entry) => entry.id === calendarId.value) ?? calendarExamples[0],
 )
 const activeSelection = computed(() => selections[calendarId.value])
 const yearValue = computed(() => String(activeSelection.value.year))
-const monthValue = computed(() => String(activeSelection.value.month))
-const dayValue = computed(() => String(activeSelection.value.day))
 const daysInSelectedMonth = computed(() =>
   activeCalendar.value.calendar.daysInMonth(
     activeSelection.value.year,
@@ -230,26 +246,47 @@ const gregorianDate = computed(() =>
 const nativeDateLabel = computed(() => formatCalendarDate(nativeDate.value))
 const gregorianDateLabel = computed(() => formatCalendarDate(gregorianDate.value))
 const yearItems = computed(() =>
-  Array.from({ length: 7 }, (_, index) => activeSelection.value.year - 3 + index).map((year) => ({
+  Array.from(
+    { length: yearRangeRadius * 2 + 1 },
+    (_, index) => yearAnchors[calendarId.value] - yearRangeRadius + index,
+  ).map((year) => ({
     label: String(year),
     value: String(year),
   })),
 )
+const monthLabels = computed(() =>
+  getCalendarMonthNames(
+    activeCalendar.value.calendar,
+    'long',
+    activeCalendar.value.locale,
+    activeSelection.value.year,
+  ),
+)
 const monthItems = computed(() =>
-  activeCalendar.value.months.map((month, index) => {
+  monthLabels.value.map((month, index) => {
     const monthNumber = index + 1
+    const label = String(monthNumber).padStart(2, '0')
 
     return {
-      label: `${String(monthNumber).padStart(2, '0')} ${month}`,
-      value: String(monthNumber),
+      label,
+      value: label,
     }
   }),
 )
 const dayItems = computed(() =>
-  daysInMonth.value.map((day) => ({
-    label: String(day).padStart(2, '0'),
-    value: String(day),
-  })),
+  daysInMonth.value.map((day) => {
+    const label = String(day).padStart(2, '0')
+
+    return {
+      label,
+      value: label,
+    }
+  }),
+)
+const monthValue = computed(() => monthItems.value[activeSelection.value.month - 1]?.value ?? '')
+const dayValue = computed(() => dayItems.value[activeSelection.value.day - 1]?.value ?? '')
+const selectedMonthLabel = computed(
+  () => monthLabels.value[activeSelection.value.month - 1] ?? 'Unknown month',
 )
 
 function setCalendar(value: CalendarId) {
@@ -258,16 +295,28 @@ function setCalendar(value: CalendarId) {
 
 function setYear(value: unknown) {
   activeSelection.value.year = Number(value)
-  clampDay()
+  clampSelection()
 }
 
 function setMonth(value: unknown) {
-  activeSelection.value.month = Number(value)
+  activeSelection.value.month = parseNumericPrefix(value)
   clampDay()
 }
 
 function setDay(value: unknown) {
-  activeSelection.value.day = Number(value)
+  activeSelection.value.day = parseNumericPrefix(value)
+}
+
+function parseNumericPrefix(value: unknown) {
+  return parseInt(String(value), 10)
+}
+
+function clampSelection() {
+  const monthsInYear = activeCalendar.value.calendar.monthsInYear(activeSelection.value.year)
+  if (activeSelection.value.month > monthsInYear) {
+    activeSelection.value.month = monthsInYear
+  }
+  clampDay()
 }
 
 function clampDay() {
