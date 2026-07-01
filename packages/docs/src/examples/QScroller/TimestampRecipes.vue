@@ -9,7 +9,7 @@
           Timestamp before storing it.
         </p>
 
-        <q-list dense bordered separator class="rounded-borders">
+        <q-list dense bordered separator class="timestamp-recipes__summary rounded-borders">
           <q-item>
             <q-item-section>
               <q-item-label caption>Scroller model</q-item-label>
@@ -57,7 +57,7 @@
         </q-banner>
 
         <div class="timestamp-recipes__meta">
-          Requested days: {{ requestedDays }}
+          Requested duration: {{ requestedDuration }}
           <br />
           Next open gap: {{ nextGap }}
         </div>
@@ -80,7 +80,6 @@ import {
   createTimestampRange,
   durationBetween,
   findRangeGaps,
-  formatDuration,
   fromUnixMilliseconds,
   getDate,
   getDateTime,
@@ -125,9 +124,15 @@ const blackoutRange = createTimestampRange(
 const storedIso = computed(() => new Date(storedMilliseconds.value).toISOString())
 const selectedRange = computed(() => createDateRange(dateRangeValue.value))
 const rangeOverlapsBlackout = computed(() => isRangeOverlapping(selectedRange.value, blackoutRange))
-const requestedDays = computed(() => {
+const requestedDuration = computed(() => {
   const duration = durationBetween(selectedRange.value.start, selectedRange.value.end)
-  return formatDuration(duration)
+  const parts = [`${duration.days} ${duration.days === 1 ? 'day' : 'days'}`]
+
+  if (duration.hours > 0) {
+    parts.push(`${duration.hours} ${duration.hours === 1 ? 'hour' : 'hours'}`)
+  }
+
+  return parts.join(', ')
 })
 const nextGap = computed(() => {
   const [gap] = findRangeGaps(bookingWindow, [blackoutRange])
@@ -211,6 +216,10 @@ function onDateRangeInput(value: unknown) {
   max-width: 56ch;
 }
 
+.timestamp-recipes__summary {
+  overflow: hidden;
+}
+
 .timestamp-recipes__date-time,
 .timestamp-recipes__range {
   height: 300px;
@@ -218,9 +227,14 @@ function onDateRangeInput(value: unknown) {
 }
 
 .timestamp-recipes__meta {
-  color: color-mix(in srgb, currentColor 76%, transparent);
+  color: rgba(0, 0, 0, 0.68);
   font-size: 0.9rem;
   line-height: 1.5;
+}
+
+.body--dark .timestamp-recipes__meta,
+.q-dark .timestamp-recipes__meta {
+  color: rgba(255, 255, 255, 0.76);
 }
 
 @media (max-width: 780px) {
