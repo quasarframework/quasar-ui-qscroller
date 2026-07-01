@@ -49,7 +49,7 @@
           :key="`month-${calendarId}`"
           :value="monthValue"
           :items="monthItems"
-          class="calendar-adapters__scroller"
+          class="calendar-adapters__scroller calendar-adapters__scroller--month"
           dense
           no-caps
           no-footer
@@ -136,6 +136,7 @@ import {
   formatCalendarDate,
   getCalendarMonthNames,
   gregorianCalendar,
+  today,
   type CalendarDateParts,
   type CalendarSystem,
 } from '@timestamp-js/core'
@@ -199,21 +200,9 @@ const scrollerTheme = {
   textColor: 'currentColor',
 }
 const selections = reactive<Record<CalendarId, CalendarSelection>>({
-  'islamic-civil': {
-    year: 1445,
-    month: 9,
-    day: 15,
-  },
-  saka: {
-    year: 1946,
-    month: 1,
-    day: 15,
-  },
-  hebrew: {
-    year: 5785,
-    month: 1,
-    day: 15,
-  },
+  'islamic-civil': createTodaySelection(islamicCivilCalendar),
+  saka: createTodaySelection(indianNationalCalendar),
+  hebrew: createTodaySelection(hebrewCalendar),
 })
 const yearAnchors: Record<CalendarId, number> = {
   'islamic-civil': selections['islamic-civil'].year,
@@ -265,11 +254,10 @@ const monthLabels = computed(() =>
 const monthItems = computed(() =>
   monthLabels.value.map((month, index) => {
     const monthNumber = index + 1
-    const label = String(monthNumber).padStart(2, '0')
 
     return {
-      label,
-      value: label,
+      label: month,
+      value: String(monthNumber).padStart(2, '0'),
     }
   }),
 )
@@ -309,6 +297,12 @@ function setDay(value: unknown) {
 
 function parseNumericPrefix(value: unknown) {
   return parseInt(String(value), 10)
+}
+
+function createTodaySelection(calendar: CalendarSystem): CalendarSelection {
+  const [year = 1, month = 1, day = 1] = today(calendar).split('-').map(Number)
+
+  return { year, month, day }
 }
 
 function clampSelection() {
@@ -398,13 +392,13 @@ function clampDay() {
 }
 
 .calendar-adapters__workspace {
-  grid-template-columns: minmax(280px, 1fr) minmax(240px, 340px);
+  grid-template-columns: minmax(380px, 1fr) minmax(240px, 340px);
   align-items: stretch;
 }
 
 .calendar-adapters__scrollers {
   display: grid;
-  grid-template-columns: repeat(3, minmax(96px, 1fr));
+  grid-template-columns: minmax(104px, 0.8fr) minmax(160px, 1.4fr) minmax(104px, 0.8fr);
   gap: 12px;
 }
 
@@ -454,10 +448,30 @@ function clampDay() {
   font-weight: 700;
 }
 
-@media (max-width: 780px) {
-  .calendar-adapters__intro,
+@media (max-width: 900px) {
   .calendar-adapters__workspace {
     grid-template-columns: 1fr;
+  }
+
+  .calendar-adapters__summary {
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 780px) {
+  .calendar-adapters__intro,
+  .calendar-adapters__selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .calendar-adapters__scrollers {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-adapters__scroller {
+    height: 220px;
   }
 }
 </style>

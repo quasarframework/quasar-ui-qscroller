@@ -212,6 +212,7 @@ const docsMenus: SiteMenuItem[] = [
     children: [
       { name: 'Introduction', path: '/getting-started/introduction' },
       { name: 'Installation Types', path: '/getting-started/installation-types' },
+      { name: 'Quick Start', path: '/getting-started/quick-start' },
     ],
   },
   {
