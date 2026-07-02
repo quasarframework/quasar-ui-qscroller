@@ -13,7 +13,9 @@ QScroller keeps the UI small and focused. `@timestamp-js/core` is the companion 
 
 Use the scroller for collection, then normalize the emitted value into a Timestamp before saving, comparing, or sending the value to an API.
 
-<MarkdownExample title="Timestamp Recipes" file="TimestampRecipes" />
+<MarkdownExample title="Date-Time Storage" file="TimestampDateTime" />
+
+<MarkdownExample title="Range Validation" file="TimestampDateRange" />
 
 ## Calendar Adapters
 
