@@ -19,12 +19,12 @@ Use the scroller for collection, then normalize the emitted value into a Timesta
 
 ## Calendar Adapters
 
-`QDateScroller`, `QDateRangeScroller`, and `QDateTimeScroller` model Gregorian dates today. For native calendar systems such as Islamic Civil (Hijri), Indian National (Saka), or Hebrew, compose string scrollers for the visible year, month, and day parts, then use the Timestamp calendar adapter to convert the selected date.
+`QDateScroller`, `QDateRangeScroller`, and `QDateTimeScroller` model Gregorian dates today. For native calendar systems such as Islamic Civil (Hijri), Indian National (Saka), Hebrew, or Persian, compose string scrollers for the visible year, month, and day parts, then use the Timestamp calendar adapter to convert the selected date.
 
 Install the adapter package you need beside `@timestamp-js/core`:
 
 ```bash
-pnpm add @timestamp-js/core @timestamp-js/calendar-hebrew @timestamp-js/calendar-islamic @timestamp-js/calendar-saka
+pnpm add @timestamp-js/core @timestamp-js/calendar-hebrew @timestamp-js/calendar-islamic @timestamp-js/calendar-saka @timestamp-js/calendar-persian
 ```
 
 <MarkdownExample title="Calendar Adapter Scrollers" file="CalendarAdapters" />

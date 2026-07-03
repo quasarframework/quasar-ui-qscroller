@@ -241,7 +241,7 @@ const featureCards = [
   {
     icon: 'translate',
     title: 'Calendar Adapters',
-    body: 'Use Timestamp adapters for Gregorian, Hijri, Saka, and Hebrew calendar-aware date selection.',
+    body: 'Use Timestamp adapters for Gregorian, Hijri, Saka, Hebrew, and Persian calendar-aware date selection.',
   },
   {
     icon: 'palette',

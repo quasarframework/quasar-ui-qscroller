@@ -143,9 +143,10 @@ import {
 import { hebrewCalendar } from '@timestamp-js/calendar-hebrew'
 import { islamicCivilCalendar } from '@timestamp-js/calendar-islamic'
 import { indianNationalCalendar } from '@timestamp-js/calendar-saka'
+import { persianCalendar } from '@timestamp-js/calendar-persian'
 import '@quasar/quasar-ui-qscroller/src/index.scss'
 
-type CalendarId = 'hebrew' | 'islamic-civil' | 'saka'
+type CalendarId = 'hebrew' | 'islamic-civil' | 'saka' | 'persian'
 
 interface CalendarExample {
   id: CalendarId
@@ -187,6 +188,14 @@ const calendarExamples: CalendarExample[] = [
     calendar: hebrewCalendar,
     locale: 'en-US',
   },
+  {
+    id: 'persian',
+    label: 'Persian (Jalali)',
+    shortLabel: 'Persian',
+    packageName: '@timestamp-js/calendar-persian',
+    calendar: persianCalendar,
+    locale: 'fa-IR-u-ca-persian',
+  },
 ]
 
 const calendarId = ref<CalendarId>('islamic-civil')
@@ -203,11 +212,13 @@ const selections = reactive<Record<CalendarId, CalendarSelection>>({
   'islamic-civil': createTodaySelection(islamicCivilCalendar),
   saka: createTodaySelection(indianNationalCalendar),
   hebrew: createTodaySelection(hebrewCalendar),
+  persian: createTodaySelection(persianCalendar),
 })
 const yearAnchors: Record<CalendarId, number> = {
   'islamic-civil': selections['islamic-civil'].year,
   saka: selections.saka.year,
   hebrew: selections.hebrew.year,
+  persian: selections.persian.year,
 }
 
 const activeCalendar = computed(
