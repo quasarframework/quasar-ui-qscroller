@@ -32,9 +32,15 @@ Yes. After the App Extension is installed, run:
 
 ```bash
 quasar describe QScroller
+quasar describe QStringScroller
+quasar describe QTimeScroller
+quasar describe QTimeRangeScroller
+quasar describe QDateScroller
+quasar describe QDateRangeScroller
+quasar describe QDateTimeScroller
 ```
 
-The same generated API is shown on the [QScroller](/developing/qscroller) page.
+The same generated API is shown on each Developing page.
 
 :::
 

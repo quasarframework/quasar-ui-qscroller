@@ -135,7 +135,7 @@ Date and date-time scrollers use browser `Intl` formatting for generated labels.
 
 ## Calendar adapters
 
-QScroller's date components model Gregorian dates. For native calendar systems such as Hijri, Saka, Hebrew, or Persian, compose string scrollers for year, month, and day, then use a Timestamp calendar adapter to convert the native date for storage or Gregorian interop.
+QScroller's date components use Gregorian by default. Pass `calendar-system` for native calendar systems such as Hijri, Saka, Hebrew, or Persian; string, array, and object model values become native to that adapter while JavaScript `Date` values remain Gregorian interop values.
 
 ```bash
 pnpm add @timestamp-js/core @timestamp-js/calendar-hebrew

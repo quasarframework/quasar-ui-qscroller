@@ -5,8 +5,8 @@
         <div class="text-overline text-primary">Timestamp calendar adapters</div>
         <h3>{{ activeCalendar.label }}</h3>
         <p>
-          Use string scrollers for native calendar parts, then let the Timestamp adapter convert the
-          selected date for storage, comparison, or Gregorian interop.
+          Pass a Timestamp calendar adapter to QDateScroller so the model date, month length, and
+          labels are native to that calendar while Gregorian interop remains available.
         </p>
       </div>
 
@@ -27,55 +27,25 @@
     </section>
 
     <section class="calendar-adapters__workspace">
-      <div class="calendar-adapters__scrollers">
-        <q-string-scroller
-          v-bind="scrollerTheme"
-          :key="`year-${calendarId}`"
-          :value="yearValue"
-          :items="yearItems"
-          class="calendar-adapters__scroller"
-          dense
-          no-caps
-          no-footer
-          @input="setYear"
-        >
-          <template #header>
-            <div class="calendar-adapters__scroller-label">Year</div>
-          </template>
-        </q-string-scroller>
-
-        <q-string-scroller
-          v-bind="scrollerTheme"
-          :key="`month-${calendarId}`"
-          :value="monthValue"
-          :items="monthItems"
-          class="calendar-adapters__scroller calendar-adapters__scroller--month"
-          dense
-          no-caps
-          no-footer
-          @input="setMonth"
-        >
-          <template #header>
-            <div class="calendar-adapters__scroller-label">Month</div>
-          </template>
-        </q-string-scroller>
-
-        <q-string-scroller
-          v-bind="scrollerTheme"
-          :key="`day-${calendarId}`"
-          :value="dayValue"
-          :items="dayItems"
-          class="calendar-adapters__scroller"
-          dense
-          no-caps
-          no-footer
-          @input="setDay"
-        >
-          <template #header>
-            <div class="calendar-adapters__scroller-label">Day</div>
-          </template>
-        </q-string-scroller>
-      </div>
+      <q-date-scroller
+        v-bind="scrollerTheme"
+        :key="calendarId"
+        :value="activeDate"
+        :calendar-system="activeCalendar.calendar"
+        :locale="activeCalendar.locale"
+        :year-begin="yearBegin"
+        :year-stop="yearStop"
+        class="calendar-adapters__date-scroller"
+        dense
+        no-footer
+        show-month-label
+        show-weekday-label
+        @input="setDate"
+      >
+        <template #header>
+          <div class="calendar-adapters__scroller-label">Native date model</div>
+        </template>
+      </q-date-scroller>
 
       <q-list bordered separator class="calendar-adapters__summary rounded-borders">
         <q-item>
@@ -118,7 +88,7 @@
           v-for="day in daysInMonth"
           :key="day"
           class="calendar-adapters__day"
-          :class="{ 'calendar-adapters__day--active': day === activeSelection.day }"
+          :class="{ 'calendar-adapters__day--active': day === activeTimestamp.day }"
           type="button"
           @click="setDay(day)"
         >
@@ -130,15 +100,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { QStringScroller } from '@quasar/quasar-ui-qscroller'
+import { computed, ref } from 'vue'
+import { QDateScroller } from '@quasar/quasar-ui-qscroller'
 import {
+  convertCalendarDate,
   formatCalendarDate,
   getCalendarMonthNames,
   gregorianCalendar,
+  parseCalendarTimestampSafe,
   today,
-  type CalendarDateParts,
   type CalendarSystem,
+  type Timestamp,
 } from '@timestamp-js/core'
 import { hebrewCalendar } from '@timestamp-js/calendar-hebrew'
 import { islamicCivilCalendar } from '@timestamp-js/calendar-islamic'
@@ -155,12 +127,6 @@ interface CalendarExample {
   packageName: string
   calendar: CalendarSystem
   locale: string
-}
-
-interface CalendarSelection {
-  year: number
-  month: number
-  day: number
 }
 
 const calendarExamples: CalendarExample[] = [
@@ -208,126 +174,66 @@ const scrollerTheme = {
   innerTextColor: 'currentColor',
   textColor: 'currentColor',
 }
-const selections = reactive<Record<CalendarId, CalendarSelection>>({
-  'islamic-civil': createTodaySelection(islamicCivilCalendar),
-  saka: createTodaySelection(indianNationalCalendar),
-  hebrew: createTodaySelection(hebrewCalendar),
-  persian: createTodaySelection(persianCalendar),
-})
-const yearAnchors: Record<CalendarId, number> = {
-  'islamic-civil': selections['islamic-civil'].year,
-  saka: selections.saka.year,
-  hebrew: selections.hebrew.year,
-  persian: selections.persian.year,
-}
+const activeDate = ref(today(islamicCivilCalendar))
 
 const activeCalendar = computed(
   () => calendarExamples.find((entry) => entry.id === calendarId.value) ?? calendarExamples[0],
 )
-const activeSelection = computed(() => selections[calendarId.value])
-const yearValue = computed(() => String(activeSelection.value.year))
+const activeTimestamp = computed(() =>
+  resolveTimestamp(activeDate.value, activeCalendar.value.calendar),
+)
+const yearBegin = computed(() => Math.max(1, activeTimestamp.value.year - yearRangeRadius))
+const yearStop = computed(() => activeTimestamp.value.year + yearRangeRadius)
 const daysInSelectedMonth = computed(() =>
   activeCalendar.value.calendar.daysInMonth(
-    activeSelection.value.year,
-    activeSelection.value.month,
+    activeTimestamp.value.year,
+    activeTimestamp.value.month,
   ),
 )
 const daysInMonth = computed(() =>
   Array.from({ length: daysInSelectedMonth.value }, (_, index) => index + 1),
 )
-const nativeDate = computed<CalendarDateParts>(() => ({
-  year: activeSelection.value.year,
-  month: activeSelection.value.month,
-  day: activeSelection.value.day,
-}))
 const gregorianDate = computed(() =>
-  gregorianCalendar.fromEpochDay(activeCalendar.value.calendar.toEpochDay(nativeDate.value)),
+  gregorianCalendar.fromEpochDay(activeCalendar.value.calendar.toEpochDay(activeTimestamp.value)),
 )
-const nativeDateLabel = computed(() => formatCalendarDate(nativeDate.value))
+const nativeDateLabel = computed(() => activeDate.value)
 const gregorianDateLabel = computed(() => formatCalendarDate(gregorianDate.value))
-const yearItems = computed(() =>
-  Array.from(
-    { length: yearRangeRadius * 2 + 1 },
-    (_, index) => yearAnchors[calendarId.value] - yearRangeRadius + index,
-  ).map((year) => ({
-    label: String(year),
-    value: String(year),
-  })),
-)
 const monthLabels = computed(() =>
   getCalendarMonthNames(
     activeCalendar.value.calendar,
     'long',
     activeCalendar.value.locale,
-    activeSelection.value.year,
+    activeTimestamp.value.year,
   ),
 )
-const monthItems = computed(() =>
-  monthLabels.value.map((month, index) => {
-    const monthNumber = index + 1
-
-    return {
-      label: month,
-      value: String(monthNumber).padStart(2, '0'),
-    }
-  }),
-)
-const dayItems = computed(() =>
-  daysInMonth.value.map((day) => {
-    const label = String(day).padStart(2, '0')
-
-    return {
-      label,
-      value: label,
-    }
-  }),
-)
-const monthValue = computed(() => monthItems.value[activeSelection.value.month - 1]?.value ?? '')
-const dayValue = computed(() => dayItems.value[activeSelection.value.day - 1]?.value ?? '')
 const selectedMonthLabel = computed(
-  () => monthLabels.value[activeSelection.value.month - 1] ?? 'Unknown month',
+  () => monthLabels.value[activeTimestamp.value.month - 1] ?? 'Unknown month',
 )
 
 function setCalendar(value: CalendarId) {
+  const previousCalendar = activeCalendar.value.calendar
+  const nextCalendar =
+    calendarExamples.find((entry) => entry.id === value)?.calendar ?? previousCalendar
+  const converted = convertCalendarDate(activeDate.value, previousCalendar, nextCalendar)
+
   calendarId.value = value
+  activeDate.value = converted ?? today(nextCalendar)
 }
 
-function setYear(value: unknown) {
-  activeSelection.value.year = Number(value)
-  clampSelection()
+function setDate(value: unknown) {
+  activeDate.value = String(value)
 }
 
-function setMonth(value: unknown) {
-  activeSelection.value.month = parseNumericPrefix(value)
-  clampDay()
+function setDay(day: number) {
+  activeDate.value = formatCalendarDate({
+    year: activeTimestamp.value.year,
+    month: activeTimestamp.value.month,
+    day,
+  })
 }
 
-function setDay(value: unknown) {
-  activeSelection.value.day = parseNumericPrefix(value)
-}
-
-function parseNumericPrefix(value: unknown) {
-  return parseInt(String(value), 10)
-}
-
-function createTodaySelection(calendar: CalendarSystem): CalendarSelection {
-  const [year = 1, month = 1, day = 1] = today(calendar).split('-').map(Number)
-
-  return { year, month, day }
-}
-
-function clampSelection() {
-  const monthsInYear = activeCalendar.value.calendar.monthsInYear(activeSelection.value.year)
-  if (activeSelection.value.month > monthsInYear) {
-    activeSelection.value.month = monthsInYear
-  }
-  clampDay()
-}
-
-function clampDay() {
-  if (activeSelection.value.day > daysInSelectedMonth.value) {
-    activeSelection.value.day = daysInSelectedMonth.value
-  }
+function resolveTimestamp(value: string, calendar: CalendarSystem): Timestamp {
+  return parseCalendarTimestampSafe(value, calendar) ?? resolveTimestamp(today(calendar), calendar)
 }
 </script>
 
@@ -407,14 +313,8 @@ function clampDay() {
   align-items: stretch;
 }
 
-.calendar-adapters__scrollers {
-  display: grid;
-  grid-template-columns: minmax(104px, 0.8fr) minmax(160px, 1.4fr) minmax(104px, 0.8fr);
-  gap: 12px;
-}
-
-.calendar-adapters__scroller {
-  height: 260px;
+.calendar-adapters__date-scroller {
+  height: 300px;
   min-width: 0;
 }
 
@@ -477,12 +377,8 @@ function clampDay() {
 }
 
 @media (max-width: 520px) {
-  .calendar-adapters__scrollers {
-    grid-template-columns: 1fr;
-  }
-
-  .calendar-adapters__scroller {
-    height: 220px;
+  .calendar-adapters__date-scroller {
+    height: 260px;
   }
 }
 </style>

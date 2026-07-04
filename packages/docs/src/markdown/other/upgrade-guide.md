@@ -58,7 +58,7 @@ npm install @quasar/quasar-ui-qscroller
 
 Use the package entrypoint instead of old source-file imports:
 
-```ts [twoslash]
+```ts [twoslash minheight=6rem]
 import { QScroller } from '@quasar/quasar-ui-qscroller'
 
 QScroller

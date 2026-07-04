@@ -291,11 +291,11 @@ const config: SiteConfig = {
     ],
     jsExternal: [
       `https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller@${codepenPackageVersion}/dist/index.umd.js`,
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.4/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-hebrew@0.1.0-rc.4/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-islamic@0.1.0-rc.4/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-saka@0.1.0-rc.4/dist/index.global.min.js',
-      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-persian@0.1.0-rc.4/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/core@0.1.0-rc.5/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-hebrew@0.1.0-rc.5/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-islamic@0.1.0-rc.5/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-saka@0.1.0-rc.5/dist/index.global.min.js',
+      'https://cdn.jsdelivr.net/npm/@timestamp-js/calendar-persian@0.1.0-rc.5/dist/index.global.min.js',
     ],
     globalPackages: [
       {
