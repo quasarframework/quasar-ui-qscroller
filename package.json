@@ -1,6 +1,6 @@
 {
   "name": "quasar-ui-qscroller-workspace",
-  "version": "3.0.0-rc.0",
+  "version": "3.0.0-rc.1",
   "private": true,
   "description": "QScroller workspace",
   "type": "module",
@@ -30,7 +30,7 @@
     "verify:build": "pnpm build && pnpm api:check && pnpm check:qpress && pnpm typecheck"
   },
   "devDependencies": {
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.0",
     "@vitest/coverage-v8": "^4.1.9",
     "npm-check-updates": "^22.2.9",
     "oxfmt": "^0.57.0",

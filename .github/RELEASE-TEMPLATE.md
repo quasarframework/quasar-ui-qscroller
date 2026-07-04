@@ -36,8 +36,8 @@ Short user-facing summary of what changed for QScroller component/app-extension 
 
 - Node.js: `>=22.13`
 - Quasar: `^2.21.0`
-- Quasar App Vite target: `@quasar/app-vite@3.0.0-rc.3`
-- npm dist-tag: `latest`
+- Quasar App Vite target: `@quasar/app-vite@3.0.0-rc.6`
+- npm dist-tag: `beta`
 
 ## Installation
 

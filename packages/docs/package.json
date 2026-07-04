@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "3.0.0-rc.0",
+  "version": "3.0.0-rc.1",
   "private": true,
   "description": "QScroller Docs",
   "author": "Jeff Galbraith <jeff@quasar.dev>",
@@ -23,13 +23,13 @@
     "check:qpress": "qpress check"
   },
   "dependencies": {
-    "@quasar/extras": "2.0.1",
+    "@quasar/extras": "2.0.2",
     "@timestamp-js/calendar-hebrew": "0.1.0-rc.5",
     "@timestamp-js/calendar-islamic": "0.1.0-rc.5",
     "@timestamp-js/calendar-persian": "0.1.0-rc.5",
     "@timestamp-js/calendar-saka": "0.1.0-rc.5",
     "@timestamp-js/core": "0.1.0-rc.5",
-    "markdown-it": "^14.2.0",
+    "markdown-it": "^14.3.0",
     "markdown-it-container": "^4.0.0",
     "pinia": "^3.0.4",
     "quasar": "^2.21.0",
@@ -45,15 +45,15 @@
     "@md-plugins/vite-ssg-plugin": "1.0.0",
     "@quasar/app-vite": "3.0.0-rc.6",
     "@quasar/quasar-ui-qscroller": "workspace:*",
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.0",
     "@vue/server-renderer": "^3.5.39",
     "autoprefixer": "^10.5.2",
     "mermaid": "^11.16.0",
     "sass-embedded": "1.100.0",
-    "shiki": "^4.3.0",
+    "shiki": "^4.3.1",
     "typescript": "~6.0.3",
     "vite-plugin-checker": "^0.14.4",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.6"
   },
   "engines": {
     "node": ">=22.13",
