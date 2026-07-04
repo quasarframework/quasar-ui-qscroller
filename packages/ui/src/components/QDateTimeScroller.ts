@@ -3,12 +3,9 @@ import {
   Timestamp as EmptyTimestamp,
   compareTimestamps,
   copyTimestamp,
-  getDate,
-  getDateObject,
+  convertCalendarTimestamp,
   getTime,
   padNumber,
-  parseDate,
-  parseTimestamp,
   type Timestamp,
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
@@ -16,12 +13,21 @@ import QDateScroller from './QDateScroller'
 import QTimeScroller from './QTimeScroller'
 import {
   baseProps,
+  calendarSystemProps,
   commonProps,
   dateProps,
   localeProps,
   timeProps,
   verticalBarProps,
 } from '../utils/props'
+import {
+  getCalendarTimestampDate,
+  getCalendarTimestampDateObject,
+  getCalendarTimestampFromDate,
+  getCurrentCalendarTimestamp,
+  getResolvedCalendarSystem,
+  parseCalendarDateTimeSafe,
+} from '../utils/calendar'
 
 export interface QDateTimeScrollerSlotScope {
   /**
@@ -49,6 +55,7 @@ export default defineComponent({
     ...baseProps,
     ...timeProps,
     ...dateProps,
+    ...calendarSystemProps,
     ...verticalBarProps,
     ...localeProps,
     /**
@@ -105,6 +112,7 @@ export default defineComponent({
     const time = ref('')
     const syncing = ref(false)
 
+    const calendar = computed(() => getResolvedCalendarSystem(props.calendarSystem))
     const slotData = computed(() => ({ value: timestamp.value }))
     const displayed = computed(() => displayDateTime.value)
 
@@ -122,7 +130,7 @@ export default defineComponent({
     function emitValue() {
       switch (type.value) {
         case 'date':
-          emit('input', getDateObject(timestamp.value))
+          emit('input', getCalendarTimestampDateObject(timestamp.value, calendar.value))
           return
         case 'array':
           emit('input', [
@@ -157,12 +165,12 @@ export default defineComponent({
     }
 
     function fromTimestamp() {
-      date.value = getDate(timestamp.value)
+      date.value = getCalendarTimestampDate(timestamp.value)
       time.value = getTime(timestamp.value)
     }
 
     function fallbackDate() {
-      return parseDate(new Date()) ?? EmptyTimestamp
+      return getCurrentCalendarTimestamp(calendar.value)
     }
 
     function timestampFromParts(
@@ -174,14 +182,16 @@ export default defineComponent({
       nextMinute: number,
     ) {
       return (
-        parseTimestamp(
+        parseCalendarDateTimeSafe(
           `${padNumber(nextYear, 4)}-${padNumber(nextMonth, 2)}-${padNumber(nextDay, 2)} ${padNumber(nextHour, 2)}:${padNumber(nextMinute, 2)}`,
+          calendar.value,
+          base,
         ) ?? base
       )
     }
 
     function parseDateTime(value: string) {
-      return parseTimestamp(value) ?? timestamp.value
+      return parseCalendarDateTimeSafe(value, calendar.value, timestamp.value) ?? timestamp.value
     }
 
     function splitDateTime() {
@@ -193,7 +203,7 @@ export default defineComponent({
       switch (valueType) {
         case '[object Date]':
           type.value = 'date'
-          timestamp.value = parseDate(props.value) ?? EmptyTimestamp
+          timestamp.value = getCalendarTimestampFromDate(props.value as Date, calendar.value)
           fromTimestamp()
           syncing.value = false
           return
@@ -227,7 +237,7 @@ export default defineComponent({
           type.value = 'string'
           now = fallbackDate()
           if (props.value) {
-            const parsed = parseTimestamp(props.value)
+            const parsed = parseCalendarDateTimeSafe(String(props.value), calendar.value)
             if (parsed !== null) {
               now = timestampFromParts(
                 now,
@@ -253,6 +263,20 @@ export default defineComponent({
     }
 
     watch(() => props.value, splitDateTime)
+    watch(calendar, (nextCalendar, previousCalendar) => {
+      if (syncing.value === true || previousCalendar.id === nextCalendar.id) {
+        return
+      }
+
+      syncing.value = true
+      timestamp.value =
+        timestamp.value.hasDay === true
+          ? convertCalendarTimestamp(timestamp.value, previousCalendar, nextCalendar)
+          : fallbackDate()
+      fromTimestamp()
+      syncing.value = false
+      emitValue()
+    })
 
     watch(date, () => {
       if (syncing.value === true) {
@@ -298,6 +322,7 @@ export default defineComponent({
           },
         ],
         value: date.value,
+        calendarSystem: props.calendarSystem,
         locale: props.locale,
         barColor: props.barColor,
         textColor: props.textColor,

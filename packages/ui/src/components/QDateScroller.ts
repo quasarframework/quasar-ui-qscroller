@@ -4,18 +4,32 @@ import {
   Timestamp as EmptyTimestamp,
   compareTimestamps,
   copyTimestamp,
-  createNativeLocaleFormatter,
-  daysInMonth,
-  getDateObject,
-  getTime,
+  createCalendarLocaleFormatterUTC,
+  convertCalendarTimestamp,
+  getCalendarMonthFormatter,
   padNumber,
-  parseDate,
-  parseTimestamp,
   type Timestamp,
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import ScrollerBase from './private/ScrollerBase'
-import { baseProps, commonProps, dateProps, localeProps, verticalBarProps } from '../utils/props'
+import {
+  baseProps,
+  calendarSystemProps,
+  commonProps,
+  dateProps,
+  localeProps,
+  verticalBarProps,
+} from '../utils/props'
+import {
+  createCalendarTimestampFromParts,
+  getCalendarDaysInMonth,
+  getCalendarMonthsInYear,
+  getCalendarTimestampDateObject,
+  getCalendarTimestampFromDate,
+  getCurrentCalendarTimestamp,
+  getResolvedCalendarSystem,
+  parseCalendarDateTimeSafe,
+} from '../utils/calendar'
 
 export interface QDateScrollerSlotScope {
   /**
@@ -42,6 +56,7 @@ export default defineComponent({
     ...commonProps,
     ...baseProps,
     ...dateProps,
+    ...calendarSystemProps,
     ...verticalBarProps,
     ...localeProps,
   },
@@ -75,11 +90,17 @@ export default defineComponent({
     const disabledDaysList = ref<string[]>([])
     const syncing = ref(false)
 
+    const calendar = computed(() => getResolvedCalendarSystem(props.calendarSystem))
     const slotData = computed(() => ({ value: timestamp.value }))
     const displayed = computed(() => displayDate.value)
 
     const daysList = computed(() => {
-      let length = daysInMonth(parseInt(year.value, 10), parseInt(month.value, 10))
+      let length = getCalendarDaysInMonth(
+        parseInt(year.value, 10),
+        parseInt(month.value, 10),
+        calendar.value,
+        DAYS_IN_MONTH_MAX,
+      )
       if (!year.value || !month.value) {
         length = DAYS_IN_MONTH_MAX
       }
@@ -94,7 +115,15 @@ export default defineComponent({
     })
 
     const monthsList = computed(() =>
-      Array.from({ length: 12 }, (_, index) => index + 1).map((entry) => {
+      Array.from(
+        {
+          length: getCalendarMonthsInYear(
+            parseInt(year.value, 10) || fallbackDate().year,
+            calendar.value,
+          ),
+        },
+        (_, index) => index + 1,
+      ).map((entry) => {
         const display = props.showMonthLabel === true ? monthNameLabel(entry) : void 0
         const value = entry < 10 ? `0${entry}` : `${entry}`
         return {
@@ -115,7 +144,7 @@ export default defineComponent({
           ? parseInt(String(props.yearStop), 10)
           : 0
 
-      const currentYear = new Date().getFullYear()
+      const currentYear = fallbackDate().year
       if (yearBegin === 0) {
         yearBegin = currentYear - 5
       }
@@ -152,18 +181,18 @@ export default defineComponent({
         day: dayFormat,
       } satisfies Intl.DateTimeFormatOptions
 
-      return createNativeLocaleFormatter(props.locale, () => options)
+      return createCalendarLocaleFormatterUTC(calendar.value, props.locale, () => options)
     })
 
     const dayFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, () => ({
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, () => ({
         timeZone: 'UTC',
         day: 'numeric',
       })),
     )
 
     const monthFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, (_value, short) =>
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, (_value, short) =>
         short
           ? {
               timeZone: 'UTC',
@@ -177,7 +206,7 @@ export default defineComponent({
     )
 
     const yearFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, (_value, short) =>
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, (_value, short) =>
         short
           ? {
               timeZone: 'UTC',
@@ -191,7 +220,7 @@ export default defineComponent({
     )
 
     const yearMonthFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, (_value, short) =>
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, (_value, short) =>
         short
           ? {
               timeZone: 'UTC',
@@ -207,7 +236,7 @@ export default defineComponent({
     )
 
     const yearDayFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, (_value, short) =>
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, (_value, short) =>
         short
           ? {
               timeZone: 'UTC',
@@ -223,7 +252,7 @@ export default defineComponent({
     )
 
     const monthDayFormatter = computed(() =>
-      createNativeLocaleFormatter(props.locale, (_value, short) =>
+      createCalendarLocaleFormatterUTC(calendar.value, props.locale, (_value, short) =>
         short
           ? {
               timeZone: 'UTC',
@@ -273,7 +302,7 @@ export default defineComponent({
     function emitValue() {
       switch (type.value) {
         case 'date':
-          emit('input', getDateObject(timestamp.value))
+          emit('input', getCalendarTimestampDateObject(timestamp.value, calendar.value))
           return
         case 'array':
           emit('input', [
@@ -320,7 +349,7 @@ export default defineComponent({
     }
 
     function fallbackDate() {
-      return parseDate(new Date()) ?? EmptyTimestamp
+      return getCurrentCalendarTimestamp(calendar.value)
     }
 
     function timestampFromDateParts(
@@ -329,11 +358,7 @@ export default defineComponent({
       nextMonth: number,
       nextDay: number,
     ) {
-      return (
-        parseTimestamp(
-          `${padNumber(nextYear, 4)}-${padNumber(nextMonth, 2)}-${padNumber(nextDay, 2)} ${getTime(base)}`,
-        ) ?? base
-      )
+      return createCalendarTimestampFromParts(base, nextYear, nextMonth, nextDay, calendar.value)
     }
 
     function toTimestamp() {
@@ -360,7 +385,7 @@ export default defineComponent({
       switch (valueType) {
         case '[object Date]':
           type.value = 'date'
-          timestamp.value = parseDate(props.value) ?? EmptyTimestamp
+          timestamp.value = getCalendarTimestampFromDate(props.value as Date, calendar.value)
           fromTimestamp()
           syncing.value = false
           return
@@ -396,7 +421,7 @@ export default defineComponent({
           type.value = 'string'
           now = fallbackDate()
           if (props.value) {
-            const parsed = parseTimestamp(String(props.value))
+            const parsed = parseCalendarDateTimeSafe(String(props.value), calendar.value)
             if (parsed !== null) {
               now = timestampFromDateParts(now, parsed.year, parsed.month, parsed.day)
             }
@@ -415,12 +440,30 @@ export default defineComponent({
     }
 
     function monthNameLabel(monthValue: number) {
-      const now = fallbackDate()
-      const formatted = timestampFromDateParts(now, now.year, monthValue, 1)
-      return monthFormatter.value(formatted, props.shortMonthLabel === true)
+      const type = props.shortMonthLabel === true ? 'short' : 'long'
+      return getCalendarMonthFormatter(calendar.value)(
+        monthValue,
+        type,
+        props.locale,
+        parseInt(year.value, 10) || fallbackDate().year,
+      )
     }
 
     watch(() => props.value, splitDate)
+    watch(calendar, (nextCalendar, previousCalendar) => {
+      if (syncing.value === true || previousCalendar.id === nextCalendar.id) {
+        return
+      }
+
+      syncing.value = true
+      timestamp.value =
+        timestamp.value.hasDay === true
+          ? convertCalendarTimestamp(timestamp.value, previousCalendar, nextCalendar)
+          : fallbackDate()
+      fromTimestamp()
+      syncing.value = false
+      emitValue()
+    })
     watch(day, () => {
       if (syncing.value !== true) {
         toTimestamp()
@@ -440,8 +483,8 @@ export default defineComponent({
         const nextMonth = parseInt(newMonth, 10)
         const previousMonth = parseInt(oldMonth, 10)
         const numericYear = parseInt(year.value, 10)
-        const previousDays = daysInMonth(numericYear, previousMonth)
-        const nextDays = daysInMonth(numericYear, nextMonth)
+        const previousDays = getCalendarDaysInMonth(numericYear, previousMonth, calendar.value)
+        const nextDays = getCalendarDaysInMonth(numericYear, nextMonth, calendar.value)
 
         if (previousDays > nextDays) {
           day.value = padNumber(nextDays, 2)

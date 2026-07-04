@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, ref, watch } from 'vue'
 import { debounce, QBtn, QResizeObserver, scroll, useQuasar } from 'quasar'
 import { useScrollerColors } from '../../composables/use-scroller-colors'
 import { commonProps, scrollerProps } from '../../utils/props'
@@ -23,16 +23,16 @@ export default defineComponent({
     const $q = useQuasar()
     const items = computed(() => (props.items ?? []) as Array<Record<string, any>>)
     const rootRef = ref<HTMLElement | null>(null)
-    const scrollTimer = ref<ReturnType<typeof setTimeout> | null>(null)
     const height = ref(0)
     const columnPadding = ref<Record<string, string>>({})
     const padding = ref(0)
+    const pendingValue = ref<unknown>()
 
     const itemHeight = computed(() => (props.dense === true ? ITEM_HEIGHT_DENSE : ITEM_HEIGHT))
 
     const selectedArea = computed(() => {
       const rect = rootRef.value?.getBoundingClientRect() ?? { width: 0, height: 0 }
-      const top = rect.height / 2 + itemHeight.value / 2
+      const top = rect.height / 2 - itemHeight.value / 2
 
       return {
         x: 0,
@@ -51,9 +51,17 @@ export default defineComponent({
         return ''
       }
 
-      const item = items.value.find((entry) => entry.value === props.value)
-      return item?.label ?? item?.value ?? ''
+      const item = items.value.find((entry) => itemMatchesValue(entry, props.value))
+      return item === void 0 ? '' : getItemLabelText(item)
     })
+
+    function getItemLabel(item: Record<string, any>) {
+      return item.display ?? item.label ?? item.value
+    }
+
+    function getItemLabelText(item: Record<string, any>) {
+      return String(getItemLabel(item) ?? '')
+    }
 
     function currentElement() {
       const container = rootRef.value?.children[0] as HTMLElement | undefined
@@ -108,46 +116,81 @@ export default defineComponent({
       }
     }
 
+    function itemMatchesValue(item: Record<string, any>, value: unknown) {
+      return item.value === value || item.label === value || item.display === value
+    }
+
+    function getActiveItemIndex() {
+      const value = pendingValue.value ?? props.value
+      const index = items.value.findIndex((item) => itemMatchesValue(item, value))
+
+      if (index !== -1) {
+        return index
+      }
+
+      const elem = currentElement()
+      if (elem === null) {
+        return -1
+      }
+
+      const text = elem.innerText.replace(/\n|\r/g, '')
+
+      return items.value.findIndex(
+        (item) =>
+          getItemLabelText(item) === text ||
+          item.value === text ||
+          item.value?.toString() === text ||
+          item.label === text ||
+          item.label?.toString() === text ||
+          item.display === text ||
+          item.display?.toString() === text,
+      )
+    }
+
+    function getNextEnabledItemIndex(index: number, dir: number) {
+      for (
+        let nextIndex = index + dir;
+        nextIndex >= 0 && nextIndex < items.value.length;
+        nextIndex += dir
+      ) {
+        if (items.value[nextIndex].disabled !== true) {
+          return nextIndex
+        }
+      }
+
+      return -1
+    }
+
+    function moveToIndex(index: number) {
+      if (rootRef.value === null) {
+        return
+      }
+
+      clearSelectedClasses()
+      setVerticalScrollPosition(rootRef.value, index * itemHeight.value, 40)
+    }
+
     function move(dir: number) {
       if (dir !== 1 && dir !== -1) {
         return false
       }
 
-      const elem = currentElement()
-      if (elem === null) {
+      const activeIndex = getActiveItemIndex()
+      if (activeIndex === -1) {
         return false
       }
 
-      const scrollToEl = dir === -1 ? elem.previousElementSibling : elem.nextElementSibling
-
-      if (scrollToEl instanceof HTMLButtonElement && scrollToEl.innerText.length > 0) {
-        if (scrollTimer.value !== null) {
-          clearTimeout(scrollTimer.value)
-        }
-
-        const klass = `.q-scroller__item--selected${props.dense === true ? '--dense' : ''}`
-        clearSelectedClasses()
-
-        const position = getVerticalScrollPosition(rootRef.value) + itemHeight.value * dir
-        setVerticalScrollPosition(rootRef.value, position, 10)
-
-        scrollTimer.value = setTimeout(() => {
-          scrollToEl.classList.add(klass.slice(1))
-          const matchingItems = items.value.filter(
-            (entry) =>
-              entry.value === scrollToEl.innerText ||
-              (entry.label !== void 0 && entry.label === scrollToEl.innerText),
-          )
-
-          if (matchingItems.length > 0 && matchingItems[0].disabled !== true) {
-            emit('input', matchingItems[0].value)
-          }
-        }, 350)
-
-        return true
+      const nextIndex = getNextEnabledItemIndex(activeIndex, dir)
+      if (nextIndex === -1) {
+        return false
       }
 
-      return false
+      const item = items.value[nextIndex]
+      pendingValue.value = item.value
+      moveToIndex(nextIndex)
+      emit('input', item.value)
+
+      return true
     }
 
     function onResize() {
@@ -202,7 +245,7 @@ export default defineComponent({
     }
 
     function getItemIndex(value: unknown) {
-      return items.value.findIndex((item) => item.value === value)
+      return items.value.findIndex((item) => itemMatchesValue(item, value))
     }
 
     function getItemIndexFromEvent(event: Event) {
@@ -220,7 +263,7 @@ export default defineComponent({
 
         if (index > -1 && index < items.value.length) {
           const item = items.value[index]
-          if (item.disabled !== true && item.value !== showLabel.value) {
+          if (item.disabled !== true && item.value !== props.value) {
             emit('input', item.value)
           }
           event.preventDefault()
@@ -240,7 +283,7 @@ export default defineComponent({
         return
       }
 
-      if (elem.innerText !== item.value) {
+      if (elem.innerText.replace(/\n|\r/g, '') !== getItemLabelText(item)) {
         const klass = `q-scroller__item--selected${props.dense === true ? '--dense' : ''}`
         elem.classList.remove(klass)
         emit('input', item.value)
@@ -276,7 +319,16 @@ export default defineComponent({
       }, 150)
     }
 
-    watch(() => props.value, updatePosition)
+    watch(
+      () => props.value,
+      () => {
+        if (itemMatchesValue({ value: pendingValue.value }, props.value) === true) {
+          pendingValue.value = void 0
+        }
+
+        updatePosition()
+      },
+    )
     watch(() => props.items, adjustColumnPadding, { deep: true })
     watch(() => props.dense, adjustColumnPadding)
 
@@ -287,12 +339,6 @@ export default defineComponent({
           emit('input', items.value[0].value)
         }
       })
-    })
-
-    onBeforeUnmount(() => {
-      if (scrollTimer.value !== null) {
-        clearTimeout(scrollTimer.value)
-      }
     })
 
     expose({
@@ -320,21 +366,21 @@ export default defineComponent({
             'justify-center align-center',
             {
               'q-scroller__item--selected':
-                props.dense !== true && (item.value === props.value || item.label === props.value),
+                props.dense !== true && itemMatchesValue(item, props.value),
               'q-scroller__item--disabled': props.dense !== true && disabled === true,
               'q-scroller__item--selected--dense':
-                props.dense === true && (item.value === props.value || item.label === props.value),
+                props.dense === true && itemMatchesValue(item, props.value),
               'q-scroller__item--disabled--dense': props.dense === true && disabled === true,
             },
           ],
           flat: true,
           dense: true,
           noWrap: true,
-          label: item.label !== void 0 ? item.label : item.value !== void 0 ? item.value : void 0,
+          label: getItemLabel(item),
           disable: disabled,
           icon: item.icon !== void 0 ? item.icon : void 0,
           iconRight: item.iconRight !== void 0 ? item.iconRight : void 0,
-          noCaps: item.noCaps !== void 0 ? item.noCaps : void 0,
+          noCaps: item.noCaps !== void 0 ? item.noCaps : item.display !== void 0 ? true : void 0,
           align: item.align !== void 0 ? item.align : void 0,
           onClick: () => clickEvent(item),
         }),

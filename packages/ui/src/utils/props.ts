@@ -1,3 +1,5 @@
+import type { PropType } from 'vue'
+import type { CalendarSystem } from '@timestamp-js/core'
 import { validateView } from './views'
 
 /* public properties */
@@ -251,6 +253,18 @@ export const localeProps = {
     type: String,
     default: 'en-us',
   },
+}
+
+export const calendarSystemProps = {
+  /**
+   * Calendar system used for date math, generated date labels, and model date fields. Defaults to Gregorian. When set, string, array, and object model dates are native to that calendar. JavaScript `Date` values remain Gregorian interop values and are converted for display.
+   *
+   * @category state
+   * @applicable date, date-range, date-time
+   * @type CalendarSystem
+   * @example :calendar-system="islamicCivilCalendar"
+   */
+  calendarSystem: Object as PropType<CalendarSystem>,
 }
 
 export const viewProps = {
@@ -989,6 +1003,7 @@ export const dateRangeProps = {
 
 export default {
   base: baseProps,
+  calendarSystem: calendarSystemProps,
   common: commonProps,
   date: dateProps,
   dateRange: dateRangeProps,

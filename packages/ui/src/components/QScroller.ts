@@ -8,6 +8,7 @@ import QTimeRangeScroller from './QTimeRangeScroller'
 import QTimeScroller from './QTimeScroller'
 import {
   baseProps,
+  calendarSystemProps,
   commonProps,
   dateProps,
   dateRangeProps,
@@ -52,6 +53,7 @@ export default defineComponent({
     ...baseProps,
     ...localeProps,
     ...dateProps,
+    ...calendarSystemProps,
     ...timeProps,
     ...timeRangeProps,
     ...dateRangeProps,

@@ -1,24 +1,31 @@
 import { computed, defineComponent, h, ref, watch, type SlotsType, type VNode } from 'vue'
 import {
   Timestamp as EmptyTimestamp,
-  getDate,
-  getDateObject,
-  getDayIdentifier,
+  getCalendarDayIdentifier,
+  formatCalendarDate,
   padNumber,
   parseDate,
-  parseTimestamp,
+  toCalendarTimestamp,
   type Timestamp,
 } from '@timestamp-js/core'
 import { useScrollerShell } from '../composables/use-scroller-shell'
 import QDateScroller from './QDateScroller'
 import {
   baseProps,
+  calendarSystemProps,
   commonProps,
   dateRangeProps,
   localeProps,
   verticalBarProps,
 } from '../utils/props'
-import { isValidDate } from '../utils/validation'
+import {
+  getCalendarTimestampDate,
+  getCalendarTimestampDateObject,
+  getCurrentCalendarTimestamp,
+  getResolvedCalendarSystem,
+  isValidCalendarDateString,
+  parseCalendarDateTimeSafe,
+} from '../utils/calendar'
 
 export interface QDateRangeScrollerSlotScope {
   /**
@@ -45,6 +52,7 @@ export default defineComponent({
     ...commonProps,
     ...baseProps,
     ...dateRangeProps,
+    ...calendarSystemProps,
     ...verticalBarProps,
     ...localeProps,
   },
@@ -82,6 +90,7 @@ export default defineComponent({
     const type = ref<string | null>(null)
     const syncing = ref(false)
 
+    const calendar = computed(() => getResolvedCalendarSystem(props.calendarSystem))
     const slotData = computed(() => {
       if (startDateRef.value && endDateRef.value) {
         return { value: [startDateRef.value.getTimestamp(), endDateRef.value.getTimestamp()] }
@@ -92,11 +101,15 @@ export default defineComponent({
     const displayed = computed(() => displayDate.value)
 
     function fallbackDate() {
-      return parseDate(new Date()) ?? EmptyTimestamp
+      return getCurrentCalendarTimestamp(calendar.value)
     }
 
     function timestampFromDate(value: string): Timestamp {
-      return parseTimestamp(`${value} 00:00`) ?? EmptyTimestamp
+      return parseCalendarDateTimeSafe(`${value} 00:00`, calendar.value) ?? EmptyTimestamp
+    }
+
+    function timestampFromDateWithCalendar(value: string, calendarSystem = calendar.value) {
+      return parseCalendarDateTimeSafe(`${value} 00:00`, calendarSystem)
     }
 
     const rangeIsValid = computed(() => {
@@ -106,8 +119,8 @@ export default defineComponent({
 
       if (startDate.value && endDate.value) {
         return (
-          getDayIdentifier(timestampFromDate(endDate.value)) >=
-          getDayIdentifier(timestampFromDate(startDate.value))
+          getCalendarDayIdentifier(timestampFromDate(endDate.value), calendar.value) >=
+          getCalendarDayIdentifier(timestampFromDate(startDate.value), calendar.value)
         )
       }
 
@@ -135,8 +148,8 @@ export default defineComponent({
       switch (type.value) {
         case 'date':
           emit('input', [
-            getDateObject(timestampFromDate(startDate.value)),
-            getDateObject(timestampFromDate(endDate.value)),
+            getCalendarTimestampDateObject(timestampFromDate(startDate.value), calendar.value),
+            getCalendarTimestampDateObject(timestampFromDate(endDate.value), calendar.value),
           ])
           return
         case 'array':
@@ -179,9 +192,12 @@ export default defineComponent({
       if (valueType === '[object Undefined]' || props.value === null) {
         type.value = 'string'
         now = fallbackDate()
-        start = getDate(now)
+        start = getCalendarTimestampDate(now)
         end = start
-        if (isValidDate(start) && isValidDate(end)) {
+        if (
+          isValidCalendarDateString(start, calendar.value) &&
+          isValidCalendarDateString(end, calendar.value)
+        ) {
           startDate.value = start
           endDate.value = end
         } else {
@@ -200,8 +216,19 @@ export default defineComponent({
       switch (Object.prototype.toString.call(props.value[0])) {
         case '[object Date]':
           type.value = 'date'
-          start = getDate(parseDate(props.value[0]) ?? EmptyTimestamp)
-          end = getDate(parseDate(props.value[1]) ?? EmptyTimestamp)
+          {
+            const parsedStart = parseDate(props.value[0])
+            const parsedEnd = parseDate(props.value[1])
+
+            start = getCalendarTimestampDate(
+              parsedStart === null
+                ? fallbackDate()
+                : toCalendarTimestamp(parsedStart, calendar.value),
+            )
+            end = getCalendarTimestampDate(
+              parsedEnd === null ? fallbackDate() : toCalendarTimestamp(parsedEnd, calendar.value),
+            )
+          }
           break
         case '[object Array]':
           type.value = 'array'
@@ -221,7 +248,7 @@ export default defineComponent({
         case '[object Undefined]':
           type.value = 'string'
           now = fallbackDate()
-          start = getDate(now)
+          start = getCalendarTimestampDate(now)
           end = start
           break
         default:
@@ -230,7 +257,10 @@ export default defineComponent({
           return
       }
 
-      if (isValidDate(start) && isValidDate(end)) {
+      if (
+        isValidCalendarDateString(start, calendar.value) &&
+        isValidCalendarDateString(end, calendar.value)
+      ) {
         startDate.value = start
         endDate.value = end
       } else {
@@ -241,6 +271,28 @@ export default defineComponent({
     }
 
     watch(() => props.value, splitDate)
+    watch(calendar, (nextCalendar, previousCalendar) => {
+      if (syncing.value === true || previousCalendar.id === nextCalendar.id) {
+        return
+      }
+
+      const start = timestampFromDateWithCalendar(startDate.value, previousCalendar)
+      const end = timestampFromDateWithCalendar(endDate.value, previousCalendar)
+
+      if (start === null || end === null) {
+        return
+      }
+
+      syncing.value = true
+      startDate.value = formatCalendarDate(
+        nextCalendar.fromEpochDay(getCalendarDayIdentifier(start, previousCalendar)),
+      )
+      endDate.value = formatCalendarDate(
+        nextCalendar.fromEpochDay(getCalendarDayIdentifier(end, previousCalendar)),
+      )
+      syncing.value = false
+      emitValue()
+    })
     watch(startDate, () => {
       if (syncing.value !== true) {
         emitValue()
@@ -269,6 +321,7 @@ export default defineComponent({
           },
         ],
         value: startDate.value,
+        calendarSystem: props.calendarSystem,
         locale: props.locale,
         barColor: props.barColor,
         textColor: props.textColor,
@@ -284,6 +337,11 @@ export default defineComponent({
         disabledYears: props.startDisabledYears,
         disabledMonths: props.startDisabledMonths,
         disabledDays: props.startDisabledDays,
+        shortYearLabel: props.startShortYearLabel,
+        shortMonthLabel: props.startShortMonthLabel,
+        shortDayLabel: props.startShortDayLabel,
+        showMonthLabel: props.startShowMonthLabel,
+        showWeekdayLabel: props.startShowWeekdayLabel,
         noDays: props.startNoDays,
         noMonths: props.startNoMonths,
         noYears: props.startNoYears,
@@ -301,6 +359,7 @@ export default defineComponent({
         ref: endDateRef,
         class: 'col-6',
         value: endDate.value,
+        calendarSystem: props.calendarSystem,
         locale: props.locale,
         barColor: props.barColor,
         textColor: props.textColor,
@@ -316,6 +375,11 @@ export default defineComponent({
         disabledYears: props.endDisabledYears,
         disabledMonths: props.endDisabledMonths,
         disabledDays: props.endDisabledDays,
+        shortYearLabel: props.endShortYearLabel,
+        shortMonthLabel: props.endShortMonthLabel,
+        shortDayLabel: props.endShortDayLabel,
+        showMonthLabel: props.endShowMonthLabel,
+        showWeekdayLabel: props.endShowWeekdayLabel,
         noDays: props.endNoDays,
         noMonths: props.endNoMonths,
         noYears: props.endNoYears,
