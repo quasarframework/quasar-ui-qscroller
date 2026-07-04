@@ -6,6 +6,8 @@
       :value="selectedRange"
       :locale="locale"
       class="example-scroller q-mt-md"
+      start-show-month-label
+      end-show-month-label
       no-footer
       @input="selectedRange = $event"
     />
@@ -19,7 +21,7 @@ import '@quasar/quasar-ui-qscroller/src/index.scss'
 
 const selectedRange = ref(['2026-05-24', '2026-05-30'])
 const locale = ref('en-us')
-const locales = ['en-us', 'fr', 'ro', 'se', 'ru', 'ar', 'ca']
+const locales = ['en-us', 'fr', 'ro', 'sv-SE', 'ru', 'ar', 'ca']
 </script>
 
 <style scoped lang="scss">
@@ -33,6 +35,6 @@ const locales = ['en-us', 'fr', 'ro', 'se', 'ru', 'ar', 'ca']
 
 .example-scroller {
   height: 300px;
-  max-width: 620px;
+  max-width: 720px;
 }
 </style>

@@ -1,22 +1,44 @@
 <template>
-  <div class="q-pa-md example-grid">
-    <q-string-scroller
-      :value="selected"
-      :items="items"
-      class="example-scroller"
-      no-footer
-      disable
-      @input="selected = $event"
-    />
+  <div class="q-pa-md comparison-examples">
+    <section class="comparison-example">
+      <div class="comparison-example__copy">
+        <div class="text-overline text-primary">Whole string scroller</div>
+        <h4>Disable all interaction</h4>
+        <p>Use `disable` when the current string value should be visible but locked.</p>
+        <div class="model-preview">
+          <span>Shared model</span>
+          <strong>{{ selected }}</strong>
+        </div>
+      </div>
+      <q-string-scroller
+        :value="selected"
+        :items="items"
+        class="comparison-example__scroller"
+        no-footer
+        disable
+        @input="selected = $event"
+      />
+    </section>
 
-    <q-string-scroller
-      :value="selected"
-      :items="items"
-      disabled-text-color="orange-4"
-      class="example-scroller"
-      no-footer
-      @input="selected = $event"
-    />
+    <section class="comparison-example">
+      <div class="comparison-example__copy">
+        <div class="text-overline text-primary">Specific items</div>
+        <h4>Disable unavailable options</h4>
+        <p>Use item-level `disabled` flags to keep only some choices unavailable.</p>
+        <div class="model-preview">
+          <span>Shared model</span>
+          <strong>{{ selected }}</strong>
+        </div>
+      </div>
+      <q-string-scroller
+        :value="selected"
+        :items="items"
+        disabled-text-color="orange-4"
+        class="comparison-example__scroller"
+        no-footer
+        @input="selected = $event"
+      />
+    </section>
   </div>
 </template>
 
@@ -38,15 +60,55 @@ const items = [
 </script>
 
 <style scoped lang="scss">
-.example-grid {
+.comparison-examples {
   display: flex;
-  flex-wrap: wrap;
   gap: 16px;
+  flex-direction: column;
 }
 
-.example-scroller {
+.comparison-example {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(220px, 300px);
+  gap: 20px;
+  align-items: start;
+  padding: 16px;
+  border: 1px solid rgba(160, 79, 23, 0.7);
+  border-radius: 6px;
+}
+
+.comparison-example__copy {
+  h4 {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 0 0 16px;
+    line-height: 1.5;
+  }
+}
+
+.model-preview {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(160, 79, 23, 0.45);
+  border-radius: 4px;
+
+  span {
+    font-size: 11px;
+    opacity: 0.75;
+  }
+}
+
+.comparison-example__scroller {
   height: 240px;
-  max-width: 220px;
-  min-width: 180px;
+  width: 100%;
+}
+
+@media (max-width: 680px) {
+  .comparison-example {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
