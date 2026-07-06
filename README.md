@@ -1,39 +1,57 @@
-> It's likely this App Extension will be deprecated (no support for Quasar v2/Vue 3) unless it gets a strong representation from developers using it.
+# QScroller
 
-QScroller (Vue Plugin, UMD and Quasar App Extension)
-===
+[![UI package](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller?label=@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![App Extension](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller?label=@quasar/quasar-app-extension-qscroller)](https://www.npmjs.com/package/@quasar/quasar-app-extension-qscroller)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/533e396c-4793-45af-a0db-6a401f90f748/deploy-status)](https://app.netlify.com/projects/qscroller/deploys)
 
-![@quasar/quasar-ui-qscroller](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller.svg?label=@quasar/quasar-ui-qscroller)
-![@quasar/quasar-app-extension-qscroller](https://img.shields.io/npm/v/@quasar/quasar-app-extension-qscroller.svg?label=@quasar/quasar-app-extension-qscroller)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/quasarframework/quasar-ui-qscroller.svg)]()
-[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/quasarframework/quasar-ui-qscroller.svg)]()
+<span class="badge-github-sponsors"><a href="https://github.com/sponsors/hawkeye64" title="Sponsor this project on GitHub"><img src="https://img.shields.io/badge/github-sponsors-ea4aaa.svg?logo=githubsponsors&logoColor=white" alt="GitHub Sponsors button" /></a></span>
+<span class="badge-paypal"><a href="https://paypal.me/hawkeye64" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span>
+
+[![Discord](https://img.shields.io/badge/discord-join%20server-738ADB?style=for-the-badge&logo=discord&logoColor=738ADB)](https://chat.quasar.dev)
+[![X](https://img.shields.io/badge/follow-@jgalbraith64-1DA1F2?style=for-the-badge&logo=x&logoColor=1DA1F2)](https://twitter.com/jgalbraith64)
+
+QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
+
+[Live Q-Press documentation site](https://qscroller.netlify.app/)
 
 # Structure
 
-* [/ui](ui) - standalone npm package (go here for more information)
-* [/app-extension](app-extension) - Quasar app extension
-* [/demo](demo) - docs, demo and examples project
-* [live demo](https://quasarframework.github.io/quasar-ui-qscroller/docs) - live docs, demo and examples
+This is a pnpm workspace mono-repo. You cannot use npm for building.
 
-# Demo Workflow
-If you fork or download this project, make sure you have the Quasar CLI globally installed:
+- [/ui](packages/ui) - standalone npm package (go here for more information)
+- [/app-extension](packages/app-extension) - Quasar app extension
+- [/docs](packages/docs) - Q-Press documentation site with docs, demos, and examples
+- [live demo](https://qscroller.netlify.app/) - **live Q-Press docs, demos, and examples**
 
+## Install
+
+```bash
+pnpm add @quasar/quasar-ui-qscroller
+# or
+bun add @quasar/quasar-ui-qscroller
+# or
+yarn add @quasar/quasar-ui-qscroller
+# or
+npm install @quasar/quasar-ui-qscroller
+# or, in a Quasar CLI project
+quasar ext add @quasar/qscroller
 ```
-$ npm i -g @quasar/cli
+
+## Development
+
+```bash
+pnpm install
+pnpm verify
+pnpm --filter docs dev
 ```
 
-The workflow to build the demo, on a fresh project, is as follows:
-```
-$ cd ui
-$ yarn
-$ yarn build
-$ cd ../demo
-$ yarn
-$ quasar dev
-```
+## Support
 
-# Donate
-If you appreciate the work that went into this, please consider donating to [Quasar](https://donate.quasar.dev) or [Jeff](https://github.com/sponsors/hawkeye64).
+If QScroller is useful in your workflow and you want to support ongoing maintenance:
 
-# License
+- GitHub Sponsors: https://github.com/sponsors/hawkeye64
+- PayPal: https://paypal.me/hawkeye64
+
+## License
+
 MIT (c) Jeff Galbraith <jeff@quasar.dev>

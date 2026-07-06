@@ -1,0 +1,114 @@
+# QScroller
+
+[![npm version](https://img.shields.io/npm/v/@quasar/quasar-ui-qscroller?label=%40quasar%2Fquasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![npm downloads](https://img.shields.io/npm/dt/@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![npm monthly downloads](https://img.shields.io/npm/dm/@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+[![license](https://img.shields.io/npm/l/@quasar/quasar-ui-qscroller)](https://www.npmjs.com/package/@quasar/quasar-ui-qscroller)
+
+<span class="badge-github-sponsors"><a href="https://github.com/sponsors/hawkeye64" title="Sponsor this project on GitHub"><img src="https://img.shields.io/badge/github-sponsors-ea4aaa.svg?logo=githubsponsors&logoColor=white" alt="GitHub Sponsors button" /></a></span>
+<span class="badge-paypal"><a href="https://paypal.me/hawkeye64" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span>
+
+[![Discord](https://img.shields.io/badge/discord-join%20server-738ADB?style=for-the-badge&logo=discord&logoColor=738ADB)](https://chat.quasar.dev)
+[![X](https://img.shields.io/badge/follow-@jgalbraith64-1DA1F2?style=for-the-badge&logo=x&logoColor=1DA1F2)](https://twitter.com/jgalbraith64)
+
+QScroller provides string, time, date, date-time, and range scrollers for Vue and Quasar applications.
+
+## Install
+
+```bash
+pnpm add @quasar/quasar-ui-qscroller
+# or
+bun add @quasar/quasar-ui-qscroller
+# or
+yarn add @quasar/quasar-ui-qscroller
+# or
+npm install @quasar/quasar-ui-qscroller
+```
+
+## Quasar CLI Vite
+
+Use the App Extension when you want QScroller registered for the whole app:
+
+```bash
+quasar ext add @quasar/qscroller
+```
+
+Or register the UI package manually in a boot file:
+
+```ts
+import { defineBoot } from '#q-app'
+import Plugin from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/dist/index.css'
+
+export default defineBoot(({ app }) => {
+  app.use(Plugin)
+})
+```
+
+## Vue 3 Or Vite
+
+```ts
+import { createApp } from 'vue'
+import Plugin from '@quasar/quasar-ui-qscroller'
+import '@quasar/quasar-ui-qscroller/dist/index.css'
+import App from './App.vue'
+
+const app = createApp(App)
+
+app.use(Plugin)
+app.mount('#app')
+```
+
+## Component Import
+
+```vue
+<style src="@quasar/quasar-ui-qscroller/dist/index.css"></style>
+
+<script setup lang="ts">
+import {
+  QDateRangeScroller,
+  QDateScroller,
+  QDateTimeScroller,
+  QScroller,
+  QStringScroller,
+  QTimeRangeScroller,
+  QTimeScroller,
+} from '@quasar/quasar-ui-qscroller'
+</script>
+```
+
+## UMD
+
+The UMD bundle exposes `window.QScroller`.
+
+Add the QScroller assets after the Quasar assets:
+
+```html
+<link
+  href="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.min.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/@quasar/quasar-ui-qscroller/dist/index.umd.min.js"></script>
+```
+
+Use `dist/index.rtl.min.css` when your app needs the RTL stylesheet.
+
+## Development
+
+```bash
+pnpm install
+pnpm --filter @quasar/quasar-ui-qscroller build
+pnpm --filter @quasar/quasar-ui-qscroller typecheck
+```
+
+## Support
+
+If QScroller is useful in your workflow and you want to support ongoing maintenance:
+
+- GitHub Sponsors: https://github.com/sponsors/hawkeye64
+- PayPal: https://paypal.me/hawkeye64
+
+## License
+
+MIT (c) Jeff Galbraith <jeff@quasar.dev>
