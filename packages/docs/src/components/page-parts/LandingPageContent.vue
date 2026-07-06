@@ -53,7 +53,7 @@
             </q-btn>
 
             <q-btn
-              href="https://github.com/quasarframework/quasar-ui-qscroller/tree/v3-beta"
+              href="https://github.com/quasarframework/quasar-ui-qscroller/tree/dev"
               target="_blank"
               rel="noopener noreferrer"
               no-caps

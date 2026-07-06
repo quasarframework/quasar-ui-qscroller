@@ -35,9 +35,9 @@ Short user-facing summary of what changed for QScroller component/app-extension 
 ## Compatibility
 
 - Node.js: `>=22.13`
-- Quasar: `^2.21.0`
-- Quasar App Vite target: `@quasar/app-vite@3.0.0-rc.6`
-- npm dist-tag: `beta`
+- Quasar: `^2.21.1`
+- Quasar App Vite target: `@quasar/app-vite@3.0.0`
+- npm dist-tag: `latest`
 
 ## Installation
 
@@ -53,12 +53,10 @@ npm install @quasar/quasar-ui-qscroller
 quasar ext add @quasar/qscroller
 ```
 
-Add the appropriate prerelease tag, such as `@beta`, only when publishing under that dist-tag.
-
 ## Documentation
 
 - Docs: https://qscroller.netlify.app/
-- Installation: https://qscroller.netlify.app/getting-started/installation
+- Installation: https://qscroller.netlify.app/getting-started/installation-types
 - Upgrade Guide: https://qscroller.netlify.app/other/upgrade-guide
 
 ## Full Changelog
