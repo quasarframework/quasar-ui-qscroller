@@ -7,7 +7,13 @@
       <div class="hero__grid">
         <div class="hero__copy">
           <div class="hero__eyebrow">Vue 3 + Quasar 2</div>
-          <img src="/app-logo.svg" alt="QScroller Logo" class="hero-logo" />
+          <img
+            src="/app-logo.svg"
+            alt="QScroller Logo"
+            class="hero-logo"
+            width="120"
+            height="120"
+          />
           <h1 class="hero-title">QScroller</h1>
 
           <p class="hero-subtitle">

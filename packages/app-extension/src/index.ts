@@ -39,6 +39,5 @@ export default defineIndexScript((api) => {
 
   api.extendQuasarConf(() => ({
     boot: ['~@quasar/quasar-app-extension-qscroller/dist/boot/vite-register.js'],
-    css: ['~@quasar/quasar-ui-qscroller/src/index.scss'],
   }))
 })
