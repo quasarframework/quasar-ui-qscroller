@@ -212,6 +212,7 @@ export function useScrollerShell(props: ShellProps) {
                   dense: true,
                   round: true,
                   icon: 'close',
+                  'aria-label': 'Close scroller',
                   onClick: emitClose,
                 }),
               ],
